@@ -11,9 +11,9 @@ Currently there are api hooks for these OPNsense modules:
 - **Diagnostics**
 - **IDS**
 - **Proxy**
-- Routes
-- TrafficShaper
-- Unbound
+- *Routes*
+- *TrafficShaper*
+- *Unbound*
 
 Modules in **bold** have mostly been implemented in the current version of the PS_OPNsense module.
 
