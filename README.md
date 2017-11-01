@@ -1,8 +1,9 @@
 # OPNsense
 
-## 
+## About
 This is a PowerShell module that leverages the OPNsense api to manage an [OPNsense](https://opnsense.org/) open source firewall appliances. The development of both OPNsense and this PowerShell module is still very much ongoing, so additional functionality will be added as these projects mature.
 
+## Supported Modules
 Currently there are api hooks for these OPNsense modules:
 - **CaptivePortal**
 - **Core (Firmware and Packages)**
