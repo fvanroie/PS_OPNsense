@@ -3,9 +3,10 @@
 ## About
 This is a PowerShell module that leverages the OPNsense api to manage an [OPNsense](https://opnsense.org/) open source firewall appliance. The development of both OPNsense and this PowerShell module is still very much ongoing, so additional functionality will be added as these projects mature.
 
+## Getting Started
 Clone the repository to your PowerShell Modules folder:
 ```git
-git clone https://github.com/fvanroie/PS_OPNsense.git .\Documents\WindowsPowershell\Modules\PS_OPNsense
+git clone https://github.com/fvanroie/PS_OPNsense.git .\PS_OPNsense
 ```
 
 To load this module in PowerShell type:
