@@ -3,6 +3,11 @@
 ## About
 This is a PowerShell module that leverages the OPNsense api to manage an [OPNsense](https://opnsense.org/) open source firewall appliance. The development of both OPNsense and this PowerShell module is still very much ongoing, so additional functionality will be added as these projects mature.
 
+Clone the repository to your PowerShell Modules folder:
+```git
+git clone https://github.com/fvanroie/PS_OPNsense.git .\Documents\WindowsPowershell\Modules\PS_OPNsense
+```
+
 To load this module in PowerShell type:
 ```powershell
 Import-Module -Name PS_OPNsense
@@ -28,7 +33,7 @@ Connecting to an OPNsense server:
 ```powershell
 Connect-OPNsense -Uri 'https://fw01.local/api' -Key <api_key> -Secret <api_secret>
 Connect-OPNsense -Uri 'https://fw01.local/api' -Key <api_key> -Secret <api_secret> -Verbose
-Connect-OPNsense -Uri 'https://fw01.local/api' -Key <api_key> -Secret <api_secret> -AcceptCertificate
+Connect-OPNsense 'https://fw01.local/api' <api_key> <api_secret> -AcceptCertificate
 ```
 Run some commands:
 ```powershell
