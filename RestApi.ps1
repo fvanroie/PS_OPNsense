@@ -1,7 +1,5 @@
-Import-Module "$PSScriptRoot\CertificateValidation.psm1"
-
 # Function that takes care of ALL the different REST api calls
-Function Invoke-ApiRestCommand {
+Function Invoke-OPNsenseApiRestCommand {
   [CmdletBinding()]
   param (
       [String]$Uri,
@@ -66,114 +64,17 @@ Function Invoke-ApiRestCommand {
   Return $Result
 }
 
-Function Connect-() {
-<#
-.SYNOPSIS
-  Connect to an OPNsense appliance
-.DESCRIPTION
-  This function does some superficial checks to make sure a recognised
-  OPNsense configuration file is represented by the supplied DOM.
-.OUTPUT
-  The function returns an object with information about the OPNsense instance or
-  throws an error message when the connection fails.
-.EXAMPLE
-  Connect-OPNsense -Url http://firewall.local/api -Key $key -Secret $Secret -Verbose
-.EXAMPLE
-  Connect-OPNsense -Url https://firewall.local/api -Key $key -Secret $Secret -AcceptCertificate -Verbose
-#>
+Function Invoke-OPNsenseCommand {
+    # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
     [CmdletBinding()]
-    param (
-        [String]$Url,
-        [String]$Key,
-        [String]$Secret,
-        [switch]$AcceptCertificate=$false
-    )
-
-    $OPNsenseApi = $MyInvocation.MyCommand.Module.PrivateData['OPNsenseApi']
-    if ($OPNsenseApi) {
-        Throw "ERROR : Already connected to $OPNsenseApi. Please use Disconnect-OPNsense first."
-    }
-
-    $bytes = [System.Text.Encoding]::UTF8.GetBytes($Key + ":" + $Secret)
-    $Credentials = [System.Convert]::ToBase64String($bytes)
-    $uri = ($Url + '/core/firmware/info')
-    $Result = Invoke-ApiRestCommand -Uri $uri -credentials $Credentials `
-                  -AcceptCertificate:$AcceptCertificate -Verbose:$VerbosePreference
-
-    if ($Result) {
-      # Validate the connection result
-      if ($Result.product_version) {
-          Write-Verbose ("OPNsense version : " + $Result.product_version )
-          $MyInvocation.MyCommand.Module.PrivateData['Credentials'] = $Credentials
-          $MyInvocation.MyCommand.Module.PrivateData['OPNsenseApi'] = $Url
-          $MyInvocation.MyCommand.Module.PrivateData['OPNsenseSkipCert'] = [bool]::Parse($AcceptCertificate)
-          return $Result | Select-Object -Property product_name,product_version
-      } else {
-        Throw 'ERROR : Failed to get the OPNsense version.'
-      }
-  } else {
-      Throw 'ERROR : Could not connect to the OPNsense server using the credentials supplied.'
-  }
-}
-
-function Disconnect-() {
-<#
-.SYNOPSIS
-
-Disconnect from an OPNsense appliance
-
-.DESCRIPTION
-
-Closes the OPNsense link and requires you to login again.
-
-.OUTPUT
-
-Returns $true when disconnected successfully or throws an error when not connected.
-
-.EXAMPLE
-Disconnect-OPNsense
-
-Sets the $ConfigXML variable that can then be piped into or sent as an
-argument to other cmdlets in the module.
-#>
-    [CmdletBinding()]
-    Param()
-    If ($MyInvocation.MyCommand.Module.PrivateData['OPNsenseApi'] ) {
-        Write-Verbose ('Disconnecting from ' + $MyInvocation.MyCommand.Module.PrivateData['OPNsenseApi'])
-        $MyInvocation.MyCommand.Module.PrivateData['Credentials'] = $null
-        $MyInvocation.MyCommand.Module.PrivateData['OPNsenseApi'] = $null
-        $MyInvocation.MyCommand.Module.PrivateData['OPNsenseSkipCert'] = $null
-    } else {
-        Throw 'ERROR : You are not connected to an OPNsense server. Please use Connect-OPNsense first.'
-    }
-}
-
-function Invoke-Command() {
-<#
-.SYNOPSIS
-
-Executes an OPNsense command against the REST api of a connected server.
-
-.DESCRIPTION
-
-The Out-OpnSenseXMLConfig function writes an an OPNsense configuration
-file to disk.
-
-.EXAMPLE
-
-Invoke-OPNsenseCommand core firmware info
-Invoke-OPNsenseCommand ids settings test -Json @{ key1 = value1; key2 = value2 }
-
-#>
-    [CmdletBinding()]
-    Param (
-        [Parameter(Mandatory=$true,position=1)][String]$Module,
-        [parameter(Mandatory=$true,position=2)][String]$Controller,
-        [parameter(Mandatory=$true,position=3)][String]$Command,
-        [parameter(Mandatory=$false)]$Json,
-        [parameter(Mandatory=$false)]$Form,
-        [parameter(Mandatory=$false)]$AddProperty
-    )
+        Param (
+            [Parameter(Mandatory=$true,position=1)][String]$Module,
+            [parameter(Mandatory=$true,position=2)][String]$Controller,
+            [parameter(Mandatory=$true,position=3)][String]$Command,
+            [parameter(Mandatory=$false)]$Json,
+            [parameter(Mandatory=$false)]$Form,
+            [parameter(Mandatory=$false)]$AddProperty
+        )
 
     $timer = [Diagnostics.Stopwatch]::StartNew()
     $Credentials = $MyInvocation.MyCommand.Module.PrivateData['Credentials']
@@ -187,14 +88,14 @@ Invoke-OPNsenseCommand ids settings test -Json @{ key1 = value1; key2 = value2 }
     }
 
     if ($Json) {
-        $Result = Invoke-ApiRestCommand -Uri $Uri -credentials $Credentials -Json $Json `
+        $Result = Invoke-OPNsenseApiRestCommand -Uri $Uri -credentials $Credentials -Json $Json `
                       -AcceptCertificate:$AcceptCertificate -Verbose:$VerbosePreference
     } else {
         if ($Form) {
-            $Result = Invoke-ApiRestCommand -Uri $Uri -credentials $Credentials -Form $Form `
+            $Result = Invoke-OPNsenseApiRestCommand -Uri $Uri -credentials $Credentials -Form $Form `
                           -AcceptCertificate:$AcceptCertificate -Verbose:$VerbosePreference
         } else {
-            $Result = Invoke-ApiRestCommand -Uri $Uri -credentials $Credentials `
+            $Result = Invoke-OPNsenseApiRestCommand -Uri $Uri -credentials $Credentials `
                           -AcceptCertificate:$AcceptCertificate -Verbose:$VerbosePreference
         }
     }
@@ -220,4 +121,55 @@ Invoke-OPNsenseCommand ids settings test -Json @{ key1 = value1; key2 = value2 }
     Write-Verbose ($timer.elapsed.ToString() + " passed.")
     # Return the object
     return $result
+}
+
+Function Connect-OPNsense() {
+    # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
+    [CmdletBinding()]
+    param (
+        [String]$Url,
+        [String]$Key,
+        [String]$Secret,
+        [switch]$AcceptCertificate=$false
+    )
+
+    $OPNsenseApi = $MyInvocation.MyCommand.Module.PrivateData['OPNsenseApi']
+    if ($OPNsenseApi) {
+        Throw "ERROR : Already connected to $OPNsenseApi. Please use Disconnect-OPNsense first."
+    }
+
+    $bytes = [System.Text.Encoding]::UTF8.GetBytes($Key + ":" + $Secret)
+    $Credentials = [System.Convert]::ToBase64String($bytes)
+    $uri = ($Url + '/core/firmware/info')
+    $Result = Invoke-OPNsenseApiRestCommand -Uri $uri -credentials $Credentials `
+                  -AcceptCertificate:$AcceptCertificate -Verbose:$VerbosePreference
+
+    if ($Result) {
+      # Validate the connection result
+      if ($Result.product_version) {
+          Write-Verbose ("OPNsense version : " + $Result.product_version )
+          $MyInvocation.MyCommand.Module.PrivateData['Credentials'] = $Credentials
+          $MyInvocation.MyCommand.Module.PrivateData['OPNsenseApi'] = $Url
+          $MyInvocation.MyCommand.Module.PrivateData['OPNsenseSkipCert'] = [bool]::Parse($AcceptCertificate)
+          return $Result | Select-Object -Property product_name,product_version
+      } else {
+        Throw 'ERROR : Failed to get the OPNsense version.'
+      }
+  } else {
+      Throw 'ERROR : Could not connect to the OPNsense server using the credentials supplied.'
+  }
+}
+
+Function Disconnect-OPNsense() {
+    # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
+    [CmdletBinding()]
+    Param()
+    If ($MyInvocation.MyCommand.Module.PrivateData['OPNsenseApi'] ) {
+        Write-Verbose ('Disconnecting from ' + $MyInvocation.MyCommand.Module.PrivateData['OPNsenseApi'])
+        $MyInvocation.MyCommand.Module.PrivateData['Credentials'] = $null
+        $MyInvocation.MyCommand.Module.PrivateData['OPNsenseApi'] = $null
+        $MyInvocation.MyCommand.Module.PrivateData['OPNsenseSkipCert'] = $null
+    } else {
+        Throw 'ERROR : You are not connected to an OPNsense server. Please use Connect-OPNsense first.'
+    }
 }
