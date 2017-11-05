@@ -1001,7 +1001,7 @@ If updates are available, use the Update-OPNsense cmdlet to install them and reb
 	<command:details>
 		<command:name>Get-OPNsensePackage</command:name>
 		<maml:description>
-			<maml:para />
+			<maml:para>Get a list of the packages in OPNsense</maml:para>
 		</maml:description>
 		<maml:copyright>
 			<maml:para />
@@ -1011,7 +1011,8 @@ If updates are available, use the Update-OPNsense cmdlet to install them and reb
 		<dev:version />
 	</command:details>
 	<maml:description>
-		<maml:para />
+		<maml:para>Retrieve a list of the packages in OPNsense.</maml:para>
+		<maml:para>Retrieve information about one or more packages in OPNsense.</maml:para>
 	</maml:description>
 	<command:syntax>
 		<command:syntaxItem>
