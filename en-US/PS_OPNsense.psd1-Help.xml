@@ -4,7 +4,7 @@
 	<command:details>
 		<command:name>Connect-OPNsense</command:name>
 		<maml:description>
-			<maml:para>Connects to an OPNsense server using the REST api.</maml:para>
+			<maml:para>Connect to an OPNsense server using the REST api.</maml:para>
 		</maml:description>
 		<maml:copyright>
 			<maml:para />
@@ -15,7 +15,7 @@
 	</command:details>
 	<maml:description>
 		<maml:para>The Connect-OPNsense cmdlet will try to connect to an OPNsense server REST api. You need to specify the Key and Secret obtained when enabling the REST api.</maml:para>
-		<maml:para>The Url must include the base URI of the OPNsense api, which is usualy /api. Also specify the appropriate protocol (http:// or https://) in the Url.</maml:para>
+		<maml:para>The Url must include the base Uri of the OPNsense api, which is usualy /api. Also specify the appropriate protocol (http:// or https://) in the Url.</maml:para>
 		<maml:para>If the server is using a self-signed certificate and your computer fails to validate it, you can temporarily disable the Certificate Validation using the -AcceptCertificate switch.</maml:para>
 	</maml:description>
 	<command:syntax>
@@ -184,7 +184,7 @@
 	<command:details>
 		<command:name>Disable-OPNsenseCronJob</command:name>
 		<maml:description>
-			<maml:para />
+			<maml:para>Disable a CronJob in OPNsense</maml:para>
 		</maml:description>
 		<maml:copyright>
 			<maml:para />
@@ -194,7 +194,7 @@
 		<dev:version />
 	</command:details>
 	<maml:description>
-		<maml:para />
+		<maml:para>Disable a CronJob in OPNsense using its UUID. The UUID can be retrieved with Get-OPNsenseCronJob.</maml:para>
 	</maml:description>
 	<command:syntax>
 		<command:syntaxItem>
@@ -202,7 +202,7 @@
 			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="1">
 				<maml:name>uuid</maml:name>
 				<maml:description>
-					<maml:para />
+					<maml:para>UUID of the CronJob to disable</maml:para>
 				</maml:description>
 				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
 			</command:parameter>
@@ -212,7 +212,7 @@
 		<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="1">
 			<maml:name>uuid</maml:name>
 			<maml:description>
-				<maml:para />
+				<maml:para>UUID of the CronJob to disable</maml:para>
 			</maml:description>
 			<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
 			<dev:type>
@@ -255,6 +255,26 @@
 		</maml:alert>
 	</maml:alertSet>
 	<command:examples>
+		<command:example>
+			<maml:title>--------------------------  Basic Example  --------------------------</maml:title>
+			<maml:introduction>
+				<maml:paragraph>PS C:\&gt;</maml:paragraph>
+			</maml:introduction>
+			<dev:code>Disable-OPNsenseCronJob -Uuid b5123c61-c036-4449-b400-9d214b914865</dev:code>
+			<dev:remarks>
+				<maml:para />
+				<maml:para />
+				<maml:para />
+				<maml:para></maml:para>
+			</dev:remarks>
+			<command:commandLines>
+				<command:commandLine>
+					<command:commandText>
+						<maml:para />
+					</command:commandText>
+				</command:commandLine>
+			</command:commandLines>
+		</command:example>
 	</command:examples>
 	<maml:relatedLinks>
 	</maml:relatedLinks>
@@ -264,7 +284,7 @@
 	<command:details>
 		<command:name>Disconnect-OPNsense</command:name>
 		<maml:description>
-			<maml:para>Disconnects from an OPNsense server REST api.</maml:para>
+			<maml:para>Disconnect from an OPNsense server REST api.</maml:para>
 		</maml:description>
 		<maml:copyright>
 			<maml:para />
@@ -345,7 +365,7 @@ You will have to use the Connect-OPNsense cmdlet again to reconnect.</maml:para>
 	<command:details>
 		<command:name>Enable-OPNsenseCronJob</command:name>
 		<maml:description>
-			<maml:para />
+			<maml:para>Enable a CronJob in OPNsense</maml:para>
 		</maml:description>
 		<maml:copyright>
 			<maml:para />
@@ -355,7 +375,7 @@ You will have to use the Connect-OPNsense cmdlet again to reconnect.</maml:para>
 		<dev:version />
 	</command:details>
 	<maml:description>
-		<maml:para />
+		<maml:para>Enable a CronJob in OPNsense using its UUID. The UUID can be retrieved with Get-OPNsenseCronJob.</maml:para>
 	</maml:description>
 	<command:syntax>
 		<command:syntaxItem>
@@ -363,7 +383,7 @@ You will have to use the Connect-OPNsense cmdlet again to reconnect.</maml:para>
 			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="1">
 				<maml:name>uuid</maml:name>
 				<maml:description>
-					<maml:para />
+					<maml:para>UUID of the CronJob to enable</maml:para>
 				</maml:description>
 				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
 			</command:parameter>
@@ -373,7 +393,7 @@ You will have to use the Connect-OPNsense cmdlet again to reconnect.</maml:para>
 		<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="1">
 			<maml:name>uuid</maml:name>
 			<maml:description>
-				<maml:para />
+				<maml:para>UUID of the CronJob to enable</maml:para>
 			</maml:description>
 			<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
 			<dev:type>
@@ -416,6 +436,26 @@ You will have to use the Connect-OPNsense cmdlet again to reconnect.</maml:para>
 		</maml:alert>
 	</maml:alertSet>
 	<command:examples>
+		<command:example>
+			<maml:title>--------------------------  Basic Example  --------------------------</maml:title>
+			<maml:introduction>
+				<maml:paragraph>PS C:\&gt;</maml:paragraph>
+			</maml:introduction>
+			<dev:code>Enable-OPNsenseCronJob -Uuid b5123c61-c036-4449-b400-9d214b914865</dev:code>
+			<dev:remarks>
+				<maml:para />
+				<maml:para />
+				<maml:para />
+				<maml:para></maml:para>
+			</dev:remarks>
+			<command:commandLines>
+				<command:commandLine>
+					<command:commandText>
+						<maml:para />
+					</command:commandText>
+				</command:commandLine>
+			</command:commandLines>
+		</command:example>
 	</command:examples>
 	<maml:relatedLinks>
 	</maml:relatedLinks>
@@ -655,7 +695,7 @@ You will have to use the Connect-OPNsense cmdlet again to reconnect.</maml:para>
 	<command:details>
 		<command:name>Get-OPNsenseCronJob</command:name>
 		<maml:description>
-			<maml:para />
+			<maml:para>Retrieve one or more CronJobs from OPNsense</maml:para>
 		</maml:description>
 		<maml:copyright>
 			<maml:para />
@@ -665,7 +705,8 @@ You will have to use the Connect-OPNsense cmdlet again to reconnect.</maml:para>
 		<dev:version />
 	</command:details>
 	<maml:description>
-		<maml:para />
+		<maml:para>If you do not specify an UUID the Get-OPNsenseCronJob cmdlet retrieves a list of all the CronJobs from OPNsense.</maml:para>
+		<maml:para>By passing a UUID to Get-OPNsenseCronJob the cmdlet will only retrieve the details of the specified CronJob.</maml:para>
 	</maml:description>
 	<command:syntax>
 		<command:syntaxItem>
@@ -673,7 +714,7 @@ You will have to use the Connect-OPNsense cmdlet again to reconnect.</maml:para>
 			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="1">
 				<maml:name>uuid</maml:name>
 				<maml:description>
-					<maml:para />
+					<maml:para>UUID of the CronJob to retrieve</maml:para>
 				</maml:description>
 				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
 			</command:parameter>
@@ -683,7 +724,7 @@ You will have to use the Connect-OPNsense cmdlet again to reconnect.</maml:para>
 		<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="1">
 			<maml:name>uuid</maml:name>
 			<maml:description>
-				<maml:para />
+				<maml:para>UUID of the CronJob to retrieve</maml:para>
 			</maml:description>
 			<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
 			<dev:type>
@@ -726,6 +767,46 @@ You will have to use the Connect-OPNsense cmdlet again to reconnect.</maml:para>
 		</maml:alert>
 	</maml:alertSet>
 	<command:examples>
+		<command:example>
+			<maml:title>--------------------------  Retrieve all CronJobs  --------------------------</maml:title>
+			<maml:introduction>
+				<maml:paragraph>PS C:\&gt;</maml:paragraph>
+			</maml:introduction>
+			<dev:code>Get-OPNsenseCronJob</dev:code>
+			<dev:remarks>
+				<maml:para />
+				<maml:para />
+				<maml:para />
+				<maml:para></maml:para>
+			</dev:remarks>
+			<command:commandLines>
+				<command:commandLine>
+					<command:commandText>
+						<maml:para />
+					</command:commandText>
+				</command:commandLine>
+			</command:commandLines>
+		</command:example>
+		<command:example>
+			<maml:title>--------------------------  Retreive one CronJob  --------------------------</maml:title>
+			<maml:introduction>
+				<maml:paragraph>PS C:\&gt;</maml:paragraph>
+			</maml:introduction>
+			<dev:code>Get-OPNsenseCronJob -Uuid b5123c61-c036-4449-b400-9d214b914865</dev:code>
+			<dev:remarks>
+				<maml:para />
+				<maml:para />
+				<maml:para />
+				<maml:para></maml:para>
+			</dev:remarks>
+			<command:commandLines>
+				<command:commandLine>
+					<command:commandText>
+						<maml:para />
+					</command:commandText>
+				</command:commandLine>
+			</command:commandLines>
+		</command:example>
 	</command:examples>
 	<maml:relatedLinks>
 	</maml:relatedLinks>
@@ -1017,7 +1098,7 @@ You will have to use the Connect-OPNsense cmdlet again to reconnect.</maml:para>
 	<command:details>
 		<command:name>Install-OPNsensePackage</command:name>
 		<maml:description>
-			<maml:para />
+			<maml:para>Install a Package in OPNsense</maml:para>
 		</maml:description>
 		<maml:copyright>
 			<maml:para />
@@ -1395,7 +1476,7 @@ You will have to use the Connect-OPNsense cmdlet again to reconnect.</maml:para>
 	<command:details>
 		<command:name>Lock-OPNsensePackage</command:name>
 		<maml:description>
-			<maml:para />
+			<maml:para>Lock a Package in OPNsense</maml:para>
 		</maml:description>
 		<maml:copyright>
 			<maml:para />
@@ -2407,7 +2488,7 @@ You will have to use the Connect-OPNsense cmdlet again to reconnect.</maml:para>
 	<command:details>
 		<command:name>Remove-OPNsensePackage</command:name>
 		<maml:description>
-			<maml:para />
+			<maml:para>Remove a Package in OPNsense</maml:para>
 		</maml:description>
 		<maml:copyright>
 			<maml:para />
@@ -2727,7 +2808,7 @@ You must specify the -Confirm parameter if you want to reboot the server without
 	<command:details>
 		<command:name>Stop-OPNsense</command:name>
 		<maml:description>
-			<maml:para />
+			<maml:para>Shutdown the OPNsense server.</maml:para>
 		</maml:description>
 		<maml:copyright>
 			<maml:para />
@@ -2737,14 +2818,55 @@ You must specify the -Confirm parameter if you want to reboot the server without
 		<dev:version />
 	</command:details>
 	<maml:description>
-		<maml:para />
+		<maml:para>The Stop-OPNsense cmdlet will shutdown the OPNsense server. Use this command with extreme care, as this will make your appliance inaccessible. Make sure you have a means to power the server on before executing this cmdlet!</maml:para>
+		<maml:para>In order to prevent accidental shutdown, the command will request user confirmation before executing the command on the OPNsense server.
+You must specify the -Confirm parameter if you want to power down the server without user intervention.</maml:para>
 	</maml:description>
 	<command:syntax>
 		<command:syntaxItem>
 			<maml:name>Stop-OPNsense</maml:name>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>WhatIf</maml:name>
+				<maml:description>
+					<maml:para />
+				</maml:description>
+				<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>Confirm</maml:name>
+				<maml:description>
+					<maml:para>Ask user confirmation before powering down the OPN server.</maml:para>
+				</maml:description>
+				<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+			</command:parameter>
 		</command:syntaxItem>
 	</command:syntax>
-	<command:parameters>	</command:parameters>
+	<command:parameters>
+		<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+			<maml:name>WhatIf</maml:name>
+			<maml:description>
+				<maml:para />
+			</maml:description>
+			<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+			<dev:type>
+				<maml:name>SwitchParameter</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+		<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+			<maml:name>Confirm</maml:name>
+			<maml:description>
+				<maml:para>Ask user confirmation before powering down the OPN server.</maml:para>
+			</maml:description>
+			<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+			<dev:type>
+				<maml:name>SwitchParameter</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+	</command:parameters>
 	<command:inputTypes>
 		<command:inputType>
 			<dev:type>
@@ -2778,6 +2900,46 @@ You must specify the -Confirm parameter if you want to reboot the server without
 		</maml:alert>
 	</maml:alertSet>
 	<command:examples>
+		<command:example>
+			<maml:title>--------------------------  With user confirmation  --------------------------</maml:title>
+			<maml:introduction>
+				<maml:paragraph>PS C:\&gt;</maml:paragraph>
+			</maml:introduction>
+			<dev:code>Stop-OPNsense</dev:code>
+			<dev:remarks>
+				<maml:para />
+				<maml:para />
+				<maml:para />
+				<maml:para></maml:para>
+			</dev:remarks>
+			<command:commandLines>
+				<command:commandLine>
+					<command:commandText>
+						<maml:para />
+					</command:commandText>
+				</command:commandLine>
+			</command:commandLines>
+		</command:example>
+		<command:example>
+			<maml:title>--------------------------  Without user confirmation  --------------------------</maml:title>
+			<maml:introduction>
+				<maml:paragraph>PS C:\&gt;</maml:paragraph>
+			</maml:introduction>
+			<dev:code>Stop-OPNsense -Confirm:$false</dev:code>
+			<dev:remarks>
+				<maml:para />
+				<maml:para />
+				<maml:para />
+				<maml:para></maml:para>
+			</dev:remarks>
+			<command:commandLines>
+				<command:commandLine>
+					<command:commandText>
+						<maml:para />
+					</command:commandText>
+				</command:commandLine>
+			</command:commandLines>
+		</command:example>
 	</command:examples>
 	<maml:relatedLinks>
 	</maml:relatedLinks>
@@ -2787,7 +2949,7 @@ You must specify the -Confirm parameter if you want to reboot the server without
 	<command:details>
 		<command:name>Unlock-OPNsensePackage</command:name>
 		<maml:description>
-			<maml:para />
+			<maml:para>Unlock a Package in OPNsense</maml:para>
 		</maml:description>
 		<maml:copyright>
 			<maml:para />
