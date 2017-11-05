@@ -46,9 +46,44 @@ Function Restart-OPNsense {
 
 Function Update-OPNsense {
     # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
-    [CmdletBinding()]
+    [CmdletBinding(
+       SupportsShouldProcess=$true,
+       ConfirmImpact="High"
+    )]
     Param()
-    return Invoke-OPNsenseCoreCommand core firmware upgrade -Verbose:$VerbosePreference
+    if ($pscmdlet.ShouldProcess($MyInvocation.MyCommand.Module.PrivateData['OPNsenseApi'])) {
+        $result = Invoke-OPNsenseCommand core firmware upgrade -Form upgrade -Verbose:$VerbosePreference
+        if ($result.status -eq 'ok') {
+            $start = 0
+            Do {
+                Start-Sleep -s 1
+                $result = Invoke-OPNsenseCommand core firmware upgradestatus -Verbose:$false
+
+                # Write-Verbose buffer, starting where we left off the previous itteration
+                $log = $result.log.substring($start)
+                $lines = $log.Split("`n")
+
+                # Write-Verbose buffer, except last line as it can be incomplete
+                for ($i = 1; $i -lt $lines.length; $i++) {
+                    Write-Verbose  $lines[$i-1]
+                    $start += $lines[$i-1].length + 1
+                }
+            } Until ($result.status -ne 'running')
+
+            # Write-Verbose remaining Buffer
+            $log = $result.log.substring($start)
+            $lines = $log.Split("`n")
+
+            # Write-Verbose buffer, including last line as it is complete
+            for ($i = 0; $i -lt $lines.length; $i++) {
+                Write-Verbose  $lines[$i]
+                $start += $lines[$i].length + 1
+            }
+        }
+        return $result
+    } else {
+        return $false
+    }
 }
 
 # pkg audit -F

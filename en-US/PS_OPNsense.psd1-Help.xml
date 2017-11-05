@@ -465,7 +465,7 @@ You will have to use the Connect-OPNsense cmdlet again to reconnect.</maml:para>
 	<command:details>
 		<command:name>Get-OPNsense</command:name>
 		<maml:description>
-			<maml:para>Return the basic information about the OPNsense server.</maml:para>
+			<maml:para>Return the basic status information about the OPNsense server.</maml:para>
 		</maml:description>
 		<maml:copyright>
 			<maml:para />
@@ -475,7 +475,10 @@ You will have to use the Connect-OPNsense cmdlet again to reconnect.</maml:para>
 		<dev:version />
 	</command:details>
 	<maml:description>
-		<maml:para>Use this command to identify basic properties of the OPNsense server, like its Product Version and Product Name.</maml:para>
+		<maml:para>Use this command to list basic status information of the OPNsense server, like its Product Version and Product Name.
+The command will first contact the mirror repository and check if any updates are available.</maml:para>
+		<maml:para>Use the Get-OPNsense cmdlet to retrieve the number of updates pending and to check whether a reboot will be needed.
+If updates are available, use the Update-OPNsense cmdlet to install them and reboot the server when required.</maml:para>
 	</maml:description>
 	<command:syntax>
 		<command:syntaxItem>
@@ -516,6 +519,26 @@ You will have to use the Connect-OPNsense cmdlet again to reconnect.</maml:para>
 		</maml:alert>
 	</maml:alertSet>
 	<command:examples>
+		<command:example>
+			<maml:title>--------------------------  Basic example  --------------------------</maml:title>
+			<maml:introduction>
+				<maml:paragraph>PS C:\&gt;</maml:paragraph>
+			</maml:introduction>
+			<dev:code>Get-OPNsense -Verbose</dev:code>
+			<dev:remarks>
+				<maml:para />
+				<maml:para />
+				<maml:para />
+				<maml:para></maml:para>
+			</dev:remarks>
+			<command:commandLines>
+				<command:commandLine>
+					<command:commandText>
+						<maml:para />
+					</command:commandText>
+				</command:commandLine>
+			</command:commandLines>
+		</command:example>
 	</command:examples>
 	<maml:relatedLinks>
 	</maml:relatedLinks>
@@ -1108,7 +1131,7 @@ You will have to use the Connect-OPNsense cmdlet again to reconnect.</maml:para>
 		<dev:version />
 	</command:details>
 	<maml:description>
-		<maml:para />
+		<maml:para>Install one of the available OPNsense software packages on the server.</maml:para>
 	</maml:description>
 	<command:syntax>
 		<command:syntaxItem>
@@ -1116,7 +1139,7 @@ You will have to use the Connect-OPNsense cmdlet again to reconnect.</maml:para>
 			<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="true (ByValue, ByPropertyName)" position="1">
 				<maml:name>Name</maml:name>
 				<maml:description>
-					<maml:para />
+					<maml:para>The Name of the package to be Installed</maml:para>
 				</maml:description>
 				<command:parameterValue required="true" variableLength="true">String[]</command:parameterValue>
 			</command:parameter>
@@ -1126,7 +1149,7 @@ You will have to use the Connect-OPNsense cmdlet again to reconnect.</maml:para>
 		<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="true (ByValue, ByPropertyName)" position="1">
 			<maml:name>Name</maml:name>
 			<maml:description>
-				<maml:para />
+				<maml:para>The Name of the package to be Installed</maml:para>
 			</maml:description>
 			<command:parameterValue required="true" variableLength="true">String[]</command:parameterValue>
 			<dev:type>
@@ -1169,6 +1192,46 @@ You will have to use the Connect-OPNsense cmdlet again to reconnect.</maml:para>
 		</maml:alert>
 	</maml:alertSet>
 	<command:examples>
+		<command:example>
+			<maml:title>--------------------------  Basic Example  --------------------------</maml:title>
+			<maml:introduction>
+				<maml:paragraph>PS C:\&gt;</maml:paragraph>
+			</maml:introduction>
+			<dev:code>Install-OPNsensePackage -Name &apos;xen-guest-tools&apos;</dev:code>
+			<dev:remarks>
+				<maml:para />
+				<maml:para />
+				<maml:para />
+				<maml:para></maml:para>
+			</dev:remarks>
+			<command:commandLines>
+				<command:commandLine>
+					<command:commandText>
+						<maml:para />
+					</command:commandText>
+				</command:commandLine>
+			</command:commandLines>
+		</command:example>
+		<command:example>
+			<maml:title>--------------------------  Install multiple Packages  --------------------------</maml:title>
+			<maml:introduction>
+				<maml:paragraph>PS C:\&gt;</maml:paragraph>
+			</maml:introduction>
+			<dev:code>Install-OPNsensePackage -Name &apos;unixODBC&apos; , &apos;xen-guest-tools&apos; -Verbose</dev:code>
+			<dev:remarks>
+				<maml:para />
+				<maml:para />
+				<maml:para />
+				<maml:para></maml:para>
+			</dev:remarks>
+			<command:commandLines>
+				<command:commandLine>
+					<command:commandText>
+						<maml:para />
+					</command:commandText>
+				</command:commandLine>
+			</command:commandLines>
+		</command:example>
 	</command:examples>
 	<maml:relatedLinks>
 	</maml:relatedLinks>
@@ -1486,7 +1549,7 @@ You will have to use the Connect-OPNsense cmdlet again to reconnect.</maml:para>
 		<dev:version />
 	</command:details>
 	<maml:description>
-		<maml:para />
+		<maml:para>The Lock-OPNsensePackage cmdlet locks the version of a package. It prevents the package from being updated by subsequent OPNsense updates. Use the to prevent unintended upgrades or downgrade to the package.</maml:para>
 	</maml:description>
 	<command:syntax>
 		<command:syntaxItem>
@@ -1494,7 +1557,7 @@ You will have to use the Connect-OPNsense cmdlet again to reconnect.</maml:para>
 			<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="true (ByValue, ByPropertyName)" position="1">
 				<maml:name>Name</maml:name>
 				<maml:description>
-					<maml:para />
+					<maml:para>The name of the package to be locked</maml:para>
 				</maml:description>
 				<command:parameterValue required="true" variableLength="true">String[]</command:parameterValue>
 			</command:parameter>
@@ -1504,7 +1567,7 @@ You will have to use the Connect-OPNsense cmdlet again to reconnect.</maml:para>
 		<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="true (ByValue, ByPropertyName)" position="1">
 			<maml:name>Name</maml:name>
 			<maml:description>
-				<maml:para />
+				<maml:para>The name of the package to be locked</maml:para>
 			</maml:description>
 			<command:parameterValue required="true" variableLength="true">String[]</command:parameterValue>
 			<dev:type>
@@ -1547,6 +1610,46 @@ You will have to use the Connect-OPNsense cmdlet again to reconnect.</maml:para>
 		</maml:alert>
 	</maml:alertSet>
 	<command:examples>
+		<command:example>
+			<maml:title>--------------------------  Basic Example  --------------------------</maml:title>
+			<maml:introduction>
+				<maml:paragraph>PS C:\&gt;</maml:paragraph>
+			</maml:introduction>
+			<dev:code>Lock-OPNsensePackage -Name &apos;xen-guest-tools&apos;</dev:code>
+			<dev:remarks>
+				<maml:para />
+				<maml:para />
+				<maml:para />
+				<maml:para></maml:para>
+			</dev:remarks>
+			<command:commandLines>
+				<command:commandLine>
+					<command:commandText>
+						<maml:para />
+					</command:commandText>
+				</command:commandLine>
+			</command:commandLines>
+		</command:example>
+		<command:example>
+			<maml:title>--------------------------  Lock multiple Packges  --------------------------</maml:title>
+			<maml:introduction>
+				<maml:paragraph>PS C:\&gt;</maml:paragraph>
+			</maml:introduction>
+			<dev:code>Lock-OPNsensePackage -Name &apos;unixODBC&apos; , &apos;xen-guest-tools&apos; -Verbose</dev:code>
+			<dev:remarks>
+				<maml:para />
+				<maml:para />
+				<maml:para />
+				<maml:para></maml:para>
+			</dev:remarks>
+			<command:commandLines>
+				<command:commandLine>
+					<command:commandText>
+						<maml:para />
+					</command:commandText>
+				</command:commandLine>
+			</command:commandLines>
+		</command:example>
 	</command:examples>
 	<maml:relatedLinks>
 	</maml:relatedLinks>
@@ -2498,7 +2601,7 @@ You will have to use the Connect-OPNsense cmdlet again to reconnect.</maml:para>
 		<dev:version />
 	</command:details>
 	<maml:description>
-		<maml:para />
+		<maml:para>Uninstalls a Package from the OPNsense server.</maml:para>
 	</maml:description>
 	<command:syntax>
 		<command:syntaxItem>
@@ -2506,7 +2609,7 @@ You will have to use the Connect-OPNsense cmdlet again to reconnect.</maml:para>
 			<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="true (ByValue, ByPropertyName)" position="1">
 				<maml:name>Name</maml:name>
 				<maml:description>
-					<maml:para />
+					<maml:para>The name of the package to be removed</maml:para>
 				</maml:description>
 				<command:parameterValue required="true" variableLength="true">String[]</command:parameterValue>
 			</command:parameter>
@@ -2516,7 +2619,7 @@ You will have to use the Connect-OPNsense cmdlet again to reconnect.</maml:para>
 		<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="true (ByValue, ByPropertyName)" position="1">
 			<maml:name>Name</maml:name>
 			<maml:description>
-				<maml:para />
+				<maml:para>The name of the package to be removed</maml:para>
 			</maml:description>
 			<command:parameterValue required="true" variableLength="true">String[]</command:parameterValue>
 			<dev:type>
@@ -2559,6 +2662,46 @@ You will have to use the Connect-OPNsense cmdlet again to reconnect.</maml:para>
 		</maml:alert>
 	</maml:alertSet>
 	<command:examples>
+		<command:example>
+			<maml:title>--------------------------  Basic example  --------------------------</maml:title>
+			<maml:introduction>
+				<maml:paragraph>PS C:\&gt;</maml:paragraph>
+			</maml:introduction>
+			<dev:code>Remove-OPNsensePackages -Name &apos;xen-guest-tools&apos;</dev:code>
+			<dev:remarks>
+				<maml:para />
+				<maml:para />
+				<maml:para />
+				<maml:para></maml:para>
+			</dev:remarks>
+			<command:commandLines>
+				<command:commandLine>
+					<command:commandText>
+						<maml:para />
+					</command:commandText>
+				</command:commandLine>
+			</command:commandLines>
+		</command:example>
+		<command:example>
+			<maml:title>--------------------------  Remove multiple Packages  --------------------------</maml:title>
+			<maml:introduction>
+				<maml:paragraph>PS C:\&gt;</maml:paragraph>
+			</maml:introduction>
+			<dev:code>Remove-OPNsensePackage -Name &apos;unixODBC&apos; , &apos;xen-guest-tools&apos; -Verbose</dev:code>
+			<dev:remarks>
+				<maml:para />
+				<maml:para />
+				<maml:para />
+				<maml:para></maml:para>
+			</dev:remarks>
+			<command:commandLines>
+				<command:commandLine>
+					<command:commandText>
+						<maml:para />
+					</command:commandText>
+				</command:commandLine>
+			</command:commandLines>
+		</command:example>
 	</command:examples>
 	<maml:relatedLinks>
 	</maml:relatedLinks>
@@ -2959,7 +3102,7 @@ You must specify the -Confirm parameter if you want to power down the server wit
 		<dev:version />
 	</command:details>
 	<maml:description>
-		<maml:para />
+		<maml:para>The Unlock-OPNsensePackage cmdlet unlocks the version of a package. It allows the package to be updated by subsequent OPNsense updates. Use the to allow updating the package to the latest version using the Update-OPNsense cmdlet.</maml:para>
 	</maml:description>
 	<command:syntax>
 		<command:syntaxItem>
@@ -2967,7 +3110,7 @@ You must specify the -Confirm parameter if you want to power down the server wit
 			<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="true (ByValue, ByPropertyName)" position="1">
 				<maml:name>Name</maml:name>
 				<maml:description>
-					<maml:para />
+					<maml:para>The name of the package to be unlocked</maml:para>
 				</maml:description>
 				<command:parameterValue required="true" variableLength="true">String[]</command:parameterValue>
 			</command:parameter>
@@ -2977,7 +3120,7 @@ You must specify the -Confirm parameter if you want to power down the server wit
 		<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="true (ByValue, ByPropertyName)" position="1">
 			<maml:name>Name</maml:name>
 			<maml:description>
-				<maml:para />
+				<maml:para>The name of the package to be unlocked</maml:para>
 			</maml:description>
 			<command:parameterValue required="true" variableLength="true">String[]</command:parameterValue>
 			<dev:type>
@@ -3020,6 +3163,46 @@ You must specify the -Confirm parameter if you want to power down the server wit
 		</maml:alert>
 	</maml:alertSet>
 	<command:examples>
+		<command:example>
+			<maml:title>--------------------------  Basic Example  --------------------------</maml:title>
+			<maml:introduction>
+				<maml:paragraph>PS C:\&gt;</maml:paragraph>
+			</maml:introduction>
+			<dev:code>Unlock-OPNsensePackage -Name &apos;xen-guest-tools&apos;</dev:code>
+			<dev:remarks>
+				<maml:para />
+				<maml:para />
+				<maml:para />
+				<maml:para></maml:para>
+			</dev:remarks>
+			<command:commandLines>
+				<command:commandLine>
+					<command:commandText>
+						<maml:para />
+					</command:commandText>
+				</command:commandLine>
+			</command:commandLines>
+		</command:example>
+		<command:example>
+			<maml:title>--------------------------  Unlock multiple Packages  --------------------------</maml:title>
+			<maml:introduction>
+				<maml:paragraph>PS C:\&gt;</maml:paragraph>
+			</maml:introduction>
+			<dev:code>Unlock-OPNsensePackage -Name &apos;unixODBC&apos; , &apos;xen-guest-tools&apos; -Verbose</dev:code>
+			<dev:remarks>
+				<maml:para />
+				<maml:para />
+				<maml:para />
+				<maml:para></maml:para>
+			</dev:remarks>
+			<command:commandLines>
+				<command:commandLine>
+					<command:commandText>
+						<maml:para />
+					</command:commandText>
+				</command:commandLine>
+			</command:commandLines>
+		</command:example>
 	</command:examples>
 	<maml:relatedLinks>
 	</maml:relatedLinks>
@@ -3029,7 +3212,7 @@ You must specify the -Confirm parameter if you want to power down the server wit
 	<command:details>
 		<command:name>Update-OPNsense</command:name>
 		<maml:description>
-			<maml:para>Update the OPNsense server software and packages.</maml:para>
+			<maml:para>Update the OPNsense server base OS and packages.</maml:para>
 		</maml:description>
 		<maml:copyright>
 			<maml:para />
@@ -3039,14 +3222,56 @@ You must specify the -Confirm parameter if you want to power down the server wit
 		<dev:version />
 	</command:details>
 	<maml:description>
-		<maml:para>The Update-OPNsense cmdlet will run the update tool and install the pending updates on the OPSsense server.</maml:para>
+		<maml:para>The Update-OPNsense cmdlet will run the update tool and install the pending updates on the OPSsense server.
+Use the Get-OPNsense cmdlet to retrieve the number of updates pending and to check whether a reboot will be required.</maml:para>
+		<maml:para>Because the server will reboot automatically when required, user confirmation is requested before updating the OPNsense server.
+You must specify the -Confirm parameter if you want to reboot the server without user intervention.</maml:para>
 	</maml:description>
 	<command:syntax>
 		<command:syntaxItem>
 			<maml:name>Update-OPNsense</maml:name>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>WhatIf</maml:name>
+				<maml:description>
+					<maml:para />
+				</maml:description>
+				<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>Confirm</maml:name>
+				<maml:description>
+					<maml:para>Ask user confirmation before updating the OPN server.</maml:para>
+				</maml:description>
+				<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+			</command:parameter>
 		</command:syntaxItem>
 	</command:syntax>
-	<command:parameters>	</command:parameters>
+	<command:parameters>
+		<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+			<maml:name>WhatIf</maml:name>
+			<maml:description>
+				<maml:para />
+			</maml:description>
+			<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+			<dev:type>
+				<maml:name>SwitchParameter</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+		<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+			<maml:name>Confirm</maml:name>
+			<maml:description>
+				<maml:para>Ask user confirmation before updating the OPN server.</maml:para>
+			</maml:description>
+			<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+			<dev:type>
+				<maml:name>SwitchParameter</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+	</command:parameters>
 	<command:inputTypes>
 		<command:inputType>
 			<dev:type>
@@ -3080,6 +3305,46 @@ You must specify the -Confirm parameter if you want to power down the server wit
 		</maml:alert>
 	</maml:alertSet>
 	<command:examples>
+		<command:example>
+			<maml:title>--------------------------  With user confirmation  --------------------------</maml:title>
+			<maml:introduction>
+				<maml:paragraph>PS C:\&gt;</maml:paragraph>
+			</maml:introduction>
+			<dev:code>Update-OPNsense -Verbose</dev:code>
+			<dev:remarks>
+				<maml:para />
+				<maml:para />
+				<maml:para />
+				<maml:para></maml:para>
+			</dev:remarks>
+			<command:commandLines>
+				<command:commandLine>
+					<command:commandText>
+						<maml:para />
+					</command:commandText>
+				</command:commandLine>
+			</command:commandLines>
+		</command:example>
+		<command:example>
+			<maml:title>--------------------------  Without user confirmation  --------------------------</maml:title>
+			<maml:introduction>
+				<maml:paragraph>PS C:\&gt;</maml:paragraph>
+			</maml:introduction>
+			<dev:code>Update-OPNsense -Confirm:$false</dev:code>
+			<dev:remarks>
+				<maml:para />
+				<maml:para />
+				<maml:para />
+				<maml:para></maml:para>
+			</dev:remarks>
+			<command:commandLines>
+				<command:commandLine>
+					<command:commandText>
+						<maml:para />
+					</command:commandText>
+				</command:commandLine>
+			</command:commandLines>
+		</command:example>
 	</command:examples>
 	<maml:relatedLinks>
 	</maml:relatedLinks>
