@@ -1,7 +1,5 @@
-Import-Module "$PSScriptRoot\CertificateValidation.psm1"
-
 # Function that takes care of ALL the different REST api calls
-Function Invoke-ApiRestCommand {
+Function Invoke-OPNsenseApiRestCommand {
   [CmdletBinding()]
   param (
       [String]$Uri,
@@ -66,21 +64,84 @@ Function Invoke-ApiRestCommand {
   Return $Result
 }
 
-Function Connect-() {
-<#
-.SYNOPSIS
-  Connect to an OPNsense appliance
-.DESCRIPTION
-  This function does some superficial checks to make sure a recognised
-  OPNsense configuration file is represented by the supplied DOM.
-.OUTPUT
-  The function returns an object with information about the OPNsense instance or
-  throws an error message when the connection fails.
-.EXAMPLE
-  Connect-OPNsense -Url http://firewall.local/api -Key $key -Secret $Secret -Verbose
-.EXAMPLE
-  Connect-OPNsense -Url https://firewall.local/api -Key $key -Secret $Secret -AcceptCertificate -Verbose
-#>
+Function Invoke-OPNsenseCommand {
+    # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
+    [CmdletBinding()]
+        Param (
+            [parameter(Mandatory=$true,position=1,ParameterSetName = "Get")]
+            [parameter(Mandatory=$true,position=1,ParameterSetName = "Json")]
+            [parameter(Mandatory=$true,position=1,ParameterSetName = "Form")]
+            [String]$Module,
+
+            [parameter(Mandatory=$true,position=2)][String]$Controller,
+            [parameter(Mandatory=$true,position=3)][String]$Command,
+
+            [parameter(Mandatory=$true,ParameterSetName = "Json")]
+            $Json,
+
+            [parameter(Mandatory=$true,ParameterSetName = "Form")]
+            $Form,
+
+            [parameter(Mandatory=$false)]$AddProperty
+        )
+
+    $timer = [Diagnostics.Stopwatch]::StartNew()
+    $Credentials = $MyInvocation.MyCommand.Module.PrivateData['Credentials']
+    $OPNsenseApi = $MyInvocation.MyCommand.Module.PrivateData['OPNsenseApi']
+    $AcceptCertificate = $MyInvocation.MyCommand.Module.PrivateData['OPNsenseSkipCert']
+
+    if ($OPNsenseApi) {
+        $Uri = ($OPNsenseApi + '/' + $Module + '/' + $Controller + '/' + $Command)
+    } else {
+        throw "ERROR : Not connected to an OPNsense instance"
+    }
+
+    if ($Json) {
+        $Result = Invoke-OPNsenseApiRestCommand -Uri $Uri -credentials $Credentials -Json $Json `
+                      -AcceptCertificate:$AcceptCertificate -Verbose:$VerbosePreference
+    } else {
+        if ($Form) {
+            $Result = Invoke-OPNsenseApiRestCommand -Uri $Uri -credentials $Credentials -Form $Form `
+                          -AcceptCertificate:$AcceptCertificate -Verbose:$VerbosePreference
+        } else {
+            $Result = Invoke-OPNsenseApiRestCommand -Uri $Uri -credentials $Credentials `
+                          -AcceptCertificate:$AcceptCertificate -Verbose:$VerbosePreference
+        }
+    }
+
+    # The result return should be a JSON object, which is automatically parsed into an object
+    # If the result is a String: Find empty labels and mark them as a space (#bug in ConvertFrom-JSON)
+    if ($Result.GetType().Name -eq "String") {
+        $result = $result.Replace('"":"','" ":"')
+        #$result = $result.Replace('"":(','" ":(')
+        $result = $result.Replace('"":{','" ":{')
+        try {
+            $result = ConvertFrom-Json $result -ErrorAction Stop
+        }
+        catch {
+            # If ConvertTo-Json still fails return the string
+        }
+    }
+
+    # Add a custom property to the output, if specified
+    if ($AddProperty) {
+        Write-Verbose "Adding Property:"
+        if ($addProperty.GetType().Name -eq "HashTable") {
+            $addProperty.keys | ForEach-Object {
+                Write-Verbose ("* $_ : " + $addProperty.Item($_))
+                $result |  Add-Member $_ $addProperty.Item($_)
+            }
+        }
+    }
+
+    $timer.stop()
+    Write-Verbose ($timer.elapsed.ToString() + " passed.")
+    # Return the object
+    return $result
+}
+
+Function Connect-OPNsense() {
+    # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
     [CmdletBinding()]
     param (
         [String]$Url,
@@ -97,7 +158,7 @@ Function Connect-() {
     $bytes = [System.Text.Encoding]::UTF8.GetBytes($Key + ":" + $Secret)
     $Credentials = [System.Convert]::ToBase64String($bytes)
     $uri = ($Url + '/core/firmware/info')
-    $Result = Invoke-ApiRestCommand -Uri $uri -credentials $Credentials `
+    $Result = Invoke-OPNsenseApiRestCommand -Uri $uri -credentials $Credentials `
                   -AcceptCertificate:$AcceptCertificate -Verbose:$VerbosePreference
 
     if ($Result) {
@@ -116,26 +177,8 @@ Function Connect-() {
   }
 }
 
-function Disconnect-() {
-<#
-.SYNOPSIS
-
-Disconnect from an OPNsense appliance
-
-.DESCRIPTION
-
-Closes the OPNsense link and requires you to login again.
-
-.OUTPUT
-
-Returns $true when disconnected successfully or throws an error when not connected.
-
-.EXAMPLE
-Disconnect-OPNsense
-
-Sets the $ConfigXML variable that can then be piped into or sent as an
-argument to other cmdlets in the module.
-#>
+Function Disconnect-OPNsense() {
+    # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
     [CmdletBinding()]
     Param()
     If ($MyInvocation.MyCommand.Module.PrivateData['OPNsenseApi'] ) {
@@ -146,78 +189,4 @@ argument to other cmdlets in the module.
     } else {
         Throw 'ERROR : You are not connected to an OPNsense server. Please use Connect-OPNsense first.'
     }
-}
-
-function Invoke-Command() {
-<#
-.SYNOPSIS
-
-Executes an OPNsense command against the REST api of a connected server.
-
-.DESCRIPTION
-
-The Out-OpnSenseXMLConfig function writes an an OPNsense configuration
-file to disk.
-
-.EXAMPLE
-
-Invoke-OPNsenseCommand core firmware info
-Invoke-OPNsenseCommand ids settings test -Json @{ key1 = value1; key2 = value2 }
-
-#>
-    [CmdletBinding()]
-    Param (
-        [Parameter(Mandatory=$true,position=1)][String]$Module,
-        [parameter(Mandatory=$true,position=2)][String]$Controller,
-        [parameter(Mandatory=$true,position=3)][String]$Command,
-        [parameter(Mandatory=$false)]$Json,
-        [parameter(Mandatory=$false)]$Form,
-        [parameter(Mandatory=$false)]$AddProperty
-    )
-
-    $timer = [Diagnostics.Stopwatch]::StartNew()
-    $Credentials = $MyInvocation.MyCommand.Module.PrivateData['Credentials']
-    $OPNsenseApi = $MyInvocation.MyCommand.Module.PrivateData['OPNsenseApi']
-    $AcceptCertificate = $MyInvocation.MyCommand.Module.PrivateData['OPNsenseSkipCert']
-
-    if ($OPNsenseApi) {
-        $Uri = ($OPNsenseApi + '/' + $Module + '/' + $Controller + '/' + $Command)
-    } else {
-        throw "ERROR : Not connected to an OPNsense instance"
-    }
-
-    if ($Json) {
-        $Result = Invoke-ApiRestCommand -Uri $Uri -credentials $Credentials -Json $Json `
-                      -AcceptCertificate:$AcceptCertificate -Verbose:$VerbosePreference
-    } else {
-        if ($Form) {
-            $Result = Invoke-ApiRestCommand -Uri $Uri -credentials $Credentials -Form $Form `
-                          -AcceptCertificate:$AcceptCertificate -Verbose:$VerbosePreference
-        } else {
-            $Result = Invoke-ApiRestCommand -Uri $Uri -credentials $Credentials `
-                          -AcceptCertificate:$AcceptCertificate -Verbose:$VerbosePreference
-        }
-    }
-
-    # The result return should be a JSON object, which is automatically parsed into an object
-    # If the result is a String: Find empty labels and mark them as a space (#bug in ConvertFrom-JSON)
-    if ($Result.GetType().Name -eq "String") {
-        $result = $result.Replace('"":{','" ":{') | ConvertFrom-Json
-    }
-
-    # Add a custom property to the output, if specified
-    if ($AddProperty) {
-        Write-Verbose "Adding Property:"
-        if ($addProperty.GetType().Name -eq "HashTable") {
-            $addProperty.keys | ForEach-Object {
-                Write-Verbose ("* $_ : " + $addProperty.Item($_))
-                $result |  Add-Member $_ $addProperty.Item($_)
-            }
-        }
-    }
-
-    $timer.stop()
-    Write-Verbose ($timer.elapsed.ToString() + " passed.")
-    # Return the object
-    return $result
 }

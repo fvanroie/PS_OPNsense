@@ -12,7 +12,7 @@
 # RootModule = ''
 
 # Version number of this module.
-ModuleVersion = '1.0'
+ModuleVersion = '0.1'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -66,11 +66,39 @@ DotNetFrameworkVersion = '4.5'
 # FormatsToProcess = @()
 
 # Modules to import as nested modules of the module specified in RootModule/ModuleToProcess
-NestedModules = @('CertificateValidation.psm1','Base.psm1')
+NestedModules = @(
+    'CaptivePortal.ps1',
+    'CertificateValidation.ps1',
+    'Cron.ps1',
+    'Diagnostics.ps1',
+    'Firmware.ps1',
+    'IDS.ps1',
+    'Packages.ps1',
+    'Proxy.ps1',
+    'RestApi.ps1',
+    'Services.ps1'
+)
 
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
 FunctionsToExport = @(
-    'Connect-','Disconnect-','Invoke-Command'
+    # RestApi
+    'Connect-OPNsense','Disconnect-OPNsense','Invoke-OPNsenseCommand',
+    # Firmware
+    'Get-OPNsense','Stop-OPNsense','Restart-OPNsense','Update-OPNsense','Invoke-OPNsenseAudit',
+    # Packages
+    'Get-OPNsensePackage','Lock-OPNsensePackage','Unlock-OPNsensePackage','Install-OPNsensePackage','Remove-OPNsensePackage','Get-OPNsensePlugin',
+    # Cron
+    'Get-OPNsenseCronJob','New-OPNsenseCronJob','Set-OPNsenseCronJob','Enable-OPNsenseCronJob','Disable-OPNsenseCronJob',
+    #IDS
+    'Get-OPNsenseIdsUserRule','New-OPNsenseIdsUserRule','Get-OPNsenseIdsAlert',
+    # Proxy
+    'New-OPNsenseProxyRemoteBlacklist',
+    # CaptivePortal
+    'New-OPNsenseCaptivePortalZone','New-OPNsenseCaptivePortalTemplate','Get-OPNsenseCaptivePortal',
+    # Diagnostics
+    'Get-OPNsenseSystemHealth','Get-OPNsenseResource','Get-OPNsenseInterface','Get-OPNsenseRoute','Get-OPNsenseARP','Clear-OPNsenseARP',
+    # Services
+    'Get-OPNsenseService','Start-OPNsenseService','Update-OPNsenseService','Restart-OPNsenseService','Stop-OPNsenseService'
 )
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
@@ -97,13 +125,13 @@ PrivateData = @{
     PSData = @{
 
         # Tags applied to this module. These help with module discovery in online galleries.
-        # Tags = @(OPNsense,REST,api)
+        Tags = @('OPNsense','REST','api')
 
         # A URL to the license for this module.
         # LicenseUri = ''
 
         # A URL to the main website for this project.
-        # ProjectUri = ''
+        ProjectUri = 'https://github.com/fvanroie/PS_OPNsense'
 
         # A URL to an icon representing this module.
         # IconUri = ''
@@ -116,9 +144,9 @@ PrivateData = @{
 } # End of PrivateData hashtable
 
 # HelpInfo URI of this module
-# HelpInfoURI = ''
+HelpInfoURI = 'PS_OPNsense.psd1-help.xml'
 
 # Default prefix for commands exported from this module. Override the default prefix using Import-Module -Prefix.
-DefaultCommandPrefix = 'OPNsense'
+# DefaultCommandPrefix = ''
 
 }
