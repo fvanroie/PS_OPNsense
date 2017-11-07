@@ -1,20 +1,6 @@
 
 Function New-OPNsenseCaptivePortalZone {
-  <#
-    .SYNOPSIS
-
-    Executes an OPNsense command against the REST api of a connected server.
-
-    .DESCRIPTION
-
-    The Out-OpnSenseXMLConfig function writes an an OPNsense configuration
-    file to disk.
-
-    .EXAMPLE
-    Invoke-OPNsenseCommand core firmware info
-    .EXAMPLE
-    Invoke-OPNsenseCommand ids settings test -Json @{ key1 = value1; key2 = value2 }
-  #>
+    # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
     param (
         [Parameter(Mandatory=$true)][String]$Description,
         [Parameter(Mandatory=$true)][String]$Interface='',
@@ -62,6 +48,7 @@ Function New-OPNsenseCaptivePortalZone {
 }
 
 Function New-OPNsenseCaptivePortalTemplate {
+    # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
     param (
         [Parameter(Mandatory=$true)][String]$Name,
         [Parameter(Mandatory=$true)][String]$File
@@ -77,6 +64,7 @@ Function New-OPNsenseCaptivePortalTemplate {
 }
 
 Function Get-OPNsenseCaptivePortal {
+    # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
     [CmdletBinding(DefaultParameterSetName='GetTemplate')]
     Param (
         [Parameter(ParameterSetName='ListProviders')][switch]$Provider,
@@ -112,6 +100,4 @@ Function Get-OPNsenseCaptivePortal {
         $result = Invoke-OPNsenseCommand captiveportal settings searchzones
         return $($result).rows
     }
-
-
 }

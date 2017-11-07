@@ -74,7 +74,8 @@ NestedModules = @(
     'Cron.ps1',
     'IDS.ps1',
     'Proxy.ps1',
-    'CaptivePortal.ps1'
+    'CaptivePortal.ps1',
+    'Diagnostics.ps1'
 )
 
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
@@ -92,7 +93,9 @@ FunctionsToExport = @(
     # Proxy
     'New-OPNsenseProxyRemoteBlacklist',
     # CaptivePortal
-    'New-OPNsenseCaptivePortalZone','New-OPNsenseCaptivePortalTemplate','Get-OPNsenseCaptivePortal'
+    'New-OPNsenseCaptivePortalZone','New-OPNsenseCaptivePortalTemplate','Get-OPNsenseCaptivePortal',
+    # Diagnostics
+    'Get-OPNsenseSystemHealth','Get-OPNsenseResource','Get-OPNsenseInterface','Get-OPNsenseARP','Get-OPNsenseRoute'
 )
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.

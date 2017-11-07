@@ -1,9 +1,11 @@
 Function Get-OPNsensePackage {
+    # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
     $packages = Invoke-OPNsenseCommand core firmware info
     return $packages.package
 }
 
 Function Lock-OPNsensePackage {
+    # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
     param (
         [Parameter(Mandatory=$true,position=1,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true)][String[]]$Name
     )
@@ -24,6 +26,7 @@ Function Lock-OPNsensePackage {
 }
 
 Function Unlock-OPNsensePackage {
+    # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
     param (
         [Parameter(Mandatory=$true,position=1,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true)][String[]]$Name
     )
@@ -44,6 +47,7 @@ Function Unlock-OPNsensePackage {
 }
 
 Function Install-OPNsensePackage {
+    # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
     param (
         [Parameter(Mandatory=$true,position=1,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true)][String[]]$Name
     )
@@ -64,6 +68,7 @@ Function Install-OPNsensePackage {
 }
 
 Function Remove-OPNsensePackage {
+    # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
     param (
         [Parameter(Mandatory=$true,position=1,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true)][String[]]$Name
     )
@@ -84,6 +89,8 @@ Function Remove-OPNsensePackage {
 }
 
 Function Get-OPNsensePlugin {
+    # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
+
     $packages = Invoke-OPNsenseCommand core firmware info
     return $packages.plugin
 }

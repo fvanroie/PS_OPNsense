@@ -1,19 +1,5 @@
 Function Get-OPNsenseCronJob {
-  <#
-    .SYNOPSIS
-
-    Executes an OPNsense command against the REST api of a connected server.
-
-    .DESCRIPTION
-
-    The Out-OpnSenseXMLConfig function writes an an OPNsense configuration
-    file to disk.
-
-    .EXAMPLE
-    Invoke-OPNsenseCommand core firmware info
-    .EXAMPLE
-    Invoke-OPNsenseCommand ids settings test -Json @{ key1 = value1; key2 = value2 }
-  #>
+    # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
     param (
         [Parameter(Mandatory=$false,position=1)][String]$uuid
     )
@@ -41,6 +27,7 @@ Function Toggle-OPNsenseCronJob {
 }
 
 Function New-OPNsenseCronJob {
+    # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
     param (
         [Parameter(Mandatory=$true,position=1)][String]$uuid,
         [Parameter(Mandatory=$true,position=2)][int]$enabled
@@ -54,6 +41,7 @@ Function New-OPNsenseCronJob {
 }
 
 Function Set-OPNsenseCronJob {
+    # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
     param (
         [Parameter(Mandatory=$true,position=1)][String]$uuid,
         [Parameter(Mandatory=$true,position=2)][int]$enabled
@@ -67,6 +55,7 @@ Function Set-OPNsenseCronJob {
 }
 
 Function Enable-OPNsenseCronJob {
+    # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
     param (
         [Parameter(Mandatory=$true,position=1)][String]$uuid
     )
@@ -74,6 +63,7 @@ Function Enable-OPNsenseCronJob {
 }
 
 Function Disable-OPNsenseCronJob {
+    # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
     param (
         [Parameter(Mandatory=$true,position=1)][String]$uuid
     )
