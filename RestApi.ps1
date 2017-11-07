@@ -68,11 +68,20 @@ Function Invoke-OPNsenseCommand {
     # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
     [CmdletBinding()]
         Param (
-            [Parameter(Mandatory=$true,position=1)][String]$Module,
+            [parameter(Mandatory=$true,position=1,ParameterSetName = "Get")]
+            [parameter(Mandatory=$true,position=1,ParameterSetName = "Json")]
+            [parameter(Mandatory=$true,position=1,ParameterSetName = "Form")]
+            [String]$Module,
+
             [parameter(Mandatory=$true,position=2)][String]$Controller,
             [parameter(Mandatory=$true,position=3)][String]$Command,
-            [parameter(Mandatory=$false)]$Json,
-            [parameter(Mandatory=$false)]$Form,
+
+            [parameter(Mandatory=$true,ParameterSetName = "Json")]
+            $Json,
+
+            [parameter(Mandatory=$true,ParameterSetName = "Form")]
+            $Form,
+
             [parameter(Mandatory=$false)]$AddProperty
         )
 
@@ -103,7 +112,15 @@ Function Invoke-OPNsenseCommand {
     # The result return should be a JSON object, which is automatically parsed into an object
     # If the result is a String: Find empty labels and mark them as a space (#bug in ConvertFrom-JSON)
     if ($Result.GetType().Name -eq "String") {
-        $result = $result.Replace('"":{','" ":{') | ConvertFrom-Json
+        $result = $result.Replace('"":"','" ":"')
+        #$result = $result.Replace('"":(','" ":(')
+        $result = $result.Replace('"":{','" ":{')
+        try {
+            $result = ConvertFrom-Json $result -ErrorAction Stop
+        }
+        catch {
+            # If ConvertTo-Json still fails return the string
+        }
     }
 
     # Add a custom property to the output, if specified

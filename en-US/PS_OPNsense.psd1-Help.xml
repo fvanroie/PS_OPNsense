@@ -475,17 +475,35 @@ You will have to use the Connect-OPNsense cmdlet again to reconnect.</maml:para>
 		<dev:version />
 	</command:details>
 	<maml:description>
-		<maml:para>Use this command to list basic status information of the OPNsense server, like its Product Version and Product Name.
-The command will first contact the mirror repository and check if any updates are available.</maml:para>
-		<maml:para>Use the Get-OPNsense cmdlet to retrieve the number of updates pending and to check whether a reboot will be needed.
-If updates are available, use the Update-OPNsense cmdlet to install them and reboot the server when required.</maml:para>
+		<maml:para>Use this command to list basic status information of the OPNsense server, like its Product Version and Product Name. The command will first contact the mirror repository and check if any updates are available.</maml:para>
+		<maml:para>Use the Get-OPNsense cmdlet to retrieve the number of updates pending and to check whether a reboot will be needed. If updates are available, use the Update-OPNsense cmdlet to install them and reboot the server when required.</maml:para>
 	</maml:description>
 	<command:syntax>
 		<command:syntaxItem>
 			<maml:name>Get-OPNsense</maml:name>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>Mirror</maml:name>
+				<maml:description>
+					<maml:para>List the OPNsense package mirrors</maml:para>
+				</maml:description>
+				<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+			</command:parameter>
 		</command:syntaxItem>
 	</command:syntax>
-	<command:parameters>	</command:parameters>
+	<command:parameters>
+		<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+			<maml:name>Mirror</maml:name>
+			<maml:description>
+				<maml:para>List the OPNsense package mirrors</maml:para>
+			</maml:description>
+			<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+			<dev:type>
+				<maml:name>SwitchParameter</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+	</command:parameters>
 	<command:inputTypes>
 		<command:inputType>
 			<dev:type>
@@ -525,6 +543,26 @@ If updates are available, use the Update-OPNsense cmdlet to install them and reb
 				<maml:paragraph>PS C:\&gt;</maml:paragraph>
 			</maml:introduction>
 			<dev:code>Get-OPNsense -Verbose</dev:code>
+			<dev:remarks>
+				<maml:para />
+				<maml:para />
+				<maml:para />
+				<maml:para></maml:para>
+			</dev:remarks>
+			<command:commandLines>
+				<command:commandLine>
+					<command:commandText>
+						<maml:para />
+					</command:commandText>
+				</command:commandLine>
+			</command:commandLines>
+		</command:example>
+		<command:example>
+			<maml:title>--------------------------  List non-commercial mirrors  --------------------------</maml:title>
+			<maml:introduction>
+				<maml:paragraph>PS C:\&gt;</maml:paragraph>
+			</maml:introduction>
+			<dev:code>Get-OPNsense -Mirror | Where-Object { -Not $_.Commercial }</dev:code>
 			<dev:remarks>
 				<maml:para />
 				<maml:para />
@@ -1218,7 +1256,7 @@ If updates are available, use the Update-OPNsense cmdlet to install them and reb
 			<maml:introduction>
 				<maml:paragraph>PS C:\&gt;</maml:paragraph>
 			</maml:introduction>
-			<dev:code>Install-OPNsensePackage -Name &apos;unixODBC&apos; , &apos;xen-guest-tools&apos; -Verbose</dev:code>
+			<dev:code>Install-OPNsensePackage -Name &apos;unixODBC&apos;,&apos;xen-guest-tools&apos; -Verbose</dev:code>
 			<dev:remarks>
 				<maml:para />
 				<maml:para />
@@ -1252,7 +1290,7 @@ If updates are available, use the Update-OPNsense cmdlet to install them and reb
 		<dev:version />
 	</command:details>
 	<maml:description>
-		<maml:para>FreeBSD registers vulnerabilities for its packages and we though that made a nice addition to a security project to create visibility and awareness.</maml:para>
+		<maml:para>FreeBSD registers vulnerabilities for its packages run this cmdlet to create visibility and awareness.</maml:para>
 	</maml:description>
 	<command:syntax>
 		<command:syntaxItem>
@@ -1322,42 +1360,104 @@ If updates are available, use the Update-OPNsense cmdlet to install them and reb
 			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="1">
 				<maml:name>Module</maml:name>
 				<maml:description>
-					<maml:para />
+					<maml:para>API module</maml:para>
 				</maml:description>
 				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
 			</command:parameter>
 			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="2">
 				<maml:name>Controller</maml:name>
 				<maml:description>
-					<maml:para />
+					<maml:para>API controller</maml:para>
 				</maml:description>
 				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
 			</command:parameter>
 			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="3">
 				<maml:name>Command</maml:name>
 				<maml:description>
-					<maml:para />
+					<maml:para>API command</maml:para>
 				</maml:description>
 				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
 			</command:parameter>
-			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
-				<maml:name>Json</maml:name>
-				<maml:description>
-					<maml:para />
-				</maml:description>
-				<command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
-			</command:parameter>
-			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
 				<maml:name>Form</maml:name>
 				<maml:description>
-					<maml:para />
+					<maml:para>Form object to POST</maml:para>
 				</maml:description>
 				<command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
 			</command:parameter>
 			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
 				<maml:name>AddProperty</maml:name>
 				<maml:description>
-					<maml:para />
+					<maml:para>Add extra property or properties to the return object</maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+			</command:parameter>
+		</command:syntaxItem>
+		<command:syntaxItem>
+			<maml:name>Invoke-OPNsenseCommand</maml:name>
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="1">
+				<maml:name>Module</maml:name>
+				<maml:description>
+					<maml:para>API module</maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="2">
+				<maml:name>Controller</maml:name>
+				<maml:description>
+					<maml:para>API controller</maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="3">
+				<maml:name>Command</maml:name>
+				<maml:description>
+					<maml:para>API command</maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>Json</maml:name>
+				<maml:description>
+					<maml:para>Json object to POST</maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>AddProperty</maml:name>
+				<maml:description>
+					<maml:para>Add extra property or properties to the return object</maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+			</command:parameter>
+		</command:syntaxItem>
+		<command:syntaxItem>
+			<maml:name>Invoke-OPNsenseCommand</maml:name>
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="1">
+				<maml:name>Module</maml:name>
+				<maml:description>
+					<maml:para>API module</maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="2">
+				<maml:name>Controller</maml:name>
+				<maml:description>
+					<maml:para>API controller</maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="3">
+				<maml:name>Command</maml:name>
+				<maml:description>
+					<maml:para>API command</maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>AddProperty</maml:name>
+				<maml:description>
+					<maml:para>Add extra property or properties to the return object</maml:para>
 				</maml:description>
 				<command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
 			</command:parameter>
@@ -1367,7 +1467,7 @@ If updates are available, use the Update-OPNsense cmdlet to install them and reb
 		<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="1">
 			<maml:name>Module</maml:name>
 			<maml:description>
-				<maml:para />
+				<maml:para>API module</maml:para>
 			</maml:description>
 			<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
 			<dev:type>
@@ -1379,7 +1479,7 @@ If updates are available, use the Update-OPNsense cmdlet to install them and reb
 		<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="2">
 			<maml:name>Controller</maml:name>
 			<maml:description>
-				<maml:para />
+				<maml:para>API controller</maml:para>
 			</maml:description>
 			<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
 			<dev:type>
@@ -1391,7 +1491,7 @@ If updates are available, use the Update-OPNsense cmdlet to install them and reb
 		<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="3">
 			<maml:name>Command</maml:name>
 			<maml:description>
-				<maml:para />
+				<maml:para>API command</maml:para>
 			</maml:description>
 			<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
 			<dev:type>
@@ -1400,10 +1500,10 @@ If updates are available, use the Update-OPNsense cmdlet to install them and reb
 			</dev:type>
 			<dev:defaultValue></dev:defaultValue>
 		</command:parameter>
-		<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+		<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
 			<maml:name>Json</maml:name>
 			<maml:description>
-				<maml:para />
+				<maml:para>Json object to POST</maml:para>
 			</maml:description>
 			<command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
 			<dev:type>
@@ -1412,10 +1512,10 @@ If updates are available, use the Update-OPNsense cmdlet to install them and reb
 			</dev:type>
 			<dev:defaultValue></dev:defaultValue>
 		</command:parameter>
-		<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+		<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
 			<maml:name>Form</maml:name>
 			<maml:description>
-				<maml:para />
+				<maml:para>Form object to POST</maml:para>
 			</maml:description>
 			<command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
 			<dev:type>
@@ -1427,7 +1527,7 @@ If updates are available, use the Update-OPNsense cmdlet to install them and reb
 		<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
 			<maml:name>AddProperty</maml:name>
 			<maml:description>
-				<maml:para />
+				<maml:para>Add extra property or properties to the return object</maml:para>
 			</maml:description>
 			<command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
 			<dev:type>
@@ -1636,7 +1736,7 @@ If updates are available, use the Update-OPNsense cmdlet to install them and reb
 			<maml:introduction>
 				<maml:paragraph>PS C:\&gt;</maml:paragraph>
 			</maml:introduction>
-			<dev:code>Lock-OPNsensePackage -Name &apos;unixODBC&apos; , &apos;xen-guest-tools&apos; -Verbose</dev:code>
+			<dev:code>Lock-OPNsensePackage -Name &apos;unixODBC&apos;,&apos;xen-guest-tools&apos; -Verbose</dev:code>
 			<dev:remarks>
 				<maml:para />
 				<maml:para />
@@ -2688,7 +2788,7 @@ If updates are available, use the Update-OPNsense cmdlet to install them and reb
 			<maml:introduction>
 				<maml:paragraph>PS C:\&gt;</maml:paragraph>
 			</maml:introduction>
-			<dev:code>Remove-OPNsensePackage -Name &apos;unixODBC&apos; , &apos;xen-guest-tools&apos; -Verbose</dev:code>
+			<dev:code>Remove-OPNsensePackage -Name &apos;unixODBC&apos;,&apos;xen-guest-tools&apos; -Verbose</dev:code>
 			<dev:remarks>
 				<maml:para />
 				<maml:para />
@@ -2723,8 +2823,7 @@ If updates are available, use the Update-OPNsense cmdlet to install them and reb
 	</command:details>
 	<maml:description>
 		<maml:para>The Restart-OPNsense cmdlet will reboot the OPNsense server. Use this command with care, as this will make your appliance inaccessible while it restarts.</maml:para>
-		<maml:para>In order to prevent accidental reboots, the command will request user confirmation before executing the command on the OPNsense server.
-You must specify the -Confirm parameter if you want to reboot the server without user intervention.</maml:para>
+		<maml:para>In order to prevent accidental reboots, the command will request user confirmation before executing the command on the OPNsense server. You must specify the -Confirm parameter if you want to reboot the server without user intervention.</maml:para>
 	</maml:description>
 	<command:syntax>
 		<command:syntaxItem>
@@ -2963,8 +3062,7 @@ You must specify the -Confirm parameter if you want to reboot the server without
 	</command:details>
 	<maml:description>
 		<maml:para>The Stop-OPNsense cmdlet will shutdown the OPNsense server. Use this command with extreme care, as this will make your appliance inaccessible. Make sure you have a means to power the server on before executing this cmdlet!</maml:para>
-		<maml:para>In order to prevent accidental shutdown, the command will request user confirmation before executing the command on the OPNsense server.
-You must specify the -Confirm parameter if you want to power down the server without user intervention.</maml:para>
+		<maml:para>In order to prevent accidental shutdown, the command will request user confirmation before executing the command on the OPNsense server. You must specify the -Confirm parameter if you want to power down the server without user intervention.</maml:para>
 	</maml:description>
 	<command:syntax>
 		<command:syntaxItem>
@@ -3189,7 +3287,7 @@ You must specify the -Confirm parameter if you want to power down the server wit
 			<maml:introduction>
 				<maml:paragraph>PS C:\&gt;</maml:paragraph>
 			</maml:introduction>
-			<dev:code>Unlock-OPNsensePackage -Name &apos;unixODBC&apos; , &apos;xen-guest-tools&apos; -Verbose</dev:code>
+			<dev:code>Unlock-OPNsensePackage -Name &apos;unixODBC&apos;,&apos;xen-guest-tools&apos; -Verbose</dev:code>
 			<dev:remarks>
 				<maml:para />
 				<maml:para />
@@ -3365,11 +3463,11 @@ You must specify the -Confirm parameter if you want to reboot the server without
 		<dev:version />
 	</command:details>
 	<maml:description>
-		<maml:para>Use the Get-OPNsenseSystemHealth cmdlet to retrieve statistics about the OPNsense system health. There first switch determines the type of data returned and can either be [ -Packets | -System | -Traffic ]
+		<maml:para>Use the Get-OPNsenseSystemHealth cmdlet to retrieve statistics about the OPNsense system health. There first switch determines the type of data returned and can be one of { Packets | System | Traffic }
 For Packet and Traffic statistics you need to specify the interface for which to return the data. For System statistics you need to specify the resource for which to return the data.</maml:para>
 		<maml:para>Use the Get-OPNsenseInterface cmdlet to retrieve a list of the available interfaces you can query. Use the Get-OPNsenseSystemResource cmdlet to retrieve a list of the available resources you can query.</maml:para>
 		<maml:para>The other parameters are optial and common to all commands. They specify the start and end date and resolution and zoomlevel of the data.</maml:para>
-		<maml:para>You can also use Inverse to make outgoing interface values negative. By default all data is shown as positive numbers.</maml:para>
+		<maml:para>By default all data is shown as positive numbers. Use the Inverse switch to present outgoing interface packets or traffic values as negative numbers.</maml:para>
 	</maml:description>
 	<command:syntax>
 		<command:syntaxItem>
@@ -3384,7 +3482,7 @@ For Packet and Traffic statistics you need to specify the interface for which to
 			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
 				<maml:name>Interface</maml:name>
 				<maml:description>
-					<maml:para>The inferface for which to return packet or trafic information</maml:para>
+					<maml:para>The interface for which to return packet or trafic information</maml:para>
 				</maml:description>
 				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
 			</command:parameter>
@@ -3419,7 +3517,7 @@ For Packet and Traffic statistics you need to specify the interface for which to
 			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
 				<maml:name>Inverse</maml:name>
 				<maml:description>
-					<maml:para>Display outgoing values as negative</maml:para>
+					<maml:para>Present outgoing interface packets or traffic values as negative numbers</maml:para>
 				</maml:description>
 				<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
 			</command:parameter>
@@ -3436,7 +3534,7 @@ For Packet and Traffic statistics you need to specify the interface for which to
 			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
 				<maml:name>Interface</maml:name>
 				<maml:description>
-					<maml:para>The inferface for which to return packet or trafic information</maml:para>
+					<maml:para>The interface for which to return packet or trafic information</maml:para>
 				</maml:description>
 				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
 			</command:parameter>
@@ -3471,7 +3569,7 @@ For Packet and Traffic statistics you need to specify the interface for which to
 			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
 				<maml:name>Inverse</maml:name>
 				<maml:description>
-					<maml:para>Display outgoing values as negative</maml:para>
+					<maml:para>Present outgoing interface packets or traffic values as negative numbers</maml:para>
 				</maml:description>
 				<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
 			</command:parameter>
@@ -3523,7 +3621,7 @@ For Packet and Traffic statistics you need to specify the interface for which to
 			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
 				<maml:name>Inverse</maml:name>
 				<maml:description>
-					<maml:para>Display outgoing values as negative</maml:para>
+					<maml:para>Present outgoing interface packets or traffic values as negative numbers</maml:para>
 				</maml:description>
 				<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
 			</command:parameter>
@@ -3545,7 +3643,7 @@ For Packet and Traffic statistics you need to specify the interface for which to
 		<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
 			<maml:name>Interface</maml:name>
 			<maml:description>
-				<maml:para>The inferface for which to return packet or trafic information</maml:para>
+				<maml:para>The interface for which to return packet or trafic information</maml:para>
 			</maml:description>
 			<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
 			<dev:type>
@@ -3605,7 +3703,7 @@ For Packet and Traffic statistics you need to specify the interface for which to
 		<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
 			<maml:name>Inverse</maml:name>
 			<maml:description>
-				<maml:para>Display outgoing values as negative</maml:para>
+				<maml:para>Present outgoing interface packets or traffic values as negative numbers</maml:para>
 			</maml:description>
 			<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
 			<dev:type>
@@ -4050,6 +4148,628 @@ For Packet and Traffic statistics you need to specify the interface for which to
 				<maml:paragraph>PS C:\&gt;</maml:paragraph>
 			</maml:introduction>
 			<dev:code>Get-OPNsenseRoute</dev:code>
+			<dev:remarks>
+				<maml:para />
+				<maml:para />
+				<maml:para />
+				<maml:para></maml:para>
+			</dev:remarks>
+			<command:commandLines>
+				<command:commandLine>
+					<command:commandText>
+						<maml:para />
+					</command:commandText>
+				</command:commandLine>
+			</command:commandLines>
+		</command:example>
+	</command:examples>
+	<maml:relatedLinks>
+	</maml:relatedLinks>
+</command:command>
+<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<!--Generated by PS Cmdlet Help Editor-->
+	<command:details>
+		<command:name>Get-OPNsenseService</command:name>
+		<maml:description>
+			<maml:para>Get the status of OPNsense services</maml:para>
+		</maml:description>
+		<maml:copyright>
+			<maml:para />
+		</maml:copyright>
+		<command:verb>Get</command:verb>
+		<command:noun>OPNsenseService</command:noun>
+		<dev:version />
+	</command:details>
+	<maml:description>
+		<maml:para>Retrieve a status list of the OPNsense services.</maml:para>
+		<maml:para>Retrieve information about one or more services in OPNsense.</maml:para>
+	</maml:description>
+	<command:syntax>
+		<command:syntaxItem>
+			<maml:name>Get-OPNsenseService</maml:name>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="1">
+				<maml:name>Name</maml:name>
+				<maml:description>
+					<maml:para>Name of an OPNsense service</maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			</command:parameter>
+		</command:syntaxItem>
+	</command:syntax>
+	<command:parameters>
+		<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="1">
+			<maml:name>Name</maml:name>
+			<maml:description>
+				<maml:para>Name of an OPNsense service</maml:para>
+			</maml:description>
+			<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			<dev:type>
+				<maml:name>String</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+	</command:parameters>
+	<command:inputTypes>
+		<command:inputType>
+			<dev:type>
+				<maml:name></maml:name>
+				<maml:uri></maml:uri>
+				<maml:description/>
+			</dev:type>
+			<maml:description>
+<maml:para />
+			</maml:description>
+		</command:inputType>
+	</command:inputTypes>
+	<command:returnValues>
+		<command:returnValue>
+			<dev:type>
+				<maml:name></maml:name>
+				<maml:uri></maml:uri>
+				<maml:description/>
+			</dev:type>
+			<maml:description>
+<maml:para />
+			</maml:description>
+		</command:returnValue>
+	</command:returnValues>
+	<command:terminatingErrors></command:terminatingErrors>
+	<command:nonTerminatingErrors></command:nonTerminatingErrors>
+	<maml:alertSet>
+		<maml:title></maml:title>
+		<maml:alert>
+			<maml:para />
+		</maml:alert>
+	</maml:alertSet>
+	<command:examples>
+		<command:example>
+			<maml:title>--------------------------  List OPNsense services  --------------------------</maml:title>
+			<maml:introduction>
+				<maml:paragraph>PS C:\&gt;</maml:paragraph>
+			</maml:introduction>
+			<dev:code>Get-OPNservice</dev:code>
+			<dev:remarks>
+				<maml:para />
+				<maml:para />
+				<maml:para />
+				<maml:para></maml:para>
+			</dev:remarks>
+			<command:commandLines>
+				<command:commandLine>
+					<command:commandText>
+						<maml:para />
+					</command:commandText>
+				</command:commandLine>
+			</command:commandLines>
+		</command:example>
+		<command:example>
+			<maml:title>--------------------------  Get status of one service  --------------------------</maml:title>
+			<maml:introduction>
+				<maml:paragraph>PS C:\&gt;</maml:paragraph>
+			</maml:introduction>
+			<dev:code>Get-OPNservice -Name proxy</dev:code>
+			<dev:remarks>
+				<maml:para />
+				<maml:para />
+				<maml:para />
+				<maml:para></maml:para>
+			</dev:remarks>
+			<command:commandLines>
+				<command:commandLine>
+					<command:commandText>
+						<maml:para />
+					</command:commandText>
+				</command:commandLine>
+			</command:commandLines>
+		</command:example>
+	</command:examples>
+	<maml:relatedLinks>
+	</maml:relatedLinks>
+</command:command>
+<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<!--Generated by PS Cmdlet Help Editor-->
+	<command:details>
+		<command:name>Restart-OPNsenseService</command:name>
+		<maml:description>
+			<maml:para>Restart an OPNsense service</maml:para>
+		</maml:description>
+		<maml:copyright>
+			<maml:para />
+		</maml:copyright>
+		<command:verb>Restart</command:verb>
+		<command:noun>OPNsenseService</command:noun>
+		<dev:version />
+	</command:details>
+	<maml:description>
+		<maml:para>Restarts an OPNsense service.</maml:para>
+	</maml:description>
+	<command:syntax>
+		<command:syntaxItem>
+			<maml:name>Restart-OPNsenseService</maml:name>
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="1">
+				<maml:name>Name</maml:name>
+				<maml:description>
+					<maml:para>Name of an OPNsense service</maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			</command:parameter>
+		</command:syntaxItem>
+	</command:syntax>
+	<command:parameters>
+		<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="1">
+			<maml:name>Name</maml:name>
+			<maml:description>
+				<maml:para>Name of an OPNsense service</maml:para>
+			</maml:description>
+			<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			<dev:type>
+				<maml:name>String</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+	</command:parameters>
+	<command:inputTypes>
+		<command:inputType>
+			<dev:type>
+				<maml:name></maml:name>
+				<maml:uri></maml:uri>
+				<maml:description/>
+			</dev:type>
+			<maml:description>
+<maml:para />
+			</maml:description>
+		</command:inputType>
+	</command:inputTypes>
+	<command:returnValues>
+		<command:returnValue>
+			<dev:type>
+				<maml:name></maml:name>
+				<maml:uri></maml:uri>
+				<maml:description/>
+			</dev:type>
+			<maml:description>
+<maml:para />
+			</maml:description>
+		</command:returnValue>
+	</command:returnValues>
+	<command:terminatingErrors></command:terminatingErrors>
+	<command:nonTerminatingErrors></command:nonTerminatingErrors>
+	<maml:alertSet>
+		<maml:title></maml:title>
+		<maml:alert>
+			<maml:para />
+		</maml:alert>
+	</maml:alertSet>
+	<command:examples>
+		<command:example>
+			<maml:title>--------------------------  Basic example  --------------------------</maml:title>
+			<maml:introduction>
+				<maml:paragraph>PS C:\&gt;</maml:paragraph>
+			</maml:introduction>
+			<dev:code>Restart-OPNsenseService -Name ids</dev:code>
+			<dev:remarks>
+				<maml:para />
+				<maml:para />
+				<maml:para />
+				<maml:para></maml:para>
+			</dev:remarks>
+			<command:commandLines>
+				<command:commandLine>
+					<command:commandText>
+						<maml:para />
+					</command:commandText>
+				</command:commandLine>
+			</command:commandLines>
+		</command:example>
+	</command:examples>
+	<maml:relatedLinks>
+	</maml:relatedLinks>
+</command:command>
+<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<!--Generated by PS Cmdlet Help Editor-->
+	<command:details>
+		<command:name>Start-OPNsenseService</command:name>
+		<maml:description>
+			<maml:para>Start an OPNsense service</maml:para>
+		</maml:description>
+		<maml:copyright>
+			<maml:para />
+		</maml:copyright>
+		<command:verb>Start</command:verb>
+		<command:noun>OPNsenseService</command:noun>
+		<dev:version />
+	</command:details>
+	<maml:description>
+		<maml:para>Starts an OPNsense service.</maml:para>
+	</maml:description>
+	<command:syntax>
+		<command:syntaxItem>
+			<maml:name>Start-OPNsenseService</maml:name>
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="1">
+				<maml:name>Name</maml:name>
+				<maml:description>
+					<maml:para>Name of an OPNsense service</maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			</command:parameter>
+		</command:syntaxItem>
+	</command:syntax>
+	<command:parameters>
+		<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="1">
+			<maml:name>Name</maml:name>
+			<maml:description>
+				<maml:para>Name of an OPNsense service</maml:para>
+			</maml:description>
+			<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			<dev:type>
+				<maml:name>String</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+	</command:parameters>
+	<command:inputTypes>
+		<command:inputType>
+			<dev:type>
+				<maml:name></maml:name>
+				<maml:uri></maml:uri>
+				<maml:description/>
+			</dev:type>
+			<maml:description>
+<maml:para />
+			</maml:description>
+		</command:inputType>
+	</command:inputTypes>
+	<command:returnValues>
+		<command:returnValue>
+			<dev:type>
+				<maml:name></maml:name>
+				<maml:uri></maml:uri>
+				<maml:description/>
+			</dev:type>
+			<maml:description>
+<maml:para />
+			</maml:description>
+		</command:returnValue>
+	</command:returnValues>
+	<command:terminatingErrors></command:terminatingErrors>
+	<command:nonTerminatingErrors></command:nonTerminatingErrors>
+	<maml:alertSet>
+		<maml:title></maml:title>
+		<maml:alert>
+			<maml:para />
+		</maml:alert>
+	</maml:alertSet>
+	<command:examples>
+		<command:example>
+			<maml:title>--------------------------  Basic example  --------------------------</maml:title>
+			<maml:introduction>
+				<maml:paragraph>PS C:\&gt;</maml:paragraph>
+			</maml:introduction>
+			<dev:code>Start-OPNsenseService -name proxy</dev:code>
+			<dev:remarks>
+				<maml:para />
+				<maml:para />
+				<maml:para />
+				<maml:para></maml:para>
+			</dev:remarks>
+			<command:commandLines>
+				<command:commandLine>
+					<command:commandText>
+						<maml:para />
+					</command:commandText>
+				</command:commandLine>
+			</command:commandLines>
+		</command:example>
+	</command:examples>
+	<maml:relatedLinks>
+	</maml:relatedLinks>
+</command:command>
+<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<!--Generated by PS Cmdlet Help Editor-->
+	<command:details>
+		<command:name>Stop-OPNsenseService</command:name>
+		<maml:description>
+			<maml:para>Stop an OPNsense service</maml:para>
+		</maml:description>
+		<maml:copyright>
+			<maml:para />
+		</maml:copyright>
+		<command:verb>Stop</command:verb>
+		<command:noun>OPNsenseService</command:noun>
+		<dev:version />
+	</command:details>
+	<maml:description>
+		<maml:para>Stops an OPNsense service</maml:para>
+	</maml:description>
+	<command:syntax>
+		<command:syntaxItem>
+			<maml:name>Stop-OPNsenseService</maml:name>
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="1">
+				<maml:name>Name</maml:name>
+				<maml:description>
+					<maml:para>Name of an OPNsense service</maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			</command:parameter>
+		</command:syntaxItem>
+	</command:syntax>
+	<command:parameters>
+		<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="1">
+			<maml:name>Name</maml:name>
+			<maml:description>
+				<maml:para>Name of an OPNsense service</maml:para>
+			</maml:description>
+			<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			<dev:type>
+				<maml:name>String</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+	</command:parameters>
+	<command:inputTypes>
+		<command:inputType>
+			<dev:type>
+				<maml:name></maml:name>
+				<maml:uri></maml:uri>
+				<maml:description/>
+			</dev:type>
+			<maml:description>
+<maml:para />
+			</maml:description>
+		</command:inputType>
+	</command:inputTypes>
+	<command:returnValues>
+		<command:returnValue>
+			<dev:type>
+				<maml:name></maml:name>
+				<maml:uri></maml:uri>
+				<maml:description/>
+			</dev:type>
+			<maml:description>
+<maml:para />
+			</maml:description>
+		</command:returnValue>
+	</command:returnValues>
+	<command:terminatingErrors></command:terminatingErrors>
+	<command:nonTerminatingErrors></command:nonTerminatingErrors>
+	<maml:alertSet>
+		<maml:title></maml:title>
+		<maml:alert>
+			<maml:para />
+		</maml:alert>
+	</maml:alertSet>
+	<command:examples>
+		<command:example>
+			<maml:title>--------------------------  Basic example  --------------------------</maml:title>
+			<maml:introduction>
+				<maml:paragraph>PS C:\&gt;</maml:paragraph>
+			</maml:introduction>
+			<dev:code>Stop-OPNsenseService -Name proxy</dev:code>
+			<dev:remarks>
+				<maml:para />
+				<maml:para />
+				<maml:para />
+				<maml:para></maml:para>
+			</dev:remarks>
+			<command:commandLines>
+				<command:commandLine>
+					<command:commandText>
+						<maml:para />
+					</command:commandText>
+				</command:commandLine>
+			</command:commandLines>
+		</command:example>
+	</command:examples>
+	<maml:relatedLinks>
+	</maml:relatedLinks>
+</command:command>
+<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<!--Generated by PS Cmdlet Help Editor-->
+	<command:details>
+		<command:name>Update-OPNsenseService</command:name>
+		<maml:description>
+			<maml:para>Reconfigure an OPNsense service</maml:para>
+		</maml:description>
+		<maml:copyright>
+			<maml:para />
+		</maml:copyright>
+		<command:verb>Update</command:verb>
+		<command:noun>OPNsenseService</command:noun>
+		<dev:version />
+	</command:details>
+	<maml:description>
+		<maml:para>Reloads the configuration of an OPNsense service without restarting the service process.</maml:para>
+	</maml:description>
+	<command:syntax>
+		<command:syntaxItem>
+			<maml:name>Update-OPNsenseService</maml:name>
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="1">
+				<maml:name>Name</maml:name>
+				<maml:description>
+					<maml:para>Name of an OPNsense service</maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			</command:parameter>
+		</command:syntaxItem>
+	</command:syntax>
+	<command:parameters>
+		<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="1">
+			<maml:name>Name</maml:name>
+			<maml:description>
+				<maml:para>Name of an OPNsense service</maml:para>
+			</maml:description>
+			<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			<dev:type>
+				<maml:name>String</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+	</command:parameters>
+	<command:inputTypes>
+		<command:inputType>
+			<dev:type>
+				<maml:name></maml:name>
+				<maml:uri></maml:uri>
+				<maml:description/>
+			</dev:type>
+			<maml:description>
+<maml:para />
+			</maml:description>
+		</command:inputType>
+	</command:inputTypes>
+	<command:returnValues>
+		<command:returnValue>
+			<dev:type>
+				<maml:name></maml:name>
+				<maml:uri></maml:uri>
+				<maml:description/>
+			</dev:type>
+			<maml:description>
+<maml:para />
+			</maml:description>
+		</command:returnValue>
+	</command:returnValues>
+	<command:terminatingErrors></command:terminatingErrors>
+	<command:nonTerminatingErrors></command:nonTerminatingErrors>
+	<maml:alertSet>
+		<maml:title></maml:title>
+		<maml:alert>
+			<maml:para />
+		</maml:alert>
+	</maml:alertSet>
+	<command:examples>
+		<command:example>
+			<maml:title>--------------------------  Basic example  --------------------------</maml:title>
+			<maml:introduction>
+				<maml:paragraph>PS C:\&gt;</maml:paragraph>
+			</maml:introduction>
+			<dev:code>Update-OPNsenseService -Name proxy</dev:code>
+			<dev:remarks>
+				<maml:para />
+				<maml:para />
+				<maml:para />
+				<maml:para></maml:para>
+			</dev:remarks>
+			<command:commandLines>
+				<command:commandLine>
+					<command:commandText>
+						<maml:para />
+					</command:commandText>
+				</command:commandLine>
+			</command:commandLines>
+		</command:example>
+	</command:examples>
+	<maml:relatedLinks>
+	</maml:relatedLinks>
+</command:command>
+<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<!--Generated by PS Cmdlet Help Editor-->
+	<command:details>
+		<command:name>Clear-OPNsenseARP</command:name>
+		<maml:description>
+			<maml:para>Flush the OPNsense arp table on the server</maml:para>
+		</maml:description>
+		<maml:copyright>
+			<maml:para />
+		</maml:copyright>
+		<command:verb>Clear</command:verb>
+		<command:noun>OPNsenseARP</command:noun>
+		<dev:version />
+	</command:details>
+	<maml:description>
+		<maml:para>Use the Clear-OPNsenseARP cmdlet to flush the contents of the arp table on the server. This can be useful when entries in the arp table are incorrect or you want to make sure the mac addresses are learned again.</maml:para>
+		<maml:para>In order to prevent an unintended flush of the arp table, the cmdlet will request user confirmation before executing the command on the OPNsense server. You must specify the -Confirm parameter if you want to flush the arp table without user intervention.</maml:para>
+	</maml:description>
+	<command:syntax>
+		<command:syntaxItem>
+			<maml:name>Clear-OPNsenseARP</maml:name>
+		</command:syntaxItem>
+	</command:syntax>
+	<command:parameters>	</command:parameters>
+	<command:inputTypes>
+		<command:inputType>
+			<dev:type>
+				<maml:name></maml:name>
+				<maml:uri></maml:uri>
+				<maml:description/>
+			</dev:type>
+			<maml:description>
+<maml:para />
+			</maml:description>
+		</command:inputType>
+	</command:inputTypes>
+	<command:returnValues>
+		<command:returnValue>
+			<dev:type>
+				<maml:name></maml:name>
+				<maml:uri></maml:uri>
+				<maml:description/>
+			</dev:type>
+			<maml:description>
+<maml:para />
+			</maml:description>
+		</command:returnValue>
+	</command:returnValues>
+	<command:terminatingErrors></command:terminatingErrors>
+	<command:nonTerminatingErrors></command:nonTerminatingErrors>
+	<maml:alertSet>
+		<maml:title></maml:title>
+		<maml:alert>
+			<maml:para />
+		</maml:alert>
+	</maml:alertSet>
+	<command:examples>
+		<command:example>
+			<maml:title>--------------------------  With user confirmation  --------------------------</maml:title>
+			<maml:introduction>
+				<maml:paragraph>PS C:\&gt;</maml:paragraph>
+			</maml:introduction>
+			<dev:code>Clear-OPNsenseARP</dev:code>
+			<dev:remarks>
+				<maml:para />
+				<maml:para />
+				<maml:para />
+				<maml:para></maml:para>
+			</dev:remarks>
+			<command:commandLines>
+				<command:commandLine>
+					<command:commandText>
+						<maml:para />
+					</command:commandText>
+				</command:commandLine>
+			</command:commandLines>
+		</command:example>
+		<command:example>
+			<maml:title>--------------------------  Without user confirmation  --------------------------</maml:title>
+			<maml:introduction>
+				<maml:paragraph>PS C:\&gt;</maml:paragraph>
+			</maml:introduction>
+			<dev:code>Clear-OPNsenseARP -Confirm:$false</dev:code>
 			<dev:remarks>
 				<maml:para />
 				<maml:para />

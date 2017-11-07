@@ -190,3 +190,12 @@ Function Get-OPNsenseARP {
     $result = Invoke-OPNsenseCommand diagnostics interface getarp
     return $result
 }
+
+Function Clear-OPNsenseARP {
+    # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
+    [CmdletBinding()]
+    param (
+    )
+    $result = Invoke-OPNsenseCommand diagnostics interface flusharp
+    return $result.Split("`n") | ? { $_ -ne '' }
+}

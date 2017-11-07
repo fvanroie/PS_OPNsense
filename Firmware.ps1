@@ -99,6 +99,34 @@ Function Invoke-OPNsenseAudit {
 Function Get-OPNsense {
     # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
     [CmdletBinding()]
-    Param()
+    Param(
+        [Alias("Mirrors")]
+        [parameter(Mandatory=$false,ParameterSetName = "Packets")]
+        [Switch]$Mirror=$false
+    )
+
+    if ([bool]::Parse($Mirror)) {
+      $allMirrors = @()
+      $result = Invoke-OPNsenseCoreCommand core firmware getfirmwareoptions -Verbose:$VerbosePreference
+      $result.mirrors | get-member -type NoteProperty | foreach-object {
+          $url=$_.Name ;
+          $name=$result.mirrors."$($_.Name)";
+
+          if ($name -match "(.*) \((.*)\)") {
+              $hosting = $Matches[1]
+              $location = $Matches[2]
+          } else {
+              $hosting = ''
+              $location = ''
+          }
+          $commercial = $Url -in $result.has_subscription
+
+          $thisMirror = New-Object PSObject -Property @{ Url = $url ; Description = $name ; Hosting = $hosting ; Location = $location ; Commercial = $commercial }
+          $allMirrors += $thisMirror
+      }
+      return $allMirrors
+    }
+
+    # No Switches
     return Invoke-OPNsenseCoreCommand core firmware status -Verbose:$VerbosePreference
 }
