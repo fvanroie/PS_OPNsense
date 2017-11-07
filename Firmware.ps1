@@ -17,17 +17,15 @@ Function Invoke-OPNsenseCoreCommand {
 }
 
 Function Stop-OPNsense {
-  # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
-  [CmdletBinding(
-     SupportsShouldProcess=$true,
-     ConfirmImpact="High"
-  )]
-  Param()
-  if ($pscmdlet.ShouldProcess($MyInvocation.MyCommand.Module.PrivateData['OPNsenseApi'])) {
-      return Invoke-OPNsenseCoreCommand core firmware poweroff -Verbose:$VerbosePreference
-  }  else  {
-      return $false
-  }
+    # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
+    [CmdletBinding(
+       SupportsShouldProcess=$true,
+       ConfirmImpact="High"
+    )]
+    Param()
+    if ($pscmdlet.ShouldProcess($MyInvocation.MyCommand.Module.PrivateData['OPNsenseApi'])) {
+        return Invoke-OPNsenseCoreCommand core firmware poweroff -Verbose:$VerbosePreference
+    }
 }
 
 Function Restart-OPNsense {

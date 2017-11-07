@@ -193,9 +193,14 @@ Function Get-OPNsenseARP {
 
 Function Clear-OPNsenseARP {
     # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
-    [CmdletBinding()]
-    param (
+    [CmdletBinding(
+       SupportsShouldProcess=$true,
+       ConfirmImpact="High"
+    )]
+    Param (
     )
-    $result = Invoke-OPNsenseCommand diagnostics interface flusharp
-    return $result.Split("`n") | ? { $_ -ne '' }
+    if ($pscmdlet.ShouldProcess($MyInvocation.MyCommand.Module.PrivateData['OPNsenseApi'])) {
+        $result = Invoke-OPNsenseCommand diagnostics interface flusharp
+        return $result.Split("`n") | ? { $_ -ne '' }
+    }
 }
