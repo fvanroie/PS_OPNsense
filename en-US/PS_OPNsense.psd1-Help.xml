@@ -1331,6 +1331,26 @@ You will have to use the Connect-OPNsense cmdlet again to reconnect.</maml:para>
 		</maml:alert>
 	</maml:alertSet>
 	<command:examples>
+		<command:example>
+			<maml:title>--------------------------  Verbose example  --------------------------</maml:title>
+			<maml:introduction>
+				<maml:paragraph>PS C:\&gt;</maml:paragraph>
+			</maml:introduction>
+			<dev:code></dev:code>
+			<dev:remarks>
+				<maml:para />
+				<maml:para />
+				<maml:para />
+				<maml:para></maml:para>
+			</dev:remarks>
+			<command:commandLines>
+				<command:commandLine>
+					<command:commandText>
+						<maml:para />
+					</command:commandText>
+				</command:commandLine>
+			</command:commandLines>
+		</command:example>
 	</command:examples>
 	<maml:relatedLinks>
 	</maml:relatedLinks>
@@ -3400,7 +3420,7 @@ You must specify the -Confirm parameter if you want to reboot the server without
 	<maml:alertSet>
 		<maml:title></maml:title>
 		<maml:alert>
-			<maml:para />
+			<maml:para>A progressbar is displayed while the command is running.</maml:para>
 		</maml:alert>
 	</maml:alertSet>
 	<command:examples>
@@ -3414,7 +3434,42 @@ You must specify the -Confirm parameter if you want to reboot the server without
 				<maml:para />
 				<maml:para />
 				<maml:para />
-				<maml:para></maml:para>
+				<maml:para>Confirm
+Are you sure you want to perform this action?
+Performing the operation &quot;Update-OPNsense&quot; on target &quot;https://10.1.0.8/api&quot;.
+[Y] Yes  [A] Yes to All  [N] No  [L] No to All  [S] Suspend  [?] Help (default is &quot;Y&quot;): a
+VERBOSE: OPNsense Uri: https://10.1.0.8/api/core/firmware/upgrade
+VERBOSE: DefaultCertPolicy
+VERBOSE: OPNsenseTrustAllCertsPolicy
+VERBOSE: Api Form Arguments: &quot;upgrade&quot;
+VERBOSE: POST https://10.1.0.8/api/core/firmware/upgrade with -1-byte payload
+VERBOSE: received 65-byte response of content type application/json; charset=UTF-8
+VERBOSE: DefaultCertPolicy
+VERBOSE: 00:00:00.2474750 passed.
+VERBOSE:
+VERBOSE: This can take a while...
+VERBOSE:
+VERBOSE:    ***GOT REQUEST TO UPGRADE: all***
+VERBOSE:    Updating OPNsense repository catalogue...
+VERBOSE:    OPNsense repository is up to date.
+VERBOSE:    All repositories are up to date.
+VERBOSE:    Updating OPNsense repository catalogue...
+VERBOSE:    OPNsense repository is up to date.
+VERBOSE:    All repositories are up to date.
+VERBOSE:    Checking for upgrades (67 candidates): .......... done
+VERBOSE:    Processing candidates (67 candidates): . done
+VERBOSE:    Checking integrity... done (0 conflicting)
+VERBOSE:    Your packages are up to date.
+VERBOSE:    Checking integrity... done (0 conflicting)
+VERBOSE:    Nothing to do.
+VERBOSE:    Nothing to do.
+VERBOSE:    Starting web GUI...done.
+VERBOSE:    Generating RRD graphs...done.
+VERBOSE:    ***DONE***
+
+status log
+------ ---
+done   ***GOT REQUEST TO UPGRADE: all***...</maml:para>
 			</dev:remarks>
 			<command:commandLines>
 				<command:commandLine>
@@ -3429,12 +3484,30 @@ You must specify the -Confirm parameter if you want to reboot the server without
 			<maml:introduction>
 				<maml:paragraph>PS C:\&gt;</maml:paragraph>
 			</maml:introduction>
-			<dev:code>Update-OPNsense -Confirm:$false</dev:code>
+			<dev:code>Update-OPNsense -Confirm:$false | Format-Table -Wrap</dev:code>
 			<dev:remarks>
+				<maml:para>Update OPNsense without asking for user confirmation, displaying the output in table format and allow for multiple lines to wrap.</maml:para>
 				<maml:para />
 				<maml:para />
-				<maml:para />
-				<maml:para></maml:para>
+				<maml:para>status log                                                                                                                                                                                                            
+------ ---                                                                                                                                                                                                            
+done   ***GOT REQUEST TO UPGRADE: all***                                                                                                                                                                              
+       Updating OPNsense repository catalogue...                                                                                                                                                                      
+       OPNsense repository is up to date.                                                                                                                                                                             
+       All repositories are up to date.                                                                                                                                                                               
+       Updating OPNsense repository catalogue...                                                                                                                                                                      
+       OPNsense repository is up to date.                                                                                                                                                                             
+       All repositories are up to date.                                                                                                                                                                               
+       Checking for upgrades (67 candidates): .......... done                                                                                                                                                         
+       Processing candidates (67 candidates): . done                                                                                                                                                                  
+       Checking integrity... done (0 conflicting)                                                                                                                                                                     
+       Your packages are up to date.                                                                                                                                                                                  
+       Checking integrity... done (0 conflicting)                                                                                                                                                                     
+       Nothing to do.                                                                                                                                                                                                 
+       Nothing to do.                                                                                                                                                                                                 
+       Starting web GUI...done.                                                                                                                                                                                       
+       Generating RRD graphs...done.                                                                                                                                                                                  
+       ***DONE***                  </maml:para>
 			</dev:remarks>
 			<command:commandLines>
 				<command:commandLine>
@@ -4708,9 +4781,48 @@ For Packet and Traffic statistics you need to specify the interface for which to
 	<command:syntax>
 		<command:syntaxItem>
 			<maml:name>Clear-OPNsenseARP</maml:name>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>WhatIf</maml:name>
+				<maml:description>
+					<maml:para />
+				</maml:description>
+				<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>Confirm</maml:name>
+				<maml:description>
+					<maml:para />
+				</maml:description>
+				<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+			</command:parameter>
 		</command:syntaxItem>
 	</command:syntax>
-	<command:parameters>	</command:parameters>
+	<command:parameters>
+		<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+			<maml:name>WhatIf</maml:name>
+			<maml:description>
+				<maml:para />
+			</maml:description>
+			<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+			<dev:type>
+				<maml:name>SwitchParameter</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+		<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+			<maml:name>Confirm</maml:name>
+			<maml:description>
+				<maml:para />
+			</maml:description>
+			<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+			<dev:type>
+				<maml:name>SwitchParameter</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+	</command:parameters>
 	<command:inputTypes>
 		<command:inputType>
 			<dev:type>
@@ -4775,6 +4887,147 @@ For Packet and Traffic statistics you need to specify the interface for which to
 				<maml:para />
 				<maml:para />
 				<maml:para></maml:para>
+			</dev:remarks>
+			<command:commandLines>
+				<command:commandLine>
+					<command:commandText>
+						<maml:para />
+					</command:commandText>
+				</command:commandLine>
+			</command:commandLines>
+		</command:example>
+	</command:examples>
+	<maml:relatedLinks>
+	</maml:relatedLinks>
+</command:command>
+<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<!--Generated by PS Cmdlet Help Editor-->
+	<command:details>
+		<command:name>Set-OPNsense</command:name>
+		<maml:description>
+			<maml:para>Configures the OPNsense firmware settings.</maml:para>
+		</maml:description>
+		<maml:copyright>
+			<maml:para />
+		</maml:copyright>
+		<command:verb>Set</command:verb>
+		<command:noun>OPNsense</command:noun>
+		<dev:version />
+	</command:details>
+	<maml:description>
+		<maml:para>Use the Set-OPNsense cmdlet to configure the settings op the OPNsense firmware. These settings include the firmware mirror, flavour and subscription.</maml:para>
+		<maml:para>Use the Get-OPNsense -FirmwareOptions command to retrieve the options. Use the Get-OPNsense -Mirror command to retrieve the available mirrors.</maml:para>
+	</maml:description>
+	<command:syntax>
+		<command:syntaxItem>
+			<maml:name>Set-OPNsense</maml:name>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>Mirror</maml:name>
+				<maml:description>
+					<maml:para>The URi of the firmware mirror</maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>Flavour</maml:name>
+				<maml:description>
+					<maml:para>The firmware flavour to use openssl, libressl, &lt;blank&gt; or a custom string.</maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>Subscription</maml:name>
+				<maml:description>
+					<maml:para>The subscription location to use on the specified mirror. The location is appended to the mirror URI.</maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			</command:parameter>
+		</command:syntaxItem>
+	</command:syntax>
+	<command:parameters>
+		<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+			<maml:name>Mirror</maml:name>
+			<maml:description>
+				<maml:para>The URi of the firmware mirror</maml:para>
+			</maml:description>
+			<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			<dev:type>
+				<maml:name>String</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+		<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+			<maml:name>Flavour</maml:name>
+			<maml:description>
+				<maml:para>The firmware flavour to use openssl, libressl, &lt;blank&gt; or a custom string.</maml:para>
+			</maml:description>
+			<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			<dev:type>
+				<maml:name>String</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+		<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+			<maml:name>Subscription</maml:name>
+			<maml:description>
+				<maml:para>The subscription location to use on the specified mirror. The location is appended to the mirror URI.</maml:para>
+			</maml:description>
+			<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			<dev:type>
+				<maml:name>String</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+	</command:parameters>
+	<command:inputTypes>
+		<command:inputType>
+			<dev:type>
+				<maml:name></maml:name>
+				<maml:uri></maml:uri>
+				<maml:description/>
+			</dev:type>
+			<maml:description>
+<maml:para />
+			</maml:description>
+		</command:inputType>
+	</command:inputTypes>
+	<command:returnValues>
+		<command:returnValue>
+			<dev:type>
+				<maml:name></maml:name>
+				<maml:uri></maml:uri>
+				<maml:description/>
+			</dev:type>
+			<maml:description>
+<maml:para />
+			</maml:description>
+		</command:returnValue>
+	</command:returnValues>
+	<command:terminatingErrors></command:terminatingErrors>
+	<command:nonTerminatingErrors></command:nonTerminatingErrors>
+	<maml:alertSet>
+		<maml:title></maml:title>
+		<maml:alert>
+			<maml:para />
+		</maml:alert>
+	</maml:alertSet>
+	<command:examples>
+		<command:example>
+			<maml:title>--------------------------  Basic example  --------------------------</maml:title>
+			<maml:introduction>
+				<maml:paragraph>PS C:\&gt;</maml:paragraph>
+			</maml:introduction>
+			<dev:code>Set-OPNsense -Mirror &apos;https://opnsense-mirror.hiho.ch&apos; -Flavour &apos;libressl&apos; -Subscription &apos;&apos;</dev:code>
+			<dev:remarks>
+				<maml:para>Select the HiHo (Zurich, CH) mirror with the libressl flavour and without a subscription.</maml:para>
+				<maml:para />
+				<maml:para />
+				<maml:para>mirror                          flavour  Subscription
+------                          -------  ------------
+https://opnsense-mirror.hiho.ch libressl</maml:para>
 			</dev:remarks>
 			<command:commandLines>
 				<command:commandLine>
