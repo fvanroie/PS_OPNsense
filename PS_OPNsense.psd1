@@ -85,10 +85,13 @@ FunctionsToExport = @(
     'Connect-OPNsense','Disconnect-OPNsense','Invoke-OPNsenseCommand',
     # Firmware
     'Get-OPNsense','Stop-OPNsense','Restart-OPNsense','Update-OPNsense','Invoke-OPNsenseAudit',
+    'Set-OPNsense',
     # Packages
-    'Get-OPNsensePackage','Lock-OPNsensePackage','Unlock-OPNsensePackage','Install-OPNsensePackage','Remove-OPNsensePackage','Get-OPNsensePlugin',
+    'Get-OPNsensePackage','Lock-OPNsensePackage','Unlock-OPNsensePackage','Install-OPNsensePackage','Remove-OPNsensePackage',
+    'Get-OPNsensePlugin',
     # Cron
-    'Get-OPNsenseCronJob','New-OPNsenseCronJob','Set-OPNsenseCronJob','Enable-OPNsenseCronJob','Disable-OPNsenseCronJob',
+    'Get-OPNsenseCronJob','Enable-OPNsenseCronJob','Disable-OPNsenseCronJob',
+    'New-OPNsenseCronJob','Set-OPNsenseCronJob',
     #IDS
     'Get-OPNsenseIdsUserRule','New-OPNsenseIdsUserRule','Get-OPNsenseIdsAlert',
     # Proxy

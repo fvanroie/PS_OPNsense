@@ -2,12 +2,14 @@
 Function Get-CertificatePolicy() {
     [CmdletBinding()]
     Param()
-#  Write-Verbose [System.Net.ServicePointManager]::ServerCertificateValidationCallback
-  Write-Verbose $([System.Net.ServicePointManager]::CertificatePolicy.GetType()).Name
-  return @{
-#    ServerCertificateValidationCallback = [System.Net.ServicePointManager]::ServerCertificateValidationCallback ;
-    CertificatePolicy = [System.Net.ServicePointManager]::CertificatePolicy
-  }
+    #  Write-Verbose [System.Net.ServicePointManager]::ServerCertificateValidationCallback
+    Write-Verbose $([System.Net.ServicePointManager]::CertificatePolicy.GetType()).Name
+    Write-Verbose [System.Net.ServicePointManager]::Expect100Continue
+    return @{
+  #    ServerCertificateValidationCallback = [System.Net.ServicePointManager]::ServerCertificateValidationCallback ;
+      CertificatePolicy = [System.Net.ServicePointManager]::CertificatePolicy ;
+      Expect100Continue = [System.Net.ServicePointManager]::Expect100Continue
+    }
 }
 
 # Change the current certificate policy
@@ -18,8 +20,10 @@ Function Set-CertificatePolicy() {
     )
     #[System.Net.ServicePointManager]::ServerCertificateValidationCallback = $CertPolicy.ServerCertificateValidationCallback
     [System.Net.ServicePointManager]::CertificatePolicy = $CertPolicy.CertificatePolicy
+    [System.Net.ServicePointManager]::Expect100Continue = $CertPolicy.Expect100Continue
     #Write-Verbose [System.Net.ServicePointManager]::ServerCertificateValidationCallback
     Write-Verbose $([System.Net.ServicePointManager]::CertificatePolicy.GetType()).Name
+    Write-Verbose [System.Net.ServicePointManager]::Expect100Continue
 }
 
 # Temporariy Disable certificate validation
@@ -46,4 +50,5 @@ Add-Type @"
     }
     #Write-Verbose [System.Net.ServicePointManager]::ServerCertificateValidationCallback
     Write-Verbose $([System.Net.ServicePointManager]::CertificatePolicy.GetType()).Name
+    [System.Net.ServicePointManager]::Expect100Continue = $false
 }

@@ -143,3 +143,46 @@ Function Get-OPNsense {
     # No Switches
     return Invoke-OPNsenseCoreCommand core firmware status -Verbose:$VerbosePreference
 }
+
+
+Function Set-OPNsense {
+    # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
+    [CmdletBinding()]
+    Param(
+      [parameter(Mandatory=$false,ParameterSetName = "FirmwareSettings")]
+        [String]$Mirror,
+        [parameter(Mandatory=$false,ParameterSetName = "FirmwareSettings")]
+        [String]$Flavour,
+        [parameter(Mandatory=$false,ParameterSetName = "FirmwareSettings")]
+        [String]$Subscription
+    )
+
+    $changed = 0
+    $FirmwareSettings = Invoke-OPNsenseCommand core firmware getFirmwareConfig -AddProperty @{ Subscription='' }
+    if ($PSBoundParameters.ContainsKey('Mirror')) {
+        $changed++
+        $FirmwareSettings.Mirror = $Mirror
+    }
+    if ($PSBoundParameters.ContainsKey('Flavour')) {
+        $changed++
+        $FirmwareSettings.Flavour = $Flavour
+    }
+    if ($PSBoundParameters.ContainsKey('Subscription')) {
+        $changed++
+        $FirmwareSettings.Subscription = $Subscription
+    }
+
+    if ($changed -gt 0) {
+        Write-Verbose "$changed setting(s) have changed"
+        $result = Invoke-OPNsenseCommand core firmware setFirmwareConfig `
+                          -Json @{ mirror = $FirmwareSettings.Mirror; flavour = $FirmwareSettings.Flavour; subscription = $FirmwareSettings.Subscription }
+        if ($Result.status -eq 'ok') {
+            return $FirmwareSettings
+        } else {
+            Throw 'Failed to set FirmwareSettings.'
+        }
+    } else {
+        Write-Warning 'No settings have changed, skipping.'
+        return $FirmwareSettings
+    }
+}

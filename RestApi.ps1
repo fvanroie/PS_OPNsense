@@ -19,8 +19,6 @@ Function Invoke-OPNsenseApiRestCommand {
       Disable-CertificateValidation -Verbose:$VerbosePreference
   }
 
-  $wr.ServicePoint
-
   Try {
       # Post a JSON object
       if ($Json) {
@@ -32,6 +30,7 @@ Function Invoke-OPNsenseApiRestCommand {
               $BasicAuthHeader.Add('Content-Type','application/json')
               $result = Invoke-RestMethod -Uri $uri -Method Post -Body $Json `
                             -Headers $BasicAuthHeader -Verbose:$VerbosePreference -WebSession $wr.ServicePoint
+                            -Headers $BasicAuthHeader -Verbose:$VerbosePreference
           } else {
               Throw 'JSON object should be a HashTable'
               #$result = Invoke-RestMethod -Uri $uri -Method Post -Body $Json `
@@ -45,13 +44,14 @@ Function Invoke-OPNsenseApiRestCommand {
               Write-Verbose "Api Form Arguments: $Json"
               $result = Invoke-RestMethod -Uri $uri -Method Post -Body $Form `
                             -Headers $BasicAuthHeader -Verbose:$VerbosePreference -WebSession $wr.ServicePoint
+                            -Headers $BasicAuthHeader -Verbose:$VerbosePreference
           # Neither Json nor Post, so its a plain request
           } else {
               # This needs to be POST for AcceptCertificate to work properly
               # Use a POST with empty body instead of a GET, to work around bug
               # that prevents GET from working when used with -AcceptCertificate
               $result = Invoke-RestMethod -Uri $uri -Method Post -Body '' `
-                            -Headers $BasicAuthHeader -Verbose:$VerbosePreference -WebSession $wr.ServicePoint
+                            -Headers $BasicAuthHeader -Verbose:$VerbosePreference
           }
       }
   }
@@ -165,7 +165,6 @@ Function Connect-OPNsense() {
     $bytes = [System.Text.Encoding]::UTF8.GetBytes($Key + ":" + $Secret)
     $Credentials = [System.Convert]::ToBase64String($bytes)
     $uri = ($Url + '/core/firmware/info')
-
     $Result = Invoke-OPNsenseApiRestCommand -Uri $uri -credentials $Credentials `
                   -AcceptCertificate:$AcceptCertificate -Verbose:$VerbosePreference
 
@@ -176,7 +175,7 @@ Function Connect-OPNsense() {
           $MyInvocation.MyCommand.Module.PrivateData['Credentials'] = $Credentials
           $MyInvocation.MyCommand.Module.PrivateData['OPNsenseApi'] = $Url
           $MyInvocation.MyCommand.Module.PrivateData['OPNsenseSkipCert'] = [bool]::Parse($AcceptCertificate)
-          return $Result #| Select-Object -Property product_name,product_version
+          return $Result | Select-Object -Property product_name,product_version
       } else {
         Throw "ERROR : Failed to get the OPNsense version of server '$Url'."
       }
