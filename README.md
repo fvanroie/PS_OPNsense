@@ -29,15 +29,6 @@ Currently there are api hooks for these OPNsense modules:
 Modules in **bold** have mostly been implemented in the current version of the PS_OPNsense module.
 
 ## Examples
-```powershell
-Connect-OPNsense -Uri 'https://fw01.local/api' -Key <my_api_key> -Secret <my_api_secret>
-Get-OPNsense
-Restart-OPNsense
-=======
-Modules in **bold** have been implemented in the current version of the PS_OPNsense module.
-Currently only the raw API commands are available. See the examples below.
-
-## Examples
 Connecting to an OPNsense server:
 ```powershell
 Connect-OPNsense -Uri 'https://fw01.local/api' -Key <api_key> -Secret <api_secret>
@@ -51,6 +42,5 @@ $(Invoke-OPNsenseCommand core firmware info).changelog
 ```
 Disconnect from the server:
 ```powershell
->>>>>>> master
 Disconnect-OPNsense
 ```
