@@ -44,3 +44,5 @@ Disconnect from the server:
 ```powershell
 Disconnect-OPNsense
 ```
+
+Use the -Verbose switch to see what is going on behind the scenes. You can use the output to learn more about the OPNsense REST Api.
