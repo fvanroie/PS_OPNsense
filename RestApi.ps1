@@ -75,28 +75,23 @@ Function Invoke-OPNsenseApiRestCommand {
 Function Invoke-OPNsenseCommand {
     # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
     [CmdletBinding()]
-        Param (
-            [parameter(Mandatory=$true,position=1,ParameterSetName = "Get")]
-            [parameter(Mandatory=$true,position=1,ParameterSetName = "Json")]
-            [parameter(Mandatory=$true,position=1,ParameterSetName = "Form")]
-            [String]$Module,
+    Param (
+        [parameter(Mandatory=$true,position=1,ParameterSetName = "Get")]
+        [parameter(Mandatory=$true,position=1,ParameterSetName = "Json")]
+        [parameter(Mandatory=$true,position=1,ParameterSetName = "Form")]
+        [String]$Module,
 
-            [parameter(Mandatory=$true,position=2)][String]$Controller,
-            [parameter(Mandatory=$true,position=3)][String]$Command,
+        [parameter(Mandatory=$true,position=2)][String]$Controller,
+        [parameter(Mandatory=$true,position=3)][String]$Command,
 
-            [parameter(Mandatory=$true,ParameterSetName = "Json")]
-            $Json,
+        [parameter(Mandatory=$true,ParameterSetName = "Json")]
+        $Json,
 
-            [parameter(Mandatory=$true,ParameterSetName = "Form")]
-            $Form,
+        [parameter(Mandatory=$true,ParameterSetName = "Form")]
+        $Form,
 
-            [parameter(Mandatory=$false)]$AddProperty
-        )
-
-
-        If ($PSBoundParameters['Debug']) {
-            $DebugPreference = 'Continue'
-        }
+        [parameter(Mandatory=$false)]$AddProperty
+    )
 
     if ($DebugPreference -eq "Inquire") { $DebugPreference = "Continue" }
 

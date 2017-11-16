@@ -96,7 +96,7 @@ Function Update-OPNsense {
 }
 
 # Performs pkg audit -F
-# FreeBSD registers vulnerabilities for its packages and command this visualizes the security issues found.
+# FreeBSD registers vulnerabilities for its packages and this command visualizes the security issues found.
 Function Invoke-OPNsenseAudit {
     # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
     [CmdletBinding()]
@@ -106,7 +106,7 @@ Function Invoke-OPNsenseAudit {
     $result = Invoke-OPNsenseCommand core firmware audit -Form audit -Verbose:$VerbosePreference
 
     if ($result.status -eq 'ok') {
-        $log =  Get-UpdateStatus -Message "Running Audit in OPNsense:" -Verbose:$VerbosePreference
+        $log = Get-UpdateStatus -Message "Running Audit in OPNsense:" -Verbose:$VerbosePreference
         if ([bool]::Parse($Raw)) { Return $log }
 
         $AuditPattern = '(.*):\n(.*)\nCVE: (.*)\nWWW: (.*)'
