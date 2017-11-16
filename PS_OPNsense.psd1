@@ -67,8 +67,10 @@ DotNetFrameworkVersion = '4.5'
 
 # Modules to import as nested modules of the module specified in RootModule/ModuleToProcess
 NestedModules = @(
+    'Backup.ps1',
     'CaptivePortal.ps1',
     'CertificateValidation.ps1',
+    'ClamAV.ps1',
     'Cron.ps1',
     'Diagnostics.ps1',
     'Firmware.ps1',
@@ -81,6 +83,10 @@ NestedModules = @(
 
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
 FunctionsToExport = @(
+    # Backup
+    'Backup-OPNsenseConfig','Restore-OPNsenseConfig','Reset-OPNsenseConfig',
+    # ClamAV
+    'Get-OPNsenseClamAV','Set-OPNsenseClamAV',
     # RestApi
     'Connect-OPNsense','Disconnect-OPNsense','Invoke-OPNsenseCommand',
     # Firmware
@@ -101,7 +107,7 @@ FunctionsToExport = @(
     # Diagnostics
     'Get-OPNsenseSystemHealth','Get-OPNsenseResource','Get-OPNsenseInterface','Get-OPNsenseRoute','Get-OPNsenseARP','Clear-OPNsenseARP',
     # Services
-    'Get-OPNsenseService','Start-OPNsenseService','Update-OPNsenseService','Restart-OPNsenseService','Stop-OPNsenseService'
+    'Get-OPNsenseService','Start-OPNsenseService','Update-OPNsenseService','Restart-OPNsenseService','Stop-OPNsenseService','Invoke-OPNsenseService'
 )
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.

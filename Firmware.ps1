@@ -95,16 +95,34 @@ Function Update-OPNsense {
     }
 }
 
-# pkg audit -F
-# FreeBSD registers vulnerabilities for its packages and we though that made a
-# nice addition to a security project to create visibility and awareness.
+# Performs pkg audit -F
+# FreeBSD registers vulnerabilities for its packages and command this visualizes the security issues found.
 Function Invoke-OPNsenseAudit {
     # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
     [CmdletBinding()]
-    Param()
-    $result = Invoke-OPNsenseCommand core firmware audit -Form '' -Verbose:$VerbosePreference
+    Param(
+        [Switch]$Raw
+    )
+    $result = Invoke-OPNsenseCommand core firmware audit -Form audit -Verbose:$VerbosePreference
+
     if ($result.status -eq 'ok') {
-        return Get-UpdateStatus -Message "Running Audit in OPNsense:" -Verbose:$VerbosePreference
+        $log =  Get-UpdateStatus -Message "Running Audit in OPNsense:" -Verbose:$VerbosePreference
+        if ([bool]::Parse($Raw)) { Return $log }
+
+        $AuditPattern = '(.*):\n(.*)\nCVE: (.*)\nWWW: (.*)'
+        $cves = Select-String -InputObject $log -Pattern $AuditPattern -AllMatches
+        $result = @()
+        foreach ($cve in $cves.matches) {
+            $argHash = @{
+                CVE = $cve.groups[3].value;
+                Issue = $cve.groups[1].value;
+                Title = $cve.groups[2].value;
+                Url = $cve.groups[4].value
+            }
+            $result += New-Object PSObject -Property $argHash
+        }
+    } else {
+        Write-Error "Failed to audit OPNsense"
     }
     return $result
 }
@@ -114,13 +132,13 @@ Function Get-OPNsense {
     [CmdletBinding()]
     Param(
         [Alias("Mirrors")]
-        [parameter(Mandatory=$false,ParameterSetName = "Packets")]
+        [parameter(Mandatory=$false)]
         [Switch]$Mirror=$false
     )
 
     if ([bool]::Parse($Mirror)) {
       $allMirrors = @()
-      $result = Invoke-OPNsenseCoreCommand core firmware getfirmwareoptions -Verbose:$VerbosePreference
+      $result = Invoke-OPNsenseCommand core firmware getfirmwareoptions -Verbose:$VerbosePreference
       $result.mirrors | get-member -type NoteProperty | foreach-object {
           $url=$_.Name ;
           $name=$result.mirrors."$($_.Name)";
@@ -141,7 +159,7 @@ Function Get-OPNsense {
     }
 
     # No Switches
-    return Invoke-OPNsenseCoreCommand core firmware status -Verbose:$VerbosePreference
+    return Invoke-OPNsenseCommand core firmware status -Verbose:$VerbosePreference
 }
 
 
