@@ -18,7 +18,6 @@ Currently there are basic api hooks for these OPNsense modules:
 
 Not all functionality is implemented yet and this is an early development alpha release. All testing and feedback
 is appreciated.
->>>>>>> dev
 
 ## Getting Started
 Clone the repository to your PowerShell Modules folder:
