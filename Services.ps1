@@ -34,43 +34,29 @@ function Get-OPNsenseService {
         $results = @()
     }
     PROCESS {
-        foreach ($service in $name)
-        {
-            if ([bool]::Parse($Version)) {
-              switch ($service) {
-                'clamav'
-                    {     $result = Invoke-OPNsenseCommand $service.tolower() service version -AddProperty @{ name = $service.tolower()}
-                          $results += $result.version
-                    }
-                default {
-                        Write-Warning "$service does not implement the version command"
-                    }
-                }
-            } else {
-                try {
-                    switch ($service) {
-                      'netflow'
-                          {     $results += Invoke-OPNsenseCommand diagnostics netflow status -AddProperty @{ name = $service.tolower()}
+        foreach ($service in $name) {
+            try {
+                switch ($service) {
+                  'netflow'
+                      {     $results += Invoke-OPNsenseCommand diagnostics netflow status -AddProperty @{ name = $service.tolower()}
+                            #$result | Add-Member 'name' $service.tolower()
+                            #$results += $result
+                      }
+                      'zerotier'
+                          {     $results += Invoke-OPNsenseCommand $service.tolower() settings status -AddProperty @{ name = $service.tolower()}
+                          }
+                    Default
+                          {     $results += Invoke-OPNsenseCommand $service.tolower() service status -AddProperty @{ name = $service.tolower()}
                                 #$result | Add-Member 'name' $service.tolower()
                                 #$results += $result
+                                # return $result | Select-Object -Property Name,Status
                           }
-                          'zerotier'
-                              {     $results += Invoke-OPNsenseCommand $service.tolower() settings status -AddProperty @{ name = $service.tolower()}
-                              }
-                        Default
-                              {     $results += Invoke-OPNsenseCommand $service.tolower() service status -AddProperty @{ name = $service.tolower()}
-                                    #$result | Add-Member 'name' $service.tolower()
-                                    #$results += $result
-                                    # return $result | Select-Object -Property Name,Status
-                              }
-                        } # switch
-                    }
-                catch {
-                    Write-Error "$service failed to report status"
+                    } # switch
                 }
-                #$result
+            catch {
+                Write-Error "$service failed to report status"
             }
-
+            #$result
         } #foreach
     } # PROCESS
     END {
