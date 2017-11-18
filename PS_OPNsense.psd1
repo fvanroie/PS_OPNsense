@@ -1,5 +1,4 @@
-<#
-    MIT License
+<#  MIT License
 
     Copyright (c) 2017 fvanroie
 
@@ -36,10 +35,10 @@
 # RootModule = ''
 
 # Version number of this module.
-ModuleVersion = '0.1.1'
+ModuleVersion = '0.1.2'
 
 # Supported PSEditions
-# CompatiblePSEditions = @()
+CompatiblePSEditions = @('Core','Desktop')
 
 # ID used to uniquely identify this module
 GUID = '49099aec-c819-43ee-8a03-aa605a0d80f8'
@@ -57,7 +56,7 @@ Copyright = '(c) 2017 fvanroie. All rights reserved.'
 Description = 'PowerShell Module for OPNsense REST api'
 
 # Minimum version of the Windows PowerShell engine required by this module
-# PowerShellVersion = ''
+PowerShellVersion = '5.0'
 
 # Name of the Windows PowerShell host required by this module
 # PowerShellHostName = ''
@@ -69,10 +68,10 @@ Description = 'PowerShell Module for OPNsense REST api'
 DotNetFrameworkVersion = '4.5'
 
 # Minimum version of the common language runtime (CLR) required by this module. This prerequisite is valid for the PowerShell Desktop edition only.
-# CLRVersion = ''
+CLRVersion = '4.0'
 
 # Processor architecture (None, X86, Amd64) required by this module
-# ProcessorArchitecture = ''
+ProcessorArchitecture = 'None'
 
 # Modules that must be imported into the global environment prior to importing this module
 # RequiredModules = @()
@@ -161,7 +160,7 @@ PrivateData = @{
         Tags = @('OPNsense','REST','api')
 
         # A URL to the license for this module.
-        # LicenseUri = ''
+        LicenseUri = 'https://github.com/fvanroie/PS_OPNsense'
 
         # A URL to the main website for this project.
         ProjectUri = 'https://github.com/fvanroie/PS_OPNsense'
@@ -170,7 +169,7 @@ PrivateData = @{
         # IconUri = ''
 
         # ReleaseNotes of this module
-        ReleaseNotes = 'Early development aplha release'
+        ReleaseNotes = 'Early development alpha release'
 
     } # End of PSData hashtable
 

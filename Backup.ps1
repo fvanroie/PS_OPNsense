@@ -1,5 +1,4 @@
-<#
-    MIT License
+<#  MIT License
 
     Copyright (c) 2017 fvanroie
 
@@ -33,9 +32,12 @@ Function Backup-OPNsenseConfig {
         [String]$Password
     )
 
+    # Check if running PowerShell Core CLR or Windows PowerShell
+    $PSCore = Is-PSCoreEdition
+
     if ($DebugPreference -eq "Inquire") { $DebugPreference = "Continue" }
 
-    $AcceptCertificate = $MyInvocation.MyCommand.Module.PrivateData['OPNsenseSkipCert']
+    $SkipCertificateCheck = $MyInvocation.MyCommand.Module.PrivateData['OPNsenseSkipCert']
     $Credential = $MyInvocation.MyCommand.Module.PrivateData['WebCredentials']
     $Uri = $MyInvocation.MyCommand.Module.PrivateData['OPNsenseUri']
 
@@ -45,13 +47,17 @@ Function Backup-OPNsenseConfig {
         $encrypt = $false
     }
 
-    if ([bool]::Parse($AcceptCertificate)) {
+    if (-Not $PSCore -And [bool]::Parse($SkipCertificateCheck)) {
         $CertPolicy = Get-CertificatePolicy -Verbose:$VerbosePreference
         Disable-CertificateValidation -Verbose:$VerbosePreference
     }
 
     Try {
-        $webpage = Invoke-WebRequest -Uri $Uri -SessionVariable cookieJar
+        if ($PSCore) {
+            $webpage = Invoke-WebRequest -Uri $Uri -SessionVariable cookieJar -SkipCertificateCheck:$SkipCertificateCheck
+        } else {
+            $webpage = Invoke-WebRequest -Uri $Uri -SessionVariable cookieJar
+        }
         $xssToken = $webpage.InputFields | Where-Object { $_.type -eq 'hidden'}
         $form = @{
             $xssToken.name = $xssToken.value;
@@ -59,13 +65,22 @@ Function Backup-OPNsenseConfig {
             passwordfld = $Credential.GetNetworkCredential().Password;
             login = 1
         }
-        $webpage = Invoke-WebRequest -Uri "$Uri/index.php" -WebSession $cookieJar -Method POST -Body $form
+        if ($PSCore) {
+            $webpage = Invoke-WebRequest -Uri "$Uri/index.php" -WebSession $cookieJar -Method POST -Body $form -SkipCertificateCheck:$SkipCertificateCheck
+        } else {
+            $webpage = Invoke-WebRequest -Uri "$Uri/index.php" -WebSession $cookieJar -Method POST -Body $form
+        }
+
         # check logged in
         if ($webpage.ParsedHtml.title -eq 'Login') {
             Throw 'Unable to login to the OPNsense server'
         }
 
-        $webpage = Invoke-WebRequest -Uri "$Uri/diag_backup.php" -WebSession $cookieJar -Method POST -Body $form
+        if ($PSCore) {
+            $webpage = Invoke-WebRequest -Uri "$Uri/diag_backup.php" -WebSession $cookieJar -Method POST -Body $form -SkipCertificateCheck:$SkipCertificateCheck
+        } else {
+            $webpage = Invoke-WebRequest -Uri "$Uri/diag_backup.php" -WebSession $cookieJar -Method POST -Body $form
+        }
         $xssToken = $webpage.InputFields | Where-Object { $_.type -eq 'hidden'}
 
         $form = @{
@@ -76,7 +91,11 @@ Function Backup-OPNsenseConfig {
             encrypt_passconf = if ($encrypt) { $Password } else { '' };
             download = "Download configuration"
         }
-        $backupxml = Invoke-WebRequest "$Uri/diag_backup.php" -WebSession $cookieJar -Method POST -Body $form
+        if ($PSCore) {
+            $backupxml = Invoke-WebRequest "$Uri/diag_backup.php" -WebSession $cookieJar -Method POST -Body $form -SkipCertificateCheck:$SkipCertificateCheck
+        } else {
+            $backupxml = Invoke-WebRequest "$Uri/diag_backup.php" -WebSession $cookieJar -Method POST -Body $form
+        }
         $Result = $backupxml.RawContent.Substring($backupxml.RawContent.Length-$backupxml.RawContentLength,$backupxml.RawContentLength)
     }
     Catch {
@@ -85,7 +104,7 @@ Function Backup-OPNsenseConfig {
     }
     # Always restore the built-in .NET certificate policy
     Finally {
-        if ([bool]::Parse($AcceptCertificate)) {
+        if (-Not $PSCore -And [bool]::Parse($SkipCertificateCheck)) {
             Set-CertificatePolicy $CertPolicy -Verbose:$VerbosePreference
         }
     }
@@ -123,6 +142,9 @@ Function Restore-OPNsenseConfig {
         [String]$Password
     )
 
+    # Check if running PowerShell Core CLR or Windows PowerShell
+    $PSCore = Is-PSCoreEdition
+
     if ($DebugPreference -eq "Inquire") { $DebugPreference = "Continue" }
 
     # Check Parameters
@@ -133,12 +155,11 @@ Function Restore-OPNsenseConfig {
 
     #Content validation
 
-
-    $AcceptCertificate = $MyInvocation.MyCommand.Module.PrivateData['OPNsenseSkipCert']
+    $SkipCertificateCheck = $MyInvocation.MyCommand.Module.PrivateData['OPNsenseSkipCert']
     $Credential = $MyInvocation.MyCommand.Module.PrivateData['WebCredentials']
     $Uri = $MyInvocation.MyCommand.Module.PrivateData['OPNsenseUri']
 
-  		$boundary = [guid]::NewGuid().ToString()
+		$boundary = [guid]::NewGuid().ToString()
 $bodyXML = @'
 --{0}
 Content-Disposition: form-data; name="{1}"; filename="{2}"
@@ -160,7 +181,7 @@ Content-Disposition: form-data; name="{1}"
         Return
     }
 
-    if ([bool]::Parse($AcceptCertificate)) {
+    if (-Not $PSCore -And [bool]::Parse($SkipCertificateCheck)) {
         $CertPolicy = Get-CertificatePolicy -Verbose:$VerbosePreference
         Disable-CertificateValidation -Verbose:$VerbosePreference
     }
@@ -206,7 +227,7 @@ Content-Disposition: form-data; name="{1}"
     }
     # Always restore the built-in .NET certificate policy
     Finally {
-        if ([bool]::Parse($AcceptCertificate)) {
+        if (-Not $PSCore -And [bool]::Parse($SkipCertificateCheck)) {
             Set-CertificatePolicy $CertPolicy -Verbose:$VerbosePreference
         }
     }
@@ -245,9 +266,12 @@ Function Reset-OPNsenseConfig {
         [String]$Hostname
     )
 
+    # Check if running PowerShell Core CLR or Windows PowerShell
+    $PSCore = Is-PSCoreEdition
+
     if ($DebugPreference -eq "Inquire") { $DebugPreference = "Continue" }
 
-    $AcceptCertificate = $MyInvocation.MyCommand.Module.PrivateData['OPNsenseSkipCert']
+    $SkipCertificateCheck = $MyInvocation.MyCommand.Module.PrivateData['OPNsenseSkipCert']
     $Credential = $MyInvocation.MyCommand.Module.PrivateData['WebCredentials']
     $Uri = $MyInvocation.MyCommand.Module.PrivateData['OPNsenseUri']
 
@@ -274,7 +298,7 @@ Function Reset-OPNsenseConfig {
         Return
     }
 
-    if ([bool]::Parse($AcceptCertificate)) {
+    if (-Not $PSCore -And [bool]::Parse($SkipCertificateCheck)) {
         $CertPolicy = Get-CertificatePolicy -Verbose:$VerbosePreference
         Disable-CertificateValidation -Verbose:$VerbosePreference
     }
@@ -318,7 +342,7 @@ Function Reset-OPNsenseConfig {
     }
     # Always restore the built-in .NET certificate policy
     Finally {
-        if ([bool]::Parse($AcceptCertificate)) {
+        if (-Not $PSCore -And [bool]::Parse($SkipCertificateCheck)) {
             Set-CertificatePolicy $CertPolicy -Verbose:$VerbosePreference
         }
     }

@@ -1,5 +1,4 @@
-<#
-    MIT License
+<#  MIT License
 
     Copyright (c) 2017 fvanroie
 
@@ -21,130 +20,6 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
 #>
-
-function Get-Services {
-    param (
-        [Parameter(Mandatory=$true,position=1)][String]$Action
-    )
-    switch ($action)
-    {
-      'status'
-        {
-            Return @(
-                'acmeclient',
-                'collectd',
-                'clamav',
-                'freeradius',
-                'haproxy',
-                'ids',
-                'monit',
-                #'postfix',
-                'proxy',
-                'quagga',
-                'siproxd',
-                'telegraf',
-                #'tinc',
-                #'tor',
-                'zabbixagent'
-                #'zabbixproxy',
-                #'zerotier'
-            )
-        }
-      'reconfigure'
-          {
-              Return @(status
-                'acmeclient',
-                'cicap',
-                'clamav',
-                'collectd',
-                'cron',
-                'freeradius',
-                'haproxy',
-                'ids',
-                'postfix',
-                'proxy',
-                'quagga',
-                'siproxd',
-                'telegraf',
-                'tor',
-                'trafficshaper',
-                'zabbixagent',
-                'zabbixproxy'
-              )
-            }
-      'start'
-            {
-                Return @(
-                    'acmeclient',
-                    'arpscanner',
-                    'clamav',
-                    'collectd',
-                    'diagnostics',
-                    'freeradius',
-                    'ftpproxy',
-                    'haproxy',
-                    'mdnsrepeater',
-                    'monit',
-                    'proxy',
-                    'quagga',
-                    'rspamd',
-                    'siproxd',
-                    'telegraf',
-                    'tinc',
-                    'tor',
-                    'zabbixagent',
-                    'zabbixproxy'
-                )
-            }
-      'restart'
-              {
-                  Return @(
-                      'acmeclient',
-                      'arpscanner',
-                      'clamav',
-                      'collectd',
-                      'ftpproxy',
-                      'helloworld',
-                      'ids',
-                      'mdnsrepeater',
-                      'monit',
-                      'postfix',
-                      'proxy',
-                      'quagga',
-                      'rspamd',
-                      'siproxd',
-                      'telegraf',
-                      'tinc',
-                      'zabbixagent'
-                  )
-              }
-      'stop'
-                {
-                    Return @(
-                        'acmeclient',
-                        'arpscanner',
-                        'captiveportal',
-                        'clamav',
-                        'collectd',
-                        'freeradius',
-                        'ftpproxy',
-                        'haproxy',
-                        'ids',
-                        'mdnsrepeater',
-                        'monit',
-                        'proxy',
-                        'quagga',
-                        'rspamd',
-                        'siproxd',
-                        'telegraf',
-                        'tinc',
-                        'tor',
-                        'zabbixagent',
-                        'zabbixproxy'
-                    )
-                }
-    }
-}
 
 function Get-OPNsenseService {
     # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
@@ -374,5 +249,128 @@ function Invoke-OPNsenseService {
     } # PROCESS
     END {
         return $results
+    }
+}
+
+Function Get-Services {
+    param (
+        [Parameter(Mandatory=$true,position=1)][String]$Action
+    )
+    switch ($action) {
+      'status'
+        {
+            Return @(
+                'acmeclient',
+                'collectd',
+                'clamav',
+                'freeradius',
+                'haproxy',
+                'ids',
+                'monit',
+                #'postfix',
+                'proxy',
+                'quagga',
+                'siproxd',
+                'telegraf',
+                #'tinc',
+                #'tor',
+                'zabbixagent'
+                #'zabbixproxy',
+                #'zerotier'
+            )
+        }
+      'reconfigure'
+          {
+              Return @(status
+                'acmeclient',
+                'cicap',
+                'clamav',
+                'collectd',
+                'cron',
+                'freeradius',
+                'haproxy',
+                'ids',
+                'postfix',
+                'proxy',
+                'quagga',
+                'siproxd',
+                'telegraf',
+                'tor',
+                'trafficshaper',
+                'zabbixagent',
+                'zabbixproxy'
+              )
+            }
+      'start'
+            {
+                Return @(
+                    'acmeclient',
+                    'arpscanner',
+                    'clamav',
+                    'collectd',
+                    'diagnostics',
+                    'freeradius',
+                    'ftpproxy',
+                    'haproxy',
+                    'mdnsrepeater',
+                    'monit',
+                    'proxy',
+                    'quagga',
+                    'rspamd',
+                    'siproxd',
+                    'telegraf',
+                    'tinc',
+                    'tor',
+                    'zabbixagent',
+                    'zabbixproxy'
+                )
+            }
+      'restart'
+              {
+                  Return @(
+                      'acmeclient',
+                      'arpscanner',
+                      'clamav',
+                      'collectd',
+                      'ftpproxy',
+                      'helloworld',
+                      'ids',
+                      'mdnsrepeater',
+                      'monit',
+                      'postfix',
+                      'proxy',
+                      'quagga',
+                      'rspamd',
+                      'siproxd',
+                      'telegraf',
+                      'tinc',
+                      'zabbixagent'
+                  )
+              }
+      'stop'
+                {
+                    Return @(
+                        'acmeclient',
+                        'arpscanner',
+                        'captiveportal',
+                        'clamav',
+                        'collectd',
+                        'freeradius',
+                        'ftpproxy',
+                        'haproxy',
+                        'ids',
+                        'mdnsrepeater',
+                        'monit',
+                        'proxy',
+                        'quagga',
+                        'rspamd',
+                        'siproxd',
+                        'telegraf',
+                        'tinc',
+                        'tor',
+                        'zabbixagent',
+                        'zabbixproxy'
+                    )
+                }
     }
 }
