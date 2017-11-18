@@ -16,7 +16,7 @@
 	<maml:description>
 		<maml:para>The Connect-OPNsense cmdlet will try to connect to an OPNsense server REST api. You need to specify the Key and Secret obtained when enabling the REST api.</maml:para>
 		<maml:para>Optionally specify a username and password for the WebUI in order to use the Backup-OPNsenseConfig, Restore-OPNsenseConfig and Reset-OPNsenseConfig cmdlets. These actions do not have a REST api equivalent yet and need the webcredentials to perform these commands on the server.</maml:para>
-		<maml:para>If the server is using a self-signed certificate and your computer fails to validate it, you can temporarily disable the Certificate Validation using the -AcceptCertificate switch.</maml:para>
+		<maml:para>If the server is using a self-signed certificate and your computer fails to validate it, you can temporarily disable the Certificate Validation using the -SkipCertificateCheck switch.</maml:para>
 	</maml:description>
 	<command:syntax>
 		<command:syntaxItem>
@@ -42,7 +42,7 @@
 				</maml:description>
 				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
 			</command:parameter>
-			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="4">
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="4">
 				<maml:name>WebCredential</maml:name>
 				<maml:description>
 					<maml:para>Optional credentials for the web interface. These credentials are only used for legacy commands that do not have a REST api equivalent yet. If you only specify a string, it will be interpreted as the username and you will be prompted to enter the password.</maml:para>
@@ -50,7 +50,7 @@
 				<command:parameterValue required="true" variableLength="false">PSCredential</command:parameterValue>
 			</command:parameter>
 			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="5">
-				<maml:name>AcceptCertificate</maml:name>
+				<maml:name>SkipCertificateCheck</maml:name>
 				<maml:description>
 					<maml:para>Bypass the server certificate validation, use this for accepting self-signed server certificates.</maml:para>
 				</maml:description>
@@ -73,7 +73,7 @@
 				</maml:description>
 				<command:parameterValue required="true" variableLength="false">PSCredential</command:parameterValue>
 			</command:parameter>
-			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="4">
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="4">
 				<maml:name>WebCredential</maml:name>
 				<maml:description>
 					<maml:para>Optional credentials for the web interface. These credentials are only used for legacy commands that do not have a REST api equivalent yet. If you only specify a string, it will be interpreted as the username and you will be prompted to enter the password.</maml:para>
@@ -81,7 +81,7 @@
 				<command:parameterValue required="true" variableLength="false">PSCredential</command:parameterValue>
 			</command:parameter>
 			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="5">
-				<maml:name>AcceptCertificate</maml:name>
+				<maml:name>SkipCertificateCheck</maml:name>
 				<maml:description>
 					<maml:para>Bypass the server certificate validation, use this for accepting self-signed server certificates.</maml:para>
 				</maml:description>
@@ -126,18 +126,6 @@
 			</dev:type>
 			<dev:defaultValue></dev:defaultValue>
 		</command:parameter>
-		<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="5">
-			<maml:name>AcceptCertificate</maml:name>
-			<maml:description>
-				<maml:para>Bypass the server certificate validation, use this for accepting self-signed server certificates.</maml:para>
-			</maml:description>
-			<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
-			<dev:type>
-				<maml:name>SwitchParameter</maml:name>
-				<maml:uri/>
-			</dev:type>
-			<dev:defaultValue></dev:defaultValue>
-		</command:parameter>
 		<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="2">
 			<maml:name>Credential</maml:name>
 			<maml:description>
@@ -150,7 +138,7 @@
 			</dev:type>
 			<dev:defaultValue></dev:defaultValue>
 		</command:parameter>
-		<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="4">
+		<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="4">
 			<maml:name>WebCredential</maml:name>
 			<maml:description>
 				<maml:para>Optional credentials for the web interface. These credentials are only used for legacy commands that do not have a REST api equivalent yet. If you only specify a string, it will be interpreted as the username and you will be prompted to enter the password.</maml:para>
@@ -158,6 +146,18 @@
 			<command:parameterValue required="true" variableLength="false">PSCredential</command:parameterValue>
 			<dev:type>
 				<maml:name>PSCredential</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+		<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="5">
+			<maml:name>SkipCertificateCheck</maml:name>
+			<maml:description>
+				<maml:para>Bypass the server certificate validation, use this for accepting self-signed server certificates.</maml:para>
+			</maml:description>
+			<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+			<dev:type>
+				<maml:name>SwitchParameter</maml:name>
 				<maml:uri/>
 			</dev:type>
 			<dev:defaultValue></dev:defaultValue>
@@ -4461,16 +4461,9 @@ intf_description : wan</maml:para>
 			<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="true (ByValue, ByPropertyName)" position="1">
 				<maml:name>Name</maml:name>
 				<maml:description>
-					<maml:para />
+					<maml:para>Name of the service</maml:para>
 				</maml:description>
 				<command:parameterValue required="true" variableLength="true">String[]</command:parameterValue>
-			</command:parameter>
-			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="2">
-				<maml:name>Version</maml:name>
-				<maml:description>
-					<maml:para />
-				</maml:description>
-				<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
 			</command:parameter>
 		</command:syntaxItem>
 	</command:syntax>
@@ -4478,23 +4471,11 @@ intf_description : wan</maml:para>
 		<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="true (ByValue, ByPropertyName)" position="1">
 			<maml:name>Name</maml:name>
 			<maml:description>
-				<maml:para />
+				<maml:para>Name of the service</maml:para>
 			</maml:description>
 			<command:parameterValue required="true" variableLength="true">String[]</command:parameterValue>
 			<dev:type>
 				<maml:name>String[]</maml:name>
-				<maml:uri/>
-			</dev:type>
-			<dev:defaultValue></dev:defaultValue>
-		</command:parameter>
-		<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="2">
-			<maml:name>Version</maml:name>
-			<maml:description>
-				<maml:para />
-			</maml:description>
-			<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
-			<dev:type>
-				<maml:name>SwitchParameter</maml:name>
 				<maml:uri/>
 			</dev:type>
 			<dev:defaultValue></dev:defaultValue>
@@ -4600,7 +4581,7 @@ intf_description : wan</maml:para>
 			<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="true (ByValue, ByPropertyName)" position="1">
 				<maml:name>Name</maml:name>
 				<maml:description>
-					<maml:para />
+					<maml:para>Name of the service</maml:para>
 				</maml:description>
 				<command:parameterValue required="true" variableLength="true">String[]</command:parameterValue>
 			</command:parameter>
@@ -4610,7 +4591,7 @@ intf_description : wan</maml:para>
 		<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="true (ByValue, ByPropertyName)" position="1">
 			<maml:name>Name</maml:name>
 			<maml:description>
-				<maml:para />
+				<maml:para>Name of the service</maml:para>
 			</maml:description>
 			<command:parameterValue required="true" variableLength="true">String[]</command:parameterValue>
 			<dev:type>
@@ -4700,7 +4681,7 @@ intf_description : wan</maml:para>
 			<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="true (ByValue, ByPropertyName)" position="1">
 				<maml:name>Name</maml:name>
 				<maml:description>
-					<maml:para />
+					<maml:para>Name of the service</maml:para>
 				</maml:description>
 				<command:parameterValue required="true" variableLength="true">String[]</command:parameterValue>
 			</command:parameter>
@@ -4710,7 +4691,7 @@ intf_description : wan</maml:para>
 		<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="true (ByValue, ByPropertyName)" position="1">
 			<maml:name>Name</maml:name>
 			<maml:description>
-				<maml:para />
+				<maml:para>Name of the service</maml:para>
 			</maml:description>
 			<command:parameterValue required="true" variableLength="true">String[]</command:parameterValue>
 			<dev:type>
@@ -4800,7 +4781,7 @@ intf_description : wan</maml:para>
 			<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="true (ByValue, ByPropertyName)" position="1">
 				<maml:name>Name</maml:name>
 				<maml:description>
-					<maml:para />
+					<maml:para>Name of the service</maml:para>
 				</maml:description>
 				<command:parameterValue required="true" variableLength="true">String[]</command:parameterValue>
 			</command:parameter>
@@ -4810,7 +4791,7 @@ intf_description : wan</maml:para>
 		<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="true (ByValue, ByPropertyName)" position="1">
 			<maml:name>Name</maml:name>
 			<maml:description>
-				<maml:para />
+				<maml:para>Name of the service</maml:para>
 			</maml:description>
 			<command:parameterValue required="true" variableLength="true">String[]</command:parameterValue>
 			<dev:type>
@@ -4900,7 +4881,7 @@ intf_description : wan</maml:para>
 			<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="true (ByValue, ByPropertyName)" position="1">
 				<maml:name>Name</maml:name>
 				<maml:description>
-					<maml:para />
+					<maml:para>Name of the service</maml:para>
 				</maml:description>
 				<command:parameterValue required="true" variableLength="true">String[]</command:parameterValue>
 			</command:parameter>
@@ -4910,7 +4891,7 @@ intf_description : wan</maml:para>
 		<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="true (ByValue, ByPropertyName)" position="1">
 			<maml:name>Name</maml:name>
 			<maml:description>
-				<maml:para />
+				<maml:para>Name of the service</maml:para>
 			</maml:description>
 			<command:parameterValue required="true" variableLength="true">String[]</command:parameterValue>
 			<dev:type>
@@ -5780,20 +5761,52 @@ At line:1 char:1
 		<dev:version />
 	</command:details>
 	<maml:description>
-		<maml:para>Upload a config.xml to the OPNsense server. This cmdlet will overwrite the current configuration with the nex configuration. The server will reboot automatically after restoring the configuration.</maml:para>
+		<maml:para>Upload the contents of config.xml to the OPNsense server. This cmdlet will overwrite the current configuration with the new configuration. You can specify either a path to a file or pass the contents of the XML directly.
+WARNING: The server will reboot automatically after restoring the configuration.</maml:para>
 		<maml:para>If required, use the Backup-OPNsenseConfig cmdlet first to save a local copy of the config.xml file before overwriting the current configuration.</maml:para>
 	</maml:description>
 	<command:syntax>
 		<command:syntaxItem>
 			<maml:name>Restore-OPNsenseConfig</maml:name>
-			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="0">
-				<maml:name>xml</maml:name>
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="1">
+				<maml:name>Xml</maml:name>
 				<maml:description>
 					<maml:para>The XML string to restore to the config.xml file on the server.</maml:para>
 				</maml:description>
 				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
 			</command:parameter>
-			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="1">
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>Password</maml:name>
+				<maml:description>
+					<maml:para>The password to decrypt the config.xml file in case it is encrypted.</maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>WhatIf</maml:name>
+				<maml:description>
+					<maml:para />
+				</maml:description>
+				<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>Confirm</maml:name>
+				<maml:description>
+					<maml:para />
+				</maml:description>
+				<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+			</command:parameter>
+		</command:syntaxItem>
+		<command:syntaxItem>
+			<maml:name>Restore-OPNsenseConfig</maml:name>
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="1">
+				<maml:name>Path</maml:name>
+				<maml:description>
+					<maml:para>Local path of the config.xml file to restore back to the server.</maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">FileInfo</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
 				<maml:name>Password</maml:name>
 				<maml:description>
 					<maml:para>The password to decrypt the config.xml file in case it is encrypted.</maml:para>
@@ -5817,8 +5830,8 @@ At line:1 char:1
 		</command:syntaxItem>
 	</command:syntax>
 	<command:parameters>
-		<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="0">
-			<maml:name>xml</maml:name>
+		<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="1">
+			<maml:name>Xml</maml:name>
 			<maml:description>
 				<maml:para>The XML string to restore to the config.xml file on the server.</maml:para>
 			</maml:description>
@@ -5829,7 +5842,7 @@ At line:1 char:1
 			</dev:type>
 			<dev:defaultValue></dev:defaultValue>
 		</command:parameter>
-		<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="1">
+		<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
 			<maml:name>Password</maml:name>
 			<maml:description>
 				<maml:para>The password to decrypt the config.xml file in case it is encrypted.</maml:para>
@@ -5861,6 +5874,18 @@ At line:1 char:1
 			<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
 			<dev:type>
 				<maml:name>SwitchParameter</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+		<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="1">
+			<maml:name>Path</maml:name>
+			<maml:description>
+				<maml:para>Local path of the config.xml file to restore back to the server.</maml:para>
+			</maml:description>
+			<command:parameterValue required="true" variableLength="false">FileInfo</command:parameterValue>
+			<dev:type>
+				<maml:name>FileInfo</maml:name>
 				<maml:uri/>
 			</dev:type>
 			<dev:defaultValue></dev:defaultValue>
@@ -5928,7 +5953,7 @@ At line:1 char:1
 	<command:details>
 		<command:name>Set-OPNsenseClamAV</command:name>
 		<maml:description>
-			<maml:para />
+			<maml:para>Change the ClamAV configuration on the OPNsense server</maml:para>
 		</maml:description>
 		<maml:copyright>
 			<maml:para />
