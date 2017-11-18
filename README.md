@@ -1,7 +1,7 @@
 # PS_OPNsense
 
 ## About
-This is a PowerShell module that leverages the OPNsense api to manage an [OPNsense](https://opnsense.org/) open source firewall appliances. The development of both OPNsense and this PowerShell module is still very much ongoing, so additional functionality will be added as these projects evolve.
+This is a PowerShell module that leverages the OPNsense api to manage [OPNsense](https://opnsense.org/) firewall appliances. The development of both OPNsense and this PowerShell module is still very much ongoing, so additional functionality will be added as these projects evolve.
 
 ## Supported Modules
 Currently there are basic api hooks for these OPNsense modules:
@@ -16,9 +16,8 @@ Currently there are basic api hooks for these OPNsense modules:
 - Proxy
 - Services
 
-Not all fucntionality is implemented yet and this is an early development alpha release. All testing and feedback
+Not all functionality is implemented yet and this is an early development alpha release. All testing and feedback
 is appreciated.
->>>>>>> dev
 
 ## Getting Started
 Clone the repository to your PowerShell Modules folder:
