@@ -198,7 +198,7 @@ Function Connect-OPNsense() {
         [String]$Secret,
 
         [parameter(Mandatory=$false,position=3,ParameterSetName = "Modern")]
-        [parameter(Mandatory=$true,position=4,ParameterSetName = "Legacy")]
+        [parameter(Mandatory=$false,position=4,ParameterSetName = "Legacy")]
         [ValidateNotNull()]
         [System.Management.Automation.PSCredential]
         [System.Management.Automation.Credential()]
@@ -216,20 +216,28 @@ Function Connect-OPNsense() {
 
     #$bytes = [System.Text.Encoding]::UTF8.GetBytes($Key + ":" + $Secret)
     #$Credentials = [System.Convert]::ToBase64String($bytes)
-    $SecurePassword = $Secret | ConvertTo-SecureString -AsPlainText -Force
-    $ApiCredentials = New-Object System.Management.Automation.PSCredential -ArgumentList $Key, $SecurePassword
-    $SecurePassword = $Password | ConvertTo-SecureString -AsPlainText -Force
-    $WebCredentials = New-Object System.Management.Automation.PSCredential -ArgumentList $Username, $SecurePassword
+    if ($PSBoundParameters.ContainsKey('Secret')) {
+        $SecurePassword = $Secret | ConvertTo-SecureString -AsPlainText -Force
+        $Credential = New-Object System.Management.Automation.PSCredential -ArgumentList $Key, $SecurePassword
+    }
+    if ($PSBoundParameters.ContainsKey('Password')) {
+        $SecurePassword = $Password | ConvertTo-SecureString -AsPlainText -Force
+        $WebCredential = New-Object System.Management.Automation.PSCredential -ArgumentList $Username, $SecurePassword
+    } else {
+        if (-Not $PSBoundParameters.ContainsKey('WebCredential')) {
+            $WebCredential = $null
+        }
+    }
     $Uri = ($Url + '/api/core/firmware/info')
-    $Result = Invoke-OPNsenseApiRestCommand -Uri $Uri -Credential $ApiCredentials `
+    $Result = Invoke-OPNsenseApiRestCommand -Uri $Uri -Credential $Credential `
                   -AcceptCertificate:$AcceptCertificate -Verbose:$VerbosePreference
 
     if ($Result) {
       # Validate the connection result
       if ($Result.product_version) {
           Write-Verbose ("OPNsense version : " + $Result.product_version )
-          $MyInvocation.MyCommand.Module.PrivateData['ApiCredentials'] = $ApiCredentials
-          $MyInvocation.MyCommand.Module.PrivateData['WebCredentials'] = $WebCredentials
+          $MyInvocation.MyCommand.Module.PrivateData['ApiCredentials'] = $Credential
+          $MyInvocation.MyCommand.Module.PrivateData['WebCredentials'] = $WebCredential
           $MyInvocation.MyCommand.Module.PrivateData['OPNsenseUri'] = $Url
           $MyInvocation.MyCommand.Module.PrivateData['OPNsenseApi'] = "$Url/api"
           $MyInvocation.MyCommand.Module.PrivateData['OPNsenseSkipCert'] = [bool]::Parse($AcceptCertificate)

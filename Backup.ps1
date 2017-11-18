@@ -33,6 +33,8 @@ Function Backup-OPNsenseConfig {
         [String]$Password
     )
 
+    if ($DebugPreference -eq "Inquire") { $DebugPreference = "Continue" }
+
     $AcceptCertificate = $MyInvocation.MyCommand.Module.PrivateData['OPNsenseSkipCert']
     $Credential = $MyInvocation.MyCommand.Module.PrivateData['WebCredentials']
     $Uri = $MyInvocation.MyCommand.Module.PrivateData['OPNsenseUri']
@@ -42,7 +44,6 @@ Function Backup-OPNsenseConfig {
     } else {
         $encrypt = $false
     }
-
 
     if ([bool]::Parse($AcceptCertificate)) {
         $CertPolicy = Get-CertificatePolicy -Verbose:$VerbosePreference
@@ -60,7 +61,9 @@ Function Backup-OPNsenseConfig {
         }
         $webpage = Invoke-WebRequest -Uri "$Uri/index.php" -WebSession $cookieJar -Method POST -Body $form
         # check logged in
-        Write-Verbose $webpage.title
+        if ($webpage.ParsedHtml.title -eq 'Login') {
+            Throw 'Unable to login to the OPNsense server'
+        }
 
         $webpage = Invoke-WebRequest -Uri "$Uri/diag_backup.php" -WebSession $cookieJar -Method POST -Body $form
         $xssToken = $webpage.InputFields | Where-Object { $_.type -eq 'hidden'}
@@ -96,13 +99,40 @@ Function Restore-OPNsenseConfig {
        ConfirmImpact="High"
     )]
     Param (
+        [parameter(Mandatory=$true,position=1,ParameterSetName = "XML")]
         [ValidateNotNullOrEmpty()]
-        [String]$xml,
+        [String]$Xml,
+
+        [parameter(Mandatory=$true,position=1,ParameterSetName = "File")]
+        [ValidateScript({
+            if(-Not ($_ | Test-Path) ){
+                throw "File does not exist"
+            }
+            if(-Not ($_ | Test-Path -PathType Leaf) ){
+                throw "The Path argument must be a file. Folders are not allowed."
+            }
+            if($_ -notmatch "(\.xml)"){
+                throw "The file specified in the path argument must be of type xml."
+            }
+            return $true
+        })]
+        [System.IO.FileInfo]$Path,
 
         [ValidateNotNullOrEmpty()]
         [parameter(Mandatory=$false)]
         [String]$Password
     )
+
+    if ($DebugPreference -eq "Inquire") { $DebugPreference = "Continue" }
+
+    # Check Parameters
+    $decrypt = if ($PSBoundParameters.ContainsKey('Password')) { $true } else { $false }
+    if ($PSBoundParameters.ContainsKey('Path')) {
+        $xml = Get-Content -Path $Path -ErrorAction Stop -Raw
+    }
+
+    #Content validation
+
 
     $AcceptCertificate = $MyInvocation.MyCommand.Module.PrivateData['OPNsenseSkipCert']
     $Credential = $MyInvocation.MyCommand.Module.PrivateData['WebCredentials']
@@ -116,7 +146,6 @@ Content-Type: text/xml
 
 {3}
 --{0}--
-
 '@
 $bodytempl = @'
 --{0}
@@ -126,14 +155,7 @@ Content-Disposition: form-data; name="{1}"
 
 '@
 
-    if ($PSBoundParameters.ContainsKey('Password')) {
-        $decrypt = $true
-    } else {
-        $decrypt = $false
-    }
-
-    if ($pscmdlet.ShouldProcess($MyInvocation.MyCommand.Module.PrivateData['OPNsenseUri'])) {
-    } else {
+    if (-Not $pscmdlet.ShouldProcess($MyInvocation.MyCommand.Module.PrivateData['OPNsenseUri'])) {
         Write-Warning 'Aborting Restore-OPNsenseConfig'
         Return
     }
@@ -154,6 +176,9 @@ Content-Disposition: form-data; name="{1}"
         }
         $webpage = Invoke-WebRequest -Uri "$Uri/index.php" -WebSession $cookieJar -Method POST -Body $form
         # check logged in
+        if ($webpage.ParsedHtml.title -eq 'Login') {
+            Throw 'Unable to login to the OPNsense server'
+        }
 
         $webpage = Invoke-WebRequest -Uri "$Uri/diag_backup.php" -WebSession $cookieJar
         $xssToken = $webpage.InputFields | Where-Object { $_.type -eq 'hidden'}
@@ -172,7 +197,7 @@ Content-Disposition: form-data; name="{1}"
             $body += $bodytempl -f $boundary, $_, $form.Item($_)
         }
         $body += $bodyXML -f $boundary, 'conffile', 'config.xml', $xml
-        #Write-Verbose $body
+        Write-Verbose $body
         $restorexml = Invoke-WebRequest "$Uri/diag_backup.php" -WebSession $cookieJar -Method POST -Body $body -ContentType "multipart/form-data; boundary=$boundary"
     }
     Catch {
@@ -220,6 +245,8 @@ Function Reset-OPNsenseConfig {
         [String]$Hostname
     )
 
+    if ($DebugPreference -eq "Inquire") { $DebugPreference = "Continue" }
+
     $AcceptCertificate = $MyInvocation.MyCommand.Module.PrivateData['OPNsenseSkipCert']
     $Credential = $MyInvocation.MyCommand.Module.PrivateData['WebCredentials']
     $Uri = $MyInvocation.MyCommand.Module.PrivateData['OPNsenseUri']
@@ -230,22 +257,19 @@ Function Reset-OPNsenseConfig {
         $encrypt = $false
     }
 
-      if ([bool]::Parse($EraseAllSettings)) {
-      } else {
-          Write-Warning 'You need to specify the Erase'
+    if (-Not [bool]::Parse($EraseAllSettings)) {
+          Write-Warning 'You need to specify the EraseAllSettings switch'
           Return
     }
 
     Write-Warning '!!! YOU ARE ABOUT TO COMPLETELY ERASE THE OPNSENSE CONFIGURATION !!!'
-    if ($pscmdlet.ShouldProcess($MyInvocation.MyCommand.Module.PrivateData['OPNsenseUri'])) {
-    } else {
+    if (-Not $pscmdlet.ShouldProcess($MyInvocation.MyCommand.Module.PrivateData['OPNsenseUri'])) {
         Write-Warning 'Aborting Reset-OPNsenseConfig'
         Return
     }
 
     Write-Warning '!!! YOU ARE ABOUT TO COMPLETELY ERASE THE OPNSENSE CONFIGURATION !!!'
-    if ($pscmdlet.ShouldProcess($MyInvocation.MyCommand.Module.PrivateData['OPNsenseUri'] + "!!! Last warning !!!")) {
-    } else {
+    if (-Not $pscmdlet.ShouldProcess($MyInvocation.MyCommand.Module.PrivateData['OPNsenseUri'] + "!!! Last warning !!!")) {
         Write-Warning 'Aborting Reset-OPNsenseConfig'
         Return
     }
@@ -266,6 +290,9 @@ Function Reset-OPNsenseConfig {
         }
         $webpage = Invoke-WebRequest -Uri "$Uri/index.php" -WebSession $cookieJar -Method POST -Body $form
         # check logged in
+        if ($webpage.ParsedHtml.title -eq 'Login') {
+            Throw 'Unable to login to the OPNsense server'
+        }
         $fqdn = $webpage.ParsedHtml.title.Split(' | ') | Select-Object -Last 1
 
         If ($fqdn -ne $Hostname) {
@@ -283,7 +310,7 @@ Function Reset-OPNsenseConfig {
         $Result = $webpage
     }
     Catch [System.Management.Automation.ItemNotFoundException] {
-      Write-Error $_.Exception.Message
+        Write-Error $_.Exception.Message
     }
     Catch {
         $ErrorMessage = $_.Exception.Message
