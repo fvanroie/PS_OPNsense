@@ -1,4 +1,4 @@
-# OPNsense
+# PS_OPNsense
 
 ## About
 This is a PowerShell module that leverages the OPNsense api to manage an [OPNsense](https://opnsense.org/) open source firewall appliances. The development of both OPNsense and this PowerShell module is still very much ongoing, so additional functionality will be added as these projects evolve.
@@ -18,6 +18,7 @@ Currently there are basic api hooks for these OPNsense modules:
 
 Not all fucntionality is implemented yet and this is an early development alpha release. All testing and feedback
 is appreciated.
+>>>>>>> dev
 
 ## Getting Started
 Clone the repository to your PowerShell Modules folder:
@@ -46,3 +47,5 @@ Disconnect from the server:
 ```powershell
 Disconnect-OPNsense
 ```
+
+Use the -Verbose and/or -Debug switches to see what is going on behind the scenes. You can use the output to learn more about the OPNsense REST Api.
