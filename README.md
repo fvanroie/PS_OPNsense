@@ -49,4 +49,4 @@ Disconnect-OPNsense
 
 Use the -Verbose and/or -Debug switches to see what is going on behind the scenes. You can use the output to learn more about the OPNsense REST Api.
 
-For the documentation on all the different cmdlets, please visit the [PS_OPNsense wiki](wiki/).
+For the documentation on all the different cmdlets, please visit the [PS_OPNsense wiki](/fvanroie/PS_OPNsense/wiki/).
