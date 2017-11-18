@@ -98,7 +98,7 @@ NestedModules = @(
     'Cron.ps1',
     'Diagnostics.ps1',
     'Firmware.ps1',
-    'IDS.ps1',
+    'Ids.ps1',
     'Packages.ps1',
     'Proxy.ps1',
     'RestApi.ps1',
