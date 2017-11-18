@@ -25,10 +25,7 @@ function Get-OPNsenseService {
     # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
     param (
         [Parameter(Mandatory=$false,position=1,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true)]
-        [String[]]$Name,
-
-        [Parameter(Mandatory=$false,position=2,ValueFromPipeline=$false,ValueFromPipelineByPropertyName=$false)]
-        [Switch]$Version
+        [String[]]$Name
     )
     BEGIN {
         if (-NOT $PSBoundParameters.ContainsKey('name')) {
