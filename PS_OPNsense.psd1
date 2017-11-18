@@ -1,3 +1,27 @@
+<#
+    MIT License
+
+    Copyright (c) 2017 fvanroie
+
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:
+
+    The above copyright notice and this permission notice shall be included in all
+    copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    SOFTWARE.
+#>
+
 #
 # Module manifest for module 'OPNsense'
 #
@@ -12,7 +36,7 @@
 # RootModule = ''
 
 # Version number of this module.
-ModuleVersion = '0.1'
+ModuleVersion = '0.1.1'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -67,12 +91,14 @@ DotNetFrameworkVersion = '4.5'
 
 # Modules to import as nested modules of the module specified in RootModule/ModuleToProcess
 NestedModules = @(
+    'Backup.ps1',
     'CaptivePortal.ps1',
     'CertificateValidation.ps1',
+    'ClamAV.ps1',
     'Cron.ps1',
     'Diagnostics.ps1',
     'Firmware.ps1',
-    'IDS.ps1',
+    'Ids.ps1',
     'Packages.ps1',
     'Proxy.ps1',
     'RestApi.ps1',
@@ -81,14 +107,21 @@ NestedModules = @(
 
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
 FunctionsToExport = @(
+    # Backup
+    'Backup-OPNsenseConfig','Restore-OPNsenseConfig','Reset-OPNsenseConfig',
+    # ClamAV
+    'Get-OPNsenseClamAV','Set-OPNsenseClamAV',
     # RestApi
     'Connect-OPNsense','Disconnect-OPNsense','Invoke-OPNsenseCommand',
     # Firmware
     'Get-OPNsense','Stop-OPNsense','Restart-OPNsense','Update-OPNsense','Invoke-OPNsenseAudit',
+    'Set-OPNsense',
     # Packages
-    'Get-OPNsensePackage','Lock-OPNsensePackage','Unlock-OPNsensePackage','Install-OPNsensePackage','Remove-OPNsensePackage','Get-OPNsensePlugin',
+    'Get-OPNsensePackage','Lock-OPNsensePackage','Unlock-OPNsensePackage','Install-OPNsensePackage','Remove-OPNsensePackage',
+    'Get-OPNsensePlugin',
     # Cron
-    'Get-OPNsenseCronJob','New-OPNsenseCronJob','Set-OPNsenseCronJob','Enable-OPNsenseCronJob','Disable-OPNsenseCronJob',
+    'Get-OPNsenseCronJob','Enable-OPNsenseCronJob','Disable-OPNsenseCronJob',
+    'New-OPNsenseCronJob','Set-OPNsenseCronJob',
     #IDS
     'Get-OPNsenseIdsUserRule','New-OPNsenseIdsUserRule','Get-OPNsenseIdsAlert',
     # Proxy
@@ -98,7 +131,7 @@ FunctionsToExport = @(
     # Diagnostics
     'Get-OPNsenseSystemHealth','Get-OPNsenseResource','Get-OPNsenseInterface','Get-OPNsenseRoute','Get-OPNsenseARP','Clear-OPNsenseARP',
     # Services
-    'Get-OPNsenseService','Start-OPNsenseService','Update-OPNsenseService','Restart-OPNsenseService','Stop-OPNsenseService'
+    'Get-OPNsenseService','Start-OPNsenseService','Update-OPNsenseService','Restart-OPNsenseService','Stop-OPNsenseService','Invoke-OPNsenseService'
 )
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
@@ -137,14 +170,14 @@ PrivateData = @{
         # IconUri = ''
 
         # ReleaseNotes of this module
-        # ReleaseNotes = ''
+        ReleaseNotes = 'Early development aplha release'
 
     } # End of PSData hashtable
 
 } # End of PrivateData hashtable
 
 # HelpInfo URI of this module
-HelpInfoURI = 'PS_OPNsense.psd1-help.xml'
+# HelpInfoURI = 'PS_OPNsense.psd1-help.xml'
 
 # Default prefix for commands exported from this module. Override the default prefix using Import-Module -Prefix.
 # DefaultCommandPrefix = ''

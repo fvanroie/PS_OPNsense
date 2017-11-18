@@ -1,15 +1,42 @@
+<#
+    MIT License
+
+    Copyright (c) 2017 fvanroie
+
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:
+
+    The above copyright notice and this permission notice shall be included in all
+    copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    SOFTWARE.
+#>
+
 # Function that takes care of ALL the different REST api calls
 Function Invoke-OPNsenseApiRestCommand {
   [CmdletBinding()]
-  param (
+  Param (
+      [ValidateNotNullOrEmpty()]
       [String]$Uri,
-      [String]$Credentials,
+      [ValidateNotNullOrEmpty()]
+      [PSCredential]$Credential,
       $Json,
       $Form,
       [switch]$AcceptCertificate=$false
   )
-  Write-Verbose "OPNsense Uri: $uri"
-  $BasicAuthHeader = @{ Authorization = ("Basic {0}" -f $Credentials) }
+
+  $bytes = [System.Text.Encoding]::UTF8.GetBytes($Credential.Username + ":" + $credential.GetNetworkCredential().Password)
+  $BasicAuthHeader = @{ 'Authorization' = ("Basic {0}" -f [System.Convert]::ToBase64String($bytes))}
 
   # Temporarily disable the built-in .NET certificate policy
   if ([bool]::Parse($AcceptCertificate)) {
@@ -23,9 +50,10 @@ Function Invoke-OPNsenseApiRestCommand {
           # Convert HashTable to JSON object
           if ($Json.GetType().Name -eq "HashTable") {
               $Json = $Json | ConvertTo-Json -Depth 15   # Default Depth is 2
-              Write-Verbose "Api JSON Arguments: $Json"
+              Write-Verbose "JSON Arguments: $Json"
               # Set correct Content-Type for JSON data
               $BasicAuthHeader.Add('Content-Type','application/json')
+              [System.Net.ServicePointManager]::Expect100Continue = $false
               $result = Invoke-RestMethod -Uri $uri -Method Post -Body $Json `
                             -Headers $BasicAuthHeader -Verbose:$VerbosePreference
           } else {
@@ -38,7 +66,8 @@ Function Invoke-OPNsenseApiRestCommand {
           if ($Form) {
               # Output Verbose object in JSON notation, if -Verbose is specified
               $Json = $Form | ConvertTo-Json -Depth 15
-              Write-Verbose "Api Form Arguments: $Json"
+              Write-Verbose "Form Arguments: $Json"
+              [System.Net.ServicePointManager]::Expect100Continue = $false
               $result = Invoke-RestMethod -Uri $uri -Method Post -Body $Form `
                             -Headers $BasicAuthHeader -Verbose:$VerbosePreference
           # Neither Json nor Post, so its a plain request
@@ -46,7 +75,10 @@ Function Invoke-OPNsenseApiRestCommand {
               # This needs to be POST for AcceptCertificate to work properly
               # Use a POST with empty body instead of a GET, to work around bug
               # that prevents GET from working when used with -AcceptCertificate
-              $result = Invoke-RestMethod -Uri $uri -Method Post -Body '' `
+
+              # Reverted back to GET method, seems OK
+              [System.Net.ServicePointManager]::Expect100Continue = $false
+              $result = Invoke-RestMethod -Uri $uri -Method Get `
                             -Headers $BasicAuthHeader -Verbose:$VerbosePreference
           }
       }
@@ -67,26 +99,28 @@ Function Invoke-OPNsenseApiRestCommand {
 Function Invoke-OPNsenseCommand {
     # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
     [CmdletBinding()]
-        Param (
-            [parameter(Mandatory=$true,position=1,ParameterSetName = "Get")]
-            [parameter(Mandatory=$true,position=1,ParameterSetName = "Json")]
-            [parameter(Mandatory=$true,position=1,ParameterSetName = "Form")]
-            [String]$Module,
+    Param (
+        [parameter(Mandatory=$true,position=1,ParameterSetName = "Get")]
+        [parameter(Mandatory=$true,position=1,ParameterSetName = "Json")]
+        [parameter(Mandatory=$true,position=1,ParameterSetName = "Form")]
+        [String]$Module,
 
-            [parameter(Mandatory=$true,position=2)][String]$Controller,
-            [parameter(Mandatory=$true,position=3)][String]$Command,
+        [parameter(Mandatory=$true,position=2)][String]$Controller,
+        [parameter(Mandatory=$true,position=3)][String]$Command,
 
-            [parameter(Mandatory=$true,ParameterSetName = "Json")]
-            $Json,
+        [parameter(Mandatory=$true,ParameterSetName = "Json")]
+        $Json,
 
-            [parameter(Mandatory=$true,ParameterSetName = "Form")]
-            $Form,
+        [parameter(Mandatory=$true,ParameterSetName = "Form")]
+        $Form,
 
-            [parameter(Mandatory=$false)]$AddProperty
-        )
+        [parameter(Mandatory=$false)]$AddProperty
+    )
+
+    if ($DebugPreference -eq "Inquire") { $DebugPreference = "Continue" }
 
     $timer = [Diagnostics.Stopwatch]::StartNew()
-    $Credentials = $MyInvocation.MyCommand.Module.PrivateData['Credentials']
+    $Credentials = $MyInvocation.MyCommand.Module.PrivateData['ApiCredentials']
     $OPNsenseApi = $MyInvocation.MyCommand.Module.PrivateData['OPNsenseApi']
     $AcceptCertificate = $MyInvocation.MyCommand.Module.PrivateData['OPNsenseSkipCert']
 
@@ -97,14 +131,14 @@ Function Invoke-OPNsenseCommand {
     }
 
     if ($Json) {
-        $Result = Invoke-OPNsenseApiRestCommand -Uri $Uri -credentials $Credentials -Json $Json `
+        $Result = Invoke-OPNsenseApiRestCommand -Uri $Uri -credential $Credentials -Json $Json `
                       -AcceptCertificate:$AcceptCertificate -Verbose:$VerbosePreference
     } else {
         if ($Form) {
-            $Result = Invoke-OPNsenseApiRestCommand -Uri $Uri -credentials $Credentials -Form $Form `
+            $Result = Invoke-OPNsenseApiRestCommand -Uri $Uri -credential $Credentials -Form $Form `
                           -AcceptCertificate:$AcceptCertificate -Verbose:$VerbosePreference
         } else {
-            $Result = Invoke-OPNsenseApiRestCommand -Uri $Uri -credentials $Credentials `
+            $Result = Invoke-OPNsenseApiRestCommand -Uri $Uri -credential $Credentials `
                           -AcceptCertificate:$AcceptCertificate -Verbose:$VerbosePreference
         }
     }
@@ -135,7 +169,7 @@ Function Invoke-OPNsenseCommand {
     }
 
     $timer.stop()
-    Write-Verbose ($timer.elapsed.ToString() + " passed.")
+    Write-Debug ($timer.elapsed.ToString() + " passed.")
     # Return the object
     return $result
 }
@@ -144,9 +178,34 @@ Function Connect-OPNsense() {
     # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
     [CmdletBinding()]
     param (
+        [parameter(Mandatory=$true,position=1,ParameterSetName = "Modern")]
+        [parameter(Mandatory=$true,position=1,ParameterSetName = "Legacy")]
+        [ValidateNotNullOrEmpty()]
         [String]$Url,
+
+        [parameter(Mandatory=$true,position=2,ParameterSetName = "Modern")]
+        [ValidateNotNull()]
+        [System.Management.Automation.PSCredential]
+        [System.Management.Automation.Credential()]
+        $Credential = [System.Management.Automation.PSCredential]::Empty,
+
+        [parameter(Mandatory=$true,position=2,ParameterSetName = "Legacy")]
+        [ValidateNotNullOrEmpty()]
         [String]$Key,
+
+        [parameter(Mandatory=$true,position=3,ParameterSetName = "Legacy")]
+        [ValidateNotNullOrEmpty()]
         [String]$Secret,
+
+        [parameter(Mandatory=$false,position=3,ParameterSetName = "Modern")]
+        [parameter(Mandatory=$true,position=4,ParameterSetName = "Legacy")]
+        [ValidateNotNull()]
+        [System.Management.Automation.PSCredential]
+        [System.Management.Automation.Credential()]
+        $WebCredential = [System.Management.Automation.PSCredential]::Empty,
+
+        [parameter(Mandatory=$false,position=4,ParameterSetName = "Modern")]
+        [parameter(Mandatory=$false,position=5,ParameterSetName = "Legacy")]
         [switch]$AcceptCertificate=$false
     )
 
@@ -155,25 +214,31 @@ Function Connect-OPNsense() {
         Throw "ERROR : Already connected to $OPNsenseApi. Please use Disconnect-OPNsense first."
     }
 
-    $bytes = [System.Text.Encoding]::UTF8.GetBytes($Key + ":" + $Secret)
-    $Credentials = [System.Convert]::ToBase64String($bytes)
-    $uri = ($Url + '/core/firmware/info')
-    $Result = Invoke-OPNsenseApiRestCommand -Uri $uri -credentials $Credentials `
+    #$bytes = [System.Text.Encoding]::UTF8.GetBytes($Key + ":" + $Secret)
+    #$Credentials = [System.Convert]::ToBase64String($bytes)
+    $SecurePassword = $Secret | ConvertTo-SecureString -AsPlainText -Force
+    $ApiCredentials = New-Object System.Management.Automation.PSCredential -ArgumentList $Key, $SecurePassword
+    $SecurePassword = $Password | ConvertTo-SecureString -AsPlainText -Force
+    $WebCredentials = New-Object System.Management.Automation.PSCredential -ArgumentList $Username, $SecurePassword
+    $Uri = ($Url + '/api/core/firmware/info')
+    $Result = Invoke-OPNsenseApiRestCommand -Uri $Uri -Credential $ApiCredentials `
                   -AcceptCertificate:$AcceptCertificate -Verbose:$VerbosePreference
 
     if ($Result) {
       # Validate the connection result
       if ($Result.product_version) {
           Write-Verbose ("OPNsense version : " + $Result.product_version )
-          $MyInvocation.MyCommand.Module.PrivateData['Credentials'] = $Credentials
-          $MyInvocation.MyCommand.Module.PrivateData['OPNsenseApi'] = $Url
+          $MyInvocation.MyCommand.Module.PrivateData['ApiCredentials'] = $ApiCredentials
+          $MyInvocation.MyCommand.Module.PrivateData['WebCredentials'] = $WebCredentials
+          $MyInvocation.MyCommand.Module.PrivateData['OPNsenseUri'] = $Url
+          $MyInvocation.MyCommand.Module.PrivateData['OPNsenseApi'] = "$Url/api"
           $MyInvocation.MyCommand.Module.PrivateData['OPNsenseSkipCert'] = [bool]::Parse($AcceptCertificate)
           return $Result | Select-Object -Property product_name,product_version
       } else {
-        Throw 'ERROR : Failed to get the OPNsense version.'
+        Throw "ERROR : Failed to get the OPNsense version of server '$Url'."
       }
   } else {
-      Throw 'ERROR : Could not connect to the OPNsense server using the credentials supplied.'
+      Throw "ERROR : Could not connect to the OPNsense server '$Url' using the credentials supplied."
   }
 }
 
@@ -183,7 +248,9 @@ Function Disconnect-OPNsense() {
     Param()
     If ($MyInvocation.MyCommand.Module.PrivateData['OPNsenseApi'] ) {
         Write-Verbose ('Disconnecting from ' + $MyInvocation.MyCommand.Module.PrivateData['OPNsenseApi'])
-        $MyInvocation.MyCommand.Module.PrivateData['Credentials'] = $null
+        $MyInvocation.MyCommand.Module.PrivateData['ApiCredentials'] = $null
+        $MyInvocation.MyCommand.Module.PrivateData['WebCredentials'] = $null
+        $MyInvocation.MyCommand.Module.PrivateData['OPNsenseUri'] = $null
         $MyInvocation.MyCommand.Module.PrivateData['OPNsenseApi'] = $null
         $MyInvocation.MyCommand.Module.PrivateData['OPNsenseSkipCert'] = $null
     } else {

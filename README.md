@@ -1,7 +1,24 @@
 # PS_OPNsense
 
 ## About
-This is a PowerShell module that leverages the OPNsense api to manage an [OPNsense](https://opnsense.org/) open source firewall appliance. The development of both OPNsense and this PowerShell module is still very much ongoing, so additional functionality will be added as these projects mature.
+This is a PowerShell module that leverages the OPNsense api to manage an [OPNsense](https://opnsense.org/) open source firewall appliances. The development of both OPNsense and this PowerShell module is still very much ongoing, so additional functionality will be added as these projects evolve.
+
+## Supported Modules
+Currently there are basic api hooks for these OPNsense modules:
+- Backup
+- CaptivePortal
+- ClamAV
+- Firmware
+- Packages
+- Cron
+- Diagnostics
+- IDS
+- Proxy
+- Services
+
+Not all fucntionality is implemented yet and this is an early development alpha release. All testing and feedback
+is appreciated.
+>>>>>>> dev
 
 ## Getting Started
 Clone the repository to your PowerShell Modules folder:
@@ -13,20 +30,6 @@ To load this module in PowerShell type:
 ```powershell
 Import-Module -Name PS_OPNsense
 ```
-
-## Supported Modules
-Currently there are api hooks for these OPNsense modules:
-- *CaptivePortal*
-- *Core (Firmware and Packages)*
-- *Cron*
-- *Diagnostics*
-- *IDS*
-- *Proxy*
-- *Routes*
-- *TrafficShaper*
-- *Unbound*
-
-Modules in **bold** have mostly been implemented in the current version of the PS_OPNsense module.
 
 ## Examples
 Connecting to an OPNsense server:
@@ -45,4 +48,4 @@ Disconnect from the server:
 Disconnect-OPNsense
 ```
 
-Use the -Verbose switch to see what is going on behind the scenes. You can use the output to learn more about the OPNsense REST Api.
+Use the -Verbose and/or -Debug switches to see what is going on behind the scenes. You can use the output to learn more about the OPNsense REST Api.
