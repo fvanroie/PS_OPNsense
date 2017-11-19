@@ -23,99 +23,99 @@
 
 # Function that takes care of ALL the different REST api calls
 Function Invoke-OPNsenseApiRestCommand {
-  [CmdletBinding()]
-  Param (
-      [ValidateNotNullOrEmpty()]
-      [String]$Uri,
-      [ValidateNotNullOrEmpty()]
-      [PSCredential]$Credential,
-      $Json,
-      $Form,
-      [switch]$SkipCertificateCheck=$false
-  )
-  $Headers = @{}
+    [CmdletBinding()]
+    Param (
+        [ValidateNotNullOrEmpty()]
+        [String]$Uri,
+        [ValidateNotNullOrEmpty()]
+        [PSCredential]$Credential,
+        $Json,
+        $Form,
+        [switch]$SkipCertificateCheck=$false
+    )
+    $Headers = @{}
 
-  # Check if running PowerShell Core CLR or Windows PowerShell
-  $PSCore = Is-PSCoreEdition
+    # Check if running PowerShell Core CLR or Windows PowerShell
+    $PSCore = Is-PSCoreEdition
 
-  # Windows PowerShell only
-  if (-Not $PSCore) {
-      $bytes = [System.Text.Encoding]::UTF8.GetBytes($Credential.Username + ":" + $credential.GetNetworkCredential().Password)
-      $Headers = @{ 'Authorization' = ("Basic {0}" -f [System.Convert]::ToBase64String($bytes))}
+    # Windows PowerShell only
+    if (-Not $PSCore) {
+        $bytes = [System.Text.Encoding]::UTF8.GetBytes($Credential.Username + ":" + $credential.GetNetworkCredential().Password)
+        $Headers = @{ 'Authorization' = ("Basic {0}" -f [System.Convert]::ToBase64String($bytes))}
 
-      # Temporarily disable the built-in .NET certificate policy
-      if ([bool]::Parse($SkipCertificateCheck)) {
-          $CertPolicy = Get-CertificatePolicy -Verbose:$VerbosePreference
-          Disable-CertificateValidation -Verbose:$VerbosePreference
-      }
-  }
+        # Temporarily disable the built-in .NET certificate policy
+        if ([bool]::Parse($SkipCertificateCheck)) {
+            $CertPolicy = Get-CertificatePolicy -Verbose:$VerbosePreference
+            Disable-CertificateValidation -Verbose:$VerbosePreference
+        }
+    }
 
-  # Call the OPNsense Rest API
-  Try {
-      # Post a JSON object
-      if ($Json) {
-          # Convert HashTable to JSON object
-          if ($Json.GetType().Name -eq "HashTable") {
-              $Json = $Json | ConvertTo-Json -Depth 15   # Default Depth is 2
-              Write-Verbose "JSON Arguments: $Json"
-              # Set correct Content-Type for JSON data
-              $Headers.Add('Content-Type','application/json')
-              if ($PSCore) {
-                  $result = Invoke-RestMethod -Uri $uri -Method 'Post' -Body $Json `
-                                      -Authentication 'Basic' -Credential $Credential -Headers $Headers `
-                                      -SkipCertificateCheck:$SkipCertificateCheck
-              } else {
-                  [System.Net.ServicePointManager]::Expect100Continue = $false
-                  $result = Invoke-RestMethod -Uri $uri -Method Post -Body $Json -Headers $Headers
-              }
-          } else {
-              Throw 'JSON object should be a HashTable'
-              #$result = Invoke-RestMethod -Uri $uri -Method Post -Body $Json `
-              #             -Headers $BasicAuthHeader -Verbose:$VerbosePreference
-          }
-      } else {
-          # Post a web Form
-          if ($Form) {
-              # Output Verbose object in JSON notation, if -Verbose is specified
-              $Json = $Form | ConvertTo-Json -Depth 15
-              Write-Verbose "Form Arguments: $Json"
-              if ($PSCore) {
-                  $result = Invoke-RestMethod -Uri $uri -Method 'Post' -Body $Form `
-                                      -Authentication 'Basic' -Credential $Credential -Headers $Headers `
-                                      -SkipCertificateCheck:$SkipCertificateCheck
-              } else {
-                  [System.Net.ServicePointManager]::Expect100Continue = $false
-                  $result = Invoke-RestMethod -Uri $uri -Method Post -Body $Form -Headers $Headers
-              }
-          # Neither Json nor Post, so its a plain request
-          } else {
-              if ($PSCore) {
-                  $result = Invoke-RestMethod -Uri $uri -Method 'Get' `
-                                    -Authentication 'Basic' -Credential $Credential -Headers $Headers `
-                                    -SkipCertificateCheck:$SkipCertificateCheck
-              } else {
-                  # This needs to be POST for SkipCertificateCheck to work properly in PS Desktop
-                  # Use a POST with empty body instead of a GET, to work around bug
-                  # that prevents GET from working when used with -SkipCertificateCheck
+    # Call the OPNsense Rest API
+    Try {
+        # Post a JSON object
+        if ($Json) {
+            # Convert HashTable to JSON object
+            if ($Json.GetType().Name -eq "HashTable") {
+                $Json = $Json | ConvertTo-Json -Depth 15   # Default Depth is 2
+                Write-Verbose "JSON Arguments: $Json"
+                # Set correct Content-Type for JSON data
+                $Headers.Add('Content-Type','application/json')
+                if ($PSCore) {
+                    $result = Invoke-RestMethod -Uri $uri -Method 'Post' -Body $Json `
+                                        -Authentication 'Basic' -Credential $Credential -Headers $Headers `
+                                        -SkipCertificateCheck:$SkipCertificateCheck
+                } else {
+                    [System.Net.ServicePointManager]::Expect100Continue = $false
+                    $result = Invoke-RestMethod -Uri $uri -Method Post -Body $Json -Headers $Headers
+                }
+            } else {
+                Throw 'JSON object should be a HashTable'
+                #$result = Invoke-RestMethod -Uri $uri -Method Post -Body $Json `
+                #             -Headers $BasicAuthHeader -Verbose:$VerbosePreference
+            }
+        } else {
+            # Post a web Form
+            if ($Form) {
+                # Output Verbose object in JSON notation, if -Verbose is specified
+                $Json = $Form | ConvertTo-Json -Depth 15
+                Write-Verbose "Form Arguments: $Json"
+                if ($PSCore) {
+                    $result = Invoke-RestMethod -Uri $uri -Method 'Post' -Body $Form `
+                                        -Authentication 'Basic' -Credential $Credential -Headers $Headers `
+                                        -SkipCertificateCheck:$SkipCertificateCheck
+                } else {
+                    [System.Net.ServicePointManager]::Expect100Continue = $false
+                    $result = Invoke-RestMethod -Uri $uri -Method Post -Body $Form -Headers $Headers
+                }
+            # Neither Json nor Post, so its a plain request
+            } else {
+                if ($PSCore) {
+                    $result = Invoke-RestMethod -Uri $uri -Method 'Get' `
+                                        -Authentication 'Basic' -Credential $Credential -Headers $Headers `
+                                        -SkipCertificateCheck:$SkipCertificateCheck
+                } else {
+                    # This needs to be POST for SkipCertificateCheck to work properly in PS Desktop
+                    # Use a POST with empty body instead of a GET, to work around bug
+                    # that prevents GET from working when used with -SkipCertificateCheck
 
-                  # Reverted back to GET method, seems OK
-                  [System.Net.ServicePointManager]::Expect100Continue = $false
-                  $result = Invoke-RestMethod -Uri $uri -Method Get -Headers $Headers
-              }
-          }
-      }
-  }
-  Catch {
-      $ErrorMessage = $_.Exception.Message
-      Write-Error "An error Occured while connecting to the OPNsense server: $ErrorMessage"
-  }
-  Finally {
-      # Always restore the built-in .NET certificate policy on Windows PowerShell only
-      if (-Not $PSCore -And [bool]::Parse($SkipCertificateCheck)) {
-          Set-CertificatePolicy $CertPolicy -Verbose:$VerbosePreference
-      }
-  }
-  Return $Result
+                    # Reverted back to GET method, seems OK
+                    [System.Net.ServicePointManager]::Expect100Continue = $false
+                    $result = Invoke-RestMethod -Uri $uri -Method Get -Headers $Headers
+                }
+            }
+        }
+    }
+    Catch {
+        $ErrorMessage = $_.Exception.Message
+        Write-Error "An error Occured while connecting to the OPNsense server: $ErrorMessage"
+    }
+    Finally {
+        # Always restore the built-in .NET certificate policy on Windows PowerShell only
+        if (-Not $PSCore -And [bool]::Parse($SkipCertificateCheck)) {
+            Set-CertificatePolicy $CertPolicy -Verbose:$VerbosePreference
+        }
+    }
+    Return $Result
 }
 
 Function Invoke-OPNsenseCommand {

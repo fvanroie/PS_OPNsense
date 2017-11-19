@@ -65,154 +65,153 @@ function Get-OPNsenseService {
 }
 
 function Update-OPNsenseService {
-  # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
-  param (
-      [Parameter(Mandatory=$false,position=1,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true)]
-      [String[]]$Name
-  )
-  BEGIN {
-      if (-NOT $PSBoundParameters.ContainsKey('name')) {
-          $name = Get-Services 'status'
-      }
-      $results = @()
-  }
-  PROCESS {
-      foreach ($service in $name)
-      {
-          try {
-              switch ($service) {
-                'netflow'
-                    {     $results += Invoke-OPNsenseCommand diagnostics netflow reconfigure -AddProperty @{ name = $service.tolower()}
-                    }
-                'monit'
-                    {     $results += Invoke-OPNsenseCommand $service.tolower() service reload -AddProperty @{ name = $service.tolower()}
-                    }
-                  Default
+    # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
+    param (
+        [Parameter(Mandatory=$false,position=1,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true)]
+        [String[]]$Name
+    )
+    BEGIN {
+        if (-NOT $PSBoundParameters.ContainsKey('name')) {
+            $name = Get-Services 'status'
+        }
+        $results = @()
+    }
+    PROCESS {
+        foreach ($service in $name) {
+            try {
+                switch ($service) {
+                    'netflow'
+                        {     $results += Invoke-OPNsenseCommand diagnostics netflow reconfigure -AddProperty @{ name = $service.tolower()}
+                        }
+                    'monit'
+                        {     $results += Invoke-OPNsenseCommand $service.tolower() service reload -AddProperty @{ name = $service.tolower()}
+                        }
+                    Default
                         {     $results += Invoke-OPNsenseCommand $service.tolower() service reconfigure -AddProperty @{ name = $service.tolower()}
                         }
-                  } # switch
-              }
-          catch {
-            Write-Error "$service failed to reconfigure"
-          }
-          #$result
+                    } # switch
+                }
+            catch {
+                Write-Error "$service failed to reconfigure"
+            }
+            #$result
 
-      } #foreach
-  } # PROCESS
-  END {
-      return $results
-  }
+        } #foreach
+    } # PROCESS
+    END {
+        return $results
+    }
 }
 
 Function Start-OPNsenseService {
-  # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
-  param (
-      [Parameter(Mandatory=$false,position=1,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true)]
-      [String[]]$Name
-  )
-  BEGIN {
-      if (-NOT $PSBoundParameters.ContainsKey('name')) {
-          $name = Get-Services 'status'
-      }
-      $results = @()
-  }
-  PROCESS {
-      foreach ($service in $name)
-      {
-          try {
-              switch ($service) {
-                'netflow'
-                    {     $results += Invoke-OPNsenseCommand diagnostics netflow start -AddProperty @{ name = $service.tolower()}
-                    }
-                  Default
-                        {     $results += Invoke-OPNsenseCommand $service.tolower() service start -AddProperty @{ name = $service.tolower()}
+    # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
+    param (
+        [Parameter(Mandatory=$false,position=1,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true)]
+        [String[]]$Name
+    )
+    BEGIN {
+        if (-NOT $PSBoundParameters.ContainsKey('name')) {
+            $name = Get-Services 'status'
+        }
+        $results = @()
+    }
+    PROCESS {
+        foreach ($service in $name)
+        {
+            try {
+                switch ($service) {
+                    'netflow'
+                        {     $results += Invoke-OPNsenseCommand diagnostics netflow start -AddProperty @{ name = $service.tolower()}
                         }
-                  } # switch
-              }
-          catch {
-            Write-Error "$service failed to start"
-          }
-          #$result
+                    Default
+                            {     $results += Invoke-OPNsenseCommand $service.tolower() service start -AddProperty @{ name = $service.tolower()}
+                            }
+                    } # switch
+                }
+            catch {
+                Write-Error "$service failed to start"
+            }
+            #$result
 
-      } #foreach
-  } # PROCESS
-  END {
-      return $results
-  }
+        } #foreach
+    } # PROCESS
+    END {
+        return $results
+    }
 }
 
 function Restart-OPNsenseService {
-  # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
-  param (
-      [Parameter(Mandatory=$false,position=1,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true)]
-      [String[]]$Name
-  )
-  BEGIN {
-      if (-NOT $PSBoundParameters.ContainsKey('name')) {
-          $name = Get-Services 'status'
-      }
-      $results = @()
-  }
-  PROCESS {
-      foreach ($service in $name)
-      {
-          try {
-              switch ($service) {
-                'netflow'
-                    {     $results += Invoke-OPNsenseCommand diagnostics netflow restart -AddProperty @{ name = $service.tolower()}
-                    }
-                  Default
-                        {     $results += Invoke-OPNsenseCommand $service.tolower() service restart -AddProperty @{ name = $service.tolower()}
+    # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
+    param (
+        [Parameter(Mandatory=$false,position=1,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true)]
+        [String[]]$Name
+    )
+    BEGIN {
+        if (-NOT $PSBoundParameters.ContainsKey('name')) {
+            $name = Get-Services 'status'
+        }
+        $results = @()
+    }
+    PROCESS {
+        foreach ($service in $name)
+        {
+            try {
+                switch ($service) {
+                    'netflow'
+                        {     $results += Invoke-OPNsenseCommand diagnostics netflow restart -AddProperty @{ name = $service.tolower()}
                         }
-                  } # switch
-              }
-          catch {
-            Write-Error "$service failed to restart"
-          }
-          #$result
+                    Default
+                            {     $results += Invoke-OPNsenseCommand $service.tolower() service restart -AddProperty @{ name = $service.tolower()}
+                            }
+                    } # switch
+                }
+            catch {
+                Write-Error "$service failed to restart"
+            }
+            #$result
 
-      } #foreach
-  } # PROCESS
-  END {
-      return $results
-  }
+        } #foreach
+    } # PROCESS
+    END {
+        return $results
+    }
 }
 
 function Stop-OPNsenseService {
-  # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
-  param (
-      [Parameter(Mandatory=$false,position=1,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true)]
-      [String[]]$Name
-  )
-  BEGIN {
-      if (-NOT $PSBoundParameters.ContainsKey('name')) {
-          $name = Get-Services 'status'
-      }
-      $results = @()
-  }
-  PROCESS {
-      foreach ($service in $name)
-      {
-          try {
-              switch ($service) {
-                'netflow'
-                    {     $results += Invoke-OPNsenseCommand diagnostics netflow stop -AddProperty @{ name = $service.tolower()}
-                    }
-                  Default
-                        {     $results += Invoke-OPNsenseCommand $service.tolower() service stop -AddProperty @{ name = $service.tolower()}
+    # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
+    param (
+        [Parameter(Mandatory=$false,position=1,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true)]
+        [String[]]$Name
+    )
+    BEGIN {
+        if (-NOT $PSBoundParameters.ContainsKey('name')) {
+            $name = Get-Services 'status'
+        }
+        $results = @()
+    }
+    PROCESS {
+        foreach ($service in $name)
+        {
+            try {
+                switch ($service) {
+                    'netflow'
+                        {     $results += Invoke-OPNsenseCommand diagnostics netflow stop -AddProperty @{ name = $service.tolower()}
                         }
-                  } # switch
-              }
-          catch {
-            Write-Error "$service failed to stop"
-          }
-          #$result
+                    Default
+                            {     $results += Invoke-OPNsenseCommand $service.tolower() service stop -AddProperty @{ name = $service.tolower()}
+                            }
+                    } # switch
+                }
+            catch {
+                Write-Error "$service failed to stop"
+            }
+            #$result
 
-      } #foreach
-  } # PROCESS
-  END {
-      return $results
-  }
+        } #foreach
+    } # PROCESS
+    END {
+        return $results
+    }
 }
 
 function Invoke-OPNsenseService {
