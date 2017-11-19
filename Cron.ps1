@@ -40,8 +40,8 @@ Function Get-OPNsenseCronJob {
     return $result
 }
 
-# Private, unapproved Verb
-Function Toggle-OPNsenseCronJob {
+# Private helper function
+Function ToggleOPNsenseCronJob {
     param (
         [Parameter(Mandatory=$true,position=1)][String]$uuid
     )
@@ -58,7 +58,7 @@ Function New-OPNsenseCronJob {
 
     $job = Get-OPNsenseCronJob -Id $uuid
     if ($job.enabled -ne $enabled) {
-        $result = Toggle-OPNsenseCronJob -id $uuid
+        $result = ToggleOPNsenseCronJob -id $uuid
     }
     return Get-OPNsenseCronJob -uuid $uuid
 }
@@ -72,7 +72,7 @@ Function Set-OPNsenseCronJob {
 
     $job = Get-OPNsenseCronJob -uuid $uuid
     if ($job.enabled -ne $enabled) {
-        $result = Toggle-OPNsenseCronJob -uuid $uuid
+        $result = ToggleOPNsenseCronJob -uuid $uuid
     }
     return Get-OPNsenseCronJob -uuid $uuid
 }

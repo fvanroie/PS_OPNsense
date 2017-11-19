@@ -61,7 +61,7 @@ Function Format-SystemHealthData {
     return $table
 }
 
-Function Validate-SystemHealthOptions {
+Function ValidateSystemHealthOptions {
     Param (
         [ValidateSet("packets","system","traffic")]
         [String]$type,
@@ -123,19 +123,19 @@ Function Get-OPNsenseSystemHealth {
     if ([bool]::Parse($Packets)) {
         $type = 'packets'
         $data = $Interface.ToLower()
-        Validate-SystemHealthOptions $type $data interface
+        ValidateSystemHealthOptions $type $data interface
     }
 
     if ([bool]::Parse($Traffic)) {
         $type = 'traffic'
         $data = $Interface.ToLower()
-        Validate-SystemHealthOptions $type $data interface
+        ValidateSystemHealthOptions $type $data interface
     }
 
     if ([bool]::Parse($System)) {
         $type = 'system'
         $data = $Resource.ToLower()
-        Validate-SystemHealthOptions $type $data resource
+        ValidateSystemHealthOptions $type $data resource
     }
     Write-Verbose "DataType: $data-$type"
 

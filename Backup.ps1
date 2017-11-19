@@ -33,7 +33,7 @@ Function Backup-OPNsenseConfig {
     )
 
     # Check if running PowerShell Core CLR or Windows PowerShell
-    $PSCore = Is-PSCoreEdition
+    $PSCore = IsPSCoreEdition
 
     if ($DebugPreference -eq "Inquire") { $DebugPreference = "Continue" }
 
@@ -143,7 +143,7 @@ Function Restore-OPNsenseConfig {
     )
 
     # Check if running PowerShell Core CLR or Windows PowerShell
-    $PSCore = Is-PSCoreEdition
+    $PSCore = IsPSCoreEdition
 
     if ($DebugPreference -eq "Inquire") { $DebugPreference = "Continue" }
 
@@ -268,7 +268,7 @@ Function Reset-OPNsenseConfig {
     )
 
     # Check if running PowerShell Core CLR or Windows PowerShell
-    $PSCore = Is-PSCoreEdition
+    $PSCore = IsPSCoreEdition
 
     if ($DebugPreference -eq "Inquire") { $DebugPreference = "Continue" }
 

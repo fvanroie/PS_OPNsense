@@ -36,7 +36,7 @@ Function Invoke-OPNsenseApiRestCommand {
     $Headers = @{}
 
     # Check if running PowerShell Core CLR or Windows PowerShell
-    $PSCore = Is-PSCoreEdition
+    $PSCore = IsPSCoreEdition
 
     # Windows PowerShell only
     if (-Not $PSCore) {
@@ -288,6 +288,6 @@ Function Disconnect-OPNsense() {
     }
 }
 
-function Is-PSCoreEdition {
+function IsPSCoreEdition {
     Return ($PSVersionTable.PSEdition -eq 'Core')
 }
