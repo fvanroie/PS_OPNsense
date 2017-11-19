@@ -159,7 +159,8 @@ Function Restore-OPNsenseConfig {
     $Credential = $MyInvocation.MyCommand.Module.PrivateData['WebCredentials']
     $Uri = $MyInvocation.MyCommand.Module.PrivateData['OPNsenseUri']
 
-		$boundary = [guid]::NewGuid().ToString()
+    $boundary = [guid]::NewGuid().ToString()
+    $body = ""
 $bodyXML = @'
 --{0}
 Content-Disposition: form-data; name="{1}"; filename="{2}"

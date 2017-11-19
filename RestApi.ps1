@@ -33,7 +33,7 @@ Function Invoke-OPNsenseApiRestCommand {
       $Form,
       [switch]$SkipCertificateCheck=$false
   )
-  $Headers = @{ }
+  $Headers = @{}
 
   # Check if running PowerShell Core CLR or Windows PowerShell
   $PSCore = Is-PSCoreEdition
