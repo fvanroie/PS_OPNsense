@@ -20,7 +20,7 @@ Not all functionality is implemented yet and this is an early development alpha 
 is appreciated.
 
 ## Getting Started
-Clone the repository to your PowerShell Modules folder:
+You can download and unzip the module into the PowerShell Modules folder or clone the repository directly:
 ```git
 git clone https://github.com/fvanroie/PS_OPNsense.git .\PS_OPNsense
 ```
