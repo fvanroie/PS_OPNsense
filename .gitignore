@@ -1,2 +1,4 @@
 # Do not upload the pshelp project
 *.pshproj
+.vscode/launch.json
+

@@ -160,7 +160,6 @@ Function Restore-OPNsenseConfig {
     $Uri = $MyInvocation.MyCommand.Module.PrivateData['OPNsenseUri']
 
     $boundary = [guid]::NewGuid().ToString()
-    $body = ""
 $bodyXML = @'
 --{0}
 Content-Disposition: form-data; name="{1}"; filename="{2}"
@@ -215,6 +214,7 @@ Content-Disposition: form-data; name="{1}"
             restore = "Restore configuration"
         }
 
+        $body = ""
         $form.Keys | ForEach-Object {
             $body += $bodytempl -f $boundary, $_, $form.Item($_)
         }
