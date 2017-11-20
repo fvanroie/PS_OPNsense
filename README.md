@@ -1,7 +1,8 @@
 # PS_OPNsense
 
 ## About
-This is a PowerShell module that uses the OPNsense REST api to manage [OPNsense](https://opnsense.org/) firewall appliances. The development of the OPNsense REST api and this PowerShell module is still ongoing, so additional functionality will be added in the future.
+This is a PowerShell module that uses the OPNsense REST api to manage [OPNsense](https://opnsense.org/) firewall appliances.
+The development of the OPNsense REST api and this PowerShell module is still ongoing, so additional functionality will be added in the future.
 
 ## Supported Modules
 Currently there are basic api hooks for these OPNsense modules:
@@ -58,13 +59,17 @@ Disconnect from the server:
 Disconnect-OPNsense
 ```
 
-Use the -Verbose and/or -Debug switches to see what is going on behind the scenes. You can use the output to learn more about the OPNsense REST Api.
+Use the -Verbose and/or -Debug switches to see what is going on behind the scenes. You can use the output to learn more about the OPNsense REST api.
 
 For the full documentation on all the different cmdlets and parameters, please visit the [PS_OPNsense wiki](https://github.com/fvanroie/PS_OPNsense//wiki/).
 
 ## Compatibility
-This modules is tested on Windows:
-- PowerShell Desktop 5.1
-- PowerShell Core RC 6.0.
+This module is tested on:
 
-PS_OPNsense aims to be cross-platform on PowerShell Core, however it is not been tested on Linux and MacOS. Feel free to use it on these platforms and report back any issues you encouter.
+|Platform|Shell|Version
++-----+-----+-----+
+|Windows|PowerShell Desktop|5.1|
+|Windows|PowerShell Core|RC 6.0|
+
+PS_OPNsense aims to be cross-platform on PowerShell Core, however it has not been tested on Linux and MacOS yet.
+Feel free to use it on these platforms and report back any issues you encouter.
