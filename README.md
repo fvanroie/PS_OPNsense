@@ -45,15 +45,9 @@ Import-Module -Name PS_OPNsense
 ## Examples
 Connecting to an OPNsense server:
 ```powershell
-<<<<<<< HEAD
 Connect-OPNsense -Uri 'http://opnsense.local:8080' -Key <api_key> -Secret <api_secret>
 Connect-OPNsense -Uri 'https://opnsense.local' -Key <api_key> -Secret <api_secret> -Verbose -Debug
 Connect-OPNsense 'https://opnsense.local' <api_key> <api_secret> -SkipCertificateCheck
-=======
-Connect-OPNsense -Uri 'https://fw01.local' -Key <api_key> -Secret <api_secret>
-Connect-OPNsense -Uri 'https://fw01.local' -Key <api_key> -Secret <api_secret> -Verbose
-Connect-OPNsense 'https://fw01.local/api' <api_key> <api_secret> -SkipCertificateCheck
->>>>>>> dev
 ```
 Run some commands:
 ```powershell
