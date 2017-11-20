@@ -61,7 +61,7 @@ Disconnect-OPNsense
 
 Use the -Verbose and/or -Debug switches to see what is going on behind the scenes. You can use the output to learn more about the OPNsense REST api.
 
-For the full documentation on all the different cmdlets and parameters, please visit the [PS_OPNsense wiki](https://github.com/fvanroie/PS_OPNsense//wiki/).
+For the full documentation off all the cmdlets and parameters, please visit the [PS_OPNsense wiki](https://github.com/fvanroie/PS_OPNsense//wiki/).
 
 ## Compatibility
 This module is tested on:
