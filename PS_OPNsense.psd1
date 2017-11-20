@@ -1,5 +1,4 @@
-<#
-    MIT License
+<#  MIT License
 
     Copyright (c) 2017 fvanroie
 
@@ -32,154 +31,167 @@
 
 @{
 
-# Script module or binary module file associated with this manifest.
-# RootModule = ''
+    # Script module or binary module file associated with this manifest.
+    # RootModule = ''
 
-# Version number of this module.
-ModuleVersion = '0.1.1'
+    # Version number of this module.
+    ModuleVersion          = '0.1.2'
 
-# Supported PSEditions
-# CompatiblePSEditions = @()
+    # Supported PSEditions
+    CompatiblePSEditions   = @('Core', 'Desktop')
 
-# ID used to uniquely identify this module
-GUID = '49099aec-c819-43ee-8a03-aa605a0d80f8'
+    # ID used to uniquely identify this module
+    GUID                   = '49099aec-c819-43ee-8a03-aa605a0d80f8'
 
-# Author of this module
-Author = 'fvanroie'
+    # Author of this module
+    Author                 = 'fvanroie'
 
-# Company or vendor of this module
-CompanyName = 'NetWize.be'
+    # Company or vendor of this module
+    CompanyName            = 'NetWize.be'
 
-# Copyright statement for this module
-Copyright = '(c) 2017 fvanroie. All rights reserved.'
+    # Copyright statement for this module
+    Copyright              = '(c) 2017 fvanroie. All rights reserved.'
 
-# Description of the functionality provided by this module
-Description = 'PowerShell Module for OPNsense REST api'
+    # Description of the functionality provided by this module
+    Description            = 'PowerShell Module for OPNsense REST api'
 
-# Minimum version of the Windows PowerShell engine required by this module
-# PowerShellVersion = ''
+    # Minimum version of the Windows PowerShell engine required by this module
+    PowerShellVersion      = '5.0'
 
-# Name of the Windows PowerShell host required by this module
-# PowerShellHostName = ''
+    # Name of the Windows PowerShell host required by this module
+    # PowerShellHostName = ''
 
-# Minimum version of the Windows PowerShell host required by this module
-# PowerShellHostVersion = ''
+    # Minimum version of the Windows PowerShell host required by this module
+    # PowerShellHostVersion = ''
 
-# Minimum version of Microsoft .NET Framework required by this module. This prerequisite is valid for the PowerShell Desktop edition only.
-DotNetFrameworkVersion = '4.5'
+    # Minimum version of Microsoft .NET Framework required by this module. This prerequisite is valid for the PowerShell Desktop edition only.
+    DotNetFrameworkVersion = '4.5'
 
-# Minimum version of the common language runtime (CLR) required by this module. This prerequisite is valid for the PowerShell Desktop edition only.
-# CLRVersion = ''
+    # Minimum version of the common language runtime (CLR) required by this module. This prerequisite is valid for the PowerShell Desktop edition only.
+    CLRVersion             = '4.0'
 
-# Processor architecture (None, X86, Amd64) required by this module
-# ProcessorArchitecture = ''
+    # Processor architecture (None, X86, Amd64) required by this module
+    ProcessorArchitecture  = 'None'
 
-# Modules that must be imported into the global environment prior to importing this module
-# RequiredModules = @()
+    # Modules that must be imported into the global environment prior to importing this module
+    # RequiredModules = @()
 
-# Assemblies that must be loaded prior to importing this module
-# RequiredAssemblies = @()
+    # Assemblies that must be loaded prior to importing this module
+    # RequiredAssemblies = @()
 
-# Script files (.ps1) that are run in the caller's environment prior to importing this module.
-# ScriptsToProcess = @()
+    # Script files (.ps1) that are run in the caller's environment prior to importing this module.
+    # ScriptsToProcess = @()
 
-# Type files (.ps1xml) to be loaded when importing this module
-# TypesToProcess = @()
+    # Type files (.ps1xml) to be loaded when importing this module
+    # TypesToProcess = @()
 
-# Format files (.ps1xml) to be loaded when importing this module
-# FormatsToProcess = @()
+    # Format files (.ps1xml) to be loaded when importing this module
+    # FormatsToProcess = @()
 
-# Modules to import as nested modules of the module specified in RootModule/ModuleToProcess
-NestedModules = @(
-    'Backup.ps1',
-    'CaptivePortal.ps1',
-    'CertificateValidation.ps1',
-    'ClamAV.ps1',
-    'Cron.ps1',
-    'Diagnostics.ps1',
-    'Firmware.ps1',
-    'Ids.ps1',
-    'Packages.ps1',
-    'Proxy.ps1',
-    'RestApi.ps1',
-    'Services.ps1'
-)
+    # Modules to import as nested modules of the module specified in RootModule/ModuleToProcess
+    NestedModules          = @(
+        # Main Module
+        'PS_OPNsense',
 
-# Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
-FunctionsToExport = @(
-    # Backup
-    'Backup-OPNsenseConfig','Restore-OPNsenseConfig','Reset-OPNsenseConfig',
-    # ClamAV
-    'Get-OPNsenseClamAV','Set-OPNsenseClamAV',
-    # RestApi
-    'Connect-OPNsense','Disconnect-OPNsense','Invoke-OPNsenseCommand',
-    # Firmware
-    'Get-OPNsense','Stop-OPNsense','Restart-OPNsense','Update-OPNsense','Invoke-OPNsenseAudit',
-    'Set-OPNsense',
-    # Packages
-    'Get-OPNsensePackage','Lock-OPNsensePackage','Unlock-OPNsensePackage','Install-OPNsensePackage','Remove-OPNsensePackage',
-    'Get-OPNsensePlugin',
-    # Cron
-    'Get-OPNsenseCronJob','Enable-OPNsenseCronJob','Disable-OPNsenseCronJob',
-    'New-OPNsenseCronJob','Set-OPNsenseCronJob',
-    #IDS
-    'Get-OPNsenseIdsUserRule','New-OPNsenseIdsUserRule','Get-OPNsenseIdsAlert',
-    # Proxy
-    'New-OPNsenseProxyRemoteBlacklist',
-    # CaptivePortal
-    'New-OPNsenseCaptivePortalZone','New-OPNsenseCaptivePortalTemplate','Get-OPNsenseCaptivePortal',
-    # Diagnostics
-    'Get-OPNsenseSystemHealth','Get-OPNsenseResource','Get-OPNsenseInterface','Get-OPNsenseRoute','Get-OPNsenseARP','Clear-OPNsenseARP',
-    # Services
-    'Get-OPNsenseService','Start-OPNsenseService','Update-OPNsenseService','Restart-OPNsenseService','Stop-OPNsenseService','Invoke-OPNsenseService'
-)
+        # Core Functionality
+        'Core/CaptivePortal',
+        'Core/Cron',
+        'Core/Diagnostics',
+        'Core/Firmware',
+        'Core/Ids',
+        'Core/Packages',
+        'Core/Proxy',
+        'Core/Services',
 
-# Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
-CmdletsToExport = @()
+        # Optional Installable Plugin Packages
+        'Plugins/ClamAV',
 
-# Variables to export from this module
-VariablesToExport = ''
+        # Legacy WebGUI Commands
+        'Legacy/Backup',
 
-# Aliases to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no aliases to export.
-AliasesToExport = @()
+        # Private Helper Function
+        'Private/Add-ObjectDetail',
+        'Private/CertificateValidation',
+        'Private/RestApi'
+    )
 
-# DSC resources to export from this module
-# DscResourcesToExport = @()
+    # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
+    FunctionsToExport      = @(
+        # Backup
+        'Backup-OPNsenseConfig', 'Restore-OPNsenseConfig', 'Reset-OPNsenseConfig',
+        # ClamAV
+        'Get-OPNsenseClamAV', 'Set-OPNsenseClamAV',
+        # PS_OPNsense
+        'Connect-OPNsense', 'Disconnect-OPNsense',
+        # RestApi
+        'Invoke-OPNsenseCommand',
+        # Firmware
+        'Get-OPNsense', 'Stop-OPNsense', 'Restart-OPNsense', 'Update-OPNsense', 'Invoke-OPNsenseAudit',
+        'Set-OPNsense',
+        # Packages
+        'Get-OPNsensePackage', 'Lock-OPNsensePackage', 'Unlock-OPNsensePackage', 'Install-OPNsensePackage', 'Remove-OPNsensePackage',
+        'Get-OPNsensePlugin',
+        # Cron
+        'Get-OPNsenseCronJob', 'Enable-OPNsenseCronJob', 'Disable-OPNsenseCronJob',
+        'New-OPNsenseCronJob', 'Set-OPNsenseCronJob',
+        #IDS
+        'Get-OPNsenseIdsUserRule', 'New-OPNsenseIdsUserRule', 'Get-OPNsenseIdsAlert',
+        # Proxy
+        'New-OPNsenseProxyRemoteBlacklist',
+        # CaptivePortal
+        'New-OPNsenseCaptivePortalZone', 'New-OPNsenseCaptivePortalTemplate', 'Get-OPNsenseCaptivePortal',
+        # Diagnostics
+        'Get-OPNsenseSystemHealth', 'Get-OPNsenseResource', 'Get-OPNsenseInterface', 'Get-OPNsenseRoute', 'Get-OPNsenseARP', 'Clear-OPNsenseARP',
+        # Services
+        'Get-OPNsenseService', 'Start-OPNsenseService', 'Update-OPNsenseService', 'Restart-OPNsenseService', 'Stop-OPNsenseService', 'Invoke-OPNsenseService'
+    )
 
-# List of all modules packaged with this module
-# ModuleList = @()
+    # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
+    CmdletsToExport        = @()
 
-# List of all files packaged with this module
-# FileList = @()
+    # Variables to export from this module
+    VariablesToExport      = ''
 
-# Private data to pass to the module specified in RootModule/ModuleToProcess. This may also contain a PSData hashtable with additional module metadata used by PowerShell.
-PrivateData = @{
+    # Aliases to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no aliases to export.
+    AliasesToExport        = @()
 
-    PSData = @{
+    # DSC resources to export from this module
+    # DscResourcesToExport = @()
 
-        # Tags applied to this module. These help with module discovery in online galleries.
-        Tags = @('OPNsense','REST','api')
+    # List of all modules packaged with this module
+    # ModuleList = @()
 
-        # A URL to the license for this module.
-        # LicenseUri = ''
+    # List of all files packaged with this module
+    # FileList = @()
 
-        # A URL to the main website for this project.
-        ProjectUri = 'https://github.com/fvanroie/PS_OPNsense'
+    # Private data to pass to the module specified in RootModule/ModuleToProcess. This may also contain a PSData hashtable with additional module metadata used by PowerShell.
+    PrivateData            = @{
 
-        # A URL to an icon representing this module.
-        # IconUri = ''
+        PSData = @{
 
-        # ReleaseNotes of this module
-        ReleaseNotes = 'Early development aplha release'
+            # Tags applied to this module. These help with module discovery in online galleries.
+            Tags         = @('OPNsense', 'REST', 'api')
 
-    } # End of PSData hashtable
+            # A URL to the license for this module.
+            LicenseUri   = 'https://github.com/fvanroie/PS_OPNsense'
 
-} # End of PrivateData hashtable
+            # A URL to the main website for this project.
+            ProjectUri   = 'https://github.com/fvanroie/PS_OPNsense'
 
-# HelpInfo URI of this module
-# HelpInfoURI = 'PS_OPNsense.psd1-help.xml'
+            # A URL to an icon representing this module.
+            # IconUri = ''
 
-# Default prefix for commands exported from this module. Override the default prefix using Import-Module -Prefix.
-# DefaultCommandPrefix = ''
+            # ReleaseNotes of this module
+            ReleaseNotes = 'Early development alpha release'
+
+        } # End of PSData hashtable
+
+    } # End of PrivateData hashtable
+
+    # HelpInfo URI of this module
+    # HelpInfoURI = 'PS_OPNsense.psd1-help.xml'
+
+    # Default prefix for commands exported from this module. Override the default prefix using Import-Module -Prefix.
+    # DefaultCommandPrefix = ''
 
 }

@@ -1,5 +1,4 @@
-<#
-    MIT License
+<#  MIT License
 
     Copyright (c) 2017 fvanroie
 
@@ -31,7 +30,7 @@ Function Get-OPNsensePackage {
 Function Lock-OPNsensePackage {
     # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
     param (
-        [Parameter(Mandatory=$true,position=1,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true)][String[]]$Name
+        [Parameter(Mandatory = $true, position = 1, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)][String[]]$Name
     )
     BEGIN {
         $pkg = Get-OPNsensePackage
@@ -40,7 +39,8 @@ Function Lock-OPNsensePackage {
         $thispkg = $pkg | Where-Object { $_.Name -eq $Name }
         If ($thispkg.installed -eq 0) {
             Write-Warning ($thispkg.Name + " is not installed and cannot be locked.")
-        } else {
+        }
+        else {
             Invoke-OPNsenseCommand core firmware "lock/$Name" -Form lock -addProperty @{ name = $Name.tolower()}
         }
     }
@@ -52,7 +52,7 @@ Function Lock-OPNsensePackage {
 Function Unlock-OPNsensePackage {
     # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
     param (
-        [Parameter(Mandatory=$true,position=1,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true)][String[]]$Name
+        [Parameter(Mandatory = $true, position = 1, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)][String[]]$Name
     )
     BEGIN {
         $pkg = Get-OPNsensePackage
@@ -61,7 +61,8 @@ Function Unlock-OPNsensePackage {
         $thispkg = $pkg | Where-Object { $_.Name -eq $Name }
         If ($thispkg.locked -eq 0) {
             Write-Warning ($thispkg.Name + " is not locked and cannot be unlocked.")
-        } else {
+        }
+        else {
             Invoke-OPNsenseCommand core firmware "unlock/$Name" -Form unlock -addProperty @{ name = $Name.tolower()}
         }
     }
@@ -73,7 +74,7 @@ Function Unlock-OPNsensePackage {
 Function Install-OPNsensePackage {
     # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
     param (
-        [Parameter(Mandatory=$true,position=1,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true)][String[]]$Name
+        [Parameter(Mandatory = $true, position = 1, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)][String[]]$Name
     )
     BEGIN {
         $pkg = Get-OPNsensePackage
@@ -82,7 +83,8 @@ Function Install-OPNsensePackage {
         $thispkg = $pkg | Where-Object { $_.Name -eq $Name }
         If ($thispkg.installed -eq 1) {
             Write-Warning ($thispkg.Name + " is already installed. Use -Force to reinstall the package.")
-        } else {
+        }
+        else {
             Invoke-OPNsenseCommand core firmware "install/$Name" -Form install -addProperty @{ name = $Name.tolower()}
         }
     }
@@ -94,7 +96,7 @@ Function Install-OPNsensePackage {
 Function Remove-OPNsensePackage {
     # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
     param (
-        [Parameter(Mandatory=$true,position=1,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true)][String[]]$Name
+        [Parameter(Mandatory = $true, position = 1, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)][String[]]$Name
     )
     BEGIN {
         $pkg = Get-OPNsensePackage
@@ -103,7 +105,8 @@ Function Remove-OPNsensePackage {
         $thispkg = $pkg | Where-Object { $_.Name -eq $Name }
         If ($thispkg.installed -eq 0) {
             Write-Warning ($thispkg.Name + " is not installed and cannot be removed.")
-        } else {
+        }
+        else {
             Invoke-OPNsenseCommand core firmware "remove/$Name" -Form remove -addProperty @{ name = $Name.tolower()}
         }
     }

@@ -1,5 +1,4 @@
-<#
-    MIT License
+<#  MIT License
 
     Copyright (c) 2017 fvanroie
 
@@ -30,9 +29,9 @@ Function Get-CertificatePolicy() {
     Write-Debug $([System.Net.ServicePointManager]::CertificatePolicy.GetType()).Name
     Write-Debug ("Expect100Continue: " + $([System.Net.ServicePointManager]::Expect100Continue))
     return @{
-  #    ServerCertificateValidationCallback = [System.Net.ServicePointManager]::ServerCertificateValidationCallback ;
-      CertificatePolicy = [System.Net.ServicePointManager]::CertificatePolicy ;
-      Expect100Continue = [System.Net.ServicePointManager]::Expect100Continue
+        #    ServerCertificateValidationCallback = [System.Net.ServicePointManager]::ServerCertificateValidationCallback ;
+        CertificatePolicy = [System.Net.ServicePointManager]::CertificatePolicy ;
+        Expect100Continue = [System.Net.ServicePointManager]::Expect100Continue
     }
 }
 
@@ -40,7 +39,7 @@ Function Get-CertificatePolicy() {
 Function Set-CertificatePolicy() {
     [CmdletBinding()]
     Param (
-        [Parameter(Mandatory=$true)]$CertPolicy
+        [Parameter(Mandatory = $true)]$CertPolicy
     )
     #[System.Net.ServicePointManager]::ServerCertificateValidationCallback = $CertPolicy.ServerCertificateValidationCallback
     [System.Net.ServicePointManager]::CertificatePolicy = $CertPolicy.CertificatePolicy
@@ -56,10 +55,10 @@ Function Disable-CertificateValidation() {
     Param()
     #[System.Net.ServicePointManager]::ServerCertificateValidationCallback = { $true }
     Try {
-      [System.Net.ServicePointManager]::CertificatePolicy = New-Object OPNsenseTrustAllCertsPolicy
+        [System.Net.ServicePointManager]::CertificatePolicy = New-Object OPNsenseTrustAllCertsPolicy
     }
     Catch {
-Add-Type @"
+        Add-Type @"
     using System.Net;
     using System.Security.Cryptography.X509Certificates;
     public class OPNsenseTrustAllCertsPolicy : ICertificatePolicy {

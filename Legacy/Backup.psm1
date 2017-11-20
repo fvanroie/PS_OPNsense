@@ -1,5 +1,4 @@
-<#
-    MIT License
+<#  MIT License
 
     Copyright (c) 2017 fvanroie
 
@@ -26,31 +25,41 @@ Function Backup-OPNsenseConfig {
     # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
     [CmdletBinding()]
     Param (
-        [switch]$RRDdata=$false,
+        [switch]$RRDdata = $false,
 
         [ValidateNotNullOrEmpty()]
-        [parameter(Mandatory=$false)]
+        [parameter(Mandatory = $false)]
         [String]$Password
     )
 
-    $AcceptCertificate = $MyInvocation.MyCommand.Module.PrivateData['OPNsenseSkipCert']
+    # Check if running PowerShell Core CLR or Windows PowerShell
+    $PSCore = IsPSCoreEdition
+
+    if ($DebugPreference -eq "Inquire") { $DebugPreference = "Continue" }
+
+    $SkipCertificateCheck = $MyInvocation.MyCommand.Module.PrivateData['OPNsenseSkipCert']
     $Credential = $MyInvocation.MyCommand.Module.PrivateData['WebCredentials']
     $Uri = $MyInvocation.MyCommand.Module.PrivateData['OPNsenseUri']
 
     if ($PSBoundParameters.ContainsKey('Password')) {
         $encrypt = $true
-    } else {
+    }
+    else {
         $encrypt = $false
     }
 
-
-    if ([bool]::Parse($AcceptCertificate)) {
+    if (-Not $PSCore -And [bool]::Parse($SkipCertificateCheck)) {
         $CertPolicy = Get-CertificatePolicy -Verbose:$VerbosePreference
         Disable-CertificateValidation -Verbose:$VerbosePreference
     }
 
     Try {
-        $webpage = Invoke-WebRequest -Uri $Uri -SessionVariable cookieJar
+        if ($PSCore) {
+            $webpage = Invoke-WebRequest -Uri $Uri -SessionVariable cookieJar -SkipCertificateCheck:$SkipCertificateCheck
+        }
+        else {
+            $webpage = Invoke-WebRequest -Uri $Uri -SessionVariable cookieJar
+        }
         $xssToken = $webpage.InputFields | Where-Object { $_.type -eq 'hidden'}
         $form = @{
             $xssToken.name = $xssToken.value;
@@ -58,11 +67,24 @@ Function Backup-OPNsenseConfig {
             passwordfld = $Credential.GetNetworkCredential().Password;
             login = 1
         }
-        $webpage = Invoke-WebRequest -Uri "$Uri/index.php" -WebSession $cookieJar -Method POST -Body $form
-        # check logged in
-        Write-Verbose $webpage.title
+        if ($PSCore) {
+            $webpage = Invoke-WebRequest -Uri "$Uri/index.php" -WebSession $cookieJar -Method POST -Body $form -SkipCertificateCheck:$SkipCertificateCheck
+        }
+        else {
+            $webpage = Invoke-WebRequest -Uri "$Uri/index.php" -WebSession $cookieJar -Method POST -Body $form
+        }
 
-        $webpage = Invoke-WebRequest -Uri "$Uri/diag_backup.php" -WebSession $cookieJar -Method POST -Body $form
+        # check logged in
+        if ($webpage.ParsedHtml.title -eq 'Login') {
+            Throw 'Unable to login to the OPNsense server'
+        }
+
+        if ($PSCore) {
+            $webpage = Invoke-WebRequest -Uri "$Uri/diag_backup.php" -WebSession $cookieJar -Method POST -Body $form -SkipCertificateCheck:$SkipCertificateCheck
+        }
+        else {
+            $webpage = Invoke-WebRequest -Uri "$Uri/diag_backup.php" -WebSession $cookieJar -Method POST -Body $form
+        }
         $xssToken = $webpage.InputFields | Where-Object { $_.type -eq 'hidden'}
 
         $form = @{
@@ -73,8 +95,13 @@ Function Backup-OPNsenseConfig {
             encrypt_passconf = if ($encrypt) { $Password } else { '' };
             download = "Download configuration"
         }
-        $backupxml = Invoke-WebRequest "$Uri/diag_backup.php" -WebSession $cookieJar -Method POST -Body $form
-        $Result = $backupxml.RawContent.Substring($backupxml.RawContent.Length-$backupxml.RawContentLength,$backupxml.RawContentLength)
+        if ($PSCore) {
+            $backupxml = Invoke-WebRequest "$Uri/diag_backup.php" -WebSession $cookieJar -Method POST -Body $form -SkipCertificateCheck:$SkipCertificateCheck
+        }
+        else {
+            $backupxml = Invoke-WebRequest "$Uri/diag_backup.php" -WebSession $cookieJar -Method POST -Body $form
+        }
+        $Result = $backupxml.RawContent.Substring($backupxml.RawContent.Length - $backupxml.RawContentLength, $backupxml.RawContentLength)
     }
     Catch {
         $ErrorMessage = $_.Exception.Message
@@ -82,7 +109,7 @@ Function Backup-OPNsenseConfig {
     }
     # Always restore the built-in .NET certificate policy
     Finally {
-        if ([bool]::Parse($AcceptCertificate)) {
+        if (-Not $PSCore -And [bool]::Parse($SkipCertificateCheck)) {
             Set-CertificatePolicy $CertPolicy -Verbose:$VerbosePreference
         }
     }
@@ -92,33 +119,61 @@ Function Backup-OPNsenseConfig {
 Function Restore-OPNsenseConfig {
     # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
     [CmdletBinding(
-       SupportsShouldProcess=$true,
-       ConfirmImpact="High"
+        SupportsShouldProcess = $true,
+        ConfirmImpact = "High"
     )]
     Param (
+        [parameter(Mandatory = $true, position = 1, ParameterSetName = "XML")]
         [ValidateNotNullOrEmpty()]
-        [String]$xml,
+        [String]$Xml,
+
+        [parameter(Mandatory = $true, position = 1, ParameterSetName = "File")]
+        [ValidateScript( {
+                if (-Not ($_ | Test-Path) ) {
+                    throw "File does not exist"
+                }
+                if (-Not ($_ | Test-Path -PathType Leaf) ) {
+                    throw "The Path argument must be a file. Folders are not allowed."
+                }
+                if ($_ -notmatch "(\.xml)") {
+                    throw "The file specified in the path argument must be of type xml."
+                }
+                return $true
+            })]
+        [System.IO.FileInfo]$Path,
 
         [ValidateNotNullOrEmpty()]
-        [parameter(Mandatory=$false)]
+        [parameter(Mandatory = $false)]
         [String]$Password
     )
 
-    $AcceptCertificate = $MyInvocation.MyCommand.Module.PrivateData['OPNsenseSkipCert']
+    # Check if running PowerShell Core CLR or Windows PowerShell
+    $PSCore = IsPSCoreEdition
+
+    if ($DebugPreference -eq "Inquire") { $DebugPreference = "Continue" }
+
+    # Check Parameters
+    $decrypt = if ($PSBoundParameters.ContainsKey('Password')) { $true } else { $false }
+    if ($PSBoundParameters.ContainsKey('Path')) {
+        $xml = Get-Content -Path $Path -ErrorAction Stop -Raw
+    }
+
+    #Content validation
+
+    $SkipCertificateCheck = $MyInvocation.MyCommand.Module.PrivateData['OPNsenseSkipCert']
     $Credential = $MyInvocation.MyCommand.Module.PrivateData['WebCredentials']
     $Uri = $MyInvocation.MyCommand.Module.PrivateData['OPNsenseUri']
 
-  		$boundary = [guid]::NewGuid().ToString()
-$bodyXML = @'
+    $boundary = [guid]::NewGuid().ToString()
+    $bodyXML = @'
 --{0}
 Content-Disposition: form-data; name="{1}"; filename="{2}"
 Content-Type: text/xml
 
 {3}
 --{0}--
-
 '@
-$bodytempl = @'
+    $bodytempl = @'
 --{0}
 Content-Disposition: form-data; name="{1}"
 
@@ -126,19 +181,12 @@ Content-Disposition: form-data; name="{1}"
 
 '@
 
-    if ($PSBoundParameters.ContainsKey('Password')) {
-        $decrypt = $true
-    } else {
-        $decrypt = $false
-    }
-
-    if ($pscmdlet.ShouldProcess($MyInvocation.MyCommand.Module.PrivateData['OPNsenseUri'])) {
-    } else {
+    if (-Not $pscmdlet.ShouldProcess($MyInvocation.MyCommand.Module.PrivateData['OPNsenseUri'])) {
         Write-Warning 'Aborting Restore-OPNsenseConfig'
         Return
     }
 
-    if ([bool]::Parse($AcceptCertificate)) {
+    if (-Not $PSCore -And [bool]::Parse($SkipCertificateCheck)) {
         $CertPolicy = Get-CertificatePolicy -Verbose:$VerbosePreference
         Disable-CertificateValidation -Verbose:$VerbosePreference
     }
@@ -154,6 +202,9 @@ Content-Disposition: form-data; name="{1}"
         }
         $webpage = Invoke-WebRequest -Uri "$Uri/index.php" -WebSession $cookieJar -Method POST -Body $form
         # check logged in
+        if ($webpage.ParsedHtml.title -eq 'Login') {
+            Throw 'Unable to login to the OPNsense server'
+        }
 
         $webpage = Invoke-WebRequest -Uri "$Uri/diag_backup.php" -WebSession $cookieJar
         $xssToken = $webpage.InputFields | Where-Object { $_.type -eq 'hidden'}
@@ -168,11 +219,12 @@ Content-Disposition: form-data; name="{1}"
             restore = "Restore configuration"
         }
 
+        $body = ""
         $form.Keys | ForEach-Object {
             $body += $bodytempl -f $boundary, $_, $form.Item($_)
         }
         $body += $bodyXML -f $boundary, 'conffile', 'config.xml', $xml
-        #Write-Verbose $body
+        Write-Verbose $body
         $restorexml = Invoke-WebRequest "$Uri/diag_backup.php" -WebSession $cookieJar -Method POST -Body $body -ContentType "multipart/form-data; boundary=$boundary"
     }
     Catch {
@@ -181,7 +233,7 @@ Content-Disposition: form-data; name="{1}"
     }
     # Always restore the built-in .NET certificate policy
     Finally {
-        if ([bool]::Parse($AcceptCertificate)) {
+        if (-Not $PSCore -And [bool]::Parse($SkipCertificateCheck)) {
             Set-CertificatePolicy $CertPolicy -Verbose:$VerbosePreference
         }
     }
@@ -195,7 +247,8 @@ Content-Disposition: form-data; name="{1}"
         }
         if ($restorexml.parsedhtml.body.getElementsbyclassname('alert-info').length -gt 0) {
             $result = $restorexml.parsedhtml.body.getElementsbyclassname('alert-info')[0].innerText
-        } else {
+        }
+        else {
             $Result = $restorexml.parsedhtml.body.getElementsbyclassname('alert')[0].innerText
         }
     }
@@ -208,49 +261,52 @@ Content-Disposition: form-data; name="{1}"
 Function Reset-OPNsenseConfig {
     # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
     [CmdletBinding(
-       SupportsShouldProcess=$true,
-       ConfirmImpact="High"
+        SupportsShouldProcess = $true,
+        ConfirmImpact = "High"
     )]
     Param (
-        [parameter(Mandatory=$true)]
-        [switch]$EraseAllSettings=$false,
+        [parameter(Mandatory = $true)]
+        [switch]$EraseAllSettings = $false,
 
         [ValidateNotNullOrEmpty()]
-        [parameter(Mandatory=$true)]
+        [parameter(Mandatory = $true)]
         [String]$Hostname
     )
 
-    $AcceptCertificate = $MyInvocation.MyCommand.Module.PrivateData['OPNsenseSkipCert']
+    # Check if running PowerShell Core CLR or Windows PowerShell
+    $PSCore = IsPSCoreEdition
+
+    if ($DebugPreference -eq "Inquire") { $DebugPreference = "Continue" }
+
+    $SkipCertificateCheck = $MyInvocation.MyCommand.Module.PrivateData['OPNsenseSkipCert']
     $Credential = $MyInvocation.MyCommand.Module.PrivateData['WebCredentials']
     $Uri = $MyInvocation.MyCommand.Module.PrivateData['OPNsenseUri']
 
     if ($PSBoundParameters.ContainsKey('Password')) {
         $encrypt = $true
-    } else {
+    }
+    else {
         $encrypt = $false
     }
 
-      if ([bool]::Parse($EraseAllSettings)) {
-      } else {
-          Write-Warning 'You need to specify the Erase'
-          Return
+    if (-Not [bool]::Parse($EraseAllSettings)) {
+        Write-Warning 'You need to specify the EraseAllSettings switch'
+        Return
     }
 
     Write-Warning '!!! YOU ARE ABOUT TO COMPLETELY ERASE THE OPNSENSE CONFIGURATION !!!'
-    if ($pscmdlet.ShouldProcess($MyInvocation.MyCommand.Module.PrivateData['OPNsenseUri'])) {
-    } else {
+    if (-Not $pscmdlet.ShouldProcess($MyInvocation.MyCommand.Module.PrivateData['OPNsenseUri'])) {
         Write-Warning 'Aborting Reset-OPNsenseConfig'
         Return
     }
 
     Write-Warning '!!! YOU ARE ABOUT TO COMPLETELY ERASE THE OPNSENSE CONFIGURATION !!!'
-    if ($pscmdlet.ShouldProcess($MyInvocation.MyCommand.Module.PrivateData['OPNsenseUri'] + "!!! Last warning !!!")) {
-    } else {
+    if (-Not $pscmdlet.ShouldProcess($MyInvocation.MyCommand.Module.PrivateData['OPNsenseUri'] + "!!! Last warning !!!")) {
         Write-Warning 'Aborting Reset-OPNsenseConfig'
         Return
     }
 
-    if ([bool]::Parse($AcceptCertificate)) {
+    if (-Not $PSCore -And [bool]::Parse($SkipCertificateCheck)) {
         $CertPolicy = Get-CertificatePolicy -Verbose:$VerbosePreference
         Disable-CertificateValidation -Verbose:$VerbosePreference
     }
@@ -266,6 +322,9 @@ Function Reset-OPNsenseConfig {
         }
         $webpage = Invoke-WebRequest -Uri "$Uri/index.php" -WebSession $cookieJar -Method POST -Body $form
         # check logged in
+        if ($webpage.ParsedHtml.title -eq 'Login') {
+            Throw 'Unable to login to the OPNsense server'
+        }
         $fqdn = $webpage.ParsedHtml.title.Split(' | ') | Select-Object -Last 1
 
         If ($fqdn -ne $Hostname) {
@@ -283,7 +342,7 @@ Function Reset-OPNsenseConfig {
         $Result = $webpage
     }
     Catch [System.Management.Automation.ItemNotFoundException] {
-      Write-Error $_.Exception.Message
+        Write-Error $_.Exception.Message
     }
     Catch {
         $ErrorMessage = $_.Exception.Message
@@ -291,7 +350,7 @@ Function Reset-OPNsenseConfig {
     }
     # Always restore the built-in .NET certificate policy
     Finally {
-        if ([bool]::Parse($AcceptCertificate)) {
+        if (-Not $PSCore -And [bool]::Parse($SkipCertificateCheck)) {
             Set-CertificatePolicy $CertPolicy -Verbose:$VerbosePreference
         }
     }
