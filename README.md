@@ -66,10 +66,10 @@ For the full documentation on all the different cmdlets and parameters, please v
 ## Compatibility
 This module is tested on:
 
-|Platform|Shell|Version
-+-----+-----+-----+
-|Windows|PowerShell Desktop|5.1|
-|Windows|PowerShell Core|RC 6.0|
+| Platform | Edition | Version|
+|----------|---------|--------|
+| Windows  | PowerShell Desktop | 5.1 |
+| Windows  | PowerShell Core | RC 6.0 |
 
-PS_OPNsense aims to be cross-platform on PowerShell Core, however it has not been tested on Linux and MacOS yet.
+PS_OPNsense aims to be cross-platform on PowerShell Core RC 6.0 and up, however it has not been tested on Linux and MacOS yet.
 Feel free to use it on these platforms and report back any issues you encouter.
