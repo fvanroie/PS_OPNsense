@@ -31,7 +31,7 @@ Function Invoke-OPNsenseApiRestCommand {
         [PSCredential]$Credential,
         $Json,
         $Form,
-        [switch]$SkipCertificateCheck=$false
+        [switch]$SkipCertificateCheck = $false
     )
     $Headers = @{}
 
@@ -59,21 +59,24 @@ Function Invoke-OPNsenseApiRestCommand {
                 $Json = $Json | ConvertTo-Json -Depth 15   # Default Depth is 2
                 Write-Verbose "JSON Arguments: $Json"
                 # Set correct Content-Type for JSON data
-                $Headers.Add('Content-Type','application/json')
+                $Headers.Add('Content-Type', 'application/json')
                 if ($PSCore) {
                     $result = Invoke-RestMethod -Uri $uri -Method 'Post' -Body $Json `
-                                        -Authentication 'Basic' -Credential $Credential -Headers $Headers `
-                                        -SkipCertificateCheck:$SkipCertificateCheck
-                } else {
+                        -Authentication 'Basic' -Credential $Credential -Headers $Headers `
+                        -SkipCertificateCheck:$SkipCertificateCheck
+                }
+                else {
                     [System.Net.ServicePointManager]::Expect100Continue = $false
                     $result = Invoke-RestMethod -Uri $uri -Method Post -Body $Json -Headers $Headers
                 }
-            } else {
+            }
+            else {
                 Throw 'JSON object should be a HashTable'
                 #$result = Invoke-RestMethod -Uri $uri -Method Post -Body $Json `
                 #             -Headers $BasicAuthHeader -Verbose:$VerbosePreference
             }
-        } else {
+        }
+        else {
             # Post a web Form
             if ($Form) {
                 # Output Verbose object in JSON notation, if -Verbose is specified
@@ -81,19 +84,22 @@ Function Invoke-OPNsenseApiRestCommand {
                 Write-Verbose "Form Arguments: $Json"
                 if ($PSCore) {
                     $result = Invoke-RestMethod -Uri $uri -Method 'Post' -Body $Form `
-                                        -Authentication 'Basic' -Credential $Credential -Headers $Headers `
-                                        -SkipCertificateCheck:$SkipCertificateCheck
-                } else {
+                        -Authentication 'Basic' -Credential $Credential -Headers $Headers `
+                        -SkipCertificateCheck:$SkipCertificateCheck
+                }
+                else {
                     [System.Net.ServicePointManager]::Expect100Continue = $false
                     $result = Invoke-RestMethod -Uri $uri -Method Post -Body $Form -Headers $Headers
                 }
-            # Neither Json nor Post, so its a plain request
-            } else {
+                # Neither Json nor Post, so its a plain request
+            }
+            else {
                 if ($PSCore) {
                     $result = Invoke-RestMethod -Uri $uri -Method 'Get' `
-                                        -Authentication 'Basic' -Credential $Credential -Headers $Headers `
-                                        -SkipCertificateCheck:$SkipCertificateCheck
-                } else {
+                        -Authentication 'Basic' -Credential $Credential -Headers $Headers `
+                        -SkipCertificateCheck:$SkipCertificateCheck
+                }
+                else {
                     # This needs to be POST for SkipCertificateCheck to work properly in PS Desktop
                     # Use a POST with empty body instead of a GET, to work around bug
                     # that prevents GET from working when used with -SkipCertificateCheck
@@ -122,21 +128,21 @@ Function Invoke-OPNsenseCommand {
     # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
     [CmdletBinding()]
     Param (
-        [parameter(Mandatory=$true,position=1,ParameterSetName = "Get")]
-        [parameter(Mandatory=$true,position=1,ParameterSetName = "Json")]
-        [parameter(Mandatory=$true,position=1,ParameterSetName = "Form")]
+        [parameter(Mandatory = $true, position = 1, ParameterSetName = "Get")]
+        [parameter(Mandatory = $true, position = 1, ParameterSetName = "Json")]
+        [parameter(Mandatory = $true, position = 1, ParameterSetName = "Form")]
         [String]$Module,
 
-        [parameter(Mandatory=$true,position=2)][String]$Controller,
-        [parameter(Mandatory=$true,position=3)][String]$Command,
+        [parameter(Mandatory = $true, position = 2)][String]$Controller,
+        [parameter(Mandatory = $true, position = 3)][String]$Command,
 
-        [parameter(Mandatory=$true,ParameterSetName = "Json")]
+        [parameter(Mandatory = $true, ParameterSetName = "Json")]
         $Json,
 
-        [parameter(Mandatory=$true,ParameterSetName = "Form")]
+        [parameter(Mandatory = $true, ParameterSetName = "Form")]
         $Form,
 
-        [parameter(Mandatory=$false)]$AddProperty
+        [parameter(Mandatory = $false)]$AddProperty
     )
 
     if ($DebugPreference -eq "Inquire") { $DebugPreference = "Continue" }
@@ -148,29 +154,32 @@ Function Invoke-OPNsenseCommand {
 
     if ($OPNsenseApi) {
         $Uri = ($OPNsenseApi + '/' + $Module + '/' + $Controller + '/' + $Command)
-    } else {
+    }
+    else {
         throw "ERROR : Not connected to an OPNsense instance"
     }
 
     if ($Json) {
         $Result = Invoke-OPNsenseApiRestCommand -Uri $Uri -credential $Credentials -Json $Json `
-                      -SkipCertificateCheck:$SkipCertificateCheck -Verbose:$VerbosePreference
-    } else {
+            -SkipCertificateCheck:$SkipCertificateCheck -Verbose:$VerbosePreference
+    }
+    else {
         if ($Form) {
             $Result = Invoke-OPNsenseApiRestCommand -Uri $Uri -credential $Credentials -Form $Form `
-                          -SkipCertificateCheck:$SkipCertificateCheck -Verbose:$VerbosePreference
-        } else {
+                -SkipCertificateCheck:$SkipCertificateCheck -Verbose:$VerbosePreference
+        }
+        else {
             $Result = Invoke-OPNsenseApiRestCommand -Uri $Uri -credential $Credentials `
-                          -SkipCertificateCheck:$SkipCertificateCheck -Verbose:$VerbosePreference
+                -SkipCertificateCheck:$SkipCertificateCheck -Verbose:$VerbosePreference
         }
     }
 
     # The result return should be a JSON object, which is automatically parsed into an object
     # If the result is a String: Find empty labels and mark them as a space (#bug in ConvertFrom-JSON)
     if ($Result.GetType().Name -eq "String") {
-        $result = $result.Replace('"":"','" ":"')
+        $result = $result.Replace('"":"', '" ":"')
         #$result = $result.Replace('"":(','" ":(')
-        $result = $result.Replace('"":{','" ":{')
+        $result = $result.Replace('"":{', '" ":{')
         try {
             $result = ConvertFrom-Json $result -ErrorAction Stop
         }
@@ -200,35 +209,35 @@ Function Connect-OPNsense() {
     # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
     [CmdletBinding()]
     param (
-        [parameter(Mandatory=$true,position=1,ParameterSetName = "Modern")]
-        [parameter(Mandatory=$true,position=1,ParameterSetName = "Legacy")]
+        [parameter(Mandatory = $true, position = 1, ParameterSetName = "Modern")]
+        [parameter(Mandatory = $true, position = 1, ParameterSetName = "Legacy")]
         [ValidateNotNullOrEmpty()]
         [String]$Url,
 
-        [parameter(Mandatory=$true,position=2,ParameterSetName = "Modern")]
+        [parameter(Mandatory = $true, position = 2, ParameterSetName = "Modern")]
         [ValidateNotNull()]
         [System.Management.Automation.PSCredential]
         [System.Management.Automation.Credential()]
         $Credential = [System.Management.Automation.PSCredential]::Empty,
 
-        [parameter(Mandatory=$true,position=2,ParameterSetName = "Legacy")]
+        [parameter(Mandatory = $true, position = 2, ParameterSetName = "Legacy")]
         [ValidateNotNullOrEmpty()]
         [String]$Key,
 
-        [parameter(Mandatory=$true,position=3,ParameterSetName = "Legacy")]
+        [parameter(Mandatory = $true, position = 3, ParameterSetName = "Legacy")]
         [ValidateNotNullOrEmpty()]
         [String]$Secret,
 
-        [parameter(Mandatory=$false,position=3,ParameterSetName = "Modern")]
-        [parameter(Mandatory=$false,position=4,ParameterSetName = "Legacy")]
+        [parameter(Mandatory = $false, position = 3, ParameterSetName = "Modern")]
+        [parameter(Mandatory = $false, position = 4, ParameterSetName = "Legacy")]
         [ValidateNotNull()]
         [System.Management.Automation.PSCredential]
         [System.Management.Automation.Credential()]
         $WebCredential = [System.Management.Automation.PSCredential]::Empty,
 
-        [parameter(Mandatory=$false,position=4,ParameterSetName = "Modern")]
-        [parameter(Mandatory=$false,position=5,ParameterSetName = "Legacy")]
-        [switch]$SkipCertificateCheck=$false
+        [parameter(Mandatory = $false, position = 4, ParameterSetName = "Modern")]
+        [parameter(Mandatory = $false, position = 5, ParameterSetName = "Legacy")]
+        [switch]$SkipCertificateCheck = $false
     )
 
     $OPNsenseApi = $MyInvocation.MyCommand.Module.PrivateData['OPNsenseApi']
@@ -245,31 +254,34 @@ Function Connect-OPNsense() {
     if ($PSBoundParameters.ContainsKey('Password')) {
         $SecurePassword = $Password | ConvertTo-SecureString -AsPlainText -Force
         $WebCredential = New-Object System.Management.Automation.PSCredential -ArgumentList $Username, $SecurePassword
-    } else {
+    }
+    else {
         if (-Not $PSBoundParameters.ContainsKey('WebCredential')) {
             $WebCredential = $null
         }
     }
     $Uri = ($Url + '/api/core/firmware/info')
     $Result = Invoke-OPNsenseApiRestCommand -Uri $Uri -Credential $Credential `
-                  -SkipCertificateCheck:$SkipCertificateCheck -Verbose:$VerbosePreference
+        -SkipCertificateCheck:$SkipCertificateCheck -Verbose:$VerbosePreference
 
     if ($Result) {
-      # Validate the connection result
-      if ($Result.product_version) {
-          Write-Verbose ("OPNsense version : " + $Result.product_version )
-          $MyInvocation.MyCommand.Module.PrivateData['ApiCredentials'] = $Credential
-          $MyInvocation.MyCommand.Module.PrivateData['WebCredentials'] = $WebCredential
-          $MyInvocation.MyCommand.Module.PrivateData['OPNsenseUri'] = $Url
-          $MyInvocation.MyCommand.Module.PrivateData['OPNsenseApi'] = "$Url/api"
-          $MyInvocation.MyCommand.Module.PrivateData['OPNsenseSkipCert'] = [bool]::Parse($SkipCertificateCheck)
-          return $Result | Select-Object -Property product_name,product_version
-      } else {
-        Throw "ERROR : Failed to get the OPNsense version of server '$Url'."
-      }
-  } else {
-      Throw "ERROR : Could not connect to the OPNsense server '$Url' using the credentials supplied."
-  }
+        # Validate the connection result
+        if ($Result.product_version) {
+            Write-Verbose ("OPNsense version : " + $Result.product_version )
+            $MyInvocation.MyCommand.Module.PrivateData['ApiCredentials'] = $Credential
+            $MyInvocation.MyCommand.Module.PrivateData['WebCredentials'] = $WebCredential
+            $MyInvocation.MyCommand.Module.PrivateData['OPNsenseUri'] = $Url
+            $MyInvocation.MyCommand.Module.PrivateData['OPNsenseApi'] = "$Url/api"
+            $MyInvocation.MyCommand.Module.PrivateData['OPNsenseSkipCert'] = [bool]::Parse($SkipCertificateCheck)
+            return $Result | Select-Object -Property product_name, product_version
+        }
+        else {
+            Throw "ERROR : Failed to get the OPNsense version of server '$Url'."
+        }
+    }
+    else {
+        Throw "ERROR : Could not connect to the OPNsense server '$Url' using the credentials supplied."
+    }
 }
 
 Function Disconnect-OPNsense() {
@@ -283,7 +295,8 @@ Function Disconnect-OPNsense() {
         $MyInvocation.MyCommand.Module.PrivateData['OPNsenseUri'] = $null
         $MyInvocation.MyCommand.Module.PrivateData['OPNsenseApi'] = $null
         $MyInvocation.MyCommand.Module.PrivateData['OPNsenseSkipCert'] = $null
-    } else {
+    }
+    else {
         Throw 'ERROR : You are not connected to an OPNsense server. Please use Connect-OPNsense first.'
     }
 }

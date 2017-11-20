@@ -24,7 +24,7 @@
 function Get-OPNsenseService {
     # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
     param (
-        [Parameter(Mandatory=$false,position=1,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true)]
+        [Parameter(Mandatory = $false, position = 1, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)]
         [String[]]$Name
     )
     BEGIN {
@@ -37,22 +37,22 @@ function Get-OPNsenseService {
         foreach ($service in $name) {
             try {
                 switch ($service) {
-                  'netflow'
-                      {     $results += Invoke-OPNsenseCommand diagnostics netflow status -AddProperty @{ name = $service.tolower()}
-                            #$result | Add-Member 'name' $service.tolower()
-                            #$results += $result
-                      }
-                      'zerotier'
-                          {     $results += Invoke-OPNsenseCommand $service.tolower() settings status -AddProperty @{ name = $service.tolower()}
-                          }
+                    'netflow'
+                    {     $results += Invoke-OPNsenseCommand diagnostics netflow status -AddProperty @{ name = $service.tolower()}
+                        #$result | Add-Member 'name' $service.tolower()
+                        #$results += $result
+                    }
+                    'zerotier'
+                    {     $results += Invoke-OPNsenseCommand $service.tolower() settings status -AddProperty @{ name = $service.tolower()}
+                    }
                     Default
-                          {     $results += Invoke-OPNsenseCommand $service.tolower() service status -AddProperty @{ name = $service.tolower()}
-                                #$result | Add-Member 'name' $service.tolower()
-                                #$results += $result
-                                # return $result | Select-Object -Property Name,Status
-                          }
-                    } # switch
-                }
+                    {     $results += Invoke-OPNsenseCommand $service.tolower() service status -AddProperty @{ name = $service.tolower()}
+                        #$result | Add-Member 'name' $service.tolower()
+                        #$results += $result
+                        # return $result | Select-Object -Property Name,Status
+                    }
+                } # switch
+            }
             catch {
                 Write-Error "$service failed to report status"
             }
@@ -67,7 +67,7 @@ function Get-OPNsenseService {
 function Update-OPNsenseService {
     # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
     param (
-        [Parameter(Mandatory=$false,position=1,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true)]
+        [Parameter(Mandatory = $false, position = 1, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)]
         [String[]]$Name
     )
     BEGIN {
@@ -81,16 +81,16 @@ function Update-OPNsenseService {
             try {
                 switch ($service) {
                     'netflow'
-                        {     $results += Invoke-OPNsenseCommand diagnostics netflow reconfigure -AddProperty @{ name = $service.tolower()}
-                        }
+                    {     $results += Invoke-OPNsenseCommand diagnostics netflow reconfigure -AddProperty @{ name = $service.tolower()}
+                    }
                     'monit'
-                        {     $results += Invoke-OPNsenseCommand $service.tolower() service reload -AddProperty @{ name = $service.tolower()}
-                        }
+                    {     $results += Invoke-OPNsenseCommand $service.tolower() service reload -AddProperty @{ name = $service.tolower()}
+                    }
                     Default
-                        {     $results += Invoke-OPNsenseCommand $service.tolower() service reconfigure -AddProperty @{ name = $service.tolower()}
-                        }
-                    } # switch
-                }
+                    {     $results += Invoke-OPNsenseCommand $service.tolower() service reconfigure -AddProperty @{ name = $service.tolower()}
+                    }
+                } # switch
+            }
             catch {
                 Write-Error "$service failed to reconfigure"
             }
@@ -106,7 +106,7 @@ function Update-OPNsenseService {
 Function Start-OPNsenseService {
     # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
     param (
-        [Parameter(Mandatory=$false,position=1,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true)]
+        [Parameter(Mandatory = $false, position = 1, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)]
         [String[]]$Name
     )
     BEGIN {
@@ -116,18 +116,17 @@ Function Start-OPNsenseService {
         $results = @()
     }
     PROCESS {
-        foreach ($service in $name)
-        {
+        foreach ($service in $name) {
             try {
                 switch ($service) {
                     'netflow'
-                        {     $results += Invoke-OPNsenseCommand diagnostics netflow start -AddProperty @{ name = $service.tolower()}
-                        }
+                    {     $results += Invoke-OPNsenseCommand diagnostics netflow start -AddProperty @{ name = $service.tolower()}
+                    }
                     Default
-                            {     $results += Invoke-OPNsenseCommand $service.tolower() service start -AddProperty @{ name = $service.tolower()}
-                            }
-                    } # switch
-                }
+                    {     $results += Invoke-OPNsenseCommand $service.tolower() service start -AddProperty @{ name = $service.tolower()}
+                    }
+                } # switch
+            }
             catch {
                 Write-Error "$service failed to start"
             }
@@ -143,7 +142,7 @@ Function Start-OPNsenseService {
 function Restart-OPNsenseService {
     # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
     param (
-        [Parameter(Mandatory=$false,position=1,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true)]
+        [Parameter(Mandatory = $false, position = 1, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)]
         [String[]]$Name
     )
     BEGIN {
@@ -153,18 +152,17 @@ function Restart-OPNsenseService {
         $results = @()
     }
     PROCESS {
-        foreach ($service in $name)
-        {
+        foreach ($service in $name) {
             try {
                 switch ($service) {
                     'netflow'
-                        {     $results += Invoke-OPNsenseCommand diagnostics netflow restart -AddProperty @{ name = $service.tolower()}
-                        }
+                    {     $results += Invoke-OPNsenseCommand diagnostics netflow restart -AddProperty @{ name = $service.tolower()}
+                    }
                     Default
-                            {     $results += Invoke-OPNsenseCommand $service.tolower() service restart -AddProperty @{ name = $service.tolower()}
-                            }
-                    } # switch
-                }
+                    {     $results += Invoke-OPNsenseCommand $service.tolower() service restart -AddProperty @{ name = $service.tolower()}
+                    }
+                } # switch
+            }
             catch {
                 Write-Error "$service failed to restart"
             }
@@ -180,7 +178,7 @@ function Restart-OPNsenseService {
 function Stop-OPNsenseService {
     # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
     param (
-        [Parameter(Mandatory=$false,position=1,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true)]
+        [Parameter(Mandatory = $false, position = 1, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)]
         [String[]]$Name
     )
     BEGIN {
@@ -190,18 +188,17 @@ function Stop-OPNsenseService {
         $results = @()
     }
     PROCESS {
-        foreach ($service in $name)
-        {
+        foreach ($service in $name) {
             try {
                 switch ($service) {
                     'netflow'
-                        {     $results += Invoke-OPNsenseCommand diagnostics netflow stop -AddProperty @{ name = $service.tolower()}
-                        }
+                    {     $results += Invoke-OPNsenseCommand diagnostics netflow stop -AddProperty @{ name = $service.tolower()}
+                    }
                     Default
-                            {     $results += Invoke-OPNsenseCommand $service.tolower() service stop -AddProperty @{ name = $service.tolower()}
-                            }
-                    } # switch
-                }
+                    {     $results += Invoke-OPNsenseCommand $service.tolower() service stop -AddProperty @{ name = $service.tolower()}
+                    }
+                } # switch
+            }
             catch {
                 Write-Error "$service failed to stop"
             }
@@ -217,11 +214,11 @@ function Stop-OPNsenseService {
 function Invoke-OPNsenseService {
     # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
     param (
-        [Parameter(Mandatory=$true,position=1,ValueFromPipeline=$false,ValueFromPipelineByPropertyName=$false)]
+        [Parameter(Mandatory = $true, position = 1, ValueFromPipeline = $false, ValueFromPipelineByPropertyName = $false)]
         [Switch]$FreshClam
     )
     BEGIN {
-      $results = @()
+        $results = @()
     }
     PROCESS {
         if ([bool]::Parse($FreshClam)) {
@@ -236,11 +233,10 @@ function Invoke-OPNsenseService {
 
 Function Get-Services {
     param (
-        [Parameter(Mandatory=$true,position=1)][String]$Action
+        [Parameter(Mandatory = $true, position = 1)][String]$Action
     )
     switch ($action) {
-      'status'
-        {
+        'status' {
             Return @(
                 'acmeclient',
                 'collectd',
@@ -261,9 +257,8 @@ Function Get-Services {
                 #'zerotier'
             )
         }
-      'reconfigure'
-          {
-              Return @(status
+        'reconfigure' {
+            Return @(status
                 'acmeclient',
                 'cicap',
                 'clamav',
@@ -281,78 +276,75 @@ Function Get-Services {
                 'trafficshaper',
                 'zabbixagent',
                 'zabbixproxy'
-              )
-            }
-      'start'
-            {
-                Return @(
-                    'acmeclient',
-                    'arpscanner',
-                    'clamav',
-                    'collectd',
-                    'diagnostics',
-                    'freeradius',
-                    'ftpproxy',
-                    'haproxy',
-                    'mdnsrepeater',
-                    'monit',
-                    'proxy',
-                    'quagga',
-                    'rspamd',
-                    'siproxd',
-                    'telegraf',
-                    'tinc',
-                    'tor',
-                    'zabbixagent',
-                    'zabbixproxy'
-                )
-            }
-      'restart'
-              {
-                  Return @(
-                      'acmeclient',
-                      'arpscanner',
-                      'clamav',
-                      'collectd',
-                      'ftpproxy',
-                      'helloworld',
-                      'ids',
-                      'mdnsrepeater',
-                      'monit',
-                      'postfix',
-                      'proxy',
-                      'quagga',
-                      'rspamd',
-                      'siproxd',
-                      'telegraf',
-                      'tinc',
-                      'zabbixagent'
-                  )
-              }
-      'stop'
-                {
-                    Return @(
-                        'acmeclient',
-                        'arpscanner',
-                        'captiveportal',
-                        'clamav',
-                        'collectd',
-                        'freeradius',
-                        'ftpproxy',
-                        'haproxy',
-                        'ids',
-                        'mdnsrepeater',
-                        'monit',
-                        'proxy',
-                        'quagga',
-                        'rspamd',
-                        'siproxd',
-                        'telegraf',
-                        'tinc',
-                        'tor',
-                        'zabbixagent',
-                        'zabbixproxy'
-                    )
-                }
+            )
+        }
+        'start' {
+            Return @(
+                'acmeclient',
+                'arpscanner',
+                'clamav',
+                'collectd',
+                'diagnostics',
+                'freeradius',
+                'ftpproxy',
+                'haproxy',
+                'mdnsrepeater',
+                'monit',
+                'proxy',
+                'quagga',
+                'rspamd',
+                'siproxd',
+                'telegraf',
+                'tinc',
+                'tor',
+                'zabbixagent',
+                'zabbixproxy'
+            )
+        }
+        'restart' {
+            Return @(
+                'acmeclient',
+                'arpscanner',
+                'clamav',
+                'collectd',
+                'ftpproxy',
+                'helloworld',
+                'ids',
+                'mdnsrepeater',
+                'monit',
+                'postfix',
+                'proxy',
+                'quagga',
+                'rspamd',
+                'siproxd',
+                'telegraf',
+                'tinc',
+                'zabbixagent'
+            )
+        }
+        'stop' {
+            Return @(
+                'acmeclient',
+                'arpscanner',
+                'captiveportal',
+                'clamav',
+                'collectd',
+                'freeradius',
+                'ftpproxy',
+                'haproxy',
+                'ids',
+                'mdnsrepeater',
+                'monit',
+                'proxy',
+                'quagga',
+                'rspamd',
+                'siproxd',
+                'telegraf',
+                'tinc',
+                'tor',
+                'zabbixagent',
+                'zabbixproxy'
+            )
+        }
     }
 }

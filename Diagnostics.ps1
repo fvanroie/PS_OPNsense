@@ -23,7 +23,7 @@
 
 Function Convert-UnixSecondstoLocal {
     param(
-        [parameter(Mandatory=$true)][decimal] $unixSeconds
+        [parameter(Mandatory = $true)][decimal] $unixSeconds
     )
     return [timezone]::CurrentTimeZone.ToLocalTime(([datetime]'1/1/1970').AddSeconds($unixSeconds))
 
@@ -33,12 +33,12 @@ Function Convert-UnixSecondstoLocal {
 
 Function Convert-DateTimetoUnix {
     param (
-        [parameter(Mandatory=$true)]
+        [parameter(Mandatory = $true)]
         [ValidateNotNullOrEmpty()]
         [DateTime]$dt
     )
     $origin = New-Object -Type DateTime -ArgumentList 1970, 1, 1, 0, 0, 0, 0
-    [Math]::Round($($dt-$origin).TotalSeconds)
+    [Math]::Round($($dt - $origin).TotalSeconds)
 }
 
 Function Format-SystemHealthData {
@@ -50,10 +50,10 @@ Function Format-SystemHealthData {
     $table = @()
     $rows = $rawdata[0].values.Count
     for ($i = 0; $i -lt $rows; $i++) {
-        $unixdt =  Convert-UnixSecondstoLocal ($rawdata.values[$i][0]/1000)
+        $unixdt = Convert-UnixSecondstoLocal ($rawdata.values[$i][0] / 1000)
         $row = New-Object PSObject -Property @{ timestamp = $Unixdt }
         foreach ($column in $rawdata) {
-           $row | Add-Member -NotePropertyName $column.key -NotePropertyValue $column.values[$i][1]
+            $row | Add-Member -NotePropertyName $column.key -NotePropertyValue $column.values[$i][1]
         }
         $table += $row
     }
@@ -63,17 +63,16 @@ Function Format-SystemHealthData {
 
 Function ValidateSystemHealthOptions {
     Param (
-        [ValidateSet("packets","system","traffic")]
+        [ValidateSet("packets", "system", "traffic")]
         [String]$type,
         [String]$data,
         [String]$collection
     )
 
     $result = Invoke-OPNsenseCommand diagnostics systemhealth getRRDlist
-    switch ($type)
-    {
+    switch ($type) {
         'packets' { $options = $result.data.packets }
-        'system'  { $options = $result.data.system }
+        'system' { $options = $result.data.system }
         'traffic' { $options = $result.data.traffic }
         default { Throw "Invalid SystemHealthOptions type: $type" }
     }
@@ -87,38 +86,38 @@ Function Get-OPNsenseSystemHealth {
     # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
     [CmdletBinding()]
     param (
-    		[parameter(Mandatory=$true,ParameterSetName = "Packets")]
-    		[ValidateNotNullOrEmpty()]
-    		[Switch]$Packets,
+        [parameter(Mandatory = $true, ParameterSetName = "Packets")]
+        [ValidateNotNullOrEmpty()]
+        [Switch]$Packets,
 
-    		[parameter(Mandatory=$true,ParameterSetName = "Traffic")]
-    		[ValidateNotNullOrEmpty()]
-    		[Switch]$Traffic,
+        [parameter(Mandatory = $true, ParameterSetName = "Traffic")]
+        [ValidateNotNullOrEmpty()]
+        [Switch]$Traffic,
 
-    		[parameter(Mandatory=$true,ParameterSetName = "Packets")]
-    		[parameter(Mandatory=$true,ParameterSetName = "Traffic")]
-    		[ValidateNotNullOrEmpty()]
-    		[String]$Interface,
+        [parameter(Mandatory = $true, ParameterSetName = "Packets")]
+        [parameter(Mandatory = $true, ParameterSetName = "Traffic")]
+        [ValidateNotNullOrEmpty()]
+        [String]$Interface,
 
-    		[parameter(Mandatory=$true,ParameterSetName = "System")]
-    		[ValidateNotNullOrEmpty()]
-    		[Switch]$System,
+        [parameter(Mandatory = $true, ParameterSetName = "System")]
+        [ValidateNotNullOrEmpty()]
+        [Switch]$System,
 
-    		[parameter(Mandatory=$true,ParameterSetName = "System")]
-    		[ValidateNotNullOrEmpty()]
-    		[String]$Resource,
+        [parameter(Mandatory = $true, ParameterSetName = "System")]
+        [ValidateNotNullOrEmpty()]
+        [String]$Resource,
 
-    		[DateTime]$From,
-    		[DateTime]$To,
+        [DateTime]$From,
+        [DateTime]$To,
 
-    		[ValidateSet("Standard","Medium","High")]
-    		[String]$Resolution,
+        [ValidateSet("Standard", "Medium", "High")]
+        [String]$Resolution,
 
-    		[ValidateSet("20 Hours","60 Hours","9 Days","10 Days")]
-    		[String]$Zoomlevel,
+        [ValidateSet("20 Hours", "60 Hours", "9 Days", "10 Days")]
+        [String]$Zoomlevel,
 
-        [Switch]$Inverse=$false
-  	)
+        [Switch]$Inverse = $false
+    )
 
     if ([bool]::Parse($Packets)) {
         $type = 'packets'
@@ -141,28 +140,30 @@ Function Get-OPNsenseSystemHealth {
 
     if ([bool]($MyInvocation.BoundParameters.Keys -match 'From')) {
         $start = Convert-DateTimetoUnix $From
-    } else {
+    }
+    else {
         $start = 0
     }
     if ([bool]($MyInvocation.BoundParameters.Keys -match 'To')) {
         $end = Convert-DateTimetoUnix $To
-    } else {
+    }
+    else {
         $end = 0
     }
     Write-Verbose "From: $start"
     Write-Verbose "To: $end"
 
     switch ($Resolution) {
-      'Medium' { $res = 240 }
-      'High'   { $res = 600 }
-      default  { $res = 120 }
+        'Medium' { $res = 240 }
+        'High' { $res = 600 }
+        default { $res = 120 }
     }
     Write-Verbose "Resolution: $res"
     switch ($ZoomLevel) {
-      '60 Hours' { $zoom = 1 }
-      '9 Days'   { $zoom = 2 }
-      '10 Days'  { $zoom = 3 }
-      default    { $zoom = 0 }
+        '60 Hours' { $zoom = 1 }
+        '9 Days' { $zoom = 2 }
+        '10 Days' { $zoom = 3 }
+        default { $zoom = 0 }
     }
     Write-Verbose "ZoomLevel: $zoom"
     $inv = if ([boolean]::Parse($Inverse)) { 'true' } else { 'false' }
@@ -183,7 +184,7 @@ Function Get-OPNsenseInterface {
     [CmdletBinding()]
     Param()
     $result = $(Invoke-OPNsenseCommand diagnostics systemhealth getRRDlist).data.traffic |
-        Select-Object -Property @{"N"="Interface"; "E"={$_}}
+        Select-Object -Property @{"N" = "Interface"; "E" = {$_}}
     return $result
 }
 
@@ -192,7 +193,7 @@ Function Get-OPNsenseResource {
     [CmdletBinding()]
     Param()
     $result = $(Invoke-OPNsenseCommand diagnostics systemhealth getRRDlist).data.system |
-        Select-Object -Property @{"N"="Resource"; "E"={$_}}
+        Select-Object -Property @{"N" = "Resource"; "E" = {$_}}
     return $result
 }
 
@@ -217,8 +218,8 @@ Function Get-OPNsenseARP {
 Function Clear-OPNsenseARP {
     # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
     [CmdletBinding(
-       SupportsShouldProcess=$true,
-       ConfirmImpact="High"
+        SupportsShouldProcess = $true,
+        ConfirmImpact = "High"
     )]
     Param (
     )

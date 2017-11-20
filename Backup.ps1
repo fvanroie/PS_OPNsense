@@ -25,10 +25,10 @@ Function Backup-OPNsenseConfig {
     # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
     [CmdletBinding()]
     Param (
-        [switch]$RRDdata=$false,
+        [switch]$RRDdata = $false,
 
         [ValidateNotNullOrEmpty()]
-        [parameter(Mandatory=$false)]
+        [parameter(Mandatory = $false)]
         [String]$Password
     )
 
@@ -43,7 +43,8 @@ Function Backup-OPNsenseConfig {
 
     if ($PSBoundParameters.ContainsKey('Password')) {
         $encrypt = $true
-    } else {
+    }
+    else {
         $encrypt = $false
     }
 
@@ -55,7 +56,8 @@ Function Backup-OPNsenseConfig {
     Try {
         if ($PSCore) {
             $webpage = Invoke-WebRequest -Uri $Uri -SessionVariable cookieJar -SkipCertificateCheck:$SkipCertificateCheck
-        } else {
+        }
+        else {
             $webpage = Invoke-WebRequest -Uri $Uri -SessionVariable cookieJar
         }
         $xssToken = $webpage.InputFields | Where-Object { $_.type -eq 'hidden'}
@@ -67,7 +69,8 @@ Function Backup-OPNsenseConfig {
         }
         if ($PSCore) {
             $webpage = Invoke-WebRequest -Uri "$Uri/index.php" -WebSession $cookieJar -Method POST -Body $form -SkipCertificateCheck:$SkipCertificateCheck
-        } else {
+        }
+        else {
             $webpage = Invoke-WebRequest -Uri "$Uri/index.php" -WebSession $cookieJar -Method POST -Body $form
         }
 
@@ -78,7 +81,8 @@ Function Backup-OPNsenseConfig {
 
         if ($PSCore) {
             $webpage = Invoke-WebRequest -Uri "$Uri/diag_backup.php" -WebSession $cookieJar -Method POST -Body $form -SkipCertificateCheck:$SkipCertificateCheck
-        } else {
+        }
+        else {
             $webpage = Invoke-WebRequest -Uri "$Uri/diag_backup.php" -WebSession $cookieJar -Method POST -Body $form
         }
         $xssToken = $webpage.InputFields | Where-Object { $_.type -eq 'hidden'}
@@ -93,10 +97,11 @@ Function Backup-OPNsenseConfig {
         }
         if ($PSCore) {
             $backupxml = Invoke-WebRequest "$Uri/diag_backup.php" -WebSession $cookieJar -Method POST -Body $form -SkipCertificateCheck:$SkipCertificateCheck
-        } else {
+        }
+        else {
             $backupxml = Invoke-WebRequest "$Uri/diag_backup.php" -WebSession $cookieJar -Method POST -Body $form
         }
-        $Result = $backupxml.RawContent.Substring($backupxml.RawContent.Length-$backupxml.RawContentLength,$backupxml.RawContentLength)
+        $Result = $backupxml.RawContent.Substring($backupxml.RawContent.Length - $backupxml.RawContentLength, $backupxml.RawContentLength)
     }
     Catch {
         $ErrorMessage = $_.Exception.Message
@@ -114,31 +119,31 @@ Function Backup-OPNsenseConfig {
 Function Restore-OPNsenseConfig {
     # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
     [CmdletBinding(
-       SupportsShouldProcess=$true,
-       ConfirmImpact="High"
+        SupportsShouldProcess = $true,
+        ConfirmImpact = "High"
     )]
     Param (
-        [parameter(Mandatory=$true,position=1,ParameterSetName = "XML")]
+        [parameter(Mandatory = $true, position = 1, ParameterSetName = "XML")]
         [ValidateNotNullOrEmpty()]
         [String]$Xml,
 
-        [parameter(Mandatory=$true,position=1,ParameterSetName = "File")]
-        [ValidateScript({
-            if(-Not ($_ | Test-Path) ){
-                throw "File does not exist"
-            }
-            if(-Not ($_ | Test-Path -PathType Leaf) ){
-                throw "The Path argument must be a file. Folders are not allowed."
-            }
-            if($_ -notmatch "(\.xml)"){
-                throw "The file specified in the path argument must be of type xml."
-            }
-            return $true
-        })]
+        [parameter(Mandatory = $true, position = 1, ParameterSetName = "File")]
+        [ValidateScript( {
+                if (-Not ($_ | Test-Path) ) {
+                    throw "File does not exist"
+                }
+                if (-Not ($_ | Test-Path -PathType Leaf) ) {
+                    throw "The Path argument must be a file. Folders are not allowed."
+                }
+                if ($_ -notmatch "(\.xml)") {
+                    throw "The file specified in the path argument must be of type xml."
+                }
+                return $true
+            })]
         [System.IO.FileInfo]$Path,
 
         [ValidateNotNullOrEmpty()]
-        [parameter(Mandatory=$false)]
+        [parameter(Mandatory = $false)]
         [String]$Password
     )
 
@@ -160,7 +165,7 @@ Function Restore-OPNsenseConfig {
     $Uri = $MyInvocation.MyCommand.Module.PrivateData['OPNsenseUri']
 
     $boundary = [guid]::NewGuid().ToString()
-$bodyXML = @'
+    $bodyXML = @'
 --{0}
 Content-Disposition: form-data; name="{1}"; filename="{2}"
 Content-Type: text/xml
@@ -168,7 +173,7 @@ Content-Type: text/xml
 {3}
 --{0}--
 '@
-$bodytempl = @'
+    $bodytempl = @'
 --{0}
 Content-Disposition: form-data; name="{1}"
 
@@ -242,7 +247,8 @@ Content-Disposition: form-data; name="{1}"
         }
         if ($restorexml.parsedhtml.body.getElementsbyclassname('alert-info').length -gt 0) {
             $result = $restorexml.parsedhtml.body.getElementsbyclassname('alert-info')[0].innerText
-        } else {
+        }
+        else {
             $Result = $restorexml.parsedhtml.body.getElementsbyclassname('alert')[0].innerText
         }
     }
@@ -255,15 +261,15 @@ Content-Disposition: form-data; name="{1}"
 Function Reset-OPNsenseConfig {
     # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
     [CmdletBinding(
-       SupportsShouldProcess=$true,
-       ConfirmImpact="High"
+        SupportsShouldProcess = $true,
+        ConfirmImpact = "High"
     )]
     Param (
-        [parameter(Mandatory=$true)]
-        [switch]$EraseAllSettings=$false,
+        [parameter(Mandatory = $true)]
+        [switch]$EraseAllSettings = $false,
 
         [ValidateNotNullOrEmpty()]
-        [parameter(Mandatory=$true)]
+        [parameter(Mandatory = $true)]
         [String]$Hostname
     )
 
@@ -278,13 +284,14 @@ Function Reset-OPNsenseConfig {
 
     if ($PSBoundParameters.ContainsKey('Password')) {
         $encrypt = $true
-    } else {
+    }
+    else {
         $encrypt = $false
     }
 
     if (-Not [bool]::Parse($EraseAllSettings)) {
-          Write-Warning 'You need to specify the EraseAllSettings switch'
-          Return
+        Write-Warning 'You need to specify the EraseAllSettings switch'
+        Return
     }
 
     Write-Warning '!!! YOU ARE ABOUT TO COMPLETELY ERASE THE OPNSENSE CONFIGURATION !!!'

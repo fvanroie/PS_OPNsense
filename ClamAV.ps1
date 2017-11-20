@@ -28,7 +28,8 @@ function Get-OPNsenseClamAV {
     )
     if ([bool]::Parse($Version)) {
         Return $(Invoke-OPNsenseCommand clamav service version).version
-    } else {
+    }
+    else {
         Return $(Invoke-OPNsenseCommand clamav general get).general
     }
 }
@@ -36,44 +37,44 @@ function Get-OPNsenseClamAV {
 Function Set-OPNsenseClamAV {
     [CmdletBinding()]
     param (
-      [parameter(Mandatory=$false)][bool]$Enable,
-      [parameter(Mandatory=$false)][bool]$EnableTCP,
+        [parameter(Mandatory = $false)][bool]$Enable,
+        [parameter(Mandatory = $false)][bool]$EnableTCP,
 
-      [parameter(Mandatory=$false)][int]$MaxThreads = 10,
-      [parameter(Mandatory=$false)][int]$MaxQueue	= 100,
-      [parameter(Mandatory=$false)][int]$IdleTimeout = 30,
-      [parameter(Mandatory=$false)][int]$MaxDirRecursion = 20,
+        [parameter(Mandatory = $false)][int]$MaxThreads = 10,
+        [parameter(Mandatory = $false)][int]$MaxQueue	= 100,
+        [parameter(Mandatory = $false)][int]$IdleTimeout = 30,
+        [parameter(Mandatory = $false)][int]$MaxDirRecursion = 20,
 
-      [parameter(Mandatory=$false)][bool]$FollowDirSym,
-      [parameter(Mandatory=$false)][bool]$FollowFileSym,
-      [parameter(Mandatory=$false)][bool]$DisableCache,
-      [parameter(Mandatory=$false)][bool]$ScanPE,
-      [parameter(Mandatory=$false)][bool]$ScanELF,
-      [parameter(Mandatory=$false)][bool]$DetectBroken,
-      [parameter(Mandatory=$false)][bool]$ScanOLE2,
-      [parameter(Mandatory=$false)][bool]$OLEe2BlockMarcros,
-      [parameter(Mandatory=$false)][bool]$ScanPDF,
-      [parameter(Mandatory=$false)][bool]$ScanSWF,
-      [parameter(Mandatory=$false)][bool]$ScanXMLdocs,
-      [parameter(Mandatory=$false)][bool]$ScanHWP3,
-      [parameter(Mandatory=$false)][bool]$ScanMailFiles,
-      [parameter(Mandatory=$false)][bool]$ScanHtml,
-      [parameter(Mandatory=$false)][bool]$ScanArchive,
-      [parameter(Mandatory=$false)][bool]$ArcBlockEnc,
+        [parameter(Mandatory = $false)][bool]$FollowDirSym,
+        [parameter(Mandatory = $false)][bool]$FollowFileSym,
+        [parameter(Mandatory = $false)][bool]$DisableCache,
+        [parameter(Mandatory = $false)][bool]$ScanPE,
+        [parameter(Mandatory = $false)][bool]$ScanELF,
+        [parameter(Mandatory = $false)][bool]$DetectBroken,
+        [parameter(Mandatory = $false)][bool]$ScanOLE2,
+        [parameter(Mandatory = $false)][bool]$OLEe2BlockMarcros,
+        [parameter(Mandatory = $false)][bool]$ScanPDF,
+        [parameter(Mandatory = $false)][bool]$ScanSWF,
+        [parameter(Mandatory = $false)][bool]$ScanXMLdocs,
+        [parameter(Mandatory = $false)][bool]$ScanHWP3,
+        [parameter(Mandatory = $false)][bool]$ScanMailFiles,
+        [parameter(Mandatory = $false)][bool]$ScanHtml,
+        [parameter(Mandatory = $false)][bool]$ScanArchive,
+        [parameter(Mandatory = $false)][bool]$ArcBlockEnc,
 
-      [parameter(Mandatory=$false)][String]$MaxScanSize	= '100M',
-      [parameter(Mandatory=$false)][String]$MaxFileSize	= '25M',
-      [parameter(Mandatory=$false)][int]$MaxRecursion	= 16,
-      [parameter(Mandatory=$false)][int]$MaxFiles	= 10000,
+        [parameter(Mandatory = $false)][String]$MaxScanSize	= '100M',
+        [parameter(Mandatory = $false)][String]$MaxFileSize	= '25M',
+        [parameter(Mandatory = $false)][int]$MaxRecursion	= 16,
+        [parameter(Mandatory = $false)][int]$MaxFiles	= 10000,
 
-      # FreshClam
-      [parameter(Mandatory=$false)][bool]$FreshClamEnable,
-      [parameter(Mandatory=$false)][bool]$FreshClamLogVerbose,
-      [parameter(Mandatory=$false)][String]$FreshClamMirror	= 'database.clamav.net',
-      [parameter(Mandatory=$false)][int]$FreshClamTimeout	= 60
-  )
+        # FreshClam
+        [parameter(Mandatory = $false)][bool]$FreshClamEnable,
+        [parameter(Mandatory = $false)][bool]$FreshClamLogVerbose,
+        [parameter(Mandatory = $false)][String]$FreshClamMirror	= 'database.clamav.net',
+        [parameter(Mandatory = $false)][int]$FreshClamTimeout	= 60
+    )
 
-<#    $argHash = @{
+    <#    $argHash = @{
         general = @{
           maxthreads=$MaxThreads;
           maxqueue=$MaxQueue;
@@ -136,48 +137,68 @@ Function Set-OPNsenseClamAV {
 
     $argHash = Get-OPNsenseClamAV
 
-    if ($PSBoundParameters.ContainsKey('Enable'))  {
-        $argHash['enabled'] = $( if ([bool]::Parse($Enable)) {'1'} else {'0'} ) }
-    if ($PSBoundParameters.ContainsKey('FreshClamEnable'))  {
-        $argHash['fc_enabled'] = $( if ([bool]::Parse($FreshClamEnable)) {'1'} else {'0'} ) }
-    if ($PSBoundParameters.ContainsKey('EnableTCP'))  {
-        $argHash['enabletcp'] = $( if ([bool]::Parse($EnableTCP)) {'1'} else {'0'} ) }
+    if ($PSBoundParameters.ContainsKey('Enable')) {
+        $argHash['enabled'] = $( if ([bool]::Parse($Enable)) {'1'} else {'0'} ) 
+    }
+    if ($PSBoundParameters.ContainsKey('FreshClamEnable')) {
+        $argHash['fc_enabled'] = $( if ([bool]::Parse($FreshClamEnable)) {'1'} else {'0'} ) 
+    }
+    if ($PSBoundParameters.ContainsKey('EnableTCP')) {
+        $argHash['enabletcp'] = $( if ([bool]::Parse($EnableTCP)) {'1'} else {'0'} ) 
+    }
 
-    if ($PSBoundParameters.ContainsKey('FollowDirSym'))  {
-        $argHash['followdirsym'] = $( if ([bool]::Parse($FollowDirSym)) {'1'} else {'0'} ) }
-    if ($PSBoundParameters.ContainsKey('FollowFileSym'))  {
-        $argHash['followfilesym'] = $( if ([bool]::Parse($FollowFileSym)) {'1'} else {'0'} ) }
-    if ($PSBoundParameters.ContainsKey('DisableCache'))  {
-        $argHash['disablecache'] = $( if ([bool]::Parse($DisableCache)) {'1'} else {'0'} ) }
-    if ($PSBoundParameters.ContainsKey('ScanPE'))  {
-        $argHash['scanpe'] = $( if ([bool]::Parse($ScanPE)) {'1'} else {'0'} ) }
-    if ($PSBoundParameters.ContainsKey('ScanELF'))  {
-        $argHash['scanelf'] = $( if ([bool]::Parse($ScanELF)) {'1'} else {'0'} ) }
-    if ($PSBoundParameters.ContainsKey('DetectBroken'))  {
-        $argHash['detectbroken'] = $( if ([bool]::Parse($DetectBroken)) {'1'} else {'0'} ) }
-    if ($PSBoundParameters.ContainsKey('ScanOLE'))  {
-        $argHash['scanole2'] = $( if ([bool]::Parse($ScanOLE2)) {'1'} else {'0'} ) }
-    if ($PSBoundParameters.ContainsKey('OLEe'))  {
-        $argHash['ole2blockmarcros'] = $( if ([bool]::Parse($OLEe2BlockMarcros)) {'1'} else {'0'} ) }
-    if ($PSBoundParameters.ContainsKey('ScanPDF'))  {
-        $argHash['scanpdf'] = $( if ([bool]::Parse($ScanPDF)) {'1'} else {'0'} ) }
-    if ($PSBoundParameters.ContainsKey('ScanSWF'))  {
-        $argHash['scanswf'] = $( if ([bool]::Parse($ScanSWF)) {'1'} else {'0'} ) }
-    if ($PSBoundParameters.ContainsKey('ScanXMLdocs'))  {
-        $argHash['scanxmldocs'] = $( if ([bool]::Parse($ScanXMLdocs)) {'1'} else {'0'} ) }
-    if ($PSBoundParameters.ContainsKey('ScanHWP'))  {
-        $argHash['scanhwp3'] = $( if ([bool]::Parse($ScanHWP3)) {'1'} else {'0'} ) }
-    if ($PSBoundParameters.ContainsKey('ScanMailFiles'))  {
-        $argHash['scanmailfiles'] = $( if ([bool]::Parse($ScanMailFiles)) {'1'} else {'0'} ) }
-    if ($PSBoundParameters.ContainsKey('ScanHtml'))  {
-        $argHash['scanhtml'] = $( if ([bool]::Parse($ScanHtml)) {'1'} else {'0'} ) }
-    if ($PSBoundParameters.ContainsKey('ScanArchive'))  {
-        $argHash['scanarchive'] = $( if ([bool]::Parse($ScanArchive)) {'1'} else {'0'} ) }
-    if ($PSBoundParameters.ContainsKey('ArcBlockEnc'))  {
-        $argHash['arcblockenc'] = $( if ([bool]::Parse($ArcBlockEnc)) {'1'} else {'0'} ) }
+    if ($PSBoundParameters.ContainsKey('FollowDirSym')) {
+        $argHash['followdirsym'] = $( if ([bool]::Parse($FollowDirSym)) {'1'} else {'0'} ) 
+    }
+    if ($PSBoundParameters.ContainsKey('FollowFileSym')) {
+        $argHash['followfilesym'] = $( if ([bool]::Parse($FollowFileSym)) {'1'} else {'0'} ) 
+    }
+    if ($PSBoundParameters.ContainsKey('DisableCache')) {
+        $argHash['disablecache'] = $( if ([bool]::Parse($DisableCache)) {'1'} else {'0'} ) 
+    }
+    if ($PSBoundParameters.ContainsKey('ScanPE')) {
+        $argHash['scanpe'] = $( if ([bool]::Parse($ScanPE)) {'1'} else {'0'} ) 
+    }
+    if ($PSBoundParameters.ContainsKey('ScanELF')) {
+        $argHash['scanelf'] = $( if ([bool]::Parse($ScanELF)) {'1'} else {'0'} ) 
+    }
+    if ($PSBoundParameters.ContainsKey('DetectBroken')) {
+        $argHash['detectbroken'] = $( if ([bool]::Parse($DetectBroken)) {'1'} else {'0'} ) 
+    }
+    if ($PSBoundParameters.ContainsKey('ScanOLE')) {
+        $argHash['scanole2'] = $( if ([bool]::Parse($ScanOLE2)) {'1'} else {'0'} ) 
+    }
+    if ($PSBoundParameters.ContainsKey('OLEe')) {
+        $argHash['ole2blockmarcros'] = $( if ([bool]::Parse($OLEe2BlockMarcros)) {'1'} else {'0'} ) 
+    }
+    if ($PSBoundParameters.ContainsKey('ScanPDF')) {
+        $argHash['scanpdf'] = $( if ([bool]::Parse($ScanPDF)) {'1'} else {'0'} ) 
+    }
+    if ($PSBoundParameters.ContainsKey('ScanSWF')) {
+        $argHash['scanswf'] = $( if ([bool]::Parse($ScanSWF)) {'1'} else {'0'} ) 
+    }
+    if ($PSBoundParameters.ContainsKey('ScanXMLdocs')) {
+        $argHash['scanxmldocs'] = $( if ([bool]::Parse($ScanXMLdocs)) {'1'} else {'0'} ) 
+    }
+    if ($PSBoundParameters.ContainsKey('ScanHWP')) {
+        $argHash['scanhwp3'] = $( if ([bool]::Parse($ScanHWP3)) {'1'} else {'0'} ) 
+    }
+    if ($PSBoundParameters.ContainsKey('ScanMailFiles')) {
+        $argHash['scanmailfiles'] = $( if ([bool]::Parse($ScanMailFiles)) {'1'} else {'0'} ) 
+    }
+    if ($PSBoundParameters.ContainsKey('ScanHtml')) {
+        $argHash['scanhtml'] = $( if ([bool]::Parse($ScanHtml)) {'1'} else {'0'} ) 
+    }
+    if ($PSBoundParameters.ContainsKey('ScanArchive')) {
+        $argHash['scanarchive'] = $( if ([bool]::Parse($ScanArchive)) {'1'} else {'0'} ) 
+    }
+    if ($PSBoundParameters.ContainsKey('ArcBlockEnc')) {
+        $argHash['arcblockenc'] = $( if ([bool]::Parse($ArcBlockEnc)) {'1'} else {'0'} ) 
+    }
 
-    if ($PSBoundParameters.ContainsKey('FreshClamLogVerbose'))  {
-        $argHash['fc_logverbose'] = $( if ([bool]::Parse($FreshClamLogVerbose)) {'1'} else {'0'} ) }
+    if ($PSBoundParameters.ContainsKey('FreshClamLogVerbose')) {
+        $argHash['fc_logverbose'] = $( if ([bool]::Parse($FreshClamLogVerbose)) {'1'} else {'0'} ) 
+    }
 
 
 

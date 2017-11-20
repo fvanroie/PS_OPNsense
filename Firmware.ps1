@@ -24,9 +24,9 @@
 Function Invoke-OPNsenseCoreCommand {
     [CmdletBinding()]
     Param (
-      [Parameter(Mandatory=$true,position=1)][String]$Module,
-      [parameter(Mandatory=$true,position=2)][String]$Controller,
-      [parameter(Mandatory=$true,position=3)][String]$Command
+        [Parameter(Mandatory = $true, position = 1)][String]$Module,
+        [parameter(Mandatory = $true, position = 2)][String]$Controller,
+        [parameter(Mandatory = $true, position = 3)][String]$Command
     )
     $result = Invoke-OPNsenseCommand $Module $Controller $Command -Form $Command -Verbose:$VerbosePreference
     if ($result.status -eq "failure") {
@@ -42,8 +42,8 @@ Function Invoke-OPNsenseCoreCommand {
 Function Stop-OPNsense {
     # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
     [CmdletBinding(
-       SupportsShouldProcess=$true,
-       ConfirmImpact="High"
+        SupportsShouldProcess = $true,
+        ConfirmImpact = "High"
     )]
     Param()
     if ($pscmdlet.ShouldProcess($MyInvocation.MyCommand.Module.PrivateData['OPNsenseApi'])) {
@@ -54,13 +54,14 @@ Function Stop-OPNsense {
 Function Restart-OPNsense {
     # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
     [CmdletBinding(
-       SupportsShouldProcess=$true,
-       ConfirmImpact="High"
+        SupportsShouldProcess = $true,
+        ConfirmImpact = "High"
     )]
     Param()
     if ($pscmdlet.ShouldProcess($MyInvocation.MyCommand.Module.PrivateData['OPNsenseApi'])) {
         return Invoke-OPNsenseCoreCommand core firmware reboot -Verbose:$VerbosePreference
-    }  else  {
+    }
+    else {
         return $false
     }
 }
@@ -85,8 +86,8 @@ Function Get-UpdateStatus {
 
         # Write-Verbose buffer, except last line as it can be incomplete
         for ($i = 1; $i -lt $lines.length; $i++) {
-          Write-Verbose ('   ' + $lines[$i-1])
-            $start += $lines[$i-1].length + 1
+            Write-Verbose ('   ' + $lines[$i - 1])
+            $start += $lines[$i - 1].length + 1
         }
     } Until ($result.status -ne 'running')
 
@@ -105,8 +106,8 @@ Function Get-UpdateStatus {
 Function Update-OPNsense {
     # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
     [CmdletBinding(
-       SupportsShouldProcess=$true,
-       ConfirmImpact="High"
+        SupportsShouldProcess = $true,
+        ConfirmImpact = "High"
     )]
     Param()
     if ($pscmdlet.ShouldProcess($MyInvocation.MyCommand.Module.PrivateData['OPNsenseApi'])) {
@@ -137,14 +138,15 @@ Function Invoke-OPNsenseAudit {
         $result = @()
         foreach ($cve in $cves.matches) {
             $argHash = @{
-                CVE = $cve.groups[3].value;
+                CVE   = $cve.groups[3].value;
                 Issue = $cve.groups[1].value;
                 Title = $cve.groups[2].value;
-                Url = $cve.groups[4].value
+                Url   = $cve.groups[4].value
             }
             $result += New-Object PSObject -Property $argHash
         }
-    } else {
+    }
+    else {
         Write-Error "Failed to audit OPNsense"
     }
     return $result
@@ -155,30 +157,31 @@ Function Get-OPNsense {
     [CmdletBinding()]
     Param(
         [Alias("Mirrors")]
-        [parameter(Mandatory=$false)]
-        [Switch]$Mirror=$false
+        [parameter(Mandatory = $false)]
+        [Switch]$Mirror = $false
     )
 
     if ([bool]::Parse($Mirror)) {
-      $allMirrors = @()
-      $result = Invoke-OPNsenseCommand core firmware getfirmwareoptions -Verbose:$VerbosePreference
-      $result.mirrors | get-member -type NoteProperty | foreach-object {
-          $url=$_.Name ;
-          $name=$result.mirrors."$($_.Name)";
+        $allMirrors = @()
+        $result = Invoke-OPNsenseCommand core firmware getfirmwareoptions -Verbose:$VerbosePreference
+        $result.mirrors | get-member -type NoteProperty | foreach-object {
+            $url = $_.Name ;
+            $name = $result.mirrors."$($_.Name)";
 
-          if ($name -match "(.*) \((.*)\)") {
-              $hosting = $Matches[1]
-              $location = $Matches[2]
-          } else {
-              $hosting = ''
-              $location = ''
-          }
-          $commercial = $Url -in $result.has_subscription
+            if ($name -match "(.*) \((.*)\)") {
+                $hosting = $Matches[1]
+                $location = $Matches[2]
+            }
+            else {
+                $hosting = ''
+                $location = ''
+            }
+            $commercial = $Url -in $result.has_subscription
 
-          $thisMirror = New-Object PSObject -Property @{ Url = $url ; Description = $name ; Hosting = $hosting ; Location = $location ; Commercial = $commercial }
-          $allMirrors += $thisMirror
-      }
-      return $allMirrors
+            $thisMirror = New-Object PSObject -Property @{ Url = $url ; Description = $name ; Hosting = $hosting ; Location = $location ; Commercial = $commercial }
+            $allMirrors += $thisMirror
+        }
+        return $allMirrors
     }
 
     # No Switches
@@ -190,16 +193,16 @@ Function Set-OPNsense {
     # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
     [CmdletBinding()]
     Param(
-      [parameter(Mandatory=$false,ParameterSetName = "FirmwareSettings")]
+        [parameter(Mandatory = $false, ParameterSetName = "FirmwareSettings")]
         [String]$Mirror,
-        [parameter(Mandatory=$false,ParameterSetName = "FirmwareSettings")]
+        [parameter(Mandatory = $false, ParameterSetName = "FirmwareSettings")]
         [String]$Flavour,
-        [parameter(Mandatory=$false,ParameterSetName = "FirmwareSettings")]
+        [parameter(Mandatory = $false, ParameterSetName = "FirmwareSettings")]
         [String]$Subscription
     )
 
     $changed = 0
-    $FirmwareSettings = Invoke-OPNsenseCommand core firmware getFirmwareConfig -AddProperty @{ Subscription='' }
+    $FirmwareSettings = Invoke-OPNsenseCommand core firmware getFirmwareConfig -AddProperty @{ Subscription = '' }
     if ($PSBoundParameters.ContainsKey('Mirror')) {
         $changed++
         $FirmwareSettings.Mirror = $Mirror
@@ -216,13 +219,15 @@ Function Set-OPNsense {
     if ($changed -gt 0) {
         Write-Verbose "$changed setting(s) have changed"
         $result = Invoke-OPNsenseCommand core firmware setFirmwareConfig `
-                          -Json @{ mirror = $FirmwareSettings.Mirror; flavour = $FirmwareSettings.Flavour; subscription = $FirmwareSettings.Subscription }
+            -Json @{ mirror = $FirmwareSettings.Mirror; flavour = $FirmwareSettings.Flavour; subscription = $FirmwareSettings.Subscription }
         if ($Result.status -eq 'ok') {
             return $FirmwareSettings
-        } else {
+        }
+        else {
             Throw 'Failed to set FirmwareSettings.'
         }
-    } else {
+    }
+    else {
         Write-Warning 'No settings have changed, skipping.'
         return $FirmwareSettings
     }
