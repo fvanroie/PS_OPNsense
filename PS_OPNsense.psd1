@@ -90,18 +90,29 @@
 
     # Modules to import as nested modules of the module specified in RootModule/ModuleToProcess
     NestedModules          = @(
-        'Backup.ps1',
-        'CaptivePortal.ps1',
-        'CertificateValidation.ps1',
-        'ClamAV.ps1',
-        'Cron.ps1',
-        'Diagnostics.ps1',
-        'Firmware.ps1',
-        'Ids.ps1',
-        'Packages.ps1',
-        'Proxy.ps1',
-        'RestApi.ps1',
-        'Services.ps1'
+        # Main Module
+        'PS_OPNsense',
+
+        # Core Functionality
+        'Core/CaptivePortal',
+        'Core/Cron',
+        'Core/Diagnostics',
+        'Core/Firmware',
+        'Core/Ids',
+        'Core/Packages',
+        'Core/Proxy',
+        'Core/Services',
+
+        # Optional Installable Plugin Packages
+        'Plugins/ClamAV',
+
+        # Legacy WebGUI Commands
+        'Legacy/Backup',
+
+        # Private Helper Function
+        'Private/Add-ObjectDetail',
+        'Private/CertificateValidation',
+        'Private/RestApi'
     )
 
     # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
@@ -110,8 +121,10 @@
         'Backup-OPNsenseConfig', 'Restore-OPNsenseConfig', 'Reset-OPNsenseConfig',
         # ClamAV
         'Get-OPNsenseClamAV', 'Set-OPNsenseClamAV',
+        # PS_OPNsense
+        'Connect-OPNsense', 'Disconnect-OPNsense',
         # RestApi
-        'Connect-OPNsense', 'Disconnect-OPNsense', 'Invoke-OPNsenseCommand',
+        'Invoke-OPNsenseCommand',
         # Firmware
         'Get-OPNsense', 'Stop-OPNsense', 'Restart-OPNsense', 'Update-OPNsense', 'Invoke-OPNsenseAudit',
         'Set-OPNsense',
