@@ -91,28 +91,28 @@
     # Modules to import as nested modules of the module specified in RootModule/ModuleToProcess
     NestedModules          = @(
         # Main Module
-        'PS_OPNsense',
+        'PS_OPNsense.ps1',
 
         # Core Functionality
-        'Core/CaptivePortal',
-        'Core/Cron',
-        'Core/Diagnostics',
-        'Core/Firmware',
-        'Core/Ids',
-        'Core/Packages',
-        'Core/Proxy',
-        'Core/Services',
+        'Core/CaptivePortal.ps1',
+        'Core/Cron.ps1',
+        'Core/Diagnostics.ps1',
+        'Core/Firmware.ps1',
+        'Core/Ids.ps1',
+        'Core/Packages.ps1',
+        'Core/Proxy.ps1',
+        'Core/Services.ps1',
 
         # Optional Installable Plugin Packages
-        'Plugins/ClamAV',
+        'Plugins/ClamAV.ps1',
 
         # Legacy WebGUI Commands
-        'Legacy/Backup',
+        'Legacy/Backup.ps1',
 
         # Private Helper Function
-        'Private/Add-ObjectDetail',
-        'Private/CertificateValidation',
-        'Private/RestApi'
+        'Private/Add-ObjectDetail.ps1',
+        'Private/CertificateValidation.ps1',
+        'Private/RestApi.ps1'
     )
 
     # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
@@ -159,7 +159,7 @@
     # DscResourcesToExport = @()
 
     # List of all modules packaged with this module
-    # ModuleList = @()
+    ModuleList             = @()
 
     # List of all files packaged with this module
     # FileList = @()

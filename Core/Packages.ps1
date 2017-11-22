@@ -74,7 +74,8 @@ Function Unlock-OPNsensePackage {
 Function Install-OPNsensePackage {
     # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
     param (
-        [Parameter(Mandatory = $true, position = 1, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)][String[]]$Name
+        [Parameter(Mandatory = $true, position = 1, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)][String[]]$Name,
+        [Parameter(Mandatory = $false)][Switch]$Force
     )
     BEGIN {
         $pkg = Get-OPNsensePackage
@@ -82,7 +83,12 @@ Function Install-OPNsensePackage {
     PROCESS {
         $thispkg = $pkg | Where-Object { $_.Name -eq $Name }
         If ($thispkg.installed -eq 1) {
-            Write-Warning ($thispkg.Name + " is already installed. Use -Force to reinstall the package.")
+            If (-Not [bool]::Parse($Force)) {
+                Write-Warning ($thispkg.Name + " is already installed. Use -Force to reinstall the package.")
+            }
+            else {
+                Invoke-OPNsenseCommand core firmware "reistall/$Name" -Form reinstall -addProperty @{ name = $Name.tolower()}              
+            }
         }
         else {
             Invoke-OPNsenseCommand core firmware "install/$Name" -Form install -addProperty @{ name = $Name.tolower()}

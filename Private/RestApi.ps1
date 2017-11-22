@@ -205,3 +205,6 @@ Function Invoke-OPNsenseCommand {
     return $result
 }
 
+function IsPSCoreEdition {
+    Return ($PSVersionTable.PSEdition -eq 'Core')
+}

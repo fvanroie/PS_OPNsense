@@ -60,7 +60,8 @@ Function Connect-OPNsense() {
     if ($OPNsenseApi) {
         Throw "ERROR : Already connected to $OPNsenseApi. Please use Disconnect-OPNsense first."
     }
-
+    $minversion = [System.Version]'18.2'
+    
     #$bytes = [System.Text.Encoding]::UTF8.GetBytes($Key + ":" + $Secret)
     #$Credentials = [System.Convert]::ToBase64String($bytes)
     if ($PSBoundParameters.ContainsKey('Secret')) {
@@ -83,20 +84,35 @@ Function Connect-OPNsense() {
     if ($Result) {
         # Validate the connection result
         if ($Result.product_version) {
-            Write-Verbose ("OPNsense version : " + $Result.product_version )
+            try {
+                $temp = Select-String -InputObject $v.product_version -pattern '[0-9\.]*' -AllMatches
+                $shortversion = [System.Version]$temp.Matches[0].Value.Trim('.')                
+                Write-Verbose ("OPNsense version : " + $Result.product_version )
+
+                if ($shortversion -lt $minversion) {
+                    Write-Warning "$shortversion may not be supported by the PS_OPNsense PowerShell Module. Please use OPNsense $minversion or higher."
+                }
+            }
+            catch {
+                $shortversion = $null
+                Write-Warning "Unsupported version of $($v.product_name) $($v.product_version) detected. Proceed with extreme care!"
+            }
+            $result | Add-Member 'short_version' $shortversion
+
+            $MyInvocation.MyCommand.Module.PrivateData['Version'] = $shortversion
             $MyInvocation.MyCommand.Module.PrivateData['ApiCredentials'] = $Credential
             $MyInvocation.MyCommand.Module.PrivateData['WebCredentials'] = $WebCredential
             $MyInvocation.MyCommand.Module.PrivateData['OPNsenseUri'] = $Url
             $MyInvocation.MyCommand.Module.PrivateData['OPNsenseApi'] = "$Url/api"
             $MyInvocation.MyCommand.Module.PrivateData['OPNsenseSkipCert'] = [bool]::Parse($SkipCertificateCheck)
-            return $Result | Select-Object -Property product_name, product_version
+            return $result  | Select-Object -Property product_name, product_version, short_version
         }
         else {
             Throw "ERROR : Failed to get the OPNsense version of server '$Url'."
         }
     }
     else {
-        Throw "ERROR : Could not connect to the OPNsense server '$Url' using the credentials supplied."
+        Throw "ERROR : Could not connect to the OPNsense server '$Url' using the api credentials supplied."
     }
 }
 
@@ -117,6 +133,4 @@ Function Disconnect-OPNsense() {
     }
 }
 
-function IsPSCoreEdition {
-    Return ($PSVersionTable.PSEdition -eq 'Core')
-}
+

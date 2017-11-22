@@ -131,8 +131,11 @@ Function Invoke-OPNsenseAudit {
 
     if ($result.status -eq 'ok') {
         $log = Get-UpdateStatus -Message "Running Audit in OPNsense:" -Verbose:$VerbosePreference
+
+        # Raw Output
         if ([bool]::Parse($Raw)) { Return $log }
 
+        # Parsed Output
         $AuditPattern = '(.*):\n(.*)\nCVE: (.*)\nWWW: (.*)'
         $cves = Select-String -InputObject $log -Pattern $AuditPattern -AllMatches
         $result = @()
@@ -157,9 +160,12 @@ Function Get-OPNsense {
     [CmdletBinding()]
     Param(
         [Alias("Mirrors")]
-        [parameter(Mandatory = $false)]
-        [Switch]$Mirror = $false
-    )
+        [Parameter(Mandatory = $false, ParameterSetName = 'Mirror')]
+        [Switch]$Mirror = $false,
+
+        [Parameter(Mandatory = $false, ParameterSetName = 'Changelog')]
+        [Switch]$Changelog = $true
+     )
 
     if ([bool]::Parse($Mirror)) {
         $allMirrors = @()
@@ -184,8 +190,13 @@ Function Get-OPNsense {
         return $allMirrors
     }
 
+    if ([bool]::Parse($Changelog)) {
+        $result = Invoke-OPNsenseCommand core firmware changelog -Form changelog
+        return $result
+    }
+
     # No Switches
-    return Invoke-OPNsenseCommand core firmware status -Verbose:$VerbosePreference
+    return Invoke-OPNsenseCommand core firmware status
 }
 
 
