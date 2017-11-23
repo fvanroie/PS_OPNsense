@@ -33,90 +33,90 @@ Function Invoke-OPNsenseApiRestCommand {
         $Form,
         [switch]$SkipCertificateCheck = $false
     )
-    $Headers = @{}
-
     # Check if running PowerShell Core CLR or Windows PowerShell
     $PSCore = IsPSCoreEdition
 
-    # Windows PowerShell only
-    if (-Not $PSCore) {
+    # Copy the parameters for splatting
+    $ParamSplat = $PSBoundParameters
+    $ParamSplat.Remove("Json") | Out-Null
+    $ParamSplat.Remove("Form") | Out-Null
+
+    # Our Custom Http Headers
+    $Headers = @{}
+
+    # Check PowerShell Edition
+    if ($PSCore) {
+        # PS Core knows the Basic Authentication and handles SkipCertificateCheck
+        $ParamSplat.Add("Authentication","Basic") | Out-Null
+    } else {
+        # On Windows PowerShell only, Add Basic Authentication Header
         $bytes = [System.Text.Encoding]::UTF8.GetBytes($Credential.Username + ":" + $credential.GetNetworkCredential().Password)
         $Headers = @{ 'Authorization' = ("Basic {0}" -f [System.Convert]::ToBase64String($bytes))}
 
-        # Temporarily disable the built-in .NET certificate policy
+        # We must handle SkipCertificateCheck in .NET as this Switch doesn't exist in PS Desktop
+        # Workaround: Temporarily disable the built-in .NET certificate policy
         if ([bool]::Parse($SkipCertificateCheck)) {
             $CertPolicy = Get-CertificatePolicy -Verbose:$VerbosePreference
             Disable-CertificateValidation -Verbose:$VerbosePreference
         }
+        [System.Net.ServicePointManager]::Expect100Continue = $false
+        $ParamSplat.Remove("SkipCertificateCheck") | Out-Null
     }
 
-    # Call the OPNsense Rest API
-    Try {
-        # Post a JSON object
-        if ($Json) {
-            # Convert HashTable to JSON object
-            if ($Json.GetType().Name -eq "HashTable") {
-                $Json = $Json | ConvertTo-Json -Depth 15   # Default Depth is 2
-                Write-Verbose "JSON Arguments: $Json"
-                # Set correct Content-Type for JSON data
-                $Headers.Add('Content-Type', 'application/json')
-                if ($PSCore) {
-                    $result = Invoke-RestMethod -Uri $uri -Method 'Post' -Body $Json `
-                        -Authentication 'Basic' -Credential $Credential -Headers $Headers `
-                        -SkipCertificateCheck:$SkipCertificateCheck
-                }
-                else {
-                    [System.Net.ServicePointManager]::Expect100Continue = $false
-                    $result = Invoke-RestMethod -Uri $uri -Method Post -Body $Json -Headers $Headers
-                }
-            }
-            else {
-                Throw 'JSON object should be a HashTable'
-                #$result = Invoke-RestMethod -Uri $uri -Method Post -Body $Json `
-                #             -Headers $BasicAuthHeader -Verbose:$VerbosePreference
-            }
+    if ($Json) {
+        # Convert HashTable to JSON object
+        if ($Json.GetType().Name -eq "HashTable") {
+            $Json = $Json | ConvertTo-Json -Depth 15   # Default Depth is 2!
+            Write-Verbose "JSON Arguments: $Json"
+            # Set correct Content-Type for JSON data
+            $Headers.Add('Content-Type', 'application/json')
+            $ParamSplat.Add('Method', 'POST')
+            $ParamSplat.Add('Body', $json)
+        } else {
+            Throw 'JSON object should be a HashTable'
+        }
+    }
+    else {
+        # Post a web Form
+        if ($Form) {
+            # Output Verbose object in JSON notation, if -Verbose is specified
+            $Json = $Form | ConvertTo-Json -Depth 15
+            Write-Verbose "Form Arguments: $Json"
+ 
+            $ParamSplat.Add('Method', 'POST')
+            $ParamSplat.Add('Body', $form)
         }
         else {
-            # Post a web Form
-            if ($Form) {
-                # Output Verbose object in JSON notation, if -Verbose is specified
-                $Json = $Form | ConvertTo-Json -Depth 15
-                Write-Verbose "Form Arguments: $Json"
-                if ($PSCore) {
-                    $result = Invoke-RestMethod -Uri $uri -Method 'Post' -Body $Form `
-                        -Authentication 'Basic' -Credential $Credential -Headers $Headers `
-                        -SkipCertificateCheck:$SkipCertificateCheck
-                }
-                else {
-                    [System.Net.ServicePointManager]::Expect100Continue = $false
-                    $result = Invoke-RestMethod -Uri $uri -Method Post -Body $Form -Headers $Headers
-                }
-                # Neither Json nor Post, so its a plain request
-            }
-            else {
-                if ($PSCore) {
-                    $result = Invoke-RestMethod -Uri $uri -Method 'Get' `
-                        -Authentication 'Basic' -Credential $Credential -Headers $Headers `
-                        -SkipCertificateCheck:$SkipCertificateCheck
-                }
-                else {
-                    # This needs to be POST for SkipCertificateCheck to work properly in PS Desktop
-                    # Use a POST with empty body instead of a GET, to work around bug
-                    # that prevents GET from working when used with -SkipCertificateCheck
-
-                    # Reverted back to GET method, seems OK
-                    [System.Net.ServicePointManager]::Expect100Continue = $false
-                    $result = Invoke-RestMethod -Uri $uri -Method Get -Headers $Headers
-                }
-            }
+            # Neither Json nor Post, so its a plain request
+            $ParamSplat.Add('Method', 'GET') 
         }
+    }
+
+    # Write Parameters to Debug channel
+    Write-Debug "Invoke-RestMethod"
+    # Write Custom Headers to Debug channel
+    if ($Headers.Count -gt 0) {
+        $temp = $Headers | ConvertTo-Json -Compress
+        Write-Debug "   -Headers : $temp"
+    }
+    foreach ($key in $ParamSplat.keys) {
+        $val = $ParamSplat.Item($key)
+        Write-Debug "   -$key : $val"
+    }
+
+    # Add Custom Headers to the custom Splat
+    $ParamSplat.Add("Headers",$Headers) | Out-Null
+
+    # Call the OPNsense Rest API using the Splatted Parameters
+    Try {
+        $result = Invoke-RestMethod @ParamSplat
     }
     Catch {
         $ErrorMessage = $_.Exception.Message
-        Write-Error "An error Occured while connecting to the OPNsense server: $ErrorMessage"
+        Write-Error "An error Occured while contacting the OPNsense server: $ErrorMessage"
     }
     Finally {
-        # Always restore the built-in .NET certificate policy on Windows PowerShell only
+        # Always restore the built-in .NET certificate policy on Windows PS Desktop only
         if (-Not $PSCore -And [bool]::Parse($SkipCertificateCheck)) {
             Set-CertificatePolicy $CertPolicy -Verbose:$VerbosePreference
         }
@@ -162,13 +162,11 @@ Function Invoke-OPNsenseCommand {
     if ($Json) {
         $Result = Invoke-OPNsenseApiRestCommand -Uri $Uri -credential $Credentials -Json $Json `
             -SkipCertificateCheck:$SkipCertificateCheck -Verbose:$VerbosePreference
-    }
-    else {
+    } else {
         if ($Form) {
             $Result = Invoke-OPNsenseApiRestCommand -Uri $Uri -credential $Credentials -Form $Form `
                 -SkipCertificateCheck:$SkipCertificateCheck -Verbose:$VerbosePreference
-        }
-        else {
+        } else {
             $Result = Invoke-OPNsenseApiRestCommand -Uri $Uri -credential $Credentials `
                 -SkipCertificateCheck:$SkipCertificateCheck -Verbose:$VerbosePreference
         }
