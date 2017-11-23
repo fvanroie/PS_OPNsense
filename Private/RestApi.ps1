@@ -31,6 +31,7 @@ Function Invoke-OPNsenseApiRestCommand {
         [PSCredential]$Credential,
         $Json,
         $Form,
+        [System.IO.FileInfo]$OutFile,
         [switch]$SkipCertificateCheck = $false
     )
     # Check if running PowerShell Core CLR or Windows PowerShell
@@ -141,6 +142,7 @@ Function Invoke-OPNsenseCommand {
 
         [parameter(Mandatory = $true, ParameterSetName = "Form")]
         $Form,
+        [System.IO.FileInfo]$OutFile,
 
         [parameter(Mandatory = $false)]$AddProperty
     )
@@ -165,11 +167,16 @@ Function Invoke-OPNsenseCommand {
     } else {
         if ($Form) {
             $Result = Invoke-OPNsenseApiRestCommand -Uri $Uri -credential $Credentials -Form $Form `
-                -SkipCertificateCheck:$SkipCertificateCheck -Verbose:$VerbosePreference
+                -SkipCertificateCheck:$SkipCertificateCheck -Verbose:$VerbosePreference -OutFile $OutFile
         } else {
             $Result = Invoke-OPNsenseApiRestCommand -Uri $Uri -credential $Credentials `
                 -SkipCertificateCheck:$SkipCertificateCheck -Verbose:$VerbosePreference
         }
+    }
+
+
+    If ($OutFile) {
+        return
     }
 
     # The result return should be a JSON object, which is automatically parsed into an object

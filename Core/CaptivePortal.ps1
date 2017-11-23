@@ -69,21 +69,100 @@ Function New-OPNsenseCaptivePortalZone {
     return Invoke-OPNsenseCommand captiveportal settings addzone -Json $obj
 }
 
+
+Function Get-OPNsenseCaptivePortalTemplate {
+    # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
+    [CmdletBinding(DefaultParameterSetName = 'GetTemplate')]
+    Param (
+        [Parameter(Mandatory = $false)][String]$Name,
+        [Parameter(Mandatory = $false)][String]$Uuid,
+        [Parameter(Mandatory = $false)][String]$FileId
+    )
+    $result = Invoke-OPNsenseCommand captiveportal service searchTemplates | Select-Object -ExpandProperty Rows
+
+    if ($Name) {
+        $result = $result | where-object { $_.Name -like $Name }
+    }
+    if ($Uuid) {
+        $result = $result | where-object { $_.Uuid -like $Uuid }
+    }
+    if ($FileId) {
+        $result = $result | where-object { $_.FileId -like $FileId }
+    }
+    Return $result
+}
+
 Function New-OPNsenseCaptivePortalTemplate {
     # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
     param (
         [Parameter(Mandatory = $true)][String]$Name,
-        [Parameter(Mandatory = $true)][String]$File
+        [System.IO.FileInfo]$Path
     )
-    if (Test-Path -PathType Leaf -Path $File) {
-        $filecontent = [IO.File]::ReadAllBytes($File)
-        $obj = @{'name' = $Name; 'content' = [System.Convert]::ToBase64String($filecontent)};
+    $Path = Convert-Path $Path
+    if (Test-Path -PathType Leaf -Path $Path) {
+        $filecontent = [IO.File]::ReadAllBytes($Path)
+        $obj = @{'name' = $Name; 'content' = [System.Convert]::ToBase64String($filecontent)}
 
         return Invoke-OPNsenseCommand captiveportal service saveTemplate -Json $obj
     }
     else {
-        Write-Error "Could not load file $File"
+        Write-Error "Could not load template file $File"
     }
+}
+
+Function Save-OPNsenseCaptivePortalTemplate {
+    # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
+    param (
+        [Parameter(Mandatory = $true)][String]$FileId,
+        [Parameter(Mandatory = $true)][System.IO.FileInfo]$Path,
+        [Parameter(Mandatory = $false)][Switch]$Force       
+    )
+
+   if (Test-Path -PathType Leaf -Path $Path) {
+        if (-Not [bool]::Parse($Force)) {
+            Write-Error "The file $Path already exists."
+            return
+        }
+    }
+
+    try {
+        $result = Invoke-OPNsenseCommand captiveportal service getTemplate -Form "fileid=$fileid" -OutFile $path
+        return $result
+    }
+    catch {
+        Write-Error "Could not save template file $File"
+    }
+}
+
+Function Remove-OPNsenseCaptivePortalTemplate {
+    # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
+    [CmdletBinding(DefaultParameterSetName = 'GetTemplate')]
+    Param (
+        [Parameter(Mandatory = $false)][String]$Name,
+        [Parameter(Mandatory = $false)][String]$Uuid,
+        [Parameter(Mandatory = $false)][String]$FileId
+    )
+    $results = {}
+    
+    $result = Invoke-OPNsenseCommand captiveportal service searchTemplates | Select-Object -ExpandProperty Rows
+
+    if ($Name) {
+        $result = $result | where-object { $_.Name -like $Name }
+    }
+    if ($Uuid) {
+        $result = $result | where-object { $_.Uuid -like $Uuid }
+    }
+    if ($FileId) {
+        $result = $result | where-object { $_.FileId -like $FileId }
+    }
+
+    foreach ($templ in $result) {
+        Write-Verbose "Deleting Template $($templ.uuid)"
+        $result = Invoke-OPNsenseCommand captiveportal service "delTemplate/$($templ.uuid)" -Form delTemplate -AddProperty @{ 'uuid' = $templ.uuid }
+        $results += $result
+    }
+
+    Return $results
 }
 
 Function Get-OPNsenseCaptivePortal {
@@ -101,7 +180,6 @@ Function Get-OPNsenseCaptivePortal {
         [Parameter(Mandatory = $false, ParameterSetName = 'GetTemplate')]
         [Parameter(Mandatory = $false, ParameterSetName = 'GetZone')]
         [string]$Id
-
     )
 
     If ([bool]::Parse($Provider)) {

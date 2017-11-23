@@ -139,7 +139,9 @@
         # Proxy
         'New-OPNsenseProxyRemoteBlacklist',
         # CaptivePortal
-        'New-OPNsenseCaptivePortalZone', 'New-OPNsenseCaptivePortalTemplate', 'Get-OPNsenseCaptivePortal',
+        'New-OPNsenseCaptivePortalZone',
+        'New-OPNsenseCaptivePortalTemplate', 'Get-OPNsenseCaptivePortalTemplate', 'Set-OPNsenseCaptivePortalTemplate', 'Remove-OPNsenseCaptivePortalTemplate', 'Save-OPNsenseCaptivePortalTemplate',
+        'Get-OPNsenseCaptivePortal',
         # Diagnostics
         'Get-OPNsenseSystemHealth', 'Get-OPNsenseResource', 'Get-OPNsenseInterface', 'Get-OPNsenseRoute', 'Get-OPNsenseARP', 'Clear-OPNsenseARP',
         # Services
