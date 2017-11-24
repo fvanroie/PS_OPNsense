@@ -134,3 +134,25 @@ Function Disconnect-OPNsense() {
 }
 
 
+Function Enable-OPNsense {
+    # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
+    [CmdletBinding()]
+    Param(
+        [Switch]$Zone,
+        [Switch]$Job,
+        
+        [Switch]$Rule,
+        [Switch]$RuleSet,
+        [Switch]$UserRule,
+        
+        [Switch]$RemoteBlacklist,
+        
+        [Switch]$Route,
+
+        [Switch]$Pipe,
+        [Switch]$Queue,
+
+        [String[]]$UUID
+    )
+    
+}

@@ -23,8 +23,46 @@
 
 Function Get-OPNsensePackage {
     # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
-    $packages = Invoke-OPNsenseCommand core firmware info
-    return $packages.package
+    param (
+        [Parameter(Mandatory = $false, position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)]
+        [SupportsWildcards()][String[]]$Name,
+        [Switch]$Installed = $false,
+        [Switch]$Locked = $false
+    )
+    BEGIN {
+        # Get all packages
+        $packages = $(Invoke-OPNsenseCommand core firmware info).package
+        foreach ($package in $packages) {
+            $package.installed = $package.installed -eq 1
+            $package.locked = $package.locked -eq 1
+            $package.provided = $package.provided -eq 1
+        }
+        if ($PSBoundParameters.ContainsKey('Installed')) {
+            $packages = $packages | where-Object { $_.Installed -eq $Installed }
+        }
+
+        if ($PSBoundParameters.ContainsKey('Locked')) {
+            $packages = $packages | where-Object { $_.Locked -eq $Locked }
+        }
+
+        $allpackages = @()
+    }
+    PROCESS {
+        # Multiple Names can be passed
+        foreach ($pkgname in $Name) {
+            # Filter packages based on possible wildcards
+            $temppkgs = $packages | where-Object { $_.Name -like $pkgname }
+            foreach ($temppkg in $temppkgs){
+                # Check if packege is already included
+                if ($allpackages -notcontains $temppkg) {
+                    $allpackages += $temppkg
+                }
+            }
+        }
+    }
+    END {
+        return $allpackages | Add-ObjectDetail -TypeName 'OPNsense.Package'
+    }
 }
 
 Function Lock-OPNsensePackage {

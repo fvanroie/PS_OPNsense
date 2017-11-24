@@ -27,10 +27,10 @@ function Get-OPNsenseClamAV {
         [Switch]$Version
     )
     if ([bool]::Parse($Version)) {
-        Return $(Invoke-OPNsenseCommand clamav service version).version
+        Return $(Invoke-OPNsenseCommand clamav service version).version | Add-ObjectDetail -TypeName 'OPNsense.Service.ClamAV.Version'
     }
     else {
-        Return $(Invoke-OPNsenseCommand clamav general get).general
+        Return $(Invoke-OPNsenseCommand clamav general get).general | Add-ObjectDetail -TypeName 'OPNsense.Service.ClamAV.Option'
     }
 }
 
@@ -199,8 +199,6 @@ Function Set-OPNsenseClamAV {
     if ($PSBoundParameters.ContainsKey('FreshClamLogVerbose')) {
         $argHash['fc_logverbose'] = $( if ([bool]::Parse($FreshClamLogVerbose)) {'1'} else {'0'} ) 
     }
-
-
 
     return Invoke-OPNsenseCommand clamav general set -Json $argHash
 }

@@ -60,7 +60,7 @@ function Get-OPNsenseService {
         } #foreach
     } # PROCESS
     END {
-        return $results
+        return $results | Add-ObjectDetail -TypeName 'OPNsense.Service'
     }
 }
 
@@ -111,7 +111,7 @@ Function Start-OPNsenseService {
     )
     BEGIN {
         if (-NOT $PSBoundParameters.ContainsKey('name')) {
-            $name = Get-Services 'status'
+            $name = Get-Services 'start'
         }
         $results = @()
     }
@@ -147,7 +147,7 @@ function Restart-OPNsenseService {
     )
     BEGIN {
         if (-NOT $PSBoundParameters.ContainsKey('name')) {
-            $name = Get-Services 'status'
+            $name = Get-Services 'restart'
         }
         $results = @()
     }
@@ -183,7 +183,7 @@ function Stop-OPNsenseService {
     )
     BEGIN {
         if (-NOT $PSBoundParameters.ContainsKey('name')) {
-            $name = Get-Services 'status'
+            $name = Get-Services 'stop'
         }
         $results = @()
     }

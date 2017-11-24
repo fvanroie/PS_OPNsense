@@ -157,14 +157,16 @@ Function Invoke-OPNsenseAudit {
 
 Function Get-OPNsense {
     # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
-    [CmdletBinding()]
+    [CmdletBinding(DefaultParameterSetName = 'Mirror')]
     Param(
         [Alias("Mirrors")]
         [Parameter(Mandatory = $false, ParameterSetName = 'Mirror')]
         [Switch]$Mirror = $false,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'Changelog')]
-        [Switch]$Changelog = $true
+        [Parameter(Mandatory = $true, ParameterSetName = 'Changelog')]
+        [Switch]$Changelog = $false,
+        [Parameter(Mandatory = $true, ParameterSetName = 'Changelog')]
+        [String]$Version        
      )
 
     if ([bool]::Parse($Mirror)) {
@@ -187,12 +189,12 @@ Function Get-OPNsense {
             $thisMirror = New-Object PSObject -Property @{ Url = $url ; Description = $name ; Hosting = $hosting ; Location = $location ; Commercial = $commercial }
             $allMirrors += $thisMirror
         }
-        return $allMirrors
+        return $allMirrors | Add-ObjectDetail -TypeName 'OPNsense.Firmware.Mirror'
     }
 
     if ([bool]::Parse($Changelog)) {
-        $result = Invoke-OPNsenseCommand core firmware changelog -Form changelog
-        return $result
+        $result = Invoke-OPNsenseCommand core firmware "changelog/$Version" -Form changelog
+        return $result  | Add-ObjectDetail -TypeName 'OPNsense.Firmware.Changelog'
     }
 
     # No Switches
@@ -204,42 +206,42 @@ Function Set-OPNsense {
     # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
     [CmdletBinding()]
     Param(
-        [parameter(Mandatory = $false, ParameterSetName = "FirmwareSettings")]
+        [parameter(Mandatory = $false, ParameterSetName = "FirmwareOptions")]
         [String]$Mirror,
-        [parameter(Mandatory = $false, ParameterSetName = "FirmwareSettings")]
+        [parameter(Mandatory = $false, ParameterSetName = "FirmwareOptions")]
         [String]$Flavour,
-        [parameter(Mandatory = $false, ParameterSetName = "FirmwareSettings")]
+        [parameter(Mandatory = $false, ParameterSetName = "FirmwareOptions")]
         [String]$Subscription
     )
 
     $changed = 0
-    $FirmwareSettings = Invoke-OPNsenseCommand core firmware getFirmwareConfig -AddProperty @{ Subscription = '' }
+    $FirmwareOptions = Invoke-OPNsenseCommand core firmware getFirmwareConfig -AddProperty @{ Subscription = '' }
     if ($PSBoundParameters.ContainsKey('Mirror')) {
         $changed++
-        $FirmwareSettings.Mirror = $Mirror
+        $FirmwareOptions.Mirror = $Mirror
     }
     if ($PSBoundParameters.ContainsKey('Flavour')) {
         $changed++
-        $FirmwareSettings.Flavour = $Flavour
+        $FirmwareOptions.Flavour = $Flavour
     }
     if ($PSBoundParameters.ContainsKey('Subscription')) {
         $changed++
-        $FirmwareSettings.Subscription = $Subscription
+        $FirmwareOptions.Subscription = $Subscription
     }
 
     if ($changed -gt 0) {
         Write-Verbose "$changed setting(s) have changed"
         $result = Invoke-OPNsenseCommand core firmware setFirmwareConfig `
-            -Json @{ mirror = $FirmwareSettings.Mirror; flavour = $FirmwareSettings.Flavour; subscription = $FirmwareSettings.Subscription }
+            -Json @{ mirror = $FirmwareOptions.Mirror; flavour = $FirmwareOptions.Flavour; subscription = $FirmwareOptions.Subscription }
         if ($Result.status -eq 'ok') {
-            return $FirmwareSettings
+            return $FirmwareOptions | Add-ObjectDetail -TypeName 'OPNsense.Firmware.Options'
         }
         else {
-            Throw 'Failed to set FirmwareSettings.'
+            Throw 'Failed to set the firmware options.'
         }
     }
     else {
         Write-Warning 'No settings have changed, skipping.'
-        return $FirmwareSettings
+        return $FirmwareOptions | Add-ObjectDetail -TypeName 'OPNsense.Firmware.Options'
     }
 }

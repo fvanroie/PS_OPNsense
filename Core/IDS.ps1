@@ -78,3 +78,7 @@ Function New-OPNsenseIdsUserRule {
 Function Get-OPNsenseIdsAlert {
     return $(Invoke-OPNsenseCommand ids service queryalerts -Form fileid=none).rows
 }
+
+Function Update-OPNsenseIdsRule {
+    
+}
