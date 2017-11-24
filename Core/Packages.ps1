@@ -24,8 +24,9 @@
 Function Get-OPNsensePackage {
     # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
     param (
+        [SupportsWildcards()]    
         [Parameter(Mandatory = $false, position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)]
-        [SupportsWildcards()][String[]]$Name,
+        [String[]]$Name,
         [Switch]$Installed = $false,
         [Switch]$Locked = $false
     )
@@ -52,7 +53,7 @@ Function Get-OPNsensePackage {
         foreach ($pkgname in $Name) {
             # Filter packages based on possible wildcards
             $temppkgs = $packages | where-Object { $_.Name -like $pkgname }
-            foreach ($temppkg in $temppkgs){
+            foreach ($temppkg in $temppkgs) {
                 # Check if packege is already included
                 if ($allpackages -notcontains $temppkg) {
                     $allpackages += $temppkg

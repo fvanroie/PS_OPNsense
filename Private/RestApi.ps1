@@ -48,8 +48,9 @@ Function Invoke-OPNsenseApiRestCommand {
     # Check PowerShell Edition
     if ($PSCore) {
         # PS Core knows the Basic Authentication and handles SkipCertificateCheck
-        $ParamSplat.Add("Authentication","Basic") | Out-Null
-    } else {
+        $ParamSplat.Add("Authentication", "Basic") | Out-Null
+    }
+    else {
         # On Windows PowerShell only, Add Basic Authentication Header
         $bytes = [System.Text.Encoding]::UTF8.GetBytes($Credential.Username + ":" + $credential.GetNetworkCredential().Password)
         $Headers = @{ 'Authorization' = ("Basic {0}" -f [System.Convert]::ToBase64String($bytes))}
@@ -70,10 +71,12 @@ Function Invoke-OPNsenseApiRestCommand {
             $Json = $Json | ConvertTo-Json -Depth 15   # Default Depth is 2!
             Write-Verbose "JSON Arguments: $Json"
             # Set correct Content-Type for JSON data
-            $Headers.Add('Content-Type', 'application/json')
+            #$ParamSplat.Add('ContentType', 'application/json; charset=UTF-8')    THIS HAS A BUG !
+            $ParamSplat.Add('ContentType', 'application/json')
             $ParamSplat.Add('Method', 'POST')
             $ParamSplat.Add('Body', $json)
-        } else {
+        }
+        else {
             Throw 'JSON object should be a HashTable'
         }
     }
@@ -106,7 +109,7 @@ Function Invoke-OPNsenseApiRestCommand {
     }
 
     # Add Custom Headers to the custom Splat
-    $ParamSplat.Add("Headers",$Headers) | Out-Null
+    $ParamSplat.Add("Headers", $Headers) | Out-Null
 
     # Call the OPNsense Rest API using the Splatted Parameters
     Try {
@@ -164,48 +167,57 @@ Function Invoke-OPNsenseCommand {
     if ($Json) {
         $Result = Invoke-OPNsenseApiRestCommand -Uri $Uri -credential $Credentials -Json $Json `
             -SkipCertificateCheck:$SkipCertificateCheck -Verbose:$VerbosePreference
-    } else {
+    }
+    else {
         if ($Form) {
             $Result = Invoke-OPNsenseApiRestCommand -Uri $Uri -credential $Credentials -Form $Form `
                 -SkipCertificateCheck:$SkipCertificateCheck -Verbose:$VerbosePreference -OutFile $OutFile
-        } else {
+        }
+        else {
             $Result = Invoke-OPNsenseApiRestCommand -Uri $Uri -credential $Credentials `
                 -SkipCertificateCheck:$SkipCertificateCheck -Verbose:$VerbosePreference
         }
     }
 
-
+    # Save file to disk
     If ($OutFile) {
         return
     }
 
     # The result return should be a JSON object, which is automatically parsed into an object
     # If the result is a String: Find empty labels and mark them as a space (#bug in ConvertFrom-JSON)
-    if ($Result.GetType().Name -eq "String") {
-        $result = $result.Replace('"":"', '" ":"')
-        #$result = $result.Replace('"":(','" ":(')
-        $result = $result.Replace('"":{', '" ":{')
-        try {
-            $result = ConvertFrom-Json $result -ErrorAction Stop
+    if ($result) {
+        if ($Result.GetType().Name -eq "String") {
+            $result = $result.Replace('"":"', '" ":"')
+            #$result = $result.Replace('"":(','" ":(')
+            $result = $result.Replace('"":{', '" ":{')
+            try {
+                $result = ConvertFrom-Json $result -ErrorAction Stop
+            }
+            catch {
+                # If ConvertTo-Json still fails return the string
+            }
         }
-        catch {
-            # If ConvertTo-Json still fails return the string
-        }
-    }
 
-    # Add a custom property to the output, if specified
-    if ($AddProperty) {
-        Write-Verbose "Adding Property:"
-        if ($addProperty.GetType().Name -eq "HashTable") {
-            $addProperty.keys | ForEach-Object {
-                Write-Verbose ("* $_ : " + $addProperty.Item($_))
-                $result |  Add-Member $_ $addProperty.Item($_)
+        # Add a custom property to the output, if specified
+        if ($AddProperty) {
+            Write-Verbose "Adding Property:"
+            if ($addProperty.GetType().Name -eq "HashTable") {
+                $addProperty.keys | ForEach-Object {
+                    Write-Verbose ("* $_ : " + $addProperty.Item($_))
+                    $result |  Add-Member $_ $addProperty.Item($_)
+                }
             }
         }
     }
 
-    $timer.stop()
-    Write-Debug ($timer.elapsed.ToString() + " passed.")
+    $CurrentTime = $Timer.Elapsed
+    write-Debug $([string]::Format("Time passed: {0:d2}h {1:d2}m {2:d2}.{3:d3}s",
+            $CurrentTime.hours, 
+            $CurrentTime.minutes, 
+            $CurrentTime.seconds,
+            $CurrentTime.milliseconds))
+    $Timer.stop()
     # Return the object
     return $result
 }

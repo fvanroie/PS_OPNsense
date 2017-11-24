@@ -224,7 +224,7 @@ Function Clear-OPNsenseARP {
     Param (
     )
     if ($pscmdlet.ShouldProcess($MyInvocation.MyCommand.Module.PrivateData['OPNsenseApi'])) {
-        $result = Invoke-OPNsenseCommand diagnostics interface flusharp
+        $result = Invoke-OPNsenseCommand diagnostics interface flusharp -Form flusharp
         return $result.Split("`n") | Where-Object { $_ -ne '' }
     }
 }

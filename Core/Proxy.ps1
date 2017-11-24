@@ -23,23 +23,98 @@
 
 Function New-OPNsenseProxyRemoteBlacklist {
     param (
-        [Parameter(Mandatory = $true)][String]$Filename,
-        [Parameter(Mandatory = $true)][String]$Url,
-        [Parameter(Mandatory = $true)][String]$Description,
-        [Parameter(Mandatory = $false)][Boolean]$Enabled,
-        [Parameter(Mandatory = $false)][String]$Username,
-        [Parameter(Mandatory = $false)][String]$Password,
-        [Parameter(Mandatory = $false)][String]$Filter,
-        [Parameter(Mandatory = $false)][Boolean]$SslNoVerify
-
+        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)]
+        [String]$Filename,
+        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)]
+        [String]$Url,
+        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)]
+        [String]$Description,
+        [Parameter(Mandatory = $false, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)]
+        [ValidateSet('True', 'False', '0', '1', $true, $false)]
+        $Enabled,
+        [Parameter(Mandatory = $false, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)]
+        [String]$Username,
+        [Parameter(Mandatory = $false, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)]
+        [String]$Password,
+        [Parameter(Mandatory = $false, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)]
+        [String]$Filter,
+        [Parameter(Mandatory = $false, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)]
+        [ValidateSet('True', 'False', '0', '1', $true, $false)]
+        $SslNoVerify
     )
-    $opnBlacklist = @{
-        blacklist = @{ filename = $Filename ; url = $Url ; description = $Description }
+    BEGIN {
+        $blacklists = $()
     }
+    PROCESS {
+        $blacklist = @{ filename = $Filename ; url = $Url ; description = $Description; enabled = '0' ;
+            username = $Username ; password = $Password ; SslNoVerify = '0'
+        }
 
-    if ($Enabled) {
-        $opnBlacklist.blacklist
+        if ([System.Convert]::ToBoolean($Enabled)) {
+            $blacklist['enabled'] = '1'
+        }
+        if ([System.Convert]::ToBoolean($SslNoVerify)) {
+            $blacklist['SslNoVerify'] = '1'
+        }
+        $result = Invoke-OPNsenseCommand proxy settings addremoteblacklist -Json @{ 'blacklist' = $blacklist }
+        $blacklists += $result
     }
+    END {
+        return $blacklists | Add-ObjectDetail -TypeName 'OPNsense.Proxy.RemoteBlacklist'
+    }
+}
 
-    return Invoke-OPNsenseCommand proxy settings addremoteblacklist -Json $opnBlacklist
+Function Get-OPNsenseProxyRemoteBlacklist {
+    # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
+    param (
+        [SupportsWildcards()]    
+        [Parameter(Mandatory = $false, position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)]
+        [String[]]$Uuid
+    )
+    BEGIN {
+        $blacklists = @()
+    }
+    PROCESS {
+        if ($PSBoundParameters.ContainsKey('Uuid')) {
+            foreach ($Id in $uuid) {
+                $Blacklist = Invoke-OPNsenseCommand proxy settings "getremoteblacklist/$Id" |
+                    Select-Object -ExpandProperty blacklist
+                $Blacklist.enabled = $Blacklist.enabled -eq 1
+                $Blacklist.sslNoVerify = $Blacklist.sslNoVerify -eq 1
+                $Blacklist | Add-Member 'uuid' $Id
+                $blacklists += $Blacklist
+            }
+        }
+        else {
+            $Blacklist = Invoke-OPNsenseCommand proxy settings searchremoteblacklists | Select-Object -ExpandProperty rows
+            foreach ($Item in $blacklist) {
+                $Item.enabled = $Item.enabled -eq 1
+            }
+            $blacklists += $Blacklist
+        }
+    }
+    END {
+        return $blacklists
+    }
+}
+
+Function Remove-OPNsenseProxyRemoteBlacklist {
+    # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
+    param (
+        [SupportsWildcards()]    
+        [Parameter(Mandatory = $true, position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)]
+        [String[]]$Uuid
+    )
+    BEGIN {
+        $blacklists = @()
+    }
+    PROCESS {
+        foreach ($Id in $uuid) {
+            $Blacklist = Invoke-OPNsenseCommand proxy settings "delremoteblacklist/$Id" -Form delremoteblacklist  -AddProperty @{ 'uuid' = $Id }
+            $blacklists += $Blacklist
+        }
+    }
+    END {
+        return $blacklists
+    }
 }

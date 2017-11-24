@@ -86,7 +86,7 @@
     # TypesToProcess = @()
 
     # Format files (.ps1xml) to be loaded when importing this module
-    FormatsToProcess = @(
+    FormatsToProcess       = @(
         'Formats\Firmware.format.ps1xml',
         'Formats\Packages.format.ps1xml',
         'Formats\Services.format.ps1xml',
@@ -142,7 +142,7 @@
         #IDS
         'Get-OPNsenseIdsUserRule', 'New-OPNsenseIdsUserRule', 'Get-OPNsenseIdsAlert',
         # Proxy
-        'New-OPNsenseProxyRemoteBlacklist',
+        'New-OPNsenseProxyRemoteBlacklist', 'Get-OPNsenseProxyRemoteBlacklist', 'Remove-OPNsenseProxyRemoteBlacklist',
         # CaptivePortal
         'New-OPNsenseCaptivePortalZone',
         'New-OPNsenseCaptivePortalTemplate', 'Get-OPNsenseCaptivePortalTemplate', 'Set-OPNsenseCaptivePortalTemplate', 'Remove-OPNsenseCaptivePortalTemplate', 'Save-OPNsenseCaptivePortalTemplate',

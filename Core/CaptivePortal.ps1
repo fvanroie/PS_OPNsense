@@ -118,7 +118,7 @@ Function Save-OPNsenseCaptivePortalTemplate {
         [Parameter(Mandatory = $false)][Switch]$Force       
     )
 
-   if (Test-Path -PathType Leaf -Path $Path) {
+    if (Test-Path -PathType Leaf -Path $Path) {
         if (-Not [bool]::Parse($Force)) {
             Write-Error "The file $Path already exists."
             return
