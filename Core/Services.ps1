@@ -84,10 +84,10 @@ function Update-OPNsenseService {
                     {     $results += Invoke-OPNsenseCommand diagnostics netflow reconfigure -AddProperty @{ name = $service.tolower()}
                     }
                     'monit'
-                    {     $results += Invoke-OPNsenseCommand $service.tolower() service reload -AddProperty @{ name = $service.tolower()}
+                    {     $results += Invoke-OPNsenseCommand $service.tolower() service reload -Json @{} -AddProperty @{ name = $service.tolower()}
                     }
                     Default
-                    {     $results += Invoke-OPNsenseCommand $service.tolower() service reconfigure -AddProperty @{ name = $service.tolower()}
+                    {     $results += Invoke-OPNsenseCommand $service.tolower() service reconfigure -Json @{} -AddProperty @{ name = $service.tolower()}
                     }
                 } # switch
             }
@@ -123,7 +123,7 @@ Function Start-OPNsenseService {
                     {     $results += Invoke-OPNsenseCommand diagnostics netflow start -AddProperty @{ name = $service.tolower()}
                     }
                     Default
-                    {     $results += Invoke-OPNsenseCommand $service.tolower() service start -AddProperty @{ name = $service.tolower()}
+                    {     $results += Invoke-OPNsenseCommand $service.tolower() service start -Json @{} -AddProperty @{ name = $service.tolower()}
                     }
                 } # switch
             }
@@ -159,7 +159,7 @@ function Restart-OPNsenseService {
                     {     $results += Invoke-OPNsenseCommand diagnostics netflow restart -AddProperty @{ name = $service.tolower()}
                     }
                     Default
-                    {     $results += Invoke-OPNsenseCommand $service.tolower() service restart -AddProperty @{ name = $service.tolower()}
+                    {     $results += Invoke-OPNsenseCommand $service.tolower() service restart -Json @{} -AddProperty @{ name = $service.tolower()}
                     }
                 } # switch
             }
@@ -195,7 +195,7 @@ function Stop-OPNsenseService {
                     {     $results += Invoke-OPNsenseCommand diagnostics netflow stop -AddProperty @{ name = $service.tolower()}
                     }
                     Default
-                    {     $results += Invoke-OPNsenseCommand $service.tolower() service stop -AddProperty @{ name = $service.tolower()}
+                    {     $results += Invoke-OPNsenseCommand $service.tolower() service stop -Json @{} -AddProperty @{ name = $service.tolower()}
                     }
                 } # switch
             }

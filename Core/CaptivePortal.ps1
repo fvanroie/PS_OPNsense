@@ -169,13 +169,15 @@ Function Get-OPNsenseCaptivePortal {
     # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
     [CmdletBinding(DefaultParameterSetName = 'GetTemplate')]
     Param (
-        [Parameter(ParameterSetName = 'ListProviders')][switch]$Provider,
+        [Parameter(ParameterSetName = 'ListProviders')]
+        [switch]$Provider,
 
         [Parameter(ParameterSetName = 'GetTemplate')]
-        [Parameter(ParameterSetName = 'ListTemplates')][switch]$Template,
+        [Parameter(ParameterSetName = 'ListTemplates')]
+        [switch]$Template,
 
         [Parameter(ParameterSetName = 'GetZone')]
-        [Parameter(ParameterSetName = 'ListZones')][switch]$Zone,
+        [switch]$Zone,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'GetTemplate')]
         [Parameter(Mandatory = $false, ParameterSetName = 'GetZone')]

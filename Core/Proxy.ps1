@@ -118,3 +118,19 @@ Function Remove-OPNsenseProxyRemoteBlacklist {
         return $blacklists
     }
 }
+
+Function Sync-OPNsenseProxyRemoteBlacklist {
+    # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
+    param (
+        [Parameter(Mandatory = $false, position = 0)]
+        [Switch]$Apply
+    )
+
+    if ([bool]::Parse($Apply)) {
+        $result = Invoke-OPNsenseCommand proxy service fetchacls -Form fetchacls
+    } else {
+        $result = Invoke-OPNsenseCommand proxy service downloadacls -Form downloadacls
+    }
+
+    Return $result
+}
