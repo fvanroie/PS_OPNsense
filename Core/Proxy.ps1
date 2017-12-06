@@ -22,6 +22,7 @@
 #>
 
 Function New-OPNsenseProxyRemoteBlacklist {
+    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
     param (
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)]
         [String]$Filename,
@@ -65,7 +66,7 @@ Function New-OPNsenseProxyRemoteBlacklist {
 }
 
 Function Get-OPNsenseProxyRemoteBlacklist {
-    # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
+    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
     param (
         [SupportsWildcards()]    
         [Parameter(Mandatory = $false, position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)]
@@ -84,8 +85,7 @@ Function Get-OPNsenseProxyRemoteBlacklist {
                 $Blacklist | Add-Member 'uuid' $Id
                 $blacklists += $Blacklist
             }
-        }
-        else {
+        } else {
             $Blacklist = Invoke-OPNsenseCommand proxy settings searchremoteblacklists | Select-Object -ExpandProperty rows
             foreach ($Item in $blacklist) {
                 $Item.enabled = $Item.enabled -eq 1
@@ -99,7 +99,7 @@ Function Get-OPNsenseProxyRemoteBlacklist {
 }
 
 Function Remove-OPNsenseProxyRemoteBlacklist {
-    # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
+    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
     param (
         [SupportsWildcards()]    
         [Parameter(Mandatory = $true, position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)]
@@ -120,7 +120,7 @@ Function Remove-OPNsenseProxyRemoteBlacklist {
 }
 
 Function Sync-OPNsenseProxyRemoteBlacklist {
-    # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
+    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
     param (
         [Parameter(Mandatory = $false, position = 0)]
         [Switch]$Apply

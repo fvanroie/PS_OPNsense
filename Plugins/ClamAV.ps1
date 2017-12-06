@@ -22,19 +22,20 @@
 #>
 
 function Get-OPNsenseClamAV {
+    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
     [CmdletBinding()]
     param (
         [Switch]$Version
     )
     if ([bool]::Parse($Version)) {
         Return $(Invoke-OPNsenseCommand clamav service version).version | Add-ObjectDetail -TypeName 'OPNsense.Service.ClamAV.Version'
-    }
-    else {
+    } else {
         Return $(Invoke-OPNsenseCommand clamav general get).general | Add-ObjectDetail -TypeName 'OPNsense.Service.ClamAV.Option'
     }
 }
 
 Function Set-OPNsenseClamAV {
+    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
     [CmdletBinding()]
     param (
         [parameter(Mandatory = $false)][bool]$Enable,

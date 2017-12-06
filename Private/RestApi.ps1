@@ -49,8 +49,7 @@ Function Invoke-OPNsenseApiRestCommand {
     if ($PSCore) {
         # PS Core knows the Basic Authentication and handles SkipCertificateCheck
         $ParamSplat.Add("Authentication", "Basic") | Out-Null
-    }
-    else {
+    } else {
         # On Windows PowerShell only, Add Basic Authentication Header
         $bytes = [System.Text.Encoding]::UTF8.GetBytes($Credential.Username + ":" + $credential.GetNetworkCredential().Password)
         $Headers = @{ 'Authorization' = ("Basic {0}" -f [System.Convert]::ToBase64String($bytes))}
@@ -75,12 +74,10 @@ Function Invoke-OPNsenseApiRestCommand {
             $ParamSplat.Add('ContentType', 'application/json')
             $ParamSplat.Add('Method', 'POST')
             $ParamSplat.Add('Body', $json)
-        }
-        else {
+        } else {
             Throw 'JSON object should be a HashTable'
         }
-    }
-    else {
+    } else {
         # Post a web Form
         if ($Form) {
             # Output Verbose object in JSON notation, if -Verbose is specified
@@ -89,8 +86,7 @@ Function Invoke-OPNsenseApiRestCommand {
  
             $ParamSplat.Add('Method', 'POST')
             $ParamSplat.Add('Body', $form)
-        }
-        else {
+        } else {
             # Neither Json nor Post, so its a plain request
             $ParamSplat.Add('Method', 'GET') 
         }
@@ -114,12 +110,10 @@ Function Invoke-OPNsenseApiRestCommand {
     # Call the OPNsense Rest API using the Splatted Parameters
     Try {
         $result = Invoke-RestMethod @ParamSplat
-    }
-    Catch {
+    } Catch {
         $ErrorMessage = $_.Exception.Message
         Write-Error "An error Occured while contacting the OPNsense server: $ErrorMessage"
-    }
-    Finally {
+    } Finally {
         # Always restore the built-in .NET certificate policy on Windows PS Desktop only
         if (-Not $PSCore -And [bool]::Parse($SkipCertificateCheck)) {
             Set-CertificatePolicy $CertPolicy -Verbose:$VerbosePreference
@@ -129,7 +123,7 @@ Function Invoke-OPNsenseApiRestCommand {
 }
 
 Function Invoke-OPNsenseCommand {
-    # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
+    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
     [CmdletBinding()]
     Param (
         [parameter(Mandatory = $true, position = 1, ParameterSetName = "Get")]
@@ -159,21 +153,18 @@ Function Invoke-OPNsenseCommand {
 
     if ($OPNsenseApi) {
         $Uri = ($OPNsenseApi + '/' + $Module + '/' + $Controller + '/' + $Command)
-    }
-    else {
+    } else {
         throw "ERROR : Not connected to an OPNsense instance"
     }
 
     if ($Json) {
         $Result = Invoke-OPNsenseApiRestCommand -Uri $Uri -credential $Credentials -Json $Json `
             -SkipCertificateCheck:$SkipCertificateCheck -Verbose:$VerbosePreference
-    }
-    else {
+    } else {
         if ($Form) {
             $Result = Invoke-OPNsenseApiRestCommand -Uri $Uri -credential $Credentials -Form $Form `
                 -SkipCertificateCheck:$SkipCertificateCheck -Verbose:$VerbosePreference -OutFile $OutFile
-        }
-        else {
+        } else {
             $Result = Invoke-OPNsenseApiRestCommand -Uri $Uri -credential $Credentials `
                 -SkipCertificateCheck:$SkipCertificateCheck -Verbose:$VerbosePreference
         }
@@ -193,8 +184,7 @@ Function Invoke-OPNsenseCommand {
             $result = $result.Replace('"":{', '" ":{')
             try {
                 $result = ConvertFrom-Json $result -ErrorAction Stop
-            }
-            catch {
+            } catch {
                 # If ConvertTo-Json still fails return the string
             }
         }

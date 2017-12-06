@@ -117,11 +117,14 @@
         # Private Helper Function
         'Private/Add-ObjectDetail.ps1',
         'Private/CertificateValidation.ps1',
+        'Private/New-ValidationDynamicParam.ps1',
         'Private/RestApi.ps1'
     )
 
     # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
     FunctionsToExport      = @(
+        # TEST
+        'Enable-OPNsense',
         # Backup
         'Backup-OPNsenseConfig', 'Restore-OPNsenseConfig', 'Reset-OPNsenseConfig',
         # ClamAV

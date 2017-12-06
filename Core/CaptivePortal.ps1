@@ -22,10 +22,10 @@
 #>
 
 Function New-OPNsenseCaptivePortalZone {
-    # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
+    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
+    [CmdletBinding()]
     param (
-        [Parameter(Mandatory = $true)][String]$Description,
-        [Parameter(Mandatory = $true)][String]$Interface = '',
+        [Parameter(Mandatory = $true, Position = 0)][String]$Description,
         [Parameter(Mandatory = $false)][Boolean]$Enabled = $true,
         [Parameter(Mandatory = $false)][Boolean]$ConcurrentLogins = $true,
         [Parameter(Mandatory = $false)][Boolean]$TransparentHTTPProxy = $false,
@@ -33,45 +33,145 @@ Function New-OPNsenseCaptivePortalZone {
         [Parameter(Mandatory = $false)][int]$IdleTimeout = 0,
         [Parameter(Mandatory = $false)][int]$HardTimeout = 0,
         [Parameter(Mandatory = $false)][int]$authEnforceGroup = 1999,
-        [Parameter(Mandatory = $false)][String]$AuthServers = '',
         [Parameter(Mandatory = $false)][String]$allowedAddress = '',
         [Parameter(Mandatory = $false)][String]$allowedMACAddress = '',
-        [Parameter(Mandatory = $false)][String]$Hostname = '',
-        [Parameter(Mandatory = $false)][String]$CertificateId, #uuid
-        [Parameter(Mandatory = $false)][String]$TemplateId       #uuid
+        [Parameter(Mandatory = $false)][String]$Hostname = ''
     )
 
-    if ($Enabled) { $isEnabled = 1 } else { $isEnabled = 0 }
-    if ($ConcurrentLogins) { $isConcurrentLogins = 1 } else { $isConcurrentLogins = 0 }
-    if ($TransparentHTTPProxy) { $isTransparentHTTPProxy = 1 } else { $isTransparentHTTPProxy = 0 }
-    if ($TransparentHTTPSProxy) { $isTransparentHTTPSProxy = 1 } else { $isTransparentHTTPSProxy = 0 }
+    DynamicParam {
+        # Get all the dynamic parameter values
+        $newzone = Invoke-OPNsenseCommand captiveportal settings getzone | Select-Object -ExpandProperty zone
+        # Create the dictionary 
+        $RuntimeParameterDictionary = New-Object System.Management.Automation.RuntimeDefinedParameterDictionary
 
-    $obj = @{
-        zone = @{
-            enabled               = $isEnabled;
-            interfaces            = $Interface;
-            authservers           = $AuthServers;
-            authEnforceGroup      = $authEnforceGroup;
-            idletimeout           = $IdleTimeout;
-            hardtimeout           = $HardTimeout;
-            concurrentlogins      = $isConcurrentLogins;
-            certificate           = $CertificateId;
-            servername            = $Hostname;
-            allowedAddresses      = $allowedAddress;
-            allowedMACAddresses   = $allowedMACAddress;
-            transparentHTTPProxy  = $isTransparentHTTPProxy;
-            transparentHTTPSProxy = $isTransparentHTTPSProxy;
-            template              = $TemplateId;
-            description           = $Description
+        # Interface
+        $options = $newzone | Select-Object -ExpandProperty interfaces | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty name
+        $dynParam = New-ValidationDynamicParam -Name Interface -Type '[String[]]' -Mandatory -ValidateSetOptions $options
+        $RuntimeParameterDictionary.Add('Interface', $dynParam)
+
+        # AuthServers
+        $options = $newzone | Select-Object -ExpandProperty authservers | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty name
+        $dynParam = New-ValidationDynamicParam -Name AuthServers -Type '[String[]]' -ValidateSetOptions $options
+        $RuntimeParameterDictionary.Add('AuthServers', $dynParam)
+
+        # Template
+        $options = $newzone | Select-Object -ExpandProperty template | Get-Member -MemberType NoteProperty | Where-Object { $_.Name -notin ('', ' ') } |  Select-Object -ExpandProperty name
+        $arrList = @()
+        foreach ($option in $options) {
+            $arrList += $newzone.template."$option".value
+            $arrList += $option
         }
-    };
+        $dynParam = New-ValidationDynamicParam -Name Template -Type '[String]' -ValidateSetOptions $arrList
+        $RuntimeParameterDictionary.Add('Template', $dynParam)
 
-    return Invoke-OPNsenseCommand captiveportal settings addzone -Json $obj
+        # Certificate
+        $options = $newzone | Select-Object -ExpandProperty certificate | Get-Member -MemberType NoteProperty | Where-Object { $_.Name -notin ('', ' ') } |  Select-Object -ExpandProperty name
+        $arrList = @()
+        foreach ($option in $options) {
+            $arrList += $newzone.certificate."$option".value
+            $arrList += $option
+        }
+        $dynParam = New-ValidationDynamicParam -Name Certificate -Type '[String]' -ValidateSetOptions $arrList
+        $RuntimeParameterDictionary.Add('Certificate', $dynParam)
+
+        # Add the parameters
+        return $RuntimeParameterDictionary
+    }
+
+    BEGIN {
+        $myInterface = $PSBoundParameters.Interface -join ','
+        $myAuthServers = $PSBoundParameters.AuthServers -join ','      
+        $myCertificate = $PSBoundParameters.Certificate
+        $myTemplate = $PSBoundParameters.Template
+
+        if ($myTemplate -or $myCertificate) {
+            $newzone = Invoke-OPNsenseCommand captiveportal settings getzone | Select-Object -ExpandProperty zone
+
+            # Resolve Name to UUID
+            if ($myCertificate) {
+                $options = $newzone | Select-Object -ExpandProperty certificate | Get-Member -MemberType NoteProperty | Where-Object { $_.Name -notin ('', ' ') } |  Select-Object -ExpandProperty name
+                if ($myCertificate -notin $options) {
+                    $found = 0
+                    foreach ($option in $options) {
+                        if ($myCertificate -eq $newzone.certificate."$option".value) {
+                            $myCertificate = $option
+                            $found++
+                        }
+                    }
+                    if ($found -ne 1) {
+                        Throw "Unable to find the UUID of the certificate"
+                    }
+                }
+            }
+
+            # Resolve Name to UUID
+            if ($myTemplate) {
+                $options = $newzone | Select-Object -ExpandProperty template | Get-Member -MemberType NoteProperty | Where-Object { $_.Name -notin ('', ' ') } |  Select-Object -ExpandProperty name
+                if ($myTemplate -notin $options) {
+                    $found = 0
+                    foreach ($option in $options) {
+                        if ($myTemplate -eq $newzone.template."$option".value) {
+                            $myTemplate = $option
+                            $found++
+                        }
+                    }
+                    if ($found -ne 1) {
+                        Throw "Unable to find the UUID of the template"
+                    }
+                }
+            }
+
+        }
+    }
+    PROCESS {}
+
+    END {
+        if ($Enabled) { $isEnabled = 1 } else { $isEnabled = 0 }
+        if ($ConcurrentLogins) { $isConcurrentLogins = 1 } else { $isConcurrentLogins = 0 }
+        if ($TransparentHTTPProxy) { $isTransparentHTTPProxy = 1 } else { $isTransparentHTTPProxy = 0 }
+        if ($TransparentHTTPSProxy) { $isTransparentHTTPSProxy = 1 } else { $isTransparentHTTPSProxy = 0 }
+
+        $obj = @{
+            zone = @{
+                enabled               = [String]$isEnabled;
+                interfaces            = [String]$myInterface;
+                authservers           = [String]$myAuthServers;
+                authEnforceGroup      = $authEnforceGroup;
+                idletimeout           = [String]$IdleTimeout;
+                hardtimeout           = [String]$HardTimeout;
+                concurrentlogins      = $isConcurrentLogins;
+                certificate           = [String]$myCertificate;
+                servername            = $Hostname;
+                allowedAddresses      = $allowedAddress;
+                allowedMACAddresses   = $allowedMACAddress;
+                transparentHTTPProxy  = [String]$isTransparentHTTPProxy;
+                transparentHTTPSProxy = [String]$isTransparentHTTPSProxy;
+                template              = [String]$myTemplate;
+                description           = $Description
+            }
+        };
+
+        $result = Invoke-OPNsenseCommand captiveportal settings addzone -Json $obj
+        if ($result) {
+            if ($result.validations) {
+                $count = $($result.validations | Get-Member -MemberType NoteProperty).count
+                $keys = $result.validations | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty  Name
+                Write-Verbose "$count validations failed:"
+                foreach ($key in $keys) {
+                    Write-Verbose ("   - $key : " + $result.validations."$key")
+                }
+            }
+        } else {
+            Throw "Failed to add the CaptivePortal zone..."
+        }
+
+        return $result
+    }
 }
 
 
 Function Get-OPNsenseCaptivePortalTemplate {
-    # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
+    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
     [CmdletBinding(DefaultParameterSetName = 'GetTemplate')]
     Param (
         [Parameter(Mandatory = $false)][String]$Name,
@@ -93,7 +193,7 @@ Function Get-OPNsenseCaptivePortalTemplate {
 }
 
 Function New-OPNsenseCaptivePortalTemplate {
-    # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
+    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
     param (
         [Parameter(Mandatory = $true)][String]$Name,
         [System.IO.FileInfo]$Path
@@ -104,14 +204,13 @@ Function New-OPNsenseCaptivePortalTemplate {
         $obj = @{'name' = $Name; 'content' = [System.Convert]::ToBase64String($filecontent)}
 
         return Invoke-OPNsenseCommand captiveportal service saveTemplate -Json $obj
-    }
-    else {
+    } else {
         Write-Error "Could not load template file $File"
     }
 }
 
 Function Save-OPNsenseCaptivePortalTemplate {
-    # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
+    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
     param (
         [Parameter(Mandatory = $true)][String]$FileId,
         [Parameter(Mandatory = $true)][System.IO.FileInfo]$Path,
@@ -128,15 +227,14 @@ Function Save-OPNsenseCaptivePortalTemplate {
     try {
         $result = Invoke-OPNsenseCommand captiveportal service getTemplate -Form "fileid=$fileid" -OutFile $path
         return $result
-    }
-    catch {
+    } catch {
         Write-Error "Could not save template file $File"
     }
 }
 
 Function Remove-OPNsenseCaptivePortalTemplate {
-    # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
-    [CmdletBinding(DefaultParameterSetName = 'GetTemplate')]
+    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
+    [CmdletBinding()]
     Param (
         [Parameter(Mandatory = $false)][String]$Name,
         [Parameter(Mandatory = $false)][String]$Uuid,
@@ -166,22 +264,22 @@ Function Remove-OPNsenseCaptivePortalTemplate {
 }
 
 Function Get-OPNsenseCaptivePortal {
-    # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
+    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
     [CmdletBinding(DefaultParameterSetName = 'GetTemplate')]
     Param (
-        [Parameter(ParameterSetName = 'ListProviders')]
-        [switch]$Provider,
-
         [Parameter(ParameterSetName = 'GetTemplate')]
-        [Parameter(ParameterSetName = 'ListTemplates')]
         [switch]$Template,
 
         [Parameter(ParameterSetName = 'GetZone')]
         [switch]$Zone,
 
+        [Parameter(ParameterSetName = 'ListProviders')]
+        [switch]$Provider,
+
         [Parameter(Mandatory = $false, ParameterSetName = 'GetTemplate')]
         [Parameter(Mandatory = $false, ParameterSetName = 'GetZone')]
-        [string]$Id
+        [ValidateNotNullOrEmpty()]
+        [string]$Uuid
     )
 
     If ([bool]::Parse($Provider)) {

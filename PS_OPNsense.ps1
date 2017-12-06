@@ -23,7 +23,7 @@
 
 Function Connect-OPNsense() {
     # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
-    [CmdletBinding()]
+    [CmdletBinding(DefaultParameterSetName = "Modern")]
     param (
         [parameter(Mandatory = $true, position = 1, ParameterSetName = "Modern")]
         [parameter(Mandatory = $true, position = 1, ParameterSetName = "Legacy")]
@@ -42,13 +42,11 @@ Function Connect-OPNsense() {
 
         [parameter(Mandatory = $true, position = 3, ParameterSetName = "Legacy")]
         [ValidateNotNullOrEmpty()]
-        [String]$Secret,
+        [SecureString]$Secret,
 
         [parameter(Mandatory = $false, position = 3, ParameterSetName = "Modern")]
         [parameter(Mandatory = $false, position = 4, ParameterSetName = "Legacy")]
-        [ValidateNotNull()]
         [System.Management.Automation.PSCredential]
-        [System.Management.Automation.Credential()]
         $WebCredential = [System.Management.Automation.PSCredential]::Empty,
 
         [parameter(Mandatory = $false, position = 4, ParameterSetName = "Modern")]
@@ -65,18 +63,12 @@ Function Connect-OPNsense() {
     #$bytes = [System.Text.Encoding]::UTF8.GetBytes($Key + ":" + $Secret)
     #$Credentials = [System.Convert]::ToBase64String($bytes)
     if ($PSBoundParameters.ContainsKey('Secret')) {
-        $SecurePassword = $Secret | ConvertTo-SecureString -AsPlainText -Force
-        $Credential = New-Object System.Management.Automation.PSCredential -ArgumentList $Key, $SecurePassword
+        $Credential = New-Object System.Management.Automation.PSCredential -ArgumentList $Key, $Secret
     }
-    if ($PSBoundParameters.ContainsKey('Password')) {
-        $SecurePassword = $Password | ConvertTo-SecureString -AsPlainText -Force
-        $WebCredential = New-Object System.Management.Automation.PSCredential -ArgumentList $Username, $SecurePassword
+    if (-Not $PSBoundParameters.ContainsKey('WebCredential')) {
+        $WebCredential = $null
     }
-    else {
-        if (-Not $PSBoundParameters.ContainsKey('WebCredential')) {
-            $WebCredential = $null
-        }
-    }
+
     $Uri = ($Url + '/api/core/firmware/info')
     $Result = Invoke-OPNsenseApiRestCommand -Uri $Uri -Credential $Credential `
         -SkipCertificateCheck:$SkipCertificateCheck -Verbose:$VerbosePreference
@@ -92,8 +84,7 @@ Function Connect-OPNsense() {
                 if ($shortversion -lt $minversion) {
                     Write-Warning "$shortversion may not be supported by the PS_OPNsense PowerShell Module. Please use OPNsense $minversion or higher."
                 }
-            }
-            catch {
+            } catch {
                 $shortversion = $null
                 Write-Warning "Unsupported version of $($v.product_name) $($v.product_version) detected. Proceed with extreme care!"
             }
@@ -106,12 +97,10 @@ Function Connect-OPNsense() {
             $MyInvocation.MyCommand.Module.PrivateData['OPNsenseApi'] = "$Url/api"
             $MyInvocation.MyCommand.Module.PrivateData['OPNsenseSkipCert'] = [bool]::Parse($SkipCertificateCheck)
             return $result  | Select-Object -Property product_name, product_version, short_version
-        }
-        else {
+        } else {
             Throw "ERROR : Failed to get the OPNsense version of server '$Url'."
         }
-    }
-    else {
+    } else {
         Throw "ERROR : Could not connect to the OPNsense server '$Url' using the api credentials supplied."
     }
 }
@@ -127,8 +116,7 @@ Function Disconnect-OPNsense() {
         $MyInvocation.MyCommand.Module.PrivateData['OPNsenseUri'] = $null
         $MyInvocation.MyCommand.Module.PrivateData['OPNsenseApi'] = $null
         $MyInvocation.MyCommand.Module.PrivateData['OPNsenseSkipCert'] = $null
-    }
-    else {
+    } else {
         Throw 'ERROR : You are not connected to an OPNsense server. Please use Connect-OPNsense first.'
     }
 }
@@ -136,23 +124,109 @@ Function Disconnect-OPNsense() {
 
 Function Enable-OPNsense {
     # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
-    [CmdletBinding()]
+    [CmdletBinding(DefaultParameterSetName = "CaptivePortalZone")]
     Param(
-        [Switch]$Zone,
-        [Switch]$Job,
-        
-        [Switch]$Rule,
-        [Switch]$RuleSet,
-        [Switch]$UserRule,
-        
-        [Switch]$RemoteBlacklist,
-        
+        [parameter(ParameterSetName = "CaptivePortalZone")]
+        [Alias('Zone')]
+        [Switch]$CaptivePortalZone,
+        [parameter(ParameterSetName = "CronJob")]
+        [Alias('Job')]
+        [Switch]$CronJob,
+        [parameter(ParameterSetName = "IdsRule")]
+        [Alias('Rule')]
+        [Switch]$IdsRule,
+        [parameter(ParameterSetName = "IdsRuleSet")]
+        [Alias('RuleSet')]
+        [Switch]$IdsRuleSet,
+        [parameter(ParameterSetName = "IdsUserRule")]
+        [Alias('UserRule')]
+        [Switch]$IdsUserRule,
+        [parameter(ParameterSetName = "ProxyRemoteBlackList")]
+        [Alias('Blacklist')]
+        [Alias('RemoteBlacklist')]
+        [Switch]$ProxyRemoteBlackList,
+        [parameter(ParameterSetName = "Route")]
         [Switch]$Route,
-
-        [Switch]$Pipe,
-        [Switch]$Queue,
-
-        [String[]]$UUID
+        [parameter(ParameterSetName = "TrafficShaperPipe")]
+        [Alias('Pipe')]
+        [Switch]$TrafficShaperPipe,
+        [parameter(ParameterSetName = "TrafficShaperQueue")]
+        [Alias('Queue')]
+        [Switch]$TrafficShaperQueue
     )
-    
+
+    DynamicParam {
+        # Create the dictionary 
+        $RuntimeParameterDictionary = New-Object System.Management.Automation.RuntimeDefinedParameterDictionary
+
+        if ($CaptivePortalZone) {
+            $options = $(Invoke-OPNsenseCommand captiveportal settings searchzones).rows
+        }
+        if ($CronJob) {
+            $options = $(Invoke-OPNsenseCommand cron settings searchjobs).rows
+        }
+        if ($ProxyRemoteBlacklist) {
+            $options = $(Invoke-OPNsenseCommand proxy settings searchremoteblacklists).rows
+        }
+        if ($Route) {
+            $options = $(Invoke-OPNsenseCommand routes routes searchroute).rows
+        }
+        if ($TrafficShaperPipe) {
+            $options = $(Invoke-OPNsenseCommand trafficshaper settings searchpipes).rows
+        }
+        if ($TrafficShaperQueue) {
+            $options = $(Invoke-OPNsenseCommand trafficshaper settings searchqueues).rows
+        }
+
+        if ($options) {
+            $options = $options | Select-Object -ExpandProperty Uuid
+            $dynParam = New-ValidationDynamicParam -Name Uuid -Type '[String[]]' -Mandatory -ValidateSetOptions $options -Position 0 -ValueFromPipelineByPropertyName -ValueFromPipeline
+            $RuntimeParameterDictionary.Add('Uuid', $dynParam)
+        }
+        return $RuntimeParameterDictionary
+    }
+
+    BEGIN {
+
+    }
+
+    PROCESS {
+        foreach ($myuuid in $PSBoundParameters.Uuid) {
+            if ($CaptivePortalZone) {
+                $result += Invoke-OPNsenseCommand captiveportal settings "togglezone/$myuuid/1" -Form 'toggle'
+            }
+            if ($CronJob) {
+                # Warning, CronJobs can only be toggled and not set directly.
+                # It is needed to check the status first and toggle only when needed !!
+                $result += Enable-OPNsenseCronJob -uuid $myuuid
+            }
+            if ($IdsRule) {
+                $result += Invoke-OPNsenseCommand ids settings "togglerule/$myuuid/1" -Form 'toggle'
+            }
+            if ($IdsRuleSet) {
+                $result += Invoke-OPNsenseCommand ids settings "toggleruleset/$myuuid/1" -Form 'toggle'
+            }
+            if ($IdsUserRule) {
+                $result += Invoke-OPNsenseCommand ids settings "toggleuserrule/$myuuid/1" -Form 'toggle'
+            }
+            if ($ProxyRemoteBlacklist) {
+                # Warning, RemoteBlackLists can only be toggled and not set directly.
+                # It is needed to check the status first and toggle only when needed !!
+                $result += Invoke-OPNsenseCommand proxy settings "toggleremoteblacklist/$myuuid" -Form 'toggle'
+            }
+            if ($Route) {
+                $result += Invoke-OPNsenseCommand routes routes "toggleRoute/$myuuid/0" -Form 'toggle' # 0 = enabled
+            }
+            if ($TrafficShaperPipe) {
+                $result += Invoke-OPNsenseCommand trafficshaper settings "togglepipe/$myuuid/1" -Form 'toggle'
+            }
+            if ($TrafficShaperQueue) {
+                $result += Invoke-OPNsenseCommand trafficshaper settings "togglequeue/$myuuid/1" -Form 'toggle'
+            }
+        }
+    }
+
+    END {
+        return $result
+    }
 }

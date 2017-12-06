@@ -40,7 +40,7 @@ Function Invoke-OPNsenseCoreCommand {
 }
 
 Function Stop-OPNsense {
-    # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
+    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
     [CmdletBinding(
         SupportsShouldProcess = $true,
         ConfirmImpact = "High"
@@ -52,7 +52,7 @@ Function Stop-OPNsense {
 }
 
 Function Restart-OPNsense {
-    # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
+    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
     [CmdletBinding(
         SupportsShouldProcess = $true,
         ConfirmImpact = "High"
@@ -60,8 +60,7 @@ Function Restart-OPNsense {
     Param()
     if ($pscmdlet.ShouldProcess($MyInvocation.MyCommand.Module.PrivateData['OPNsenseApi'])) {
         return Invoke-OPNsenseCoreCommand core firmware reboot -Verbose:$VerbosePreference
-    }
-    else {
+    } else {
         return $false
     }
 }
@@ -104,7 +103,7 @@ Function Get-UpdateStatus {
 }
 
 Function Update-OPNsense {
-    # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
+    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
     [CmdletBinding(
         SupportsShouldProcess = $true,
         ConfirmImpact = "High"
@@ -122,7 +121,7 @@ Function Update-OPNsense {
 # Performs pkg audit -F
 # FreeBSD registers vulnerabilities for its packages and this command visualizes the security issues found.
 Function Invoke-OPNsenseAudit {
-    # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
+    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
     [CmdletBinding()]
     Param(
         [Switch]$Raw
@@ -148,15 +147,14 @@ Function Invoke-OPNsenseAudit {
             }
             $result += New-Object PSObject -Property $argHash
         }
-    }
-    else {
+    } else {
         Write-Error "Failed to audit OPNsense"
     }
     return $result
 }
 
 Function Get-OPNsense {
-    # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
+    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
     [CmdletBinding(DefaultParameterSetName = 'Mirror')]
     Param(
         [Alias("Mirrors")]
@@ -167,7 +165,7 @@ Function Get-OPNsense {
         [Switch]$Changelog = $false,
         [Parameter(Mandatory = $true, ParameterSetName = 'Changelog')]
         [String]$Version        
-     )
+    )
 
     if ([bool]::Parse($Mirror)) {
         $allMirrors = @()
@@ -179,8 +177,7 @@ Function Get-OPNsense {
             if ($name -match "(.*) \((.*)\)") {
                 $hosting = $Matches[1]
                 $location = $Matches[2]
-            }
-            else {
+            } else {
                 $hosting = ''
                 $location = ''
             }
@@ -203,7 +200,7 @@ Function Get-OPNsense {
 
 
 Function Set-OPNsense {
-    # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
+    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
     [CmdletBinding()]
     Param(
         [parameter(Mandatory = $false, ParameterSetName = "FirmwareOptions")]
@@ -235,12 +232,10 @@ Function Set-OPNsense {
             -Json @{ mirror = $FirmwareOptions.Mirror; flavour = $FirmwareOptions.Flavour; subscription = $FirmwareOptions.Subscription }
         if ($Result.status -eq 'ok') {
             return $FirmwareOptions | Add-ObjectDetail -TypeName 'OPNsense.Firmware.Options'
-        }
-        else {
+        } else {
             Throw 'Failed to set the firmware options.'
         }
-    }
-    else {
+    } else {
         Write-Warning 'No settings have changed, skipping.'
         return $FirmwareOptions | Add-ObjectDetail -TypeName 'OPNsense.Firmware.Options'
     }
