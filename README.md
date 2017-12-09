@@ -33,7 +33,7 @@ A minimal set of legacy commands are also available in this PowerShell module. O
 These cmdlets will be ported over to use the REST api functions when they are ported to the REST api when they are made available in future OPNsense firmware versions.
 
 ## Getting Started
-Clone the repository to your PowerShell Modules folder:
+You can download and unzip the module into the PowerShell Modules folder or clone the repository directly:
 ```git
 git clone https://github.com/fvanroie/PS_OPNsense.git .\PS_OPNsense
 ```
@@ -46,9 +46,9 @@ Import-Module -Name PS_OPNsense
 ## Examples
 Connecting to an OPNsense server:
 ```powershell
-Connect-OPNsense -Uri 'https://fw01.local' -Key <api_key> -Secret <api_secret>
-Connect-OPNsense -Uri 'https://fw01.local' -Key <api_key> -Secret <api_secret> -Verbose
-Connect-OPNsense 'https://fw01.local/api' <api_key> <api_secret> -SkipCertificateCheck
+Connect-OPNsense -Uri 'http://opnsense.local:8080' -Key <api_key> -Secret <api_secret>
+Connect-OPNsense -Uri 'https://opnsense.local' -Key <api_key> -Secret <api_secret> -Verbose -Debug
+Connect-OPNsense 'https://opnsense.local' <api_key> <api_secret> -SkipCertificateCheck
 ```
 Run some commands:
 ```powershell
