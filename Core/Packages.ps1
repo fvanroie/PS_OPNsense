@@ -46,6 +46,9 @@ Function Get-OPNsensePackage {
             $packages = $packages | where-Object { $_.Locked -eq $Locked }
         }
 
+        # No Name was passed
+        if (-Not $PSBoundParameters.ContainsKey('Name')) { $Name = '*' }
+
         $allpackages = @()
     }
     PROCESS {

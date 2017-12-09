@@ -46,6 +46,9 @@
                 <PropertyName>Daily</PropertyName>
                 </ListItem>
                 <ListItem>
+                <PropertyName>ByteCode</PropertyName>
+                </ListItem>
+                <ListItem>
                 <PropertyName>Signatures</PropertyName>
                 </ListItem>
             </ListItems>

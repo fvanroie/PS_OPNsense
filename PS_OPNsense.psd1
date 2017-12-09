@@ -87,6 +87,7 @@
 
     # Format files (.ps1xml) to be loaded when importing this module
     FormatsToProcess       = @(
+        'Formats\Cron.format.ps1xml',
         'Formats\Firmware.format.ps1xml',
         'Formats\Packages.format.ps1xml',
         'Formats\Services.format.ps1xml',

@@ -132,6 +132,8 @@ Function Enable-OPNsense {
         [parameter(ParameterSetName = "CronJob")]
         [Alias('Job')]
         [Switch]$CronJob,
+        [parameter(ParameterSetName = "FtpProxy")]
+        [Switch]$FtpProxy,
         [parameter(ParameterSetName = "IdsRule")]
         [Alias('Rule')]
         [Switch]$IdsRule,
@@ -164,6 +166,9 @@ Function Enable-OPNsense {
         }
         if ($CronJob) {
             $options = $(Invoke-OPNsenseCommand cron settings searchjobs).rows
+        }
+        if ($FtpProxy) {
+            $options = $(Invoke-OPNsenseCommand ftpproxy settings searchproxy).rows
         }
         if ($ProxyRemoteBlacklist) {
             $options = $(Invoke-OPNsenseCommand proxy settings searchremoteblacklists).rows
@@ -199,6 +204,11 @@ Function Enable-OPNsense {
                 # Warning, CronJobs can only be toggled and not set directly.
                 # It is needed to check the status first and toggle only when needed !!
                 $result += Enable-OPNsenseCronJob -uuid $myuuid
+            }
+            if ($FtpProxy) {
+                # Warning, FtpProxy can only be toggled and not set directly.
+                # It is needed to check the status first and toggle only when needed !!
+                $result += Invoke-OPNsenseCommand ftpproxy settings "toggleproxy/$myuuid" -Form 'toggle'
             }
             if ($IdsRule) {
                 $result += Invoke-OPNsenseCommand ids settings "togglerule/$myuuid/1" -Form 'toggle'
