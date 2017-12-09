@@ -22,7 +22,7 @@
 #>
 
 Function Backup-OPNsenseConfig {
-    # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
+    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
     [CmdletBinding()]
     Param (
         [switch]$RRDdata = $false,
@@ -43,8 +43,7 @@ Function Backup-OPNsenseConfig {
 
     if ($PSBoundParameters.ContainsKey('Password')) {
         $encrypt = $true
-    }
-    else {
+    } else {
         $encrypt = $false
     }
 
@@ -56,8 +55,7 @@ Function Backup-OPNsenseConfig {
     Try {
         if ($PSCore) {
             $webpage = Invoke-WebRequest -Uri $Uri -SessionVariable cookieJar -SkipCertificateCheck:$SkipCertificateCheck
-        }
-        else {
+        } else {
             $webpage = Invoke-WebRequest -Uri $Uri -SessionVariable cookieJar
         }
         $xssToken = $webpage.InputFields | Where-Object { $_.type -eq 'hidden'}
@@ -69,8 +67,7 @@ Function Backup-OPNsenseConfig {
         }
         if ($PSCore) {
             $webpage = Invoke-WebRequest -Uri "$Uri/index.php" -WebSession $cookieJar -Method POST -Body $form -SkipCertificateCheck:$SkipCertificateCheck
-        }
-        else {
+        } else {
             $webpage = Invoke-WebRequest -Uri "$Uri/index.php" -WebSession $cookieJar -Method POST -Body $form
         }
 
@@ -81,8 +78,7 @@ Function Backup-OPNsenseConfig {
 
         if ($PSCore) {
             $webpage = Invoke-WebRequest -Uri "$Uri/diag_backup.php" -WebSession $cookieJar -Method POST -Body $form -SkipCertificateCheck:$SkipCertificateCheck
-        }
-        else {
+        } else {
             $webpage = Invoke-WebRequest -Uri "$Uri/diag_backup.php" -WebSession $cookieJar -Method POST -Body $form
         }
         $xssToken = $webpage.InputFields | Where-Object { $_.type -eq 'hidden'}
@@ -97,13 +93,11 @@ Function Backup-OPNsenseConfig {
         }
         if ($PSCore) {
             $backupxml = Invoke-WebRequest "$Uri/diag_backup.php" -WebSession $cookieJar -Method POST -Body $form -SkipCertificateCheck:$SkipCertificateCheck
-        }
-        else {
+        } else {
             $backupxml = Invoke-WebRequest "$Uri/diag_backup.php" -WebSession $cookieJar -Method POST -Body $form
         }
         $Result = $backupxml.RawContent.Substring($backupxml.RawContent.Length - $backupxml.RawContentLength, $backupxml.RawContentLength)
-    }
-    Catch {
+    } Catch {
         $ErrorMessage = $_.Exception.Message
         Write-Error "An error Occured while connecting to the OPNsense server: $ErrorMessage"
     }
@@ -117,7 +111,7 @@ Function Backup-OPNsenseConfig {
 }
 
 Function Restore-OPNsenseConfig {
-    # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
+    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
     [CmdletBinding(
         SupportsShouldProcess = $true,
         ConfirmImpact = "High"
@@ -226,8 +220,7 @@ Content-Disposition: form-data; name="{1}"
         $body += $bodyXML -f $boundary, 'conffile', 'config.xml', $xml
         Write-Verbose $body
         $restorexml = Invoke-WebRequest "$Uri/diag_backup.php" -WebSession $cookieJar -Method POST -Body $body -ContentType "multipart/form-data; boundary=$boundary"
-    }
-    Catch {
+    } Catch {
         $ErrorMessage = $_.Exception.Message
         Write-Error "An error Occured while connecting to the OPNsense server: $ErrorMessage"
     }
@@ -247,19 +240,17 @@ Content-Disposition: form-data; name="{1}"
         }
         if ($restorexml.parsedhtml.body.getElementsbyclassname('alert-info').length -gt 0) {
             $result = $restorexml.parsedhtml.body.getElementsbyclassname('alert-info')[0].innerText
-        }
-        else {
+        } else {
             $Result = $restorexml.parsedhtml.body.getElementsbyclassname('alert')[0].innerText
         }
-    }
-    catch {
+    } catch {
         $result = $restorexml
     }
     Return $Result
 }
 
 Function Reset-OPNsenseConfig {
-    # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
+    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
     [CmdletBinding(
         SupportsShouldProcess = $true,
         ConfirmImpact = "High"
@@ -284,8 +275,7 @@ Function Reset-OPNsenseConfig {
 
     if ($PSBoundParameters.ContainsKey('Password')) {
         $encrypt = $true
-    }
-    else {
+    } else {
         $encrypt = $false
     }
 
@@ -340,11 +330,9 @@ Function Reset-OPNsenseConfig {
         }
         $webpage = Invoke-WebRequest "$Uri/diag_defaults.php" -WebSession $cookieJar -Method POST -Body $form
         $Result = $webpage
-    }
-    Catch [System.Management.Automation.ItemNotFoundException] {
+    } Catch [System.Management.Automation.ItemNotFoundException] {
         Write-Error $_.Exception.Message
-    }
-    Catch {
+    } Catch {
         $ErrorMessage = $_.Exception.Message
         Write-Error "An error Occured while connecting to the OPNsense server: $ErrorMessage"
     }

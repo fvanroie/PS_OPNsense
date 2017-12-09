@@ -83,7 +83,7 @@ Function ValidateSystemHealthOptions {
 }
 
 Function Get-OPNsenseSystemHealth {
-    # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
+    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
     [CmdletBinding()]
     param (
         [parameter(Mandatory = $true, ParameterSetName = "Packets")]
@@ -140,14 +140,12 @@ Function Get-OPNsenseSystemHealth {
 
     if ([bool]($MyInvocation.BoundParameters.Keys -match 'From')) {
         $start = Convert-DateTimetoUnix $From
-    }
-    else {
+    } else {
         $start = 0
     }
     if ([bool]($MyInvocation.BoundParameters.Keys -match 'To')) {
         $end = Convert-DateTimetoUnix $To
-    }
-    else {
+    } else {
         $end = 0
     }
     Write-Verbose "From: $start"
@@ -180,7 +178,7 @@ Function Get-OPNsenseSystemHealth {
 }
 
 Function Get-OPNsenseInterface {
-    # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
+    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
     [CmdletBinding()]
     Param()
     $result = $(Invoke-OPNsenseCommand diagnostics systemhealth getRRDlist).data.traffic |
@@ -189,7 +187,7 @@ Function Get-OPNsenseInterface {
 }
 
 Function Get-OPNsenseResource {
-    # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
+    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
     [CmdletBinding()]
     Param()
     $result = $(Invoke-OPNsenseCommand diagnostics systemhealth getRRDlist).data.system |
@@ -198,7 +196,7 @@ Function Get-OPNsenseResource {
 }
 
 Function Get-OPNsenseRoute {
-    # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
+    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
     [CmdletBinding()]
     param (
     )
@@ -207,7 +205,7 @@ Function Get-OPNsenseRoute {
 }
 
 Function Get-OPNsenseARP {
-    # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
+    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
     [CmdletBinding()]
     param (
     )
@@ -216,7 +214,7 @@ Function Get-OPNsenseARP {
 }
 
 Function Clear-OPNsenseARP {
-    # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
+    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
     [CmdletBinding(
         SupportsShouldProcess = $true,
         ConfirmImpact = "High"
@@ -224,7 +222,7 @@ Function Clear-OPNsenseARP {
     Param (
     )
     if ($pscmdlet.ShouldProcess($MyInvocation.MyCommand.Module.PrivateData['OPNsenseApi'])) {
-        $result = Invoke-OPNsenseCommand diagnostics interface flusharp
+        $result = Invoke-OPNsenseCommand diagnostics interface flusharp -Form flusharp
         return $result.Split("`n") | Where-Object { $_ -ne '' }
     }
 }

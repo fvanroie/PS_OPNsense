@@ -86,37 +86,46 @@
     # TypesToProcess = @()
 
     # Format files (.ps1xml) to be loaded when importing this module
-    # FormatsToProcess = @()
+    FormatsToProcess       = @(
+        'Formats\Cron.format.ps1xml',
+        'Formats\Firmware.format.ps1xml',
+        'Formats\Packages.format.ps1xml',
+        'Formats\Services.format.ps1xml',
+        'Formats\ClamAV.format.ps1xml'
+    )
 
     # Modules to import as nested modules of the module specified in RootModule/ModuleToProcess
     NestedModules          = @(
         # Main Module
-        'PS_OPNsense',
+        'PS_OPNsense.ps1',
 
         # Core Functionality
-        'Core/CaptivePortal',
-        'Core/Cron',
-        'Core/Diagnostics',
-        'Core/Firmware',
-        'Core/Ids',
-        'Core/Packages',
-        'Core/Proxy',
-        'Core/Services',
+        'Core/CaptivePortal.ps1',
+        'Core/Cron.ps1',
+        'Core/Diagnostics.ps1',
+        'Core/Firmware.ps1',
+        'Core/Ids.ps1',
+        'Core/Packages.ps1',
+        'Core/Proxy.ps1',
+        'Core/Services.ps1',
 
         # Optional Installable Plugin Packages
-        'Plugins/ClamAV',
+        'Plugins/ClamAV.ps1',
 
         # Legacy WebGUI Commands
-        'Legacy/Backup',
+        'Legacy/Backup.ps1',
 
         # Private Helper Function
-        'Private/Add-ObjectDetail',
-        'Private/CertificateValidation',
-        'Private/RestApi'
+        'Private/Add-ObjectDetail.ps1',
+        'Private/CertificateValidation.ps1',
+        'Private/New-ValidationDynamicParam.ps1',
+        'Private/RestApi.ps1'
     )
 
     # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
     FunctionsToExport      = @(
+        # TEST
+        'Enable-OPNsense',
         # Backup
         'Backup-OPNsenseConfig', 'Restore-OPNsenseConfig', 'Reset-OPNsenseConfig',
         # ClamAV
@@ -137,9 +146,12 @@
         #IDS
         'Get-OPNsenseIdsUserRule', 'New-OPNsenseIdsUserRule', 'Get-OPNsenseIdsAlert',
         # Proxy
-        'New-OPNsenseProxyRemoteBlacklist',
+        'New-OPNsenseProxyRemoteBlacklist', 'Get-OPNsenseProxyRemoteBlacklist', 'Remove-OPNsenseProxyRemoteBlacklist',
+        'Sync-OPNsenseProxyRemoteBlacklist',
         # CaptivePortal
-        'New-OPNsenseCaptivePortalZone', 'New-OPNsenseCaptivePortalTemplate', 'Get-OPNsenseCaptivePortal',
+        'New-OPNsenseCaptivePortalZone',
+        'New-OPNsenseCaptivePortalTemplate', 'Get-OPNsenseCaptivePortalTemplate', 'Set-OPNsenseCaptivePortalTemplate', 'Remove-OPNsenseCaptivePortalTemplate', 'Save-OPNsenseCaptivePortalTemplate',
+        'Get-OPNsenseCaptivePortal',
         # Diagnostics
         'Get-OPNsenseSystemHealth', 'Get-OPNsenseResource', 'Get-OPNsenseInterface', 'Get-OPNsenseRoute', 'Get-OPNsenseARP', 'Clear-OPNsenseARP',
         # Services
@@ -159,7 +171,7 @@
     # DscResourcesToExport = @()
 
     # List of all modules packaged with this module
-    # ModuleList = @()
+    ModuleList             = @()
 
     # List of all files packaged with this module
     # FileList = @()

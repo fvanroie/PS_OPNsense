@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Configuration>  
+  <ViewDefinitions>
+    <View>
+      <Name>OPNsense.Package</Name>
+      <ViewSelectedBy>
+        <TypeName>OPNsense.Package</TypeName>
+      </ViewSelectedBy>
+
+    <TableControl>
+        <TableHeaders>
+            <TableColumnHeader/>
+            <TableColumnHeader/>
+            <TableColumnHeader/>
+            <TableColumnHeader/>
+            <TableColumnHeader/>
+            <TableColumnHeader/>
+            <TableColumnHeader/>
+        </TableHeaders>
+        <TableRowEntries>
+            <TableRowEntry>
+                <TableColumnItems>
+                    <TableColumnItem>
+                        <PropertyName>Name</PropertyName>
+                    </TableColumnItem>
+                    <TableColumnItem>
+                        <PropertyName>Version</PropertyName>
+                    </TableColumnItem>
+                    <TableColumnItem>
+                        <PropertyName>Installed</PropertyName>
+                    </TableColumnItem>
+                    <TableColumnItem>
+                        <PropertyName>Locked</PropertyName>
+                    </TableColumnItem>
+                    <TableColumnItem>
+                        <PropertyName>FlatSize</PropertyName>
+                    </TableColumnItem>
+                    <TableColumnItem>
+                        <PropertyName>Comment</PropertyName>
+                    </TableColumnItem>
+                    <TableColumnItem>
+                        <PropertyName>License</PropertyName>
+                    </TableColumnItem>
+                </TableColumnItems>
+            </TableRowEntry>
+        </TableRowEntries>
+    </TableControl>
+    </View>
+  </ViewDefinitions>
+</Configuration>

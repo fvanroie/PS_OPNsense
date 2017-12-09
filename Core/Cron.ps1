@@ -22,24 +22,34 @@
 #>
 
 Function Get-OPNsenseCronJob {
-    # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
+    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
     param (
         [Parameter(Mandatory = $false, position = 1)][String]$uuid
     )
     if ($uuid) {
-        $result = Invoke-OPNsenseCommand cron settings "getjob/$uuid"
-        if ($result.job) {
-            $result = $result.job | Add-Member 'uuid' $uuid
-        }
-        else {
-            return $result
+        $job = Invoke-OPNsenseCommand cron settings "getjob/$uuid"
+        if ($job) {
+            $result = $job | Select-Object -ExpandProperty Job
+
+            $commandlist = $result.command | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty Name
+            $commanddesc = ''
+            foreach ($command in $commandlist) {
+                if ($result.command.$command.Selected -eq 1) {
+                    $commanddesc += $result.command.$command.Value
+                }
+            }
+            $result.command = $commanddesc
+
+            Add-Member 'uuid' $uuid -InputObject $result
+        } else {
+            Write-Error "Unable to get CronJob $uuid"
+            return
         }
 
-    }
-    else {
+    } else {
         $result = $(Invoke-OPNsenseCommand cron settings searchjobs).rows
     }
-    return $result
+    return $result  | Add-ObjectDetail -TypeName 'OPNsense.Service.Cron.Job'
 }
 
 # Private helper function
@@ -47,15 +57,17 @@ Function ToggleOPNsenseCronJob {
     param (
         [Parameter(Mandatory = $true, position = 1)][String]$uuid
     )
-    $result = Invoke-OPNsenseCommand cron settings "togglejob/$uuid" toggle
+    $result = Invoke-OPNsenseCommand cron settings "togglejob/$uuid" -Form toggle
     return $result
 }
 
 Function New-OPNsenseCronJob {
-    # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
+    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
     param (
         [Parameter(Mandatory = $true, position = 1)][String]$uuid,
-        [Parameter(Mandatory = $true, position = 2)][int]$enabled
+        [Parameter(Mandatory = $true, position = 2)]
+        [ValidateSet('True', 'False', '0', '1', $true, $false)]
+        $enabled
     )
 
     $job = Get-OPNsenseCronJob -Id $uuid
@@ -66,31 +78,33 @@ Function New-OPNsenseCronJob {
 }
 
 Function Set-OPNsenseCronJob {
-    # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
+    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
     param (
         [Parameter(Mandatory = $true, position = 1)][String]$uuid,
-        [Parameter(Mandatory = $true, position = 2)][int]$enabled
+        [Parameter(Mandatory = $true, position = 2)]
+        [ValidateSet('True', 'False', '0', '1', $true, $false)]
+        $enabled
     )
 
     $job = Get-OPNsenseCronJob -uuid $uuid
-    if ($job.enabled -ne $enabled) {
+    if ([System.Convert]::ToBoolean($job.enabled) -ne [System.Convert]::ToBoolean($Enabled)) {
         $result = ToggleOPNsenseCronJob -uuid $uuid
     }
     return Get-OPNsenseCronJob -uuid $uuid
 }
 
 Function Enable-OPNsenseCronJob {
-    # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
+    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
     param (
         [Parameter(Mandatory = $true, position = 1)][String]$uuid
     )
-    return Set-OPNsenseCronJob -uuid $uuid 1
+    return Set-OPNsenseCronJob -uuid $uuid -enabled $true
 }
 
 Function Disable-OPNsenseCronJob {
-    # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
+    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
     param (
         [Parameter(Mandatory = $true, position = 1)][String]$uuid
     )
-    return Set-OPNsenseCronJob -uuid $uuid 0
+    return Set-OPNsenseCronJob -uuid $uuid -enabled $false
 }

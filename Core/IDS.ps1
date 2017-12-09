@@ -22,6 +22,7 @@
 #>
 
 function Get-OPNsenseIdsUserRule {
+    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
     param (
         [Parameter(ParameterSetName = 'UUID', Mandatory = $false, position = 1)][String]$uuid,
         [Parameter(ParameterSetName = 'Filter', Mandatory = $false, position = 1)][String]$Filter
@@ -30,19 +31,18 @@ function Get-OPNsenseIdsUserRule {
         $result = Invoke-OPNsenseCommand ids settings "getuserrule/$uuid"
         if ($result.rule) {
             $result = $result.rule | Add-Member 'uuid' $uuid
-        }
-        else {
+        } else {
             return $result
         }
 
-    }
-    else {
+    } else {
         $result = $(Invoke-OPNsenseCommand ids settings searchUserRule -Form @{searchPhrase = $Filter}).rows
     }
     return $result
 }
 
 Function New-OPNsenseIdsUserRule {
+    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
     param (
         [Parameter(Mandatory = $true)][String]$Description,
         [Parameter(Mandatory = $false)][Boolean]$Enabled = $true,
@@ -66,8 +66,7 @@ Function New-OPNsenseIdsUserRule {
 
     if ($Enabled) {
         $argHash.rule.Add('enabled', '1')
-    }
-    else {
+    } else {
         $argHash.rule.Add('enabled', '0')
     }
 
@@ -76,5 +75,11 @@ Function New-OPNsenseIdsUserRule {
 }
 
 Function Get-OPNsenseIdsAlert {
+    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
     return $(Invoke-OPNsenseCommand ids service queryalerts -Form fileid=none).rows
+}
+
+Function Update-OPNsenseIdsRule {
+    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
+
 }

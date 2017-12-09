@@ -22,7 +22,7 @@
 #>
 
 function Get-OPNsenseService {
-    # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
+    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
     param (
         [Parameter(Mandatory = $false, position = 1, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)]
         [String[]]$Name
@@ -52,20 +52,19 @@ function Get-OPNsenseService {
                         # return $result | Select-Object -Property Name,Status
                     }
                 } # switch
-            }
-            catch {
+            } catch {
                 Write-Error "$service failed to report status"
             }
             #$result
         } #foreach
     } # PROCESS
     END {
-        return $results
+        return $results | Add-ObjectDetail -TypeName 'OPNsense.Service'
     }
 }
 
 function Update-OPNsenseService {
-    # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
+    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
     param (
         [Parameter(Mandatory = $false, position = 1, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)]
         [String[]]$Name
@@ -84,14 +83,13 @@ function Update-OPNsenseService {
                     {     $results += Invoke-OPNsenseCommand diagnostics netflow reconfigure -AddProperty @{ name = $service.tolower()}
                     }
                     'monit'
-                    {     $results += Invoke-OPNsenseCommand $service.tolower() service reload -AddProperty @{ name = $service.tolower()}
+                    {     $results += Invoke-OPNsenseCommand $service.tolower() service reload -Json @{} -AddProperty @{ name = $service.tolower()}
                     }
                     Default
-                    {     $results += Invoke-OPNsenseCommand $service.tolower() service reconfigure -AddProperty @{ name = $service.tolower()}
+                    {     $results += Invoke-OPNsenseCommand $service.tolower() service reconfigure -Json @{} -AddProperty @{ name = $service.tolower()}
                     }
                 } # switch
-            }
-            catch {
+            } catch {
                 Write-Error "$service failed to reconfigure"
             }
             #$result
@@ -104,14 +102,14 @@ function Update-OPNsenseService {
 }
 
 Function Start-OPNsenseService {
-    # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
+    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
     param (
         [Parameter(Mandatory = $false, position = 1, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)]
         [String[]]$Name
     )
     BEGIN {
         if (-NOT $PSBoundParameters.ContainsKey('name')) {
-            $name = Get-Services 'status'
+            $name = Get-Services 'start'
         }
         $results = @()
     }
@@ -123,11 +121,10 @@ Function Start-OPNsenseService {
                     {     $results += Invoke-OPNsenseCommand diagnostics netflow start -AddProperty @{ name = $service.tolower()}
                     }
                     Default
-                    {     $results += Invoke-OPNsenseCommand $service.tolower() service start -AddProperty @{ name = $service.tolower()}
+                    {     $results += Invoke-OPNsenseCommand $service.tolower() service start -Json @{} -AddProperty @{ name = $service.tolower()}
                     }
                 } # switch
-            }
-            catch {
+            } catch {
                 Write-Error "$service failed to start"
             }
             #$result
@@ -140,14 +137,14 @@ Function Start-OPNsenseService {
 }
 
 function Restart-OPNsenseService {
-    # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
+    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
     param (
         [Parameter(Mandatory = $false, position = 1, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)]
         [String[]]$Name
     )
     BEGIN {
         if (-NOT $PSBoundParameters.ContainsKey('name')) {
-            $name = Get-Services 'status'
+            $name = Get-Services 'restart'
         }
         $results = @()
     }
@@ -159,11 +156,10 @@ function Restart-OPNsenseService {
                     {     $results += Invoke-OPNsenseCommand diagnostics netflow restart -AddProperty @{ name = $service.tolower()}
                     }
                     Default
-                    {     $results += Invoke-OPNsenseCommand $service.tolower() service restart -AddProperty @{ name = $service.tolower()}
+                    {     $results += Invoke-OPNsenseCommand $service.tolower() service restart -Json @{} -AddProperty @{ name = $service.tolower()}
                     }
                 } # switch
-            }
-            catch {
+            } catch {
                 Write-Error "$service failed to restart"
             }
             #$result
@@ -176,14 +172,14 @@ function Restart-OPNsenseService {
 }
 
 function Stop-OPNsenseService {
-    # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
+    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
     param (
         [Parameter(Mandatory = $false, position = 1, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)]
         [String[]]$Name
     )
     BEGIN {
         if (-NOT $PSBoundParameters.ContainsKey('name')) {
-            $name = Get-Services 'status'
+            $name = Get-Services 'stop'
         }
         $results = @()
     }
@@ -195,11 +191,10 @@ function Stop-OPNsenseService {
                     {     $results += Invoke-OPNsenseCommand diagnostics netflow stop -AddProperty @{ name = $service.tolower()}
                     }
                     Default
-                    {     $results += Invoke-OPNsenseCommand $service.tolower() service stop -AddProperty @{ name = $service.tolower()}
+                    {     $results += Invoke-OPNsenseCommand $service.tolower() service stop -Json @{} -AddProperty @{ name = $service.tolower()}
                     }
                 } # switch
-            }
-            catch {
+            } catch {
                 Write-Error "$service failed to stop"
             }
             #$result
@@ -212,7 +207,7 @@ function Stop-OPNsenseService {
 }
 
 function Invoke-OPNsenseService {
-    # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
+    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
     param (
         [Parameter(Mandatory = $true, position = 1, ValueFromPipeline = $false, ValueFromPipelineByPropertyName = $false)]
         [Switch]$FreshClam
