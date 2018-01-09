@@ -65,10 +65,11 @@ Function Restart-OPNsense {
     }
 }
 
-Function Get-UpdateStatus {
+Function Get-OPNsenseUpdateStatus {
     [CmdletBinding()]
     Param(
-        [String]$Message
+        [String]$Message = 'Busy',
+        [double]$Seconds = 2
     )
     $start = 0
     Write-Verbose ''
@@ -76,7 +77,7 @@ Function Get-UpdateStatus {
     Write-Verbose ''
     Do {
         Write-Progress -Activity $Message
-        Start-Sleep -s 2
+        Start-Sleep -Seconds $Seconds
         $result = Invoke-OPNsenseCommand core firmware upgradestatus -Verbose:$false
 
         # Write-Verbose buffer, starting where we left off the previous itteration
@@ -112,7 +113,7 @@ Function Update-OPNsense {
     if ($pscmdlet.ShouldProcess($MyInvocation.MyCommand.Module.PrivateData['OPNsenseApi'])) {
         $result = Invoke-OPNsenseCommand core firmware upgrade -Form 'upgrade' -Verbose:$VerbosePreference
         if ($result.status -eq 'ok') {
-            return Get-UpdateStatus -Message "Updating OPNsense:" -Verbose:$VerbosePreference
+            return Get-OPNsenseUpdateStatus -Message "Updating OPNsense:" -Verbose:$VerbosePreference
         }
         return $result
     }
@@ -129,7 +130,7 @@ Function Invoke-OPNsenseAudit {
     $result = Invoke-OPNsenseCommand core firmware audit -Form audit -Verbose:$VerbosePreference
 
     if ($result.status -eq 'ok') {
-        $log = Get-UpdateStatus -Message "Running Audit in OPNsense:" -Verbose:$VerbosePreference
+        $log = Get-OPNsenseUpdateStatus -Message "Running Audit in OPNsense:" -Verbose:$VerbosePreference
 
         # Raw Output
         if ([bool]::Parse($Raw)) { Return $log }
@@ -150,7 +151,7 @@ Function Invoke-OPNsenseAudit {
     } else {
         Write-Error "Failed to audit OPNsense"
     }
-    return $result
+    return $result | Add-ObjectDetail -TypeName 'OPNsense.Firmware.Audit'
 }
 
 Function Get-OPNsense {
@@ -191,7 +192,7 @@ Function Get-OPNsense {
 
     if ([bool]::Parse($Changelog)) {
         $result = Invoke-OPNsenseCommand core firmware "changelog/$Version" -Form changelog
-        return $result  | Add-ObjectDetail -TypeName 'OPNsense.Firmware.Changelog'
+        return $result | Add-ObjectDetail -TypeName 'OPNsense.Firmware.Changelog'
     }
 
     # No Switches

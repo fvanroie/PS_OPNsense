@@ -87,11 +87,12 @@
 
     # Format files (.ps1xml) to be loaded when importing this module
     FormatsToProcess       = @(
-        'Formats\Cron.format.ps1xml',
-        'Formats\Firmware.format.ps1xml',
-        'Formats\Packages.format.ps1xml',
-        'Formats\Services.format.ps1xml',
-        'Formats\ClamAV.format.ps1xml'
+        'Formats/Core.format.ps1xml',
+        'Formats/Cron.format.ps1xml',
+        'Formats/Firmware.format.ps1xml',
+        'Formats/Packages.format.ps1xml',
+        'Formats/Services.format.ps1xml',
+        'Formats/ClamAV.format.ps1xml'
     )
 
     # Modules to import as nested modules of the module specified in RootModule/ModuleToProcess
@@ -125,7 +126,7 @@
     # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
     FunctionsToExport      = @(
         # TEST
-        'Enable-OPNsense',
+        'Enable-OPNsense', 'Get-OPNsenseUpdateStatus'
         # Backup
         'Backup-OPNsenseConfig', 'Restore-OPNsenseConfig', 'Reset-OPNsenseConfig',
         # ClamAV

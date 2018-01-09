@@ -76,17 +76,19 @@ Function Lock-OPNsensePackage {
     )
     BEGIN {
         $pkg = Get-OPNsensePackage
+        $packagenames = @()
     }
     PROCESS {
         $thispkg = $pkg | Where-Object { $_.Name -eq $Name }
+        $packagenames += $Name.tolower()
         If ($thispkg.installed -eq 0) {
             Write-Warning ($thispkg.Name + " is not installed and cannot be locked.")
         } else {
-            Invoke-OPNsenseCommand core firmware "lock/$Name" -Form lock -addProperty @{ name = $Name.tolower()}
+            $result = Invoke-OPNsenseCommand core firmware "lock/$Name" -Form lock -addProperty @{ name = $Name.tolower()}
         }
     }
     END {
-        #return $results
+        return Get-OPNsensePackage -Name $packagenames
     }
 }
 
