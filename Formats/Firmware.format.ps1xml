@@ -6,7 +6,6 @@
       <ViewSelectedBy>
         <TypeName>OPNsense.Firmware.Mirror</TypeName>
       </ViewSelectedBy>
-
     <TableControl>
         <TableHeaders>
             <TableColumnHeader/>
@@ -34,7 +33,41 @@
                     <TableColumnItem>
                         <PropertyName>Url</PropertyName>
                     </TableColumnItem>
+                </TableColumnItems>
+            </TableRowEntry>
+        </TableRowEntries>
+    </TableControl>
+    </View>
 
+
+    <View>
+      <Name>OPNsense.Firmware.Audit</Name>
+      <ViewSelectedBy>
+        <TypeName>OPNsense.Firmware.Audit</TypeName>
+      </ViewSelectedBy>
+    <TableControl>
+        <TableHeaders>
+            <TableColumnHeader/>
+            <TableColumnHeader/>
+            <TableColumnHeader/>
+            <TableColumnHeader/>
+        </TableHeaders>
+        <TableRowEntries>
+            <TableRowEntry>
+                <Wrap/>
+                <TableColumnItems>
+                    <TableColumnItem>
+                        <PropertyName>CVE</PropertyName>
+                    </TableColumnItem>
+                    <TableColumnItem>
+                        <PropertyName>Issue</PropertyName>
+                    </TableColumnItem>
+                    <TableColumnItem>
+                        <PropertyName>Title</PropertyName>
+                    </TableColumnItem>
+                    <TableColumnItem>
+                        <PropertyName>Url</PropertyName>
+                    </TableColumnItem>
                 </TableColumnItems>
             </TableRowEntry>
         </TableRowEntries>

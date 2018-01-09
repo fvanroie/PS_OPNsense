@@ -37,6 +37,11 @@ function Get-OPNsenseService {
         foreach ($service in $name) {
             try {
                 switch ($service) {
+                    'mdnsrepeater'
+                    {   $result = Invoke-OPNsenseCommand mdnsrepeater service status -AddProperty @{ name = $service.tolower()}
+                        $result = New-Object -TypeName psobject -Property @{'status' = $result.result; 'name' = $service.tolower() }
+                        $results += $result
+                    }
                     'netflow'
                     {     $results += Invoke-OPNsenseCommand diagnostics netflow status -AddProperty @{ name = $service.tolower()}
                         #$result | Add-Member 'name' $service.tolower()
@@ -53,7 +58,10 @@ function Get-OPNsenseService {
                     }
                 } # switch
             } catch {
-                Write-Error "$service failed to report status"
+                Write-Warning "$service failed to report its status."
+                Write-Verbose ($_.Exception.Message)
+                $result = New-Object -TypeName psobject -Property @{'status' = 'not installed'; 'name' = $service.tolower() }
+                $results += $result
             }
             #$result
         } #foreach
@@ -209,7 +217,7 @@ function Stop-OPNsenseService {
 function Invoke-OPNsenseService {
     # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
     param (
-        [Parameter(Mandatory = $true, position = 1, ValueFromPipeline = $false, ValueFromPipelineByPropertyName = $false)]
+        [Parameter(ValueFromPipeline = $false, ValueFromPipelineByPropertyName = $false)]
         [Switch]$FreshClam
     )
     BEGIN {
@@ -234,11 +242,13 @@ Function Get-Services {
         'status' {
             Return @(
                 'acmeclient',
-                'collectd',
+                'cicap',
                 'clamav',
+                'collectd',
                 'freeradius',
                 'haproxy',
                 'ids',
+                'mdnsrepeater',
                 'monit',
                 #'postfix',
                 'proxy',
@@ -247,6 +257,7 @@ Function Get-Services {
                 'telegraf',
                 #'tinc',
                 #'tor',
+                #'trafficshaper',
                 'zabbixagent'
                 #'zabbixproxy',
                 #'zerotier'

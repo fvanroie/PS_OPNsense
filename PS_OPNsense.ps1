@@ -76,8 +76,21 @@ Function Connect-OPNsense() {
     if ($Result) {
         # Validate the connection result
         if ($Result.product_version) {
+            $warning = @"
+
+            THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+            IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+            FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+            AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+            LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+            OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+            SOFTWARE.
+            
+"@
+            Write-Warning $warning
+
             try {
-                $temp = Select-String -InputObject $v.product_version -pattern '[0-9\.]*' -AllMatches
+                $temp = Select-String -InputObject $result.product_version -pattern '[0-9\.]*' -AllMatches
                 $shortversion = [System.Version]$temp.Matches[0].Value.Trim('.')                
                 Write-Verbose ("OPNsense version : " + $Result.product_version )
 
@@ -86,9 +99,9 @@ Function Connect-OPNsense() {
                 }
             } catch {
                 $shortversion = $null
-                Write-Warning "Unsupported version of $($v.product_name) $($v.product_version) detected. Proceed with extreme care!"
+                Write-Warning "Unsupported version of $($result.product_name) $($result.product_version) detected. Proceed with extreme care!"
             }
-            $result | Add-Member 'short_version' $shortversion
+            Add-Member -InputObject $Result 'short_version' $shortversion
 
             $MyInvocation.MyCommand.Module.PrivateData['Version'] = $shortversion
             $MyInvocation.MyCommand.Module.PrivateData['ApiCredentials'] = $Credential
@@ -96,13 +109,13 @@ Function Connect-OPNsense() {
             $MyInvocation.MyCommand.Module.PrivateData['OPNsenseUri'] = $Url
             $MyInvocation.MyCommand.Module.PrivateData['OPNsenseApi'] = "$Url/api"
             $MyInvocation.MyCommand.Module.PrivateData['OPNsenseSkipCert'] = [bool]::Parse($SkipCertificateCheck)
-            return $result  | Select-Object -Property product_name, product_version, short_version
         } else {
             Throw "ERROR : Failed to get the OPNsense version of server '$Url'."
         }
     } else {
         Throw "ERROR : Could not connect to the OPNsense server '$Url' using the api credentials supplied."
     }
+    return $result  | Add-ObjectDetail -TypeName 'OPNsense.Core.Version'
 }
 
 Function Disconnect-OPNsense() {

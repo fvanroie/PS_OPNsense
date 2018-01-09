@@ -157,25 +157,34 @@ Function Invoke-OPNsenseCommand {
         throw "ERROR : Not connected to an OPNsense instance"
     }
 
-    if ($Json) {
-        $Result = Invoke-OPNsenseApiRestCommand -Uri $Uri -credential $Credentials -Json $Json `
-            -SkipCertificateCheck:$SkipCertificateCheck -Verbose:$VerbosePreference
-    } else {
-        if ($Form) {
-            $Result = Invoke-OPNsenseApiRestCommand -Uri $Uri -credential $Credentials -Form $Form `
-                -SkipCertificateCheck:$SkipCertificateCheck -Verbose:$VerbosePreference -OutFile $OutFile
+    try {
+        if ($Json) {
+            $Result = Invoke-OPNsenseApiRestCommand -Uri $Uri -credential $Credentials -Json $Json `
+                -SkipCertificateCheck:$SkipCertificateCheck -Verbose:$VerbosePreference `
+                -ErrorAction Stop
         } else {
-            $Result = Invoke-OPNsenseApiRestCommand -Uri $Uri -credential $Credentials `
-                -SkipCertificateCheck:$SkipCertificateCheck -Verbose:$VerbosePreference
+            if ($Form) {
+                $Result = Invoke-OPNsenseApiRestCommand -Uri $Uri -credential $Credentials -Form $Form `
+                    -SkipCertificateCheck:$SkipCertificateCheck -Verbose:$VerbosePreference `
+                    -ErrorAction Stop -OutFile $OutFile
+            } else {
+                $Result = Invoke-OPNsenseApiRestCommand -Uri $Uri -credential $Credentials `
+                    -SkipCertificateCheck:$SkipCertificateCheck -Verbose:$VerbosePreference `
+                    -ErrorAction Stop
+            }
         }
+    } catch [Microsoft.PowerShell.Commands.WriteErrorException] {
+        Throw $_.Exception.Message
+    } catch {
+        Throw 'API returned an UNKNOWN error: ' + $_.Exception.Message
     }
 
-    # Save file to disk
+    # File was saved file to disk
     If ($OutFile) {
         return
     }
 
-    # The result return should be a JSON object, which is automatically parsed into an object
+    # The result returned should be a JSON object, which is automatically parsed into an object
     # If the result is a String: Find empty labels and mark them as a space (#bug in ConvertFrom-JSON)
     if ($result) {
         if ($Result.GetType().Name -eq "String") {
