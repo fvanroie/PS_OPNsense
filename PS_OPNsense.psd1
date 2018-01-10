@@ -112,6 +112,7 @@
 
         # Optional Installable Plugin Packages
         'Plugins/ClamAV.ps1',
+        'Plugins/Collectd.ps1',
 
         # Legacy WebGUI Commands
         'Legacy/Backup.ps1',
@@ -131,6 +132,8 @@
         'Backup-OPNsenseConfig', 'Restore-OPNsenseConfig', 'Reset-OPNsenseConfig',
         # ClamAV
         'Get-OPNsenseClamAV', 'Set-OPNsenseClamAV',
+        # Collectd
+        'Get-OPNsenseCollectd', 'Set-OPNsenseCollectd',
         # PS_OPNsense
         'Connect-OPNsense', 'Disconnect-OPNsense',
         # RestApi
