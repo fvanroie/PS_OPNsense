@@ -210,7 +210,7 @@ Function Get-OPNsenseARP {
     param (
     )
     $result = Invoke-OPNsenseCommand diagnostics interface getarp
-    return $result
+    return $result  | Add-ObjectDetail -TypeName 'OPNsense.Diagnostics.Interface.Arp'
 }
 
 Function Clear-OPNsenseARP {

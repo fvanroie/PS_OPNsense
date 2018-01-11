@@ -87,6 +87,7 @@
 
     # Format files (.ps1xml) to be loaded when importing this module
     FormatsToProcess       = @(
+        'Formats/ArpScanner.format.ps1xml',
         'Formats/Core.format.ps1xml',
         'Formats/Cron.format.ps1xml',
         'Formats/Firmware.format.ps1xml',
@@ -111,6 +112,7 @@
         'Core/Services.ps1',
 
         # Optional Installable Plugin Packages
+        'Plugins/ArpScanner.ps1',
         'Plugins/ClamAV.ps1',
         'Plugins/Collectd.ps1',
 
@@ -128,6 +130,8 @@
     FunctionsToExport      = @(
         # TEST
         'Enable-OPNsense', 'Get-OPNsenseUpdateStatus'
+        # ArpScanner
+        'Get-OPNsenseArpScanner', 'Start-OPNsenseArpScanner', 'Wait-OPNsenseArpScanner', 'Stop-OPNsenseArpScanner', 'Update-OPNsenseArp',
         # Backup
         'Backup-OPNsenseConfig', 'Restore-OPNsenseConfig', 'Reset-OPNsenseConfig',
         # ClamAV

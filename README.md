@@ -15,13 +15,15 @@ Currently there are basic api hooks for these OPNsense modules:
 - Proxy
 - Services
 
-Not all functionality is implemented yet and this is an early development alpha release. All testing and [feedback](https://github.com/fvanroie/PS_OPNsense/issues) is appreciated.
+Not all functionality is implemented yet and this is an *early development alpha release*. All testing and [feedback](https://github.com/fvanroie/PS_OPNsense/issues) is appreciated.
 
 ## Supported Plugins
-Currently there are basic api hooks for these optional OPNsense pluginss:
+There are basic api hooks for these optional OPNsense pluginss:
+- ArpScanner
 - ClamAV
+- Collectd
 
-Currently only Start, Stop, Update and Restart services are implemented for the plugins. More work is needed to support all available REST api commands.
+Currently only Start, Stop, Update and Restart services are implemented for the other plugins. More work is needed to support all available REST api commands.
 
 ## Legacy Commands
 There is legacy WebUI support for these commands:
@@ -62,7 +64,7 @@ Disconnect-OPNsense
 
 Use the -Verbose and/or -Debug switches to see what is going on behind the scenes. You can use the output to learn more about the OPNsense REST api.
 
-For the full documentation off all the cmdlets and parameters, please visit the [PS_OPNsense wiki](https://github.com/fvanroie/PS_OPNsense//wiki/).
+For the full documentation of all the cmdlets and parameters, please visit the [PS_OPNsense wiki](https://github.com/fvanroie/PS_OPNsense//wiki/).
 
 ## Compatibility
 This module is tested on:
@@ -70,7 +72,7 @@ This module is tested on:
 Platform   | Edition            | Version
 -----------|--------------------|--------
 Windows 10 | PowerShell Desktop | 5.1
-Windows 10 | PowerShell Core    | RC 6.0
+Windows 10 | PowerShell Core    | 6.0 GA
 
-PS_OPNsense aims to be cross-platform on PowerShell Core RC 6.0 and up, however it has not been tested on Linux and MacOS yet.
-Feel free to use it on these platforms and report back any [issues](https://github.com/fvanroie/PS_OPNsense/issues) you encouter.
+PS_OPNsense aims to be cross-platform on PowerShell Core 6.0 GA and up, however it has not been tested on Linux and MacOS yet. Let me know what works and what doesn't.
+Feel free to use it on these platforms and report back any [issues](https://github.com/fvanroie/PS_OPNsense/issues) you encouter. The goal is to make PS_OPNsense crossplatform with PowerShell Core.
