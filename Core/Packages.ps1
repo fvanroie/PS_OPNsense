@@ -121,21 +121,32 @@ Function Install-OPNsensePackage {
     )
     BEGIN {
         $pkg = Get-OPNsensePackage
+        $results = @()
     }
     PROCESS {
         $thispkg = $pkg | Where-Object { $_.Name -eq $Name }
         If ($thispkg.installed -eq 1) {
             If (-Not [bool]::Parse($Force)) {
                 Write-Warning ($thispkg.Name + " is already installed. Use -Force to reinstall the package.")
+                $status = $null
             } else {
-                Invoke-OPNsenseCommand core firmware "reistall/$Name" -Form reinstall -addProperty @{ name = $Name.tolower()}              
+                $status = Invoke-OPNsenseCommand core firmware "reinstall/$Name" -Form reinstall -addProperty @{ name = $Name.tolower()}              
             }
         } else {
-            Invoke-OPNsenseCommand core firmware "install/$Name" -Form install -addProperty @{ name = $Name.tolower()}
+            $status = Invoke-OPNsenseCommand core firmware "install/$Name" -Form install -addProperty @{ name = $Name.tolower()}
+        }
+
+        # Check installation progress
+        if ($status) {
+            if ($status.status -eq 'ok') {
+                $result = Get-OPNsenseUpdateStatus
+                $result | Add-Member -MemberType NoteProperty -Name 'Name' -Value $Name.tolower()
+                $results += $result
+            }
         }
     }
     END {
-        #return $results
+        return $results
     }
 }
 
@@ -146,17 +157,24 @@ Function Remove-OPNsensePackage {
     )
     BEGIN {
         $pkg = Get-OPNsensePackage
+        $results = @()
     }
     PROCESS {
         $thispkg = $pkg | Where-Object { $_.Name -eq $Name }
         If ($thispkg.installed -eq 0) {
             Write-Warning ($thispkg.Name + " is not installed and cannot be removed.")
+            $status = $null
         } else {
-            Invoke-OPNsenseCommand core firmware "remove/$Name" -Form remove -addProperty @{ name = $Name.tolower()}
+            $status = Invoke-OPNsenseCommand core firmware "remove/$Name" -Form remove -addProperty @{ name = $Name.tolower()}
+            if ($status.status -eq 'ok') {
+                $result = Get-OPNsenseUpdateStatus
+                $result | Add-Member -MemberType NoteProperty -Name 'Name' -Value $Name.tolower()
+                $results += $result
+            }
         }
     }
     END {
-        #return $results
+        return $results
     }
 }
 
@@ -164,5 +182,5 @@ Function Get-OPNsensePlugin {
     # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
 
     $packages = Invoke-OPNsenseCommand core firmware info
-    return $packages.plugin
+    return $packages.plugin | Add-ObjectDetail -TypeName 'OPNsense.Package'
 }
