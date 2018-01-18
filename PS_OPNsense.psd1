@@ -91,6 +91,7 @@
         'Formats/Core.format.ps1xml',
         'Formats/Cron.format.ps1xml',
         'Formats/Firmware.format.ps1xml',
+        'Formats/FirmwareUpdate.format.ps1xml',
         'Formats/Packages.format.ps1xml',
         'Formats/Services.format.ps1xml',
         'Formats/ClamAV.format.ps1xml'
@@ -129,7 +130,7 @@
     # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
     FunctionsToExport      = @(
         # TEST
-        'Enable-OPNsense', #'Get-OPNsenseUpdateStatus'
+        'Enable-OPNsense', 'Get-OPNsenseUpdateStatus'
         # ArpScanner
         'Update-OPNsenseArp', #'Get-OPNsenseArpScanner', 'Start-OPNsenseArpScanner', 'Wait-OPNsenseArpScanner', 'Stop-OPNsenseArpScanner',
         # Backup
@@ -143,8 +144,9 @@
         # RestApi
         'Invoke-OPNsenseCommand',
         # Firmware
-        'Get-OPNsense', 'Stop-OPNsense', 'Restart-OPNsense', 'Update-OPNsense', 'Invoke-OPNsenseAudit',
+        'Get-OPNsense', 'Stop-OPNsense', 'Restart-OPNsense', 
         'Set-OPNsense',
+        'Update-OPNsense', 'Invoke-OPNsenseAudit', 'Get-OPNsenseUpdate'
         # Packages
         'Get-OPNsensePackage', 'Lock-OPNsensePackage', 'Unlock-OPNsensePackage', 'Install-OPNsensePackage', 'Remove-OPNsensePackage',
         'Get-OPNsensePlugin',
