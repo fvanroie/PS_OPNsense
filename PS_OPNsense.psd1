@@ -129,7 +129,7 @@
     # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
     FunctionsToExport      = @(
         # TEST
-        'Enable-OPNsense', 'Get-OPNsenseUpdateStatus'
+        'Enable-OPNsense', #'Get-OPNsenseUpdateStatus'
         # ArpScanner
         'Update-OPNsenseArp', #'Get-OPNsenseArpScanner', 'Start-OPNsenseArpScanner', 'Wait-OPNsenseArpScanner', 'Stop-OPNsenseArpScanner',
         # Backup
