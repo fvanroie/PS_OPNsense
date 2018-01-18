@@ -83,7 +83,7 @@ Function Update-OPNsenseArp {
         foreach ($peer in $result.peers) {
             $results += New-Object -TypeName psobject -Property @{ 'IP' = $peer[0]; 'MAC' = $peer[1]; 'Vendor' = $peer[2]; 'Interface' = $result.interface; 'Network' = $result.network }
         }
-        return $results  | Add-ObjectDetail -TypeName 'OPNsense.Plugin.ArpScanner.Peer'
+        return $results  | Add-ObjectDetail -TypeName 'OPNsense.Plugin.ArpScanner.Peer' | Sort-Object -Property Interface, { [System.Version]$_.IP } 
     } catch [System.SystemException] {
         Throw "Unable to update the ARP table. Make sure the os-arp-scan plugin is installed!"
     } catch {
