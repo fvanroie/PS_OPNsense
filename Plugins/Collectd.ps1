@@ -52,7 +52,7 @@ Function Set-OPNsenseCollectd {
 
     $theObject = Get-OPNsenseCollectd
     $argHash = @{}
-    $theObject.psobject.properties | Foreach { $argHash[$_.Name] = $_.Value }
+    $theObject.psobject.properties | ForEach-Object { $argHash[$_.Name] = $_.Value }
 
     if ($PSBoundParameters.ContainsKey('Plugin')) {
         foreach ($PluginName in $Plugin) {

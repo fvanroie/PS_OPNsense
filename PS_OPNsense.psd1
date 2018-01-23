@@ -35,7 +35,7 @@
     # RootModule = ''
 
     # Version number of this module.
-    ModuleVersion          = '0.1.2'
+    ModuleVersion          = '0.1.3'
 
     # Supported PSEditions
     CompatiblePSEditions   = @('Core', 'Desktop')
@@ -47,10 +47,10 @@
     Author                 = 'fvanroie'
 
     # Company or vendor of this module
-    CompanyName            = 'NetWize.be'
+    CompanyName            = 'netwiZe.be'
 
     # Copyright statement for this module
-    Copyright              = '(c) 2017 fvanroie. All rights reserved.'
+    Copyright              = '(c) 2018 fvanroie. All rights reserved.'
 
     # Description of the functionality provided by this module
     Description            = 'PowerShell Module for OPNsense REST api'
@@ -115,7 +115,8 @@
         # Optional Installable Plugin Packages
         'Plugins/ArpScanner.ps1',
         'Plugins/ClamAV.ps1',
-        'Plugins/Collectd.ps1',
+        'Plugins/Collectd.ps1'
+        'Plugins/HAProxy.ps1',
 
         # Legacy WebGUI Commands
         'Legacy/Backup.ps1',
@@ -147,6 +148,10 @@
         'Get-OPNsense', 'Stop-OPNsense', 'Restart-OPNsense', 
         'Set-OPNsense',
         'Update-OPNsense', 'Invoke-OPNsenseAudit', 'Get-OPNsenseUpdate'
+        # HAProxy
+        'New-OPNsenseHAProxyServer', 'New-OPNsenseHAProxyFrontend', 'New-OPNsenseHAProxyBackend', 'New-OPNsenseHAProxyErrorfile', 'New-OPNsenseHAProxyLuaScript',
+        'Get-OPNsenseHAProxyServer', 'Get-OPNsenseHAProxyFrontend', 'Get-OPNsenseHAProxyBackend', 'Get-OPNsenseHAProxyErrorfile', 'Get-OPNsenseHAProxyLuaScript',
+        'New-OPNsenseHAProxyObject',
         # Packages
         'Get-OPNsensePackage', 'Lock-OPNsensePackage', 'Unlock-OPNsensePackage', 'Install-OPNsensePackage', 'Remove-OPNsensePackage',
         'Get-OPNsensePlugin',
