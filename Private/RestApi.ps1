@@ -68,19 +68,23 @@ Function Invoke-OPNsenseApiRestCommand {
         # Convert HashTable to JSON object
         if ($Json.GetType().Name -eq "HashTable") {
             $Json = $Json | ConvertTo-Json -Depth 15   # Default Depth is 2!
-            Write-Verbose "JSON Arguments: $Json"
-            # Set correct Content-Type for JSON data
-            #$ParamSplat.Add('ContentType', 'application/json; charset=UTF-8')    THIS HAS A BUG !
-            $ParamSplat.Add('ContentType', 'application/json')
-            $ParamSplat.Add('Method', 'POST')
-            $ParamSplat.Add('Body', $json)
+        } elseif ($Json.GetType().Name -eq "PSCustomObject") {
+            $Json = $Json | ConvertTo-Json -Depth 15   # Default Depth is 2!
+        } elseif ($Json.GetType().Name -eq "String") {
+            # ALready a String
         } else {
             Throw 'JSON object should be a HashTable'
         }
+
+        # OK, we have a $JSON string now
+        Write-Verbose "JSON Arguments: $Json"
+        $ParamSplat.Add('Body', $json)
+        $ParamSplat.Add('ContentType', 'application/json')
+        $ParamSplat.Add('Method', 'POST')
     } else {
         # Post a web Form
         if ($Form) {
-            # Output Verbose object in JSON notation, if -Verbose is specified
+            # Output object in JSON notation, if -Verbose is specified
             $Json = $Form | ConvertTo-Json -Depth 15
             Write-Verbose "Form Arguments: $Json"
  
