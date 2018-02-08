@@ -117,6 +117,7 @@
         'Plugins/ClamAV.ps1',
         'Plugins/Collectd.ps1'
         'Plugins/HAProxy.ps1',
+        'Plugins/Lldpd.ps1',
 
         # Legacy WebGUI Commands
         'Legacy/Backup.ps1',
@@ -130,16 +131,24 @@
 
     # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
     FunctionsToExport      = @(
-        # TEST
-        'Enable-OPNsense', 'Get-OPNsenseUpdateStatus'
-        # ArpScanner
-        'Update-OPNsenseArp', #'Get-OPNsenseArpScanner', 'Start-OPNsenseArpScanner', 'Wait-OPNsenseArpScanner', 'Stop-OPNsenseArpScanner',
+        ########## TEST ##########
+        'Enable-OPNsense', 'Get-OPNsenseUpdateStatus',
+
+        ########## LEGACY ##########
         # Backup
         'Backup-OPNsenseConfig', 'Restore-OPNsenseConfig', 'Reset-OPNsenseConfig',
+
+        ########## PLUGINS ##########
+        # ArpScanner
+        'Update-OPNsenseArp', #'Get-OPNsenseArpScanner', 'Start-OPNsenseArpScanner', 'Wait-OPNsenseArpScanner', 'Stop-OPNsenseArpScanner',
         # ClamAV
         'Get-OPNsenseClamAV', 'Set-OPNsenseClamAV',
         # Collectd
         'Get-OPNsenseCollectd', 'Set-OPNsenseCollectd',
+        # Lldpd
+        'Get-OPNsenseLldp', 'Set-OPNsenseLldp',
+
+        ########## CORE ##########
         # PS_OPNsense
         'Connect-OPNsense', 'Disconnect-OPNsense',
         # RestApi
