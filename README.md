@@ -22,6 +22,8 @@ There are basic api hooks for these optional OPNsense pluginss:
 - ArpScanner
 - ClamAV
 - Collectd
+- HAProxy
+- Lldpd
 
 Currently only Start, Stop, Update and Restart services are implemented for the other plugins. More work is needed to support all available REST api commands.
 
