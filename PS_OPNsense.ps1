@@ -58,7 +58,7 @@ Function Connect-OPNsense() {
     if ($OPNsenseApi) {
         Throw "ERROR : Already connected to $OPNsenseApi. Please use Disconnect-OPNsense first."
     }
-    $minversion = [System.Version]'18.2'
+    $minversion = [System.Version]'18.1.1'
     
     #$bytes = [System.Text.Encoding]::UTF8.GetBytes($Key + ":" + $Secret)
     #$Credentials = [System.Convert]::ToBase64String($bytes)
@@ -76,7 +76,7 @@ Function Connect-OPNsense() {
     if ($Result) {
         # Validate the connection result
         if ($Result.product_version) {
-            $warning = @"
+            Write-Warning @"
 
             THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
             IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -85,9 +85,8 @@ Function Connect-OPNsense() {
             LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
             OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
             SOFTWARE.
-            
+
 "@
-            Write-Warning $warning
 
             try {
                 $temp = Select-String -InputObject $result.product_version -pattern '[0-9\.]*' -AllMatches
