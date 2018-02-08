@@ -63,5 +63,8 @@ Function Set-OPNsenseLldp {
         $args.general.sonmp = $( if ([bool]::Parse($EnableSonmp)) {'1'} else {'0'} )
     }
 
-    return Invoke-OPNsenseCommand lldpd general set -Json $args
+    $result = Invoke-OPNsenseCommand lldpd general set -Json $args
+    Update-OPNsenseService lldpd | Out-Null
+
+    return $result
 }
