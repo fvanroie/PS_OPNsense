@@ -26,7 +26,7 @@ function New-OPNsenseHAProxyObject {
     [CmdletBinding()]
     param (
         [Parameter(Mandatory = $true, position = 0)]
-        [ValidateSet('Server', 'Backend', 'Frontend', 'Healthcheck', 'Errorfile', 'Lua')]
+        [ValidateSet('Server', 'Backend', 'Frontend', 'Healthcheck', 'Errorfile', 'Lua', 'Acl', 'Action', 'Healthcheck')]
         [String]$ObjectType,
         [PsObject]$InputObject
     )
@@ -34,18 +34,112 @@ function New-OPNsenseHAProxyObject {
     return Invoke-OPNsenseCommand haproxy settings $("add{0}" -f $ObjectType.ToLower()) -Json @{ $ObjectType.ToLower() = $InputObject }
 }
 
-function Get-OPNsenseHAProxyObject {
-    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
+function Get-NoteProperty {
+    [CmdletBinding()]
+    param (
+        $obj
+    )
+    return Get-Member -InputObject $obj -MemberType NoteProperty | Select-Object -ExpandProperty Name
+}
+
+function Get-SingleOption {
+    [CmdletBinding()]
+    param (
+        $obj
+    )
+    $props = Get-NoteProperty $obj
+    $result = $null
+    foreach ($prop in $props) {
+        if ($obj.($prop).selected -gt 0) {
+            $result = $obj.($prop).value -replace ' \[default\]', ''
+        }
+    }
+    return $result
+}
+function Format-OPNsenseProperty {
+    [CmdletBinding()]
+    param (
+        $obj
+    )
+    $props = Get-NoteProperty $obj
+    foreach ($prop in $props) {
+        switch ($obj.($prop).GetType().Name) {
+            'PSCustomObject' {
+                $obj.($prop) = Get-MultiOption $obj.($prop)
+            }
+            default {}
+        }
+    }
+    return $obj
+}
+
+function Get-MultiOption {
+    [CmdletBinding()]
+    param (
+        $obj
+    )
+    $props = Get-NoteProperty $obj
+    $result = @()
+    foreach ($prop in $props) {
+        if ($obj.($prop).selected -gt 0) {
+            $result += $obj.($prop).value -replace ' \[default\]', ''
+        }
+    }
+    return $result
+}
+
+
+function Get-OPNsenseHAProxyDetail {
     [CmdletBinding()]
     param (
         [Parameter(Mandatory = $true, position = 0)]
-        [ValidateSet('Server', 'Backend', 'Frontend', 'Healthcheck', 'Errorfile', 'Lua')]
+        [ValidateSet('Server', 'Backend', 'Frontend', 'Healthcheck', 'Errorfile', 'Lua', 'Acl', 'Action', 'Healthcheck')]
+        [String]$ObjectType,
+        [parameter(Mandatory = $true)][string]$Uuid
+    )
+    BEGIN {
+        $results = @()
+    }
+    PROCESS {
+        $result = Invoke-OPNsenseCommand haproxy settings $("get{0}/{1}" -f $ObjectType.ToLower(), $Uuid) | Select-Object -ExpandProperty $ObjectType
+        $result | Add-Member -MemberType NoteProperty -Name 'uuid' -Value $Item.uuid
+        $result = Format-OPNsenseProperty $result
+
+        switch ($ObjectType) {
+            'action' {
+                $result.code = Get-SingleOption $result.code
+            }
+            default {
+            }
+        }
+
+        $results += $result
+    }
+    END {
+        return $results | Add-ObjectDetail -TypeName ('OPNsense.HAProxy.{0}.Detail' -f $ObjectType)
+    }
+}
+
+function Get-OPNsenseHAProxyObject {
+    [CmdletBinding()]
+    param (
+        [Parameter(Mandatory = $true, position = 0)]
+        [ValidateSet('Server', 'Backend', 'Frontend', 'Healthcheck', 'Errorfile', 'Lua', 'Acl', 'Action', 'Healthcheck')]
         [String]$ObjectType,
         [parameter(Mandatory = $false)][string[]]$Name,
         [parameter(Mandatory = $false)][Switch]$Enabled        
     )
     #    return Invoke-OPNsenseCommand haproxy settings get | Select-Object -ExpandProperty haproxy | Select-Object -ExpandProperty $("{0}s" -f $ObjectType) | Select-Object -ExpandProperty $("{0}s" -f $ObjectType)
-    return Invoke-OPNsenseCommand haproxy settings $("search{0}s" -f $ObjectType.ToLower()) | Select-Object -ExpandProperty rows
+    $items = Invoke-OPNsenseCommand haproxy settings $("search{0}s" -f $ObjectType.ToLower()) | Select-Object -ExpandProperty rows
+
+    # Get Object details based on the UUID
+    $results = @()
+    foreach ($item in $items) {
+        $result = Get-OPNsenseHAProxyDetail -ObjectType $ObjectType -Uuid $item.Uuid
+        $results += $result
+    }
+
+    return $results
 }
 
 Function Get-OPNsenseHAProxyServer {
@@ -85,6 +179,36 @@ Function Get-OPNsenseHAProxyErrorfile {
         [parameter(Mandatory = $false)][Switch]$Enabled        
     )
     return Get-OPNsenseHAProxyObject "Errorfile" @PSBoundParameters
+}
+
+Function Get-OPNsenseHAProxyHealthCheck {
+    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
+    [CmdletBinding()]
+    param (
+        [parameter(Mandatory = $false)][string[]]$Name,
+        [parameter(Mandatory = $false)][Switch]$Enabled        
+    )
+    return Get-OPNsenseHAProxyObject "HealthCheck" @PSBoundParameters
+}
+
+Function Get-OPNsenseHAProxyAcl {
+    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
+    [CmdletBinding()]
+    param (
+        [parameter(Mandatory = $false)][string[]]$Name,
+        [parameter(Mandatory = $false)][Switch]$Enabled        
+    )
+    return Get-OPNsenseHAProxyObject "Acl" @PSBoundParameters
+}
+
+Function Get-OPNsenseHAProxyAction {
+    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
+    [CmdletBinding()]
+    param (
+        [parameter(Mandatory = $false)][string[]]$Name,
+        [parameter(Mandatory = $false)][Switch]$Enabled        
+    )
+    return Get-OPNsenseHAProxyObject "Action" @PSBoundParameters
 }
 
 Function Get-OPNsenseHAProxyLuaScript {
