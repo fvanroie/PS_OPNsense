@@ -42,20 +42,6 @@ function Get-NoteProperty {
     return Get-Member -InputObject $obj -MemberType NoteProperty | Select-Object -ExpandProperty Name
 }
 
-function Get-SingleOption {
-    [CmdletBinding()]
-    param (
-        $obj
-    )
-    $props = Get-NoteProperty $obj
-    $result = $null
-    foreach ($prop in $props) {
-        if ($obj.($prop).selected -gt 0) {
-            $result = $obj.($prop).value -replace ' \[default\]', ''
-        }
-    }
-    return $result
-}
 function Format-OPNsenseProperty {
     [CmdletBinding()]
     param (
@@ -83,11 +69,14 @@ function Get-MultiOption {
     foreach ($prop in $props) {
         if ($obj.($prop).selected -gt 0) {
             $result += $obj.($prop).value -replace ' \[default\]', ''
+            #$result += $prop
+
+            #$val = $obj.($prop).value -replace ' \[default\]', ''
+            #$result += @{ $val = $prop}
         }
     }
     return $result
 }
-
 
 function Get-OPNsenseHAProxyDetail {
     [CmdletBinding()]
@@ -104,15 +93,6 @@ function Get-OPNsenseHAProxyDetail {
         $result = Invoke-OPNsenseCommand haproxy settings $("get{0}/{1}" -f $ObjectType.ToLower(), $Uuid) | Select-Object -ExpandProperty $ObjectType
         $result | Add-Member -MemberType NoteProperty -Name 'uuid' -Value $Item.uuid
         $result = Format-OPNsenseProperty $result
-
-        switch ($ObjectType) {
-            'action' {
-                $result.code = Get-SingleOption $result.code
-            }
-            default {
-            }
-        }
-
         $results += $result
     }
     END {
