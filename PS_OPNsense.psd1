@@ -134,6 +134,7 @@
     FunctionsToExport      = @(
         ########## TEST ##########
         'Enable-OPNsense', 'Get-OPNsenseUpdateStatus',
+        #'New-OPNsenseHAProxyObject', 'Get-OPNsenseHAProxyObject', 'Set-OPNsenseHAProxyObject', #'Remove-OPNsenseHAProxyObject', 
 
         ########## LEGACY ##########
         # Backup
@@ -162,6 +163,8 @@
         'New-OPNsenseHAProxyServer', 'New-OPNsenseHAProxyFrontend', 'New-OPNsenseHAProxyBackend', 'New-OPNsenseHAProxyErrorfile', 'New-OPNsenseHAProxyLuaScript',
         'Get-OPNsenseHAProxyServer', 'Get-OPNsenseHAProxyFrontend', 'Get-OPNsenseHAProxyBackend', 'Get-OPNsenseHAProxyErrorfile', 'Get-OPNsenseHAProxyLuaScript', 'Get-OPNsenseHAProxyAcl', 'Get-OPNsenseHAProxyHealthCheck', 'Get-OPNsenseHAProxyAction', 
         'New-OPNsenseHAProxyObject',
+        'Set-OPNsenseHAProxyServer',
+        'Remove-OPNsenseHAProxyServer', 'Remove-OPNsenseHAProxyFrontend', 'Remove-OPNsenseHAProxyBackend', 'Remove-OPNsenseHAProxyErrorfile', 'Remove-OPNsenseHAProxyLuaScript', 'Remove-OPNsenseHAProxyAcl', 'Remove-OPNsenseHAProxyHealthCheck', 'Remove-OPNsenseHAProxyAction', 
         # Packages
         'Get-OPNsensePackage', 'Lock-OPNsensePackage', 'Unlock-OPNsensePackage', 'Install-OPNsensePackage', 'Remove-OPNsensePackage',
         'Get-OPNsensePlugin',
