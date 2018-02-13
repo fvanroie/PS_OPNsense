@@ -10,7 +10,6 @@
     <TableControl>
         <TableHeaders>
             <TableColumnHeader/>
-            <TableColumnHeader><Label>Enabled</Label></TableColumnHeader>
             <TableColumnHeader/>
             <TableColumnHeader/>
             <TableColumnHeader/>
@@ -24,15 +23,6 @@
                         <PropertyName>Name</PropertyName>
                     </TableColumnItem>
                     <TableColumnItem>
-                        <ScriptBlock>
-                            if ($_.Enabled -eq 0 -Or $_.Enabled -eq '0' -or $_.Enabled -eq 'false' -or $_.Enabled -eq $false) {
-                                $false
-                            } else {
-                                $true
-                            }
-                        </ScriptBlock>
-                    </TableColumnItem>
-                    <TableColumnItem>
                         <PropertyName>Address</PropertyName>
                     </TableColumnItem>
                     <TableColumnItem>
@@ -42,10 +32,10 @@
                         <PropertyName>Mode</PropertyName>
                     </TableColumnItem>
                     <TableColumnItem>
-                        <PropertyName>Description</PropertyName>
+                        <PropertyName>Weight</PropertyName>
                     </TableColumnItem>
                     <TableColumnItem>
-                        <PropertyName>UUID</PropertyName>
+                        <PropertyName>Description</PropertyName>
                     </TableColumnItem>
                 </TableColumnItems>
             </TableRowEntry>
