@@ -21,6 +21,13 @@
     SOFTWARE.
 #>
 
+
+Function ConvertTo-Boolean {
+    Param(
+        $Val
+    )
+    Return [String]$( if (([Int]$Val) -gt 0) {'1'} else {'0'} )
+}
 function Select-InputObject {
     [CmdletBinding()]
     Param(
@@ -36,7 +43,11 @@ function Select-InputObject {
         foreach ($key in $PSBounds.keys) {
             if ($key -notin [System.Management.Automation.PSCmdlet]::CommonParameters -and
                 $key -notin [System.Management.Automation.PSCmdlet]::OptionalCommonParameters) {
-                $obj | Add-Member -MemberType NoteProperty -Name $key.tolower() -Value $PSBounds[$key] -Force
+                if ($key -in 'enabled') {
+                    $obj | Add-Member -MemberType NoteProperty -Name $key.tolower() -Value $PSBounds[$key] -Force
+                } else {
+                    $obj | Add-Member -MemberType NoteProperty -Name $key.tolower() -Value $PSBounds[$key] -Force
+                }
             }
         }        
     } else {
@@ -282,9 +293,15 @@ function New-OPNsenseHAProxyObject {
             #$Uuid = $Item.Uuid
             #if ($Uuid) {
             # Mode needs lowercase
+            $Properties = Get-NoteProperty $Item
             if ($Item.Mode) { $Item.Mode = $Item.Mode.tolower() }
             if ($Item.Code) { $Item.Code = ( 'x{0}' -f $Item.Code) }
-
+            foreach ($prop in 'Enabled', 'Negate') {
+                if ($prop -in $Properties) {
+                    $Item.$prop = ConvertTo-Boolean $Item.$prop
+                }
+            }
+            
             $snapBefore = $(Invoke-OPNsenseCommand haproxy settings $("search{0}s" -f $ObjectType.ToLower()) -Form @{ searchPhrase = $Item.Name} ).rows
             #    return Invoke-OPNsenseCommand haproxy settings get | Select-Object -ExpandProperty haproxy | Select-Object -ExpandProperty $("{0}s" -f $ObjectType) | Select-Object -ExpandProperty $("{0}s" -f $ObjectType)
             $result = Invoke-OPNsenseCommand haproxy settings $("add{0}" -f $ObjectType.ToLower()) -Json @{ $ObjectType.ToLower() = $Item }
@@ -395,31 +412,95 @@ Function New-OPNsenseHAProxyErrorfile {
 }
 Function New-OPNsenseHAProxyLuaScript {
     # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
-    [CmdletBinding()]
-    param (
-        [Parameter(Mandatory = $true, position = 0, ParameterSetName = "Object")]
-        [PsObject]$InputObject,
+    [CmdletBinding(DefaultParameterSetName = "AsParam")]  
+    Param(
+        [parameter(Position = 0, Mandatory = $true, ValueFromPipelineByPropertyname = $true, ParameterSetName = "AsObject")]
+        [PSObject[]]$InputObject,
 
-        [Parameter(Mandatory = $true, position = 0, ParameterSetName = "Normal")]
-        [String]$Name,
-        [Parameter(ParameterSetName = "Normal")]
-        [String]$Description,
-        [Parameter(Mandatory = $true, position = 1, ParameterSetName = "Normal")]
-        [String]$Content
+        [parameter(Position = 0, Mandatory = $true, ValueFromPipelineByPropertyname = $true, ParameterSetName = "AsParam")][String]$Name,
+        [parameter(Position = 1, ValueFromPipelineByPropertyname = $true)][String]$Description,
+        [parameter(Position = 2, Mandatory = $true, ValueFromPipelineByPropertyname = $true)]
+        [ValidateSet(0, 1, '0', '1', $False, $True)]$Enabled,
+        [parameter(Position = 3, Mandatory = $true, ValueFromPipelineByPropertyname = $true)][String]$Content
     )
-
-    if ($InputObject) {
-        return New-OPNsenseHAProxyObject -ObjectType "Lua" -InputObject $InputObject
-    } else {
-        $Params = @{
-            'name' = $Name;
-            'description' = "{0}" -f $Description;
-            'content' = $Content;
-        }
-        return New-OPNsenseHAProxyObject -ObjectType "Lua" -InputObject $Params
+    BEGIN {
+        $results = @()
     }
+    PROCESS {
+        # Convert parameters to InputObject
+        $obj = Select-InputObject -paramset $PSCmdlet.ParameterSetName -psbounds $PSBoundParameters -InputObject $InputObject
+        # Create new Object
+        $result = New-OPNsenseHAProxyObject -ObjectType "Lua" -InputObject $obj
+        $results += $result
+    }   
+    END {
+        return $results
+    } 
 }
+Function New-OPNsenseHAProxyHealthCheck {
+    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
+    [CmdletBinding(DefaultParameterSetName = "AsParam")]  
+    Param(
+        [parameter(Position = 0, Mandatory = $true, ValueFromPipelineByPropertyname = $true, ParameterSetName = "AsObject")]
+        [PSObject[]]$InputObject,
 
+        [parameter(Position = 0, Mandatory = $true, ValueFromPipelineByPropertyname = $true, ParameterSetName = "AsParam")][String]$Name,
+        [parameter(Position = 1, ValueFromPipelineByPropertyname = $true)][String]$Description,
+        [parameter(Position = 2, Mandatory = $true, ValueFromPipelineByPropertyname = $true)]
+        [ValidateSet('tcp', 'http', 'agent', 'ldap', 'mysql', 'pgsql', 'redis', 'smtp', 'esmtp', 'ssl')][String]$Type,
+        [parameter(Position = 3, Mandatory = $true, ValueFromPipelineByPropertyname = $true)][String]$Interval,
+        [parameter(Position = 4, Mandatory = $true, ValueFromPipelineByPropertyname = $true)][Int]$CheckPort
+
+        ## Additional options need to be implemented using Dynamic Parameters
+        ## Currently they can be set using $InputObject
+    )
+    BEGIN {
+        $results = @()
+    }
+    PROCESS {
+        # Convert parameters to InputObject
+        $obj = Select-InputObject -paramset $PSCmdlet.ParameterSetName -psbounds $PSBoundParameters -InputObject $InputObject
+        # Create new Object
+        $result = New-OPNsenseHAProxyObject -ObjectType "Healthcheck" -InputObject $obj
+        $results += $result
+    }   
+    END {
+        return $results
+    } 
+}
+Function New-OPNsenseHAProxyAcl {
+    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
+    [CmdletBinding(DefaultParameterSetName = "AsParam")]  
+    Param(
+        [parameter(Position = 0, Mandatory = $true, ValueFromPipelineByPropertyname = $true, ParameterSetName = "AsObject")]
+        [PSObject[]]$InputObject,
+
+        [parameter(Position = 0, Mandatory = $true, ValueFromPipelineByPropertyname = $true, ParameterSetName = "AsParam")][String]$Name,
+        [parameter(Position = 1, ValueFromPipelineByPropertyname = $true)][String]$Description,
+        [parameter(Position = 2, Mandatory = $true, ValueFromPipelineByPropertyname = $true)]
+        [ValidateSet('hdr_end', 'hdr_reg', 'path_beg', 'path', 'path_dir', 'url_param', 'ssl_c_verify', 'ssl_c_ca_commonname',
+            'src_is_local', 'src_bytes_in_rate', 'src_kbytes_in', 'src_conn_cnt', 'src_conn_rate', 'src_http_err_rate', 'src_http_req_rate', 'src_sess_rate',
+            'traffic_is_http', 'ssl_sni', 'ssl_sni_beg', 'ssl_sni_reg', 'custom_acl')][String]$Expression,
+        [parameter(Position = 3, Mandatory = $true, ValueFromPipelineByPropertyname = $true)]
+        [ValidateSet(0, 1, '0', '1', $False, $True)]$Negate
+
+        ## Additional options need to be implemented using Dynamic Parameters
+        ## Currently they can be set using $InputObject
+    )
+    BEGIN {
+        $results = @()
+    }
+    PROCESS {
+        # Convert parameters to InputObject
+        $obj = Select-InputObject -paramset $PSCmdlet.ParameterSetName -psbounds $PSBoundParameters -InputObject $InputObject
+        # Create new Object
+        $result = New-OPNsenseHAProxyObject -ObjectType "Acl" -InputObject $obj
+        $results += $result
+    }   
+    END {
+        return $results
+    } 
+}
 
 
 ##### SET Functions #####
@@ -457,7 +538,7 @@ function Set-OPNsenseHAProxyObject {
         }
     }
     END {
-        return $results | Add-ObjectDetail -TypeName ('OPNsense.HAProxy.{0}.Detail' -f $ObjectType)
+        return $results | Add-ObjectDetail -TypeName ('OPNsense.HAProxy. {0}.Detail' -f $ObjectType)
     }
 }
 Function Set-OPNsenseHAProxyServer {
