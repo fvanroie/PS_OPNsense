@@ -21,6 +21,51 @@
     SOFTWARE.
 #>
 
+Function Remove-OPNsenseObject {
+    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
+    [CmdletBinding(
+        SupportsShouldProcess = $true,
+        ConfirmImpact = "Medium"
+    )]
+    Param(
+        [parameter(Mandatory = $true, position = 0)][String]$Module,
+        [parameter(Mandatory = $true, position = 1)][String]$Controller,
+        [Parameter(Mandatory = $true, position = 2)]
+        #[ValidateSet('Server', 'Backend', 'Frontend', 'Healthcheck', 'Errorfile', 'Lua', 'Acl', 'Action', 'Healthcheck')]
+        [String]$ObjectType,
+
+        [Parameter(Mandatory = $true, position = 3)]
+        [AllowEmptyCollection()]
+        [String[]]$Uuid
+    )
+    BEGIN {
+        $results = @()
+        # Get object list to match uuid to object name
+        #Some Plugins implement search commands in singular, default is plural
+        switch ($Module) {
+            { @("AcmeClient", "Freeradius", "IDS", "Monit", "Postfix", "ProxyUserACL", "Quagga", "Routes", "Siproxd", "Tinc", "Tor", "Zerotier") -Contains $_ } {           
+                $metadata = $(Invoke-OPNsenseCommand $Module $Controller $("search{0}" -f $ObjectType.ToLower())).rows
+            }
+            default {           
+                $metadata = $(Invoke-OPNsenseCommand $Module $Controller $("search{0}s" -f $ObjectType.ToLower())).rows
+            }
+        }
+    }
+    PROCESS {
+        foreach ($id in $Uuid) {
+            $item = $metadata | Where-Object { $_.Uuid -eq $id }
+            if ($PSCmdlet.ShouldProcess(("{0} {{{1}}}" -f $item.name, $id), "Remove $ObjectType")) {
+                $result = Invoke-OPNsenseCommand $Module $Controller $("del{0}/{1}" -f $ObjectType.ToLower(), $id) -Json $ObjectType.ToLower() -AddProperty @{ 'Uuid' = "$id"; 'Name' = "{0}" -f $item.Name }
+                #Test-Result $result | Out-Null
+                $results += $result
+            }    
+        }
+    }    
+    END {
+        return $results
+    }
+}
+
 Function Connect-OPNsense() {
     # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
     [CmdletBinding(DefaultParameterSetName = "Modern")]

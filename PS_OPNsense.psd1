@@ -116,9 +116,15 @@
         # Optional Installable Plugin Packages
         'Plugins/ArpScanner.ps1',
         'Plugins/ClamAV.ps1',
-        'Plugins/Collectd.ps1'
+        'Plugins/Collectd.ps1',
+        'Plugins/Freeradius.ps1',
         'Plugins/HAProxy.ps1',
         'Plugins/Lldpd.ps1',
+        'Plugins/Postfix.ps1',
+        'Plugins/Quagga.ps1',
+        'Plugins/Siproxd.ps1',
+        'Plugins/Tinc.ps1',
+        'Plugins/Zerotier.ps1',
 
         # Legacy WebGUI Commands
         'Legacy/Backup.ps1',
@@ -149,8 +155,21 @@
         'Get-OPNsenseClamAV', 'Set-OPNsenseClamAV',
         # Collectd
         'Get-OPNsenseCollectd', 'Set-OPNsenseCollectd',
+        # Freeraius
+        'Remove-OPNsenseFreeradiusClient', 'Remove-OPNsenseFreeradiusUser',
         # Lldpd
         'Get-OPNsenseLldp', 'Set-OPNsenseLldp',
+        # Postfix
+        'Remove-OPNsensePostfixDomain', 'Remove-OPNsensePostfixRecipient', 'Remove-OPNsensePostfixSender',
+        # Quagga
+        'Remove-OPNsenseBgpNeighbor', 'Remove-OPNsenseBgpAspath', 'Remove-OPNsenseBgpPrefixlist', 'Remove-OPNsenseBgpRoutemap',
+        'Remove-OPNsenseOspf6Interface', 'Remove-OPNsenseOspfNetwork', 'Remove-OPNsenseOspfInterface', 'Remove-OPNsenseOspfPrefixlist',
+        # Siproxd
+        'Remove-OPNsenseSiproxdDomain', 'Remove-OPNsenseSiproxdUser',
+        # Tinc
+        'Remove-OPNsenseTincNetwork', 'Remove-OPNsenseTincHost',
+        # Zerotier
+        'Remove-OPNsenseZerotierNetwork',
 
         ########## CORE ##########
         # PS_OPNsense
@@ -164,21 +183,22 @@
         # HAProxy
         'New-OPNsenseHAProxyServer', 'New-OPNsenseHAProxyFrontend', 'New-OPNsenseHAProxyBackend', 'New-OPNsenseHAProxyErrorfile', 'New-OPNsenseHAProxyLuaScript', 'New-OPNsenseHAProxyAcl', 'New-OPNsenseHAProxyHealthCheck',
         'Get-OPNsenseHAProxyServer', 'Get-OPNsenseHAProxyFrontend', 'Get-OPNsenseHAProxyBackend', 'Get-OPNsenseHAProxyErrorfile', 'Get-OPNsenseHAProxyLuaScript', 'Get-OPNsenseHAProxyAcl', 'Get-OPNsenseHAProxyHealthCheck', 'Get-OPNsenseHAProxyAction', 
-        'Set-OPNsenseHAProxyServer',
+        'Set-OPNsenseHAProxyServer', 'Set-OPNsenseHAProxyLuaScript',
         'Remove-OPNsenseHAProxyServer', 'Remove-OPNsenseHAProxyFrontend', 'Remove-OPNsenseHAProxyBackend', 'Remove-OPNsenseHAProxyErrorfile', 'Remove-OPNsenseHAProxyLuaScript', 'Remove-OPNsenseHAProxyAcl', 'Remove-OPNsenseHAProxyHealthCheck', 'Remove-OPNsenseHAProxyAction', 
         # Packages
         'Get-OPNsensePackage', 'Lock-OPNsensePackage', 'Unlock-OPNsensePackage', 'Install-OPNsensePackage', 'Remove-OPNsensePackage',
         'Get-OPNsensePlugin',
         # Cron
-        'Get-OPNsenseCronJob', 'Enable-OPNsenseCronJob', 'Disable-OPNsenseCronJob',
+        'Get-OPNsenseCronJob', 'Enable-OPNsenseCronJob', 'Disable-OPNsenseCronJob', 'Remove-OPNsenseCronJob',
         'New-OPNsenseCronJob', 'Set-OPNsenseCronJob',
         #IDS
-        'Get-OPNsenseIdsUserRule', 'New-OPNsenseIdsUserRule', 'Get-OPNsenseIdsAlert',
+        'Get-OPNsenseIdsUserRule', 'New-OPNsenseIdsUserRule', 'Remove-OPNsenseIdsUserRule',
+        'Get-OPNsenseIdsAlert',
         # Proxy
         'New-OPNsenseProxyRemoteBlacklist', 'Get-OPNsenseProxyRemoteBlacklist', 'Remove-OPNsenseProxyRemoteBlacklist',
         'Sync-OPNsenseProxyRemoteBlacklist',
         # CaptivePortal
-        'New-OPNsenseCaptivePortalZone',
+        'New-OPNsenseCaptivePortalZone', 'Remove-OPNsenseCaptivePortalZone',
         'New-OPNsenseCaptivePortalTemplate', 'Get-OPNsenseCaptivePortalTemplate', 'Set-OPNsenseCaptivePortalTemplate', 'Remove-OPNsenseCaptivePortalTemplate', 'Save-OPNsenseCaptivePortalTemplate',
         'Get-OPNsenseCaptivePortal',
         # Diagnostics

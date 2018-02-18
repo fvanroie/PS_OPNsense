@@ -232,36 +232,6 @@ Function Save-OPNsenseCaptivePortalTemplate {
     }
 }
 
-Function Remove-OPNsenseCaptivePortalTemplate {
-    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
-    [CmdletBinding()]
-    Param (
-        [Parameter(Mandatory = $false)][String]$Name,
-        [Parameter(Mandatory = $false)][String]$Uuid,
-        [Parameter(Mandatory = $false)][String]$FileId
-    )
-    $results = {}
-    
-    $result = Invoke-OPNsenseCommand captiveportal service searchTemplates | Select-Object -ExpandProperty Rows
-
-    if ($Name) {
-        $result = $result | where-object { $_.Name -like $Name }
-    }
-    if ($Uuid) {
-        $result = $result | where-object { $_.Uuid -like $Uuid }
-    }
-    if ($FileId) {
-        $result = $result | where-object { $_.FileId -like $FileId }
-    }
-
-    foreach ($templ in $result) {
-        Write-Verbose "Deleting Template $($templ.uuid)"
-        $result = Invoke-OPNsenseCommand captiveportal service "delTemplate/$($templ.uuid)" -Form delTemplate -AddProperty @{ 'uuid' = $templ.uuid }
-        $results += $result
-    }
-
-    Return $results
-}
 
 Function Get-OPNsenseCaptivePortal {
     # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
@@ -302,3 +272,83 @@ Function Get-OPNsenseCaptivePortal {
         return $($result).rows
     }
 }
+
+
+##### REMOVE Functions #####
+Function Remove-OPNsenseCaptivePortalZone {
+    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
+    [CmdletBinding(
+        SupportsShouldProcess = $true,
+        ConfirmImpact = "Medium"
+    )]
+    Param(
+        [parameter(Mandatory = $true, Position = 0, ValueFromPipelineByPropertyname = $true, ParameterSetName = "AsParam")]
+        [AllowEmptyCollection()]
+        [String[]]$Uuid
+    )
+    BEGIN {
+        $results = @()
+    }
+    PROCESS {
+        foreach ($id in $uuid) { $results += $id }
+    }
+    END {
+        if ($false) { $PSCmdlet.ShouldProcess() }         # Hide PSScriptAlalyzer warning
+        return Remove-OPNsenseObject captiveportal settings Zone -Uuid $results
+    }
+}
+Function Remove-OPNsenseCaptivePortalTemplate {
+    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
+    [CmdletBinding(
+        SupportsShouldProcess = $true,
+        ConfirmImpact = "Medium"
+    )]
+    Param(
+        [parameter(Mandatory = $true, Position = 0, ValueFromPipelineByPropertyname = $true, ParameterSetName = "AsParam")]
+        [AllowEmptyCollection()]
+        [String[]]$Uuid
+    )
+    BEGIN {
+        $results = @()
+    }
+    PROCESS {
+        foreach ($id in $uuid) { $results += $id }
+    }
+    END {
+        if ($false) { $PSCmdlet.ShouldProcess() }         # Hide PSScriptAlalyzer warning
+        return Remove-OPNsenseObject captiveportal service Template -Uuid $results
+    }
+}
+
+<# Old, to be removed
+Function Remove-OPNsenseCaptivePortalTemplate {
+    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
+    [CmdletBinding()]
+    Param (
+        [Parameter(Mandatory = $false)][String]$Name,
+        [Parameter(Mandatory = $false)][String]$Uuid,
+        [Parameter(Mandatory = $false)][String]$FileId
+    )
+    $results = {}
+    
+    $result = Invoke-OPNsenseCommand captiveportal service searchTemplates | Select-Object -ExpandProperty Rows
+
+    if ($Name) {
+        $result = $result | where-object { $_.Name -like $Name }
+    }
+    if ($Uuid) {
+        $result = $result | where-object { $_.Uuid -like $Uuid }
+    }
+    if ($FileId) {
+        $result = $result | where-object { $_.FileId -like $FileId }
+    }
+
+    foreach ($templ in $result) {
+        Write-Verbose "Deleting Template $($templ.uuid)"
+        $result = Invoke-OPNsenseCommand captiveportal service "delTemplate/$($templ.uuid)" -Form delTemplate -AddProperty @{ 'uuid' = $templ.uuid }
+        $results += $result
+    }
+
+    Return $results
+}
+#>

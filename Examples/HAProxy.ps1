@@ -2,7 +2,7 @@
 #$key = '<myKey>'
 #$SecurePassword = '<mySecret>' | ConvertTo-SecureString -AsPlainText -Force
 #$url = 'https://opnsense.localdomain'
-$beVerbose = $true
+$beVerbose = $false
 
 ## Build Creddentials
 #$apiCred = New-Object System.Management.Automation.PSCredential -ArgumentList $Key, $SecurePassword
