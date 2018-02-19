@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Configuration>  
+  <ViewDefinitions>
+    <View>
+      <Name>OPNsense.HAProxy.Server.Detail</Name>
+      <ViewSelectedBy>
+        <TypeName>OPNsense.HAProxy.Server.Detail</TypeName>
+      </ViewSelectedBy>
+
+    <TableControl>
+        <TableHeaders>
+            <TableColumnHeader/>
+            <TableColumnHeader/>
+            <TableColumnHeader/>
+            <TableColumnHeader/>
+            <TableColumnHeader/>
+            <TableColumnHeader/>
+        </TableHeaders>
+        <TableRowEntries>
+            <TableRowEntry>
+                <TableColumnItems>
+                    <TableColumnItem>
+                        <PropertyName>Name</PropertyName>
+                    </TableColumnItem>
+                    <TableColumnItem>
+                        <PropertyName>Address</PropertyName>
+                    </TableColumnItem>
+                    <TableColumnItem>
+                        <PropertyName>Port</PropertyName>
+                    </TableColumnItem>
+                    <TableColumnItem>
+                        <PropertyName>Mode</PropertyName>
+                    </TableColumnItem>
+                    <TableColumnItem>
+                        <PropertyName>Weight</PropertyName>
+                    </TableColumnItem>
+                    <TableColumnItem>
+                        <PropertyName>Description</PropertyName>
+                    </TableColumnItem>
+                </TableColumnItems>
+            </TableRowEntry>
+        </TableRowEntries>
+    </TableControl>
+    </View>
+  </ViewDefinitions>
+</Configuration>

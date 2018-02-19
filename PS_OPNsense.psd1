@@ -35,7 +35,7 @@
     # RootModule = ''
 
     # Version number of this module.
-    ModuleVersion          = '0.1.2'
+    ModuleVersion          = '0.1.3'
 
     # Supported PSEditions
     CompatiblePSEditions   = @('Core', 'Desktop')
@@ -47,10 +47,10 @@
     Author                 = 'fvanroie'
 
     # Company or vendor of this module
-    CompanyName            = 'NetWize.be'
+    CompanyName            = 'netwiZe.be'
 
     # Copyright statement for this module
-    Copyright              = '(c) 2017 fvanroie. All rights reserved.'
+    Copyright              = '(c) 2018 fvanroie. All rights reserved.'
 
     # Description of the functionality provided by this module
     Description            = 'PowerShell Module for OPNsense REST api'
@@ -87,9 +87,12 @@
 
     # Format files (.ps1xml) to be loaded when importing this module
     FormatsToProcess       = @(
+        'Formats/ArpScanner.format.ps1xml',
         'Formats/Core.format.ps1xml',
         'Formats/Cron.format.ps1xml',
         'Formats/Firmware.format.ps1xml',
+        'Formats/FirmwareUpdate.format.ps1xml',
+        'Formats/HAProxy.format.ps1xml',
         'Formats/Packages.format.ps1xml',
         'Formats/Services.format.ps1xml',
         'Formats/ClamAV.format.ps1xml'
@@ -111,7 +114,17 @@
         'Core/Services.ps1',
 
         # Optional Installable Plugin Packages
+        'Plugins/ArpScanner.ps1',
         'Plugins/ClamAV.ps1',
+        'Plugins/Collectd.ps1',
+        'Plugins/Freeradius.ps1',
+        'Plugins/HAProxy.ps1',
+        'Plugins/Lldpd.ps1',
+        'Plugins/Postfix.ps1',
+        'Plugins/Quagga.ps1',
+        'Plugins/Siproxd.ps1',
+        'Plugins/Tinc.ps1',
+        'Plugins/Zerotier.ps1',
 
         # Legacy WebGUI Commands
         'Legacy/Backup.ps1',
@@ -125,38 +138,73 @@
 
     # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
     FunctionsToExport      = @(
-        # TEST
-        'Enable-OPNsense', 'Get-OPNsenseUpdateStatus'
+        ########## TEST ##########
+        'Enable-OPNsense', 'Get-OPNsenseUpdateStatus',
+        'New-OPNsenseHAProxyObject',
+
+        #'New-OPNsenseHAProxyObject', 'Get-OPNsenseHAProxyObject', 'Set-OPNsenseHAProxyObject', #'Remove-OPNsenseHAProxyObject', 
+
+        ########## LEGACY ##########
         # Backup
         'Backup-OPNsenseConfig', 'Restore-OPNsenseConfig', 'Reset-OPNsenseConfig',
+
+        ########## PLUGINS ##########
+        # ArpScanner
+        'Update-OPNsenseArp', #'Get-OPNsenseArpScanner', 'Start-OPNsenseArpScanner', 'Wait-OPNsenseArpScanner', 'Stop-OPNsenseArpScanner',
         # ClamAV
         'Get-OPNsenseClamAV', 'Set-OPNsenseClamAV',
+        # Collectd
+        'Get-OPNsenseCollectd', 'Set-OPNsenseCollectd',
+        # Freeraius
+        'Remove-OPNsenseFreeradiusClient', 'Remove-OPNsenseFreeradiusUser',
+        # Lldpd
+        'Get-OPNsenseLldp', 'Set-OPNsenseLldp',
+        # Postfix
+        'Remove-OPNsensePostfixDomain', 'Remove-OPNsensePostfixRecipient', 'Remove-OPNsensePostfixSender',
+        # Quagga
+        'Remove-OPNsenseBgpNeighbor', 'Remove-OPNsenseBgpAspath', 'Remove-OPNsenseBgpPrefixlist', 'Remove-OPNsenseBgpRoutemap',
+        'Remove-OPNsenseOspf6Interface', 'Remove-OPNsenseOspfNetwork', 'Remove-OPNsenseOspfInterface', 'Remove-OPNsenseOspfPrefixlist',
+        # Siproxd
+        'Remove-OPNsenseSiproxdDomain', 'Remove-OPNsenseSiproxdUser',
+        # Tinc
+        'Remove-OPNsenseTincNetwork', 'Remove-OPNsenseTincHost',
+        # Zerotier
+        'Remove-OPNsenseZerotierNetwork',
+
+        ########## CORE ##########
         # PS_OPNsense
         'Connect-OPNsense', 'Disconnect-OPNsense',
         # RestApi
         'Invoke-OPNsenseCommand',
         # Firmware
-        'Get-OPNsense', 'Stop-OPNsense', 'Restart-OPNsense', 'Update-OPNsense', 'Invoke-OPNsenseAudit',
+        'Get-OPNsense', 'Stop-OPNsense', 'Restart-OPNsense', 
         'Set-OPNsense',
+        'Update-OPNsense', 'Invoke-OPNsenseAudit', 'Get-OPNsenseUpdate'
+        # HAProxy
+        'New-OPNsenseHAProxyServer', 'New-OPNsenseHAProxyFrontend', 'New-OPNsenseHAProxyBackend', 'New-OPNsenseHAProxyErrorfile', 'New-OPNsenseHAProxyLuaScript', 'New-OPNsenseHAProxyAcl', 'New-OPNsenseHAProxyHealthCheck',
+        'Get-OPNsenseHAProxyServer', 'Get-OPNsenseHAProxyFrontend', 'Get-OPNsenseHAProxyBackend', 'Get-OPNsenseHAProxyErrorfile', 'Get-OPNsenseHAProxyLuaScript', 'Get-OPNsenseHAProxyAcl', 'Get-OPNsenseHAProxyHealthCheck', 'Get-OPNsenseHAProxyAction', 
+        'Set-OPNsenseHAProxyServer', 'Set-OPNsenseHAProxyLuaScript',
+        'Remove-OPNsenseHAProxyServer', 'Remove-OPNsenseHAProxyFrontend', 'Remove-OPNsenseHAProxyBackend', 'Remove-OPNsenseHAProxyErrorfile', 'Remove-OPNsenseHAProxyLuaScript', 'Remove-OPNsenseHAProxyAcl', 'Remove-OPNsenseHAProxyHealthCheck', 'Remove-OPNsenseHAProxyAction', 
         # Packages
         'Get-OPNsensePackage', 'Lock-OPNsensePackage', 'Unlock-OPNsensePackage', 'Install-OPNsensePackage', 'Remove-OPNsensePackage',
         'Get-OPNsensePlugin',
         # Cron
-        'Get-OPNsenseCronJob', 'Enable-OPNsenseCronJob', 'Disable-OPNsenseCronJob',
+        'Get-OPNsenseCronJob', 'Enable-OPNsenseCronJob', 'Disable-OPNsenseCronJob', 'Remove-OPNsenseCronJob',
         'New-OPNsenseCronJob', 'Set-OPNsenseCronJob',
         #IDS
-        'Get-OPNsenseIdsUserRule', 'New-OPNsenseIdsUserRule', 'Get-OPNsenseIdsAlert',
+        'Get-OPNsenseIdsUserRule', 'New-OPNsenseIdsUserRule', 'Remove-OPNsenseIdsUserRule',
+        'Get-OPNsenseIdsAlert',
         # Proxy
         'New-OPNsenseProxyRemoteBlacklist', 'Get-OPNsenseProxyRemoteBlacklist', 'Remove-OPNsenseProxyRemoteBlacklist',
         'Sync-OPNsenseProxyRemoteBlacklist',
         # CaptivePortal
-        'New-OPNsenseCaptivePortalZone',
+        'New-OPNsenseCaptivePortalZone', 'Remove-OPNsenseCaptivePortalZone',
         'New-OPNsenseCaptivePortalTemplate', 'Get-OPNsenseCaptivePortalTemplate', 'Set-OPNsenseCaptivePortalTemplate', 'Remove-OPNsenseCaptivePortalTemplate', 'Save-OPNsenseCaptivePortalTemplate',
         'Get-OPNsenseCaptivePortal',
         # Diagnostics
         'Get-OPNsenseSystemHealth', 'Get-OPNsenseResource', 'Get-OPNsenseInterface', 'Get-OPNsenseRoute', 'Get-OPNsenseARP', 'Clear-OPNsenseARP',
         # Services
-        'Get-OPNsenseService', 'Start-OPNsenseService', 'Update-OPNsenseService', 'Restart-OPNsenseService', 'Stop-OPNsenseService', 'Invoke-OPNsenseService'
+        'Get-OPNsenseService', 'Start-OPNsenseService', 'Update-OPNsenseService', 'Test-OPNsenseService', 'Restart-OPNsenseService', 'Stop-OPNsenseService', 'Invoke-OPNsenseService'
     )
 
     # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.

@@ -21,7 +21,7 @@
     SOFTWARE.
 #>
 
-# Function that takes care of ALL the different REST api calls
+# Private Function that takes care of ALL the different REST api calls
 Function Invoke-OPNsenseApiRestCommand {
     [CmdletBinding()]
     Param (
@@ -32,7 +32,7 @@ Function Invoke-OPNsenseApiRestCommand {
         $Json,
         $Form,
         [System.IO.FileInfo]$OutFile,
-        [switch]$SkipCertificateCheck = $false
+        [Switch]$SkipCertificateCheck = $false
     )
     # Check if running PowerShell Core CLR or Windows PowerShell
     $PSCore = IsPSCoreEdition
@@ -68,19 +68,23 @@ Function Invoke-OPNsenseApiRestCommand {
         # Convert HashTable to JSON object
         if ($Json.GetType().Name -eq "HashTable") {
             $Json = $Json | ConvertTo-Json -Depth 15   # Default Depth is 2!
-            Write-Verbose "JSON Arguments: $Json"
-            # Set correct Content-Type for JSON data
-            #$ParamSplat.Add('ContentType', 'application/json; charset=UTF-8')    THIS HAS A BUG !
-            $ParamSplat.Add('ContentType', 'application/json')
-            $ParamSplat.Add('Method', 'POST')
-            $ParamSplat.Add('Body', $json)
+        } elseif ($Json.GetType().Name -eq "PSCustomObject") {
+            $Json = $Json | ConvertTo-Json -Depth 15   # Default Depth is 2!
+        } elseif ($Json.GetType().Name -eq "String") {
+            # ALready a String
         } else {
             Throw 'JSON object should be a HashTable'
         }
+
+        # OK, we have a $JSON string now
+        Write-Verbose "JSON Arguments: $Json"
+        $ParamSplat.Add('Body', $json)
+        $ParamSplat.Add('ContentType', 'application/json')
+        $ParamSplat.Add('Method', 'POST')
     } else {
         # Post a web Form
         if ($Form) {
-            # Output Verbose object in JSON notation, if -Verbose is specified
+            # Output object in JSON notation, if -Verbose is specified
             $Json = $Form | ConvertTo-Json -Depth 15
             Write-Verbose "Form Arguments: $Json"
  
@@ -122,6 +126,7 @@ Function Invoke-OPNsenseApiRestCommand {
     Return $Result
 }
 
+# Public Function that abscracts the API calls
 Function Invoke-OPNsenseCommand {
     # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
     [CmdletBinding()]
@@ -139,14 +144,14 @@ Function Invoke-OPNsenseCommand {
 
         [parameter(Mandatory = $true, ParameterSetName = "Form")]
         $Form,
-        [System.IO.FileInfo]$OutFile,
+        [parameter(Mandatory = $false)][System.IO.FileInfo]$OutFile,
 
-        [parameter(Mandatory = $false)]$AddProperty
+        [parameter(Mandatory = $false)][HashTable]$AddProperty
     )
 
     if ($DebugPreference -eq "Inquire") { $DebugPreference = "Continue" }
 
-    $timer = [Diagnostics.Stopwatch]::StartNew()
+    #$timer = [Diagnostics.Stopwatch]::StartNew()
     $Credentials = $MyInvocation.MyCommand.Module.PrivateData['ApiCredentials']
     $OPNsenseApi = $MyInvocation.MyCommand.Module.PrivateData['OPNsenseApi']
     $SkipCertificateCheck = $MyInvocation.MyCommand.Module.PrivateData['OPNsenseSkipCert']
@@ -194,7 +199,7 @@ Function Invoke-OPNsenseCommand {
             try {
                 $result = ConvertFrom-Json $result -ErrorAction Stop
             } catch {
-                # If ConvertTo-Json still fails return the string
+                # If ConvertTo-Json still fails return the String already in $result by default
             }
         }
 
@@ -210,13 +215,14 @@ Function Invoke-OPNsenseCommand {
         }
     }
 
-    $CurrentTime = $Timer.Elapsed
-    write-Debug $([string]::Format("Time passed: {0:d2}h {1:d2}m {2:d2}.{3:d3}s",
-            $CurrentTime.hours, 
-            $CurrentTime.minutes, 
-            $CurrentTime.seconds,
-            $CurrentTime.milliseconds))
-    $Timer.stop()
+    #$CurrentTime = $Timer.Elapsed
+    #write-Debug $([string]::Format("Time passed: {0:d2}h {1:d2}m {2:d2}.{3:d3}s",
+    #        $CurrentTime.hours, 
+    #        $CurrentTime.minutes, 
+    #        $CurrentTime.seconds,
+    #        $CurrentTime.milliseconds))
+    #$Timer.stop()
+    
     # Return the object
     return $result
 }

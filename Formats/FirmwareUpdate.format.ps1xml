@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Configuration>
+
+  <Controls>
+    <Control>
+      <Name>FirmwareUpdate-GroupingFormat</Name>
+      <CustomControl>
+        <CustomEntries>
+          <CustomEntry>
+            <CustomItem>
+              <Frame>
+                <LeftIndent>4</LeftIndent>
+                <CustomItem>
+                  <Text>Reason: </Text>
+                  <ExpressionBinding>
+                    <ScriptBlock>$_.Reason</ScriptBlock>
+                  </ExpressionBinding>
+                  <NewLine/>
+                  <Text>      Size: </Text>
+                  <ExpressionBinding>
+                    <ScriptBlock>$_.Count</ScriptBlock>
+                  </ExpressionBinding>
+                </CustomItem>
+              </Frame>
+            </CustomItem>
+          </CustomEntry>
+        </CustomEntries>
+      </CustomControl>
+    </Control>
+  </Controls>
+
+  <ViewDefinitions>
+    <View>
+        <Name>OPNsense.Firmware.Update</Name>
+        <ViewSelectedBy>
+          <TypeName>OPNsense.Firmware.Update</TypeName>
+        </ViewSelectedBy>
+        <GroupBy>
+          <PropertyName>Reason</PropertyName>
+          <CustomControlName>FirmwareUpdate-GroupingFormat</CustomControlName>
+        </GroupBy>
+   <TableControl>
+        <TableHeaders>
+            <TableColumnHeader>
+              <Label>Name</Label>
+              <Width>30</Width>
+            </TableColumnHeader>
+            <TableColumnHeader>
+              <Label>Old</Label>
+              <Width>12</Width>
+            </TableColumnHeader>
+            <TableColumnHeader>
+              <Label>New</Label>
+              <Width>12</Width>
+            </TableColumnHeader>
+            <TableColumnHeader>
+              <Label>Reason</Label>
+            </TableColumnHeader>
+        </TableHeaders>
+        <TableRowEntries>
+            <TableRowEntry>
+                <Wrap/>
+                <TableColumnItems>
+                    <TableColumnItem>
+                        <PropertyName>Name</PropertyName>
+                    </TableColumnItem>
+                    <TableColumnItem>
+                        <PropertyName>Old</PropertyName>
+                    </TableColumnItem>
+                    <TableColumnItem>
+                        <PropertyName>New</PropertyName>
+                    </TableColumnItem>
+                    <TableColumnItem>
+                        <PropertyName>Reason</PropertyName>
+                    </TableColumnItem>
+                </TableColumnItems>
+            </TableRowEntry>
+        </TableRowEntries>
+    </TableControl>
+    </View>
+  </ViewDefinitions>
+</Configuration>

@@ -2524,7 +2524,7 @@ log    : ***GOT REQUEST TO AUDIT***
 				<maml:description>
 					<maml:para />
 				</maml:description>
-				<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+				<command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
 			</command:parameter>
 		</command:syntaxItem>
 	</command:syntax>
@@ -2546,9 +2546,9 @@ log    : ***GOT REQUEST TO AUDIT***
 			<maml:description>
 				<maml:para />
 			</maml:description>
-			<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+			<command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
 			<dev:type>
-				<maml:name>Int32</maml:name>
+				<maml:name>Object</maml:name>
 				<maml:uri/>
 			</dev:type>
 			<dev:defaultValue></dev:defaultValue>
@@ -3271,7 +3271,7 @@ log    : ***GOT REQUEST TO AUDIT***
 				<maml:description>
 					<maml:para />
 				</maml:description>
-				<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+				<command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
 			</command:parameter>
 		</command:syntaxItem>
 	</command:syntax>
@@ -3293,9 +3293,9 @@ log    : ***GOT REQUEST TO AUDIT***
 			<maml:description>
 				<maml:para />
 			</maml:description>
-			<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+			<command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
 			<dev:type>
-				<maml:name>Int32</maml:name>
+				<maml:name>Object</maml:name>
 				<maml:uri/>
 			</dev:type>
 			<dev:defaultValue></dev:defaultValue>
@@ -5601,7 +5601,7 @@ Use the optional -Version switch to retieve the version details of ClamAV and th
 	<command:syntax>
 		<command:syntaxItem>
 			<maml:name>Invoke-OPNsenseService</maml:name>
-			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="1">
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
 				<maml:name>FreshClam</maml:name>
 				<maml:description>
 					<maml:para>Triggers the FreshClam service to update the ClamAV definitions.</maml:para>
@@ -5611,7 +5611,7 @@ Use the optional -Version switch to retieve the version details of ClamAV and th
 		</command:syntaxItem>
 	</command:syntax>
 	<command:parameters>
-		<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="1">
+		<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
 			<maml:name>FreshClam</maml:name>
 			<maml:description>
 				<maml:para>Triggers the FreshClam service to update the ClamAV definitions.</maml:para>
@@ -5686,7 +5686,7 @@ Use the optional -Version switch to retieve the version details of ClamAV and th
 	<command:details>
 		<command:name>Reset-OPNsenseConfig</command:name>
 		<maml:description>
-			<maml:para>Resetthe OPNsense server to factory defaults</maml:para>
+			<maml:para>Resett he OPNsense server to factory defaults</maml:para>
 		</maml:description>
 		<maml:copyright>
 			<maml:para />
@@ -7348,8 +7348,9 @@ WARNING: The server will reboot automatically after restoring the configuration.
 		<dev:version />
 	</command:details>
 	<maml:description>
-		<maml:para>Enables one or more OPNsense objects based on their UUID within the REST api. You can pass multiple UUIDs, but they must all belong to the same object type. You cannot mix UUIDs of different object types.
-Use Get-OPNsense to retieve the UUID of an object.</maml:para>
+		<maml:para>Enables one or more OPNsense objects based on their UUID within the REST api. You can pass multiple UUIDs, but they must all belong to the same object type. You cannot mix UUIDs of different object types.</maml:para>
+		<maml:para>After specifying the object type via the corresponding SwitchParameter, you can cycle to the UUIDs by using the TAB key.
+Or you can use Get-OPNsense to retieve the UUID of an object and pipe the output to the Enable-OPNsense cmdlet.</maml:para>
 	</maml:description>
 	<command:syntax>
 		<command:syntaxItem>
@@ -7368,6 +7369,16 @@ Use Get-OPNsense to retieve the UUID of an object.</maml:para>
 				<maml:name>CronJob</maml:name>
 				<maml:description>
 					<maml:para>Enable a CronJob object</maml:para>
+				</maml:description>
+				<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+			</command:parameter>
+		</command:syntaxItem>
+		<command:syntaxItem>
+			<maml:name>Enable-OPNsense</maml:name>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>FtpProxy</maml:name>
+				<maml:description>
+					<maml:para />
 				</maml:description>
 				<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
 			</command:parameter>
@@ -7552,6 +7563,18 @@ Use Get-OPNsense to retieve the UUID of an object.</maml:para>
 			</dev:type>
 			<dev:defaultValue></dev:defaultValue>
 		</command:parameter>
+		<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+			<maml:name>FtpProxy</maml:name>
+			<maml:description>
+				<maml:para />
+			</maml:description>
+			<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+			<dev:type>
+				<maml:name>SwitchParameter</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
 	</command:parameters>
 	<command:inputTypes>
 		<command:inputType>
@@ -7591,8 +7614,8 @@ Use Get-OPNsense to retieve the UUID of an object.</maml:para>
 			<maml:introduction>
 				<maml:paragraph>PS C:\&gt;</maml:paragraph>
 			</maml:introduction>
-			<dev:code>$cronJobs = &apos;b5123c61-c036-4449-b400-9d214b914865&apos;, &apos;fc011654-9bf4-4109-abc5-985929e9a8d3&apos;
-Enable-OPNsense -CronJob $cronJobs</dev:code>
+			<dev:code>$Jobs = &apos;b5123c61-c036-4449-b400-9d214b914865&apos;,&apos;fc011654-9bf4-4109-abc5-985929e9a8d3&apos;
+Enable-OPNsense -CronJob $Jobs</dev:code>
 			<dev:remarks>
 				<maml:para />
 				<maml:para />
@@ -7613,6 +7636,3456 @@ Enable-OPNsense -CronJob $cronJobs</dev:code>
 			<maml:linkText></maml:linkText>
 			<maml:uri></maml:uri>
 		</maml:navigationLink>
+	</maml:relatedLinks>
+</command:command>
+<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<!--Generated by PS Cmdlet Help Editor-->
+	<command:details>
+		<command:name>Get-OPNsenseCollectd</command:name>
+		<maml:description>
+			<maml:para>Retrieve the settings of the Collectd plugin</maml:para>
+		</maml:description>
+		<maml:copyright>
+			<maml:para />
+		</maml:copyright>
+		<command:verb>Get</command:verb>
+		<command:noun>OPNsenseCollectd</command:noun>
+		<dev:version />
+	</command:details>
+	<maml:description>
+		<maml:para>The Get-OPNsenseCollectd cmdlet will retrieve the settings of the Collectd plugin.
+Specify the -Plugin switch to get the settings of the plugins.</maml:para>
+		<maml:para>Prerequisite:
+It is required that the &#39;os-collectd&#39; plugin is installed or this cmdlet will fail.
+Use the Install-OPNsensePackage cmdlet to install the &#39;os-collectd&#39; plugin first if needed.</maml:para>
+	</maml:description>
+	<command:syntax>
+		<command:syntaxItem>
+			<maml:name>Get-OPNsenseCollectd</maml:name>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>Plugin</maml:name>
+				<maml:description>
+					<maml:para>Retrieve the settings of the plugins</maml:para>
+				</maml:description>
+				<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+			</command:parameter>
+		</command:syntaxItem>
+	</command:syntax>
+	<command:parameters>
+		<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+			<maml:name>Plugin</maml:name>
+			<maml:description>
+				<maml:para>Retrieve the settings of the plugins</maml:para>
+			</maml:description>
+			<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+			<dev:type>
+				<maml:name>SwitchParameter</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+	</command:parameters>
+	<command:inputTypes>
+		<command:inputType>
+			<dev:type>
+				<maml:name></maml:name>
+				<maml:uri></maml:uri>
+				<maml:description/>
+			</dev:type>
+			<maml:description>
+<maml:para />
+			</maml:description>
+		</command:inputType>
+	</command:inputTypes>
+	<command:returnValues>
+		<command:returnValue>
+			<dev:type>
+				<maml:name></maml:name>
+				<maml:uri></maml:uri>
+				<maml:description/>
+			</dev:type>
+			<maml:description>
+<maml:para />
+			</maml:description>
+		</command:returnValue>
+	</command:returnValues>
+	<command:terminatingErrors></command:terminatingErrors>
+	<command:nonTerminatingErrors></command:nonTerminatingErrors>
+	<maml:alertSet>
+		<maml:title></maml:title>
+		<maml:alert>
+			<maml:para />
+		</maml:alert>
+	</maml:alertSet>
+	<command:examples>
+		<command:example>
+			<maml:title>--------------------------  Get basic settings  --------------------------</maml:title>
+			<maml:introduction>
+				<maml:paragraph>PS C:\&gt;</maml:paragraph>
+			</maml:introduction>
+			<dev:code>Get-OPNsenseCollectd</dev:code>
+			<dev:remarks>
+				<maml:para />
+				<maml:para />
+				<maml:para />
+				<maml:para></maml:para>
+			</dev:remarks>
+			<command:commandLines>
+				<command:commandLine>
+					<command:commandText>
+						<maml:para />
+					</command:commandText>
+				</command:commandLine>
+			</command:commandLines>
+		</command:example>
+		<command:example>
+			<maml:title>--------------------------  Get settings for collectd plugins  --------------------------</maml:title>
+			<maml:introduction>
+				<maml:paragraph>PS C:\&gt;</maml:paragraph>
+			</maml:introduction>
+			<dev:code>Get-OPNsenseCollectd -Plugin</dev:code>
+			<dev:remarks>
+				<maml:para />
+				<maml:para />
+				<maml:para />
+				<maml:para></maml:para>
+			</dev:remarks>
+			<command:commandLines>
+				<command:commandLine>
+					<command:commandText>
+						<maml:para />
+					</command:commandText>
+				</command:commandLine>
+			</command:commandLines>
+		</command:example>
+	</command:examples>
+	<maml:relatedLinks>
+	</maml:relatedLinks>
+</command:command>
+<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<!--Generated by PS Cmdlet Help Editor-->
+	<command:details>
+		<command:name>Get-OPNsenseUpdateStatus</command:name>
+		<maml:description>
+			<maml:para />
+		</maml:description>
+		<maml:copyright>
+			<maml:para />
+		</maml:copyright>
+		<command:verb>Get</command:verb>
+		<command:noun>OPNsenseUpdateStatus</command:noun>
+		<dev:version />
+	</command:details>
+	<maml:description>
+		<maml:para />
+	</maml:description>
+	<command:syntax>
+		<command:syntaxItem>
+			<maml:name>Get-OPNsenseUpdateStatus</maml:name>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="0">
+				<maml:name>Message</maml:name>
+				<maml:description>
+					<maml:para />
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="1">
+				<maml:name>Seconds</maml:name>
+				<maml:description>
+					<maml:para />
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">Double</command:parameterValue>
+			</command:parameter>
+		</command:syntaxItem>
+	</command:syntax>
+	<command:parameters>
+		<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="0">
+			<maml:name>Message</maml:name>
+			<maml:description>
+				<maml:para />
+			</maml:description>
+			<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			<dev:type>
+				<maml:name>String</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+		<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="1">
+			<maml:name>Seconds</maml:name>
+			<maml:description>
+				<maml:para />
+			</maml:description>
+			<command:parameterValue required="true" variableLength="false">Double</command:parameterValue>
+			<dev:type>
+				<maml:name>Double</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+	</command:parameters>
+	<command:inputTypes>
+		<command:inputType>
+			<dev:type>
+				<maml:name></maml:name>
+				<maml:uri></maml:uri>
+				<maml:description/>
+			</dev:type>
+			<maml:description>
+<maml:para />
+			</maml:description>
+		</command:inputType>
+	</command:inputTypes>
+	<command:returnValues>
+		<command:returnValue>
+			<dev:type>
+				<maml:name></maml:name>
+				<maml:uri></maml:uri>
+				<maml:description/>
+			</dev:type>
+			<maml:description>
+<maml:para />
+			</maml:description>
+		</command:returnValue>
+	</command:returnValues>
+	<command:terminatingErrors></command:terminatingErrors>
+	<command:nonTerminatingErrors></command:nonTerminatingErrors>
+	<maml:alertSet>
+		<maml:title></maml:title>
+		<maml:alert>
+			<maml:para />
+		</maml:alert>
+	</maml:alertSet>
+	<command:examples>
+	</command:examples>
+	<maml:relatedLinks>
+	</maml:relatedLinks>
+</command:command>
+<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<!--Generated by PS Cmdlet Help Editor-->
+	<command:details>
+		<command:name>Set-OPNsenseCollectd</command:name>
+		<maml:description>
+			<maml:para>Change the settings of the Collectd plugin</maml:para>
+		</maml:description>
+		<maml:copyright>
+			<maml:para />
+		</maml:copyright>
+		<command:verb>Set</command:verb>
+		<command:noun>OPNsenseCollectd</command:noun>
+		<dev:version />
+	</command:details>
+	<maml:description>
+		<maml:para>The Set-OPNsenseCollectd cmdlet will update the settings of the Collectd plugin.</maml:para>
+		<maml:para>Prerequisite:
+It is required that the &#39;os-collectd&#39; plugin is installed or this cmdlet will fail.
+Use the Install-OPNsensePackage cmdlet to install the &#39;os-collectd&#39; plugin first if needed.</maml:para>
+	</maml:description>
+	<command:syntax>
+		<command:syntaxItem>
+			<maml:name>Set-OPNsenseCollectd</maml:name>
+			<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="false" position="0">
+				<maml:name>Plugin</maml:name>
+				<maml:description>
+					<maml:para>The name of the collectd plugin setting to enable or disable</maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="true">String[]</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>Enabled</maml:name>
+				<maml:description>
+					<maml:para>Set this parameter to $True or $False to enable or disable the collectd plugin setting</maml:para>
+				</maml:description>
+				<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+			</command:parameter>
+		</command:syntaxItem>
+	</command:syntax>
+	<command:parameters>
+		<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="false" position="0">
+			<maml:name>Plugin</maml:name>
+			<maml:description>
+				<maml:para>The name of the collectd plugin setting to enable or disable</maml:para>
+			</maml:description>
+			<command:parameterValue required="true" variableLength="true">String[]</command:parameterValue>
+			<dev:type>
+				<maml:name>String[]</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+		<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+			<maml:name>Enabled</maml:name>
+			<maml:description>
+				<maml:para>Set this parameter to $True or $False to enable or disable the collectd plugin setting</maml:para>
+			</maml:description>
+			<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+			<dev:type>
+				<maml:name>SwitchParameter</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+	</command:parameters>
+	<command:inputTypes>
+		<command:inputType>
+			<dev:type>
+				<maml:name></maml:name>
+				<maml:uri></maml:uri>
+				<maml:description/>
+			</dev:type>
+			<maml:description>
+<maml:para />
+			</maml:description>
+		</command:inputType>
+	</command:inputTypes>
+	<command:returnValues>
+		<command:returnValue>
+			<dev:type>
+				<maml:name></maml:name>
+				<maml:uri></maml:uri>
+				<maml:description/>
+			</dev:type>
+			<maml:description>
+<maml:para />
+			</maml:description>
+		</command:returnValue>
+	</command:returnValues>
+	<command:terminatingErrors></command:terminatingErrors>
+	<command:nonTerminatingErrors></command:nonTerminatingErrors>
+	<maml:alertSet>
+		<maml:title></maml:title>
+		<maml:alert>
+			<maml:para />
+		</maml:alert>
+	</maml:alertSet>
+	<command:examples>
+	</command:examples>
+	<maml:relatedLinks>
+	</maml:relatedLinks>
+</command:command>
+<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<!--Generated by PS Cmdlet Help Editor-->
+	<command:details>
+		<command:name>Update-OPNsenseArp</command:name>
+		<maml:description>
+			<maml:para>Run ARP scanner on an interface</maml:para>
+		</maml:description>
+		<maml:copyright>
+			<maml:para />
+		</maml:copyright>
+		<command:verb>Update</command:verb>
+		<command:noun>OPNsenseArp</command:noun>
+		<dev:version />
+	</command:details>
+	<maml:description>
+		<maml:para>Scans the network of an interface for devices and add them to the ARP table.</maml:para>
+		<maml:para>Prerequisite:
+It is required that the &#39;os-arp-scan&#39; plugin is installed or this cmdlet will fail.
+Use the Install-OPNsensePackage cmdlet to install the &#39;os-arp-scan&#39; plugin first if needed.</maml:para>
+	</maml:description>
+	<command:syntax>
+		<command:syntaxItem>
+			<maml:name>Update-OPNsenseArp</maml:name>
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="0">
+				<maml:name>Interface</maml:name>
+				<maml:description>
+					<maml:para>The interface the ARP scan will use</maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="1">
+				<maml:name>Network</maml:name>
+				<maml:description>
+					<maml:para>The network the ARP scan will use, defaults to localnet.</maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			</command:parameter>
+		</command:syntaxItem>
+	</command:syntax>
+	<command:parameters>
+		<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="0">
+			<maml:name>Interface</maml:name>
+			<maml:description>
+				<maml:para>The interface the ARP scan will use</maml:para>
+			</maml:description>
+			<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			<dev:type>
+				<maml:name>String</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+		<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="1">
+			<maml:name>Network</maml:name>
+			<maml:description>
+				<maml:para>The network the ARP scan will use, defaults to localnet.</maml:para>
+			</maml:description>
+			<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			<dev:type>
+				<maml:name>String</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+	</command:parameters>
+	<command:inputTypes>
+		<command:inputType>
+			<dev:type>
+				<maml:name></maml:name>
+				<maml:uri></maml:uri>
+				<maml:description/>
+			</dev:type>
+			<maml:description>
+<maml:para />
+			</maml:description>
+		</command:inputType>
+	</command:inputTypes>
+	<command:returnValues>
+		<command:returnValue>
+			<dev:type>
+				<maml:name></maml:name>
+				<maml:uri></maml:uri>
+				<maml:description/>
+			</dev:type>
+			<maml:description>
+<maml:para />
+			</maml:description>
+		</command:returnValue>
+	</command:returnValues>
+	<command:terminatingErrors></command:terminatingErrors>
+	<command:nonTerminatingErrors></command:nonTerminatingErrors>
+	<maml:alertSet>
+		<maml:title></maml:title>
+		<maml:alert>
+			<maml:para />
+		</maml:alert>
+	</maml:alertSet>
+	<command:examples>
+		<command:example>
+			<maml:title>--------------------------  Basic Example  --------------------------</maml:title>
+			<maml:introduction>
+				<maml:paragraph>PS C:\&gt;</maml:paragraph>
+			</maml:introduction>
+			<dev:code>Update-OPNsenseArp -Interface &apos;em1&apos;</dev:code>
+			<dev:remarks>
+				<maml:para>This will scan the default network on interface em1 for ARP device entries.</maml:para>
+				<maml:para />
+				<maml:para />
+				<maml:para></maml:para>
+			</dev:remarks>
+			<command:commandLines>
+				<command:commandLine>
+					<command:commandText>
+						<maml:para />
+					</command:commandText>
+				</command:commandLine>
+			</command:commandLines>
+		</command:example>
+	</command:examples>
+	<maml:relatedLinks>
+	</maml:relatedLinks>
+</command:command>
+<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<!--Generated by PS Cmdlet Help Editor-->
+	<command:details>
+		<command:name>Get-OPNsenseHAProxyAcl</command:name>
+		<maml:description>
+			<maml:para />
+		</maml:description>
+		<maml:copyright>
+			<maml:para />
+		</maml:copyright>
+		<command:verb>Get</command:verb>
+		<command:noun>OPNsenseHAProxyAcl</command:noun>
+		<dev:version />
+	</command:details>
+	<maml:description>
+		<maml:para />
+	</maml:description>
+	<command:syntax>
+		<command:syntaxItem>
+			<maml:name>Get-OPNsenseHAProxyAcl</maml:name>
+			<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="false" position="0">
+				<maml:name>Name</maml:name>
+				<maml:description>
+					<maml:para />
+				</maml:description>
+				<command:parameterValue required="true" variableLength="true">String[]</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>Enabled</maml:name>
+				<maml:description>
+					<maml:para />
+				</maml:description>
+				<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+			</command:parameter>
+		</command:syntaxItem>
+	</command:syntax>
+	<command:parameters>
+		<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="false" position="0">
+			<maml:name>Name</maml:name>
+			<maml:description>
+				<maml:para />
+			</maml:description>
+			<command:parameterValue required="true" variableLength="true">String[]</command:parameterValue>
+			<dev:type>
+				<maml:name>String[]</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+		<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+			<maml:name>Enabled</maml:name>
+			<maml:description>
+				<maml:para />
+			</maml:description>
+			<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+			<dev:type>
+				<maml:name>SwitchParameter</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+	</command:parameters>
+	<command:inputTypes>
+		<command:inputType>
+			<dev:type>
+				<maml:name></maml:name>
+				<maml:uri></maml:uri>
+				<maml:description/>
+			</dev:type>
+			<maml:description>
+<maml:para />
+			</maml:description>
+		</command:inputType>
+	</command:inputTypes>
+	<command:returnValues>
+		<command:returnValue>
+			<dev:type>
+				<maml:name></maml:name>
+				<maml:uri></maml:uri>
+				<maml:description/>
+			</dev:type>
+			<maml:description>
+<maml:para />
+			</maml:description>
+		</command:returnValue>
+	</command:returnValues>
+	<command:terminatingErrors></command:terminatingErrors>
+	<command:nonTerminatingErrors></command:nonTerminatingErrors>
+	<maml:alertSet>
+		<maml:title></maml:title>
+		<maml:alert>
+			<maml:para />
+		</maml:alert>
+	</maml:alertSet>
+	<command:examples>
+	</command:examples>
+	<maml:relatedLinks>
+	</maml:relatedLinks>
+</command:command>
+<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<!--Generated by PS Cmdlet Help Editor-->
+	<command:details>
+		<command:name>Get-OPNsenseHAProxyAction</command:name>
+		<maml:description>
+			<maml:para />
+		</maml:description>
+		<maml:copyright>
+			<maml:para />
+		</maml:copyright>
+		<command:verb>Get</command:verb>
+		<command:noun>OPNsenseHAProxyAction</command:noun>
+		<dev:version />
+	</command:details>
+	<maml:description>
+		<maml:para />
+	</maml:description>
+	<command:syntax>
+		<command:syntaxItem>
+			<maml:name>Get-OPNsenseHAProxyAction</maml:name>
+			<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="false" position="0">
+				<maml:name>Name</maml:name>
+				<maml:description>
+					<maml:para />
+				</maml:description>
+				<command:parameterValue required="true" variableLength="true">String[]</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>Enabled</maml:name>
+				<maml:description>
+					<maml:para />
+				</maml:description>
+				<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+			</command:parameter>
+		</command:syntaxItem>
+	</command:syntax>
+	<command:parameters>
+		<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="false" position="0">
+			<maml:name>Name</maml:name>
+			<maml:description>
+				<maml:para />
+			</maml:description>
+			<command:parameterValue required="true" variableLength="true">String[]</command:parameterValue>
+			<dev:type>
+				<maml:name>String[]</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+		<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+			<maml:name>Enabled</maml:name>
+			<maml:description>
+				<maml:para />
+			</maml:description>
+			<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+			<dev:type>
+				<maml:name>SwitchParameter</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+	</command:parameters>
+	<command:inputTypes>
+		<command:inputType>
+			<dev:type>
+				<maml:name></maml:name>
+				<maml:uri></maml:uri>
+				<maml:description/>
+			</dev:type>
+			<maml:description>
+<maml:para />
+			</maml:description>
+		</command:inputType>
+	</command:inputTypes>
+	<command:returnValues>
+		<command:returnValue>
+			<dev:type>
+				<maml:name></maml:name>
+				<maml:uri></maml:uri>
+				<maml:description/>
+			</dev:type>
+			<maml:description>
+<maml:para />
+			</maml:description>
+		</command:returnValue>
+	</command:returnValues>
+	<command:terminatingErrors></command:terminatingErrors>
+	<command:nonTerminatingErrors></command:nonTerminatingErrors>
+	<maml:alertSet>
+		<maml:title></maml:title>
+		<maml:alert>
+			<maml:para />
+		</maml:alert>
+	</maml:alertSet>
+	<command:examples>
+	</command:examples>
+	<maml:relatedLinks>
+	</maml:relatedLinks>
+</command:command>
+<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<!--Generated by PS Cmdlet Help Editor-->
+	<command:details>
+		<command:name>Get-OPNsenseHAProxyBackend</command:name>
+		<maml:description>
+			<maml:para />
+		</maml:description>
+		<maml:copyright>
+			<maml:para />
+		</maml:copyright>
+		<command:verb>Get</command:verb>
+		<command:noun>OPNsenseHAProxyBackend</command:noun>
+		<dev:version />
+	</command:details>
+	<maml:description>
+		<maml:para />
+	</maml:description>
+	<command:syntax>
+		<command:syntaxItem>
+			<maml:name>Get-OPNsenseHAProxyBackend</maml:name>
+			<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="false" position="0">
+				<maml:name>Name</maml:name>
+				<maml:description>
+					<maml:para />
+				</maml:description>
+				<command:parameterValue required="true" variableLength="true">String[]</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>Enabled</maml:name>
+				<maml:description>
+					<maml:para />
+				</maml:description>
+				<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+			</command:parameter>
+		</command:syntaxItem>
+	</command:syntax>
+	<command:parameters>
+		<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="false" position="0">
+			<maml:name>Name</maml:name>
+			<maml:description>
+				<maml:para />
+			</maml:description>
+			<command:parameterValue required="true" variableLength="true">String[]</command:parameterValue>
+			<dev:type>
+				<maml:name>String[]</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+		<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+			<maml:name>Enabled</maml:name>
+			<maml:description>
+				<maml:para />
+			</maml:description>
+			<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+			<dev:type>
+				<maml:name>SwitchParameter</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+	</command:parameters>
+	<command:inputTypes>
+		<command:inputType>
+			<dev:type>
+				<maml:name></maml:name>
+				<maml:uri></maml:uri>
+				<maml:description/>
+			</dev:type>
+			<maml:description>
+<maml:para />
+			</maml:description>
+		</command:inputType>
+	</command:inputTypes>
+	<command:returnValues>
+		<command:returnValue>
+			<dev:type>
+				<maml:name></maml:name>
+				<maml:uri></maml:uri>
+				<maml:description/>
+			</dev:type>
+			<maml:description>
+<maml:para />
+			</maml:description>
+		</command:returnValue>
+	</command:returnValues>
+	<command:terminatingErrors></command:terminatingErrors>
+	<command:nonTerminatingErrors></command:nonTerminatingErrors>
+	<maml:alertSet>
+		<maml:title></maml:title>
+		<maml:alert>
+			<maml:para />
+		</maml:alert>
+	</maml:alertSet>
+	<command:examples>
+	</command:examples>
+	<maml:relatedLinks>
+	</maml:relatedLinks>
+</command:command>
+<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<!--Generated by PS Cmdlet Help Editor-->
+	<command:details>
+		<command:name>Get-OPNsenseHAProxyErrorfile</command:name>
+		<maml:description>
+			<maml:para />
+		</maml:description>
+		<maml:copyright>
+			<maml:para />
+		</maml:copyright>
+		<command:verb>Get</command:verb>
+		<command:noun>OPNsenseHAProxyErrorfile</command:noun>
+		<dev:version />
+	</command:details>
+	<maml:description>
+		<maml:para />
+	</maml:description>
+	<command:syntax>
+		<command:syntaxItem>
+			<maml:name>Get-OPNsenseHAProxyErrorfile</maml:name>
+			<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="false" position="0">
+				<maml:name>Name</maml:name>
+				<maml:description>
+					<maml:para />
+				</maml:description>
+				<command:parameterValue required="true" variableLength="true">String[]</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>Enabled</maml:name>
+				<maml:description>
+					<maml:para />
+				</maml:description>
+				<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+			</command:parameter>
+		</command:syntaxItem>
+	</command:syntax>
+	<command:parameters>
+		<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="false" position="0">
+			<maml:name>Name</maml:name>
+			<maml:description>
+				<maml:para />
+			</maml:description>
+			<command:parameterValue required="true" variableLength="true">String[]</command:parameterValue>
+			<dev:type>
+				<maml:name>String[]</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+		<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+			<maml:name>Enabled</maml:name>
+			<maml:description>
+				<maml:para />
+			</maml:description>
+			<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+			<dev:type>
+				<maml:name>SwitchParameter</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+	</command:parameters>
+	<command:inputTypes>
+		<command:inputType>
+			<dev:type>
+				<maml:name></maml:name>
+				<maml:uri></maml:uri>
+				<maml:description/>
+			</dev:type>
+			<maml:description>
+<maml:para />
+			</maml:description>
+		</command:inputType>
+	</command:inputTypes>
+	<command:returnValues>
+		<command:returnValue>
+			<dev:type>
+				<maml:name></maml:name>
+				<maml:uri></maml:uri>
+				<maml:description/>
+			</dev:type>
+			<maml:description>
+<maml:para />
+			</maml:description>
+		</command:returnValue>
+	</command:returnValues>
+	<command:terminatingErrors></command:terminatingErrors>
+	<command:nonTerminatingErrors></command:nonTerminatingErrors>
+	<maml:alertSet>
+		<maml:title></maml:title>
+		<maml:alert>
+			<maml:para />
+		</maml:alert>
+	</maml:alertSet>
+	<command:examples>
+	</command:examples>
+	<maml:relatedLinks>
+	</maml:relatedLinks>
+</command:command>
+<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<!--Generated by PS Cmdlet Help Editor-->
+	<command:details>
+		<command:name>Get-OPNsenseHAProxyFrontend</command:name>
+		<maml:description>
+			<maml:para />
+		</maml:description>
+		<maml:copyright>
+			<maml:para />
+		</maml:copyright>
+		<command:verb>Get</command:verb>
+		<command:noun>OPNsenseHAProxyFrontend</command:noun>
+		<dev:version />
+	</command:details>
+	<maml:description>
+		<maml:para />
+	</maml:description>
+	<command:syntax>
+		<command:syntaxItem>
+			<maml:name>Get-OPNsenseHAProxyFrontend</maml:name>
+			<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="false" position="0">
+				<maml:name>Name</maml:name>
+				<maml:description>
+					<maml:para />
+				</maml:description>
+				<command:parameterValue required="true" variableLength="true">String[]</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>Enabled</maml:name>
+				<maml:description>
+					<maml:para />
+				</maml:description>
+				<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+			</command:parameter>
+		</command:syntaxItem>
+	</command:syntax>
+	<command:parameters>
+		<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="false" position="0">
+			<maml:name>Name</maml:name>
+			<maml:description>
+				<maml:para />
+			</maml:description>
+			<command:parameterValue required="true" variableLength="true">String[]</command:parameterValue>
+			<dev:type>
+				<maml:name>String[]</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+		<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+			<maml:name>Enabled</maml:name>
+			<maml:description>
+				<maml:para />
+			</maml:description>
+			<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+			<dev:type>
+				<maml:name>SwitchParameter</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+	</command:parameters>
+	<command:inputTypes>
+		<command:inputType>
+			<dev:type>
+				<maml:name></maml:name>
+				<maml:uri></maml:uri>
+				<maml:description/>
+			</dev:type>
+			<maml:description>
+<maml:para />
+			</maml:description>
+		</command:inputType>
+	</command:inputTypes>
+	<command:returnValues>
+		<command:returnValue>
+			<dev:type>
+				<maml:name></maml:name>
+				<maml:uri></maml:uri>
+				<maml:description/>
+			</dev:type>
+			<maml:description>
+<maml:para />
+			</maml:description>
+		</command:returnValue>
+	</command:returnValues>
+	<command:terminatingErrors></command:terminatingErrors>
+	<command:nonTerminatingErrors></command:nonTerminatingErrors>
+	<maml:alertSet>
+		<maml:title></maml:title>
+		<maml:alert>
+			<maml:para />
+		</maml:alert>
+	</maml:alertSet>
+	<command:examples>
+	</command:examples>
+	<maml:relatedLinks>
+	</maml:relatedLinks>
+</command:command>
+<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<!--Generated by PS Cmdlet Help Editor-->
+	<command:details>
+		<command:name>Get-OPNsenseHAProxyHealthCheck</command:name>
+		<maml:description>
+			<maml:para />
+		</maml:description>
+		<maml:copyright>
+			<maml:para />
+		</maml:copyright>
+		<command:verb>Get</command:verb>
+		<command:noun>OPNsenseHAProxyHealthCheck</command:noun>
+		<dev:version />
+	</command:details>
+	<maml:description>
+		<maml:para />
+	</maml:description>
+	<command:syntax>
+		<command:syntaxItem>
+			<maml:name>Get-OPNsenseHAProxyHealthCheck</maml:name>
+			<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="false" position="0">
+				<maml:name>Name</maml:name>
+				<maml:description>
+					<maml:para />
+				</maml:description>
+				<command:parameterValue required="true" variableLength="true">String[]</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>Enabled</maml:name>
+				<maml:description>
+					<maml:para />
+				</maml:description>
+				<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+			</command:parameter>
+		</command:syntaxItem>
+	</command:syntax>
+	<command:parameters>
+		<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="false" position="0">
+			<maml:name>Name</maml:name>
+			<maml:description>
+				<maml:para />
+			</maml:description>
+			<command:parameterValue required="true" variableLength="true">String[]</command:parameterValue>
+			<dev:type>
+				<maml:name>String[]</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+		<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+			<maml:name>Enabled</maml:name>
+			<maml:description>
+				<maml:para />
+			</maml:description>
+			<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+			<dev:type>
+				<maml:name>SwitchParameter</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+	</command:parameters>
+	<command:inputTypes>
+		<command:inputType>
+			<dev:type>
+				<maml:name></maml:name>
+				<maml:uri></maml:uri>
+				<maml:description/>
+			</dev:type>
+			<maml:description>
+<maml:para />
+			</maml:description>
+		</command:inputType>
+	</command:inputTypes>
+	<command:returnValues>
+		<command:returnValue>
+			<dev:type>
+				<maml:name></maml:name>
+				<maml:uri></maml:uri>
+				<maml:description/>
+			</dev:type>
+			<maml:description>
+<maml:para />
+			</maml:description>
+		</command:returnValue>
+	</command:returnValues>
+	<command:terminatingErrors></command:terminatingErrors>
+	<command:nonTerminatingErrors></command:nonTerminatingErrors>
+	<maml:alertSet>
+		<maml:title></maml:title>
+		<maml:alert>
+			<maml:para />
+		</maml:alert>
+	</maml:alertSet>
+	<command:examples>
+	</command:examples>
+	<maml:relatedLinks>
+	</maml:relatedLinks>
+</command:command>
+<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<!--Generated by PS Cmdlet Help Editor-->
+	<command:details>
+		<command:name>Get-OPNsenseHAProxyLuaScript</command:name>
+		<maml:description>
+			<maml:para />
+		</maml:description>
+		<maml:copyright>
+			<maml:para />
+		</maml:copyright>
+		<command:verb>Get</command:verb>
+		<command:noun>OPNsenseHAProxyLuaScript</command:noun>
+		<dev:version />
+	</command:details>
+	<maml:description>
+		<maml:para />
+	</maml:description>
+	<command:syntax>
+		<command:syntaxItem>
+			<maml:name>Get-OPNsenseHAProxyLuaScript</maml:name>
+			<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="false" position="0">
+				<maml:name>Name</maml:name>
+				<maml:description>
+					<maml:para />
+				</maml:description>
+				<command:parameterValue required="true" variableLength="true">String[]</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>Enabled</maml:name>
+				<maml:description>
+					<maml:para />
+				</maml:description>
+				<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+			</command:parameter>
+		</command:syntaxItem>
+	</command:syntax>
+	<command:parameters>
+		<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="false" position="0">
+			<maml:name>Name</maml:name>
+			<maml:description>
+				<maml:para />
+			</maml:description>
+			<command:parameterValue required="true" variableLength="true">String[]</command:parameterValue>
+			<dev:type>
+				<maml:name>String[]</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+		<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+			<maml:name>Enabled</maml:name>
+			<maml:description>
+				<maml:para />
+			</maml:description>
+			<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+			<dev:type>
+				<maml:name>SwitchParameter</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+	</command:parameters>
+	<command:inputTypes>
+		<command:inputType>
+			<dev:type>
+				<maml:name></maml:name>
+				<maml:uri></maml:uri>
+				<maml:description/>
+			</dev:type>
+			<maml:description>
+<maml:para />
+			</maml:description>
+		</command:inputType>
+	</command:inputTypes>
+	<command:returnValues>
+		<command:returnValue>
+			<dev:type>
+				<maml:name></maml:name>
+				<maml:uri></maml:uri>
+				<maml:description/>
+			</dev:type>
+			<maml:description>
+<maml:para />
+			</maml:description>
+		</command:returnValue>
+	</command:returnValues>
+	<command:terminatingErrors></command:terminatingErrors>
+	<command:nonTerminatingErrors></command:nonTerminatingErrors>
+	<maml:alertSet>
+		<maml:title></maml:title>
+		<maml:alert>
+			<maml:para />
+		</maml:alert>
+	</maml:alertSet>
+	<command:examples>
+	</command:examples>
+	<maml:relatedLinks>
+	</maml:relatedLinks>
+</command:command>
+<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<!--Generated by PS Cmdlet Help Editor-->
+	<command:details>
+		<command:name>Get-OPNsenseHAProxyServer</command:name>
+		<maml:description>
+			<maml:para />
+		</maml:description>
+		<maml:copyright>
+			<maml:para />
+		</maml:copyright>
+		<command:verb>Get</command:verb>
+		<command:noun>OPNsenseHAProxyServer</command:noun>
+		<dev:version />
+	</command:details>
+	<maml:description>
+		<maml:para />
+	</maml:description>
+	<command:syntax>
+		<command:syntaxItem>
+			<maml:name>Get-OPNsenseHAProxyServer</maml:name>
+			<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="false" position="0">
+				<maml:name>Name</maml:name>
+				<maml:description>
+					<maml:para />
+				</maml:description>
+				<command:parameterValue required="true" variableLength="true">String[]</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>Enabled</maml:name>
+				<maml:description>
+					<maml:para />
+				</maml:description>
+				<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+			</command:parameter>
+		</command:syntaxItem>
+	</command:syntax>
+	<command:parameters>
+		<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="false" position="0">
+			<maml:name>Name</maml:name>
+			<maml:description>
+				<maml:para />
+			</maml:description>
+			<command:parameterValue required="true" variableLength="true">String[]</command:parameterValue>
+			<dev:type>
+				<maml:name>String[]</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+		<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+			<maml:name>Enabled</maml:name>
+			<maml:description>
+				<maml:para />
+			</maml:description>
+			<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+			<dev:type>
+				<maml:name>SwitchParameter</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+	</command:parameters>
+	<command:inputTypes>
+		<command:inputType>
+			<dev:type>
+				<maml:name></maml:name>
+				<maml:uri></maml:uri>
+				<maml:description/>
+			</dev:type>
+			<maml:description>
+<maml:para />
+			</maml:description>
+		</command:inputType>
+	</command:inputTypes>
+	<command:returnValues>
+		<command:returnValue>
+			<dev:type>
+				<maml:name></maml:name>
+				<maml:uri></maml:uri>
+				<maml:description/>
+			</dev:type>
+			<maml:description>
+<maml:para />
+			</maml:description>
+		</command:returnValue>
+	</command:returnValues>
+	<command:terminatingErrors></command:terminatingErrors>
+	<command:nonTerminatingErrors></command:nonTerminatingErrors>
+	<maml:alertSet>
+		<maml:title></maml:title>
+		<maml:alert>
+			<maml:para />
+		</maml:alert>
+	</maml:alertSet>
+	<command:examples>
+	</command:examples>
+	<maml:relatedLinks>
+	</maml:relatedLinks>
+</command:command>
+<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<!--Generated by PS Cmdlet Help Editor-->
+	<command:details>
+		<command:name>Get-OPNsenseLldp</command:name>
+		<maml:description>
+			<maml:para />
+		</maml:description>
+		<maml:copyright>
+			<maml:para />
+		</maml:copyright>
+		<command:verb>Get</command:verb>
+		<command:noun>OPNsenseLldp</command:noun>
+		<dev:version />
+	</command:details>
+	<maml:description>
+		<maml:para />
+	</maml:description>
+	<command:syntax>
+		<command:syntaxItem>
+			<maml:name>Get-OPNsenseLldp</maml:name>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>Neighbor</maml:name>
+				<maml:description>
+					<maml:para />
+				</maml:description>
+				<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+			</command:parameter>
+		</command:syntaxItem>
+	</command:syntax>
+	<command:parameters>
+		<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+			<maml:name>Neighbor</maml:name>
+			<maml:description>
+				<maml:para />
+			</maml:description>
+			<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+			<dev:type>
+				<maml:name>SwitchParameter</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+	</command:parameters>
+	<command:inputTypes>
+		<command:inputType>
+			<dev:type>
+				<maml:name></maml:name>
+				<maml:uri></maml:uri>
+				<maml:description/>
+			</dev:type>
+			<maml:description>
+<maml:para />
+			</maml:description>
+		</command:inputType>
+	</command:inputTypes>
+	<command:returnValues>
+		<command:returnValue>
+			<dev:type>
+				<maml:name></maml:name>
+				<maml:uri></maml:uri>
+				<maml:description/>
+			</dev:type>
+			<maml:description>
+<maml:para />
+			</maml:description>
+		</command:returnValue>
+	</command:returnValues>
+	<command:terminatingErrors></command:terminatingErrors>
+	<command:nonTerminatingErrors></command:nonTerminatingErrors>
+	<maml:alertSet>
+		<maml:title></maml:title>
+		<maml:alert>
+			<maml:para />
+		</maml:alert>
+	</maml:alertSet>
+	<command:examples>
+	</command:examples>
+	<maml:relatedLinks>
+	</maml:relatedLinks>
+</command:command>
+<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<!--Generated by PS Cmdlet Help Editor-->
+	<command:details>
+		<command:name>Get-OPNsenseUpdate</command:name>
+		<maml:description>
+			<maml:para />
+		</maml:description>
+		<maml:copyright>
+			<maml:para />
+		</maml:copyright>
+		<command:verb>Get</command:verb>
+		<command:noun>OPNsenseUpdate</command:noun>
+		<dev:version />
+	</command:details>
+	<maml:description>
+		<maml:para />
+	</maml:description>
+	<command:syntax>
+		<command:syntaxItem>
+			<maml:name>Get-OPNsenseUpdate</maml:name>
+			<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="true (ByValue, ByPropertyName)" position="0">
+				<maml:name>Name</maml:name>
+				<maml:description>
+					<maml:para />
+				</maml:description>
+				<command:parameterValue required="true" variableLength="true">String[]</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>Reason</maml:name>
+				<maml:description>
+					<maml:para />
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			</command:parameter>
+		</command:syntaxItem>
+	</command:syntax>
+	<command:parameters>
+		<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="true (ByValue, ByPropertyName)" position="0">
+			<maml:name>Name</maml:name>
+			<maml:description>
+				<maml:para />
+			</maml:description>
+			<command:parameterValue required="true" variableLength="true">String[]</command:parameterValue>
+			<dev:type>
+				<maml:name>String[]</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+		<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+			<maml:name>Reason</maml:name>
+			<maml:description>
+				<maml:para />
+			</maml:description>
+			<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			<dev:type>
+				<maml:name>String</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+	</command:parameters>
+	<command:inputTypes>
+		<command:inputType>
+			<dev:type>
+				<maml:name></maml:name>
+				<maml:uri></maml:uri>
+				<maml:description/>
+			</dev:type>
+			<maml:description>
+<maml:para />
+			</maml:description>
+		</command:inputType>
+	</command:inputTypes>
+	<command:returnValues>
+		<command:returnValue>
+			<dev:type>
+				<maml:name></maml:name>
+				<maml:uri></maml:uri>
+				<maml:description/>
+			</dev:type>
+			<maml:description>
+<maml:para />
+			</maml:description>
+		</command:returnValue>
+	</command:returnValues>
+	<command:terminatingErrors></command:terminatingErrors>
+	<command:nonTerminatingErrors></command:nonTerminatingErrors>
+	<maml:alertSet>
+		<maml:title></maml:title>
+		<maml:alert>
+			<maml:para />
+		</maml:alert>
+	</maml:alertSet>
+	<command:examples>
+	</command:examples>
+	<maml:relatedLinks>
+	</maml:relatedLinks>
+</command:command>
+<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<!--Generated by PS Cmdlet Help Editor-->
+	<command:details>
+		<command:name>New-OPNsenseHAProxyBackend</command:name>
+		<maml:description>
+			<maml:para />
+		</maml:description>
+		<maml:copyright>
+			<maml:para />
+		</maml:copyright>
+		<command:verb>New</command:verb>
+		<command:noun>OPNsenseHAProxyBackend</command:noun>
+		<dev:version />
+	</command:details>
+	<maml:description>
+		<maml:para />
+	</maml:description>
+	<command:syntax>
+		<command:syntaxItem>
+			<maml:name>New-OPNsenseHAProxyBackend</maml:name>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="0">
+				<maml:name>Parameters</maml:name>
+				<maml:description>
+					<maml:para />
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">PSObject</command:parameterValue>
+			</command:parameter>
+		</command:syntaxItem>
+	</command:syntax>
+	<command:parameters>
+		<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="0">
+			<maml:name>Parameters</maml:name>
+			<maml:description>
+				<maml:para />
+			</maml:description>
+			<command:parameterValue required="true" variableLength="false">PSObject</command:parameterValue>
+			<dev:type>
+				<maml:name>PSObject</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+	</command:parameters>
+	<command:inputTypes>
+		<command:inputType>
+			<dev:type>
+				<maml:name></maml:name>
+				<maml:uri></maml:uri>
+				<maml:description/>
+			</dev:type>
+			<maml:description>
+<maml:para />
+			</maml:description>
+		</command:inputType>
+	</command:inputTypes>
+	<command:returnValues>
+		<command:returnValue>
+			<dev:type>
+				<maml:name></maml:name>
+				<maml:uri></maml:uri>
+				<maml:description/>
+			</dev:type>
+			<maml:description>
+<maml:para />
+			</maml:description>
+		</command:returnValue>
+	</command:returnValues>
+	<command:terminatingErrors></command:terminatingErrors>
+	<command:nonTerminatingErrors></command:nonTerminatingErrors>
+	<maml:alertSet>
+		<maml:title></maml:title>
+		<maml:alert>
+			<maml:para />
+		</maml:alert>
+	</maml:alertSet>
+	<command:examples>
+	</command:examples>
+	<maml:relatedLinks>
+	</maml:relatedLinks>
+</command:command>
+<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<!--Generated by PS Cmdlet Help Editor-->
+	<command:details>
+		<command:name>New-OPNsenseHAProxyErrorfile</command:name>
+		<maml:description>
+			<maml:para />
+		</maml:description>
+		<maml:copyright>
+			<maml:para />
+		</maml:copyright>
+		<command:verb>New</command:verb>
+		<command:noun>OPNsenseHAProxyErrorfile</command:noun>
+		<dev:version />
+	</command:details>
+	<maml:description>
+		<maml:para />
+	</maml:description>
+	<command:syntax>
+		<command:syntaxItem>
+			<maml:name>New-OPNsenseHAProxyErrorfile</maml:name>
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="0">
+				<maml:name>InputObject</maml:name>
+				<maml:description>
+					<maml:para />
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">PSObject</command:parameterValue>
+			</command:parameter>
+		</command:syntaxItem>
+		<command:syntaxItem>
+			<maml:name>New-OPNsenseHAProxyErrorfile</maml:name>
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="0">
+				<maml:name>Name</maml:name>
+				<maml:description>
+					<maml:para />
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>Description</maml:name>
+				<maml:description>
+					<maml:para />
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="1">
+				<maml:name>ErrorCode</maml:name>
+				<maml:description>
+					<maml:para />
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="2">
+				<maml:name>Content</maml:name>
+				<maml:description>
+					<maml:para />
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			</command:parameter>
+		</command:syntaxItem>
+	</command:syntax>
+	<command:parameters>
+		<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="0">
+			<maml:name>InputObject</maml:name>
+			<maml:description>
+				<maml:para />
+			</maml:description>
+			<command:parameterValue required="true" variableLength="false">PSObject</command:parameterValue>
+			<dev:type>
+				<maml:name>PSObject</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+		<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="0">
+			<maml:name>Name</maml:name>
+			<maml:description>
+				<maml:para />
+			</maml:description>
+			<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			<dev:type>
+				<maml:name>String</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+		<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+			<maml:name>Description</maml:name>
+			<maml:description>
+				<maml:para />
+			</maml:description>
+			<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			<dev:type>
+				<maml:name>String</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+		<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="1">
+			<maml:name>ErrorCode</maml:name>
+			<maml:description>
+				<maml:para />
+			</maml:description>
+			<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+			<dev:type>
+				<maml:name>Int32</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+		<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="2">
+			<maml:name>Content</maml:name>
+			<maml:description>
+				<maml:para />
+			</maml:description>
+			<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			<dev:type>
+				<maml:name>String</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+	</command:parameters>
+	<command:inputTypes>
+		<command:inputType>
+			<dev:type>
+				<maml:name></maml:name>
+				<maml:uri></maml:uri>
+				<maml:description/>
+			</dev:type>
+			<maml:description>
+<maml:para />
+			</maml:description>
+		</command:inputType>
+	</command:inputTypes>
+	<command:returnValues>
+		<command:returnValue>
+			<dev:type>
+				<maml:name></maml:name>
+				<maml:uri></maml:uri>
+				<maml:description/>
+			</dev:type>
+			<maml:description>
+<maml:para />
+			</maml:description>
+		</command:returnValue>
+	</command:returnValues>
+	<command:terminatingErrors></command:terminatingErrors>
+	<command:nonTerminatingErrors></command:nonTerminatingErrors>
+	<maml:alertSet>
+		<maml:title></maml:title>
+		<maml:alert>
+			<maml:para />
+		</maml:alert>
+	</maml:alertSet>
+	<command:examples>
+	</command:examples>
+	<maml:relatedLinks>
+	</maml:relatedLinks>
+</command:command>
+<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<!--Generated by PS Cmdlet Help Editor-->
+	<command:details>
+		<command:name>New-OPNsenseHAProxyFrontend</command:name>
+		<maml:description>
+			<maml:para />
+		</maml:description>
+		<maml:copyright>
+			<maml:para />
+		</maml:copyright>
+		<command:verb>New</command:verb>
+		<command:noun>OPNsenseHAProxyFrontend</command:noun>
+		<dev:version />
+	</command:details>
+	<maml:description>
+		<maml:para />
+	</maml:description>
+	<command:syntax>
+		<command:syntaxItem>
+			<maml:name>New-OPNsenseHAProxyFrontend</maml:name>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="0">
+				<maml:name>Parameters</maml:name>
+				<maml:description>
+					<maml:para />
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">PSObject</command:parameterValue>
+			</command:parameter>
+		</command:syntaxItem>
+	</command:syntax>
+	<command:parameters>
+		<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="0">
+			<maml:name>Parameters</maml:name>
+			<maml:description>
+				<maml:para />
+			</maml:description>
+			<command:parameterValue required="true" variableLength="false">PSObject</command:parameterValue>
+			<dev:type>
+				<maml:name>PSObject</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+	</command:parameters>
+	<command:inputTypes>
+		<command:inputType>
+			<dev:type>
+				<maml:name></maml:name>
+				<maml:uri></maml:uri>
+				<maml:description/>
+			</dev:type>
+			<maml:description>
+<maml:para />
+			</maml:description>
+		</command:inputType>
+	</command:inputTypes>
+	<command:returnValues>
+		<command:returnValue>
+			<dev:type>
+				<maml:name></maml:name>
+				<maml:uri></maml:uri>
+				<maml:description/>
+			</dev:type>
+			<maml:description>
+<maml:para />
+			</maml:description>
+		</command:returnValue>
+	</command:returnValues>
+	<command:terminatingErrors></command:terminatingErrors>
+	<command:nonTerminatingErrors></command:nonTerminatingErrors>
+	<maml:alertSet>
+		<maml:title></maml:title>
+		<maml:alert>
+			<maml:para />
+		</maml:alert>
+	</maml:alertSet>
+	<command:examples>
+	</command:examples>
+	<maml:relatedLinks>
+	</maml:relatedLinks>
+</command:command>
+<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<!--Generated by PS Cmdlet Help Editor-->
+	<command:details>
+		<command:name>New-OPNsenseHAProxyLuaScript</command:name>
+		<maml:description>
+			<maml:para />
+		</maml:description>
+		<maml:copyright>
+			<maml:para />
+		</maml:copyright>
+		<command:verb>New</command:verb>
+		<command:noun>OPNsenseHAProxyLuaScript</command:noun>
+		<dev:version />
+	</command:details>
+	<maml:description>
+		<maml:para />
+	</maml:description>
+	<command:syntax>
+		<command:syntaxItem>
+			<maml:name>New-OPNsenseHAProxyLuaScript</maml:name>
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="0">
+				<maml:name>InputObject</maml:name>
+				<maml:description>
+					<maml:para />
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">PSObject</command:parameterValue>
+			</command:parameter>
+		</command:syntaxItem>
+		<command:syntaxItem>
+			<maml:name>New-OPNsenseHAProxyLuaScript</maml:name>
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="0">
+				<maml:name>Name</maml:name>
+				<maml:description>
+					<maml:para />
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>Description</maml:name>
+				<maml:description>
+					<maml:para />
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="1">
+				<maml:name>Content</maml:name>
+				<maml:description>
+					<maml:para />
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			</command:parameter>
+		</command:syntaxItem>
+	</command:syntax>
+	<command:parameters>
+		<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="0">
+			<maml:name>InputObject</maml:name>
+			<maml:description>
+				<maml:para />
+			</maml:description>
+			<command:parameterValue required="true" variableLength="false">PSObject</command:parameterValue>
+			<dev:type>
+				<maml:name>PSObject</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+		<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="0">
+			<maml:name>Name</maml:name>
+			<maml:description>
+				<maml:para />
+			</maml:description>
+			<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			<dev:type>
+				<maml:name>String</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+		<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+			<maml:name>Description</maml:name>
+			<maml:description>
+				<maml:para />
+			</maml:description>
+			<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			<dev:type>
+				<maml:name>String</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+		<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="1">
+			<maml:name>Content</maml:name>
+			<maml:description>
+				<maml:para />
+			</maml:description>
+			<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			<dev:type>
+				<maml:name>String</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+	</command:parameters>
+	<command:inputTypes>
+		<command:inputType>
+			<dev:type>
+				<maml:name></maml:name>
+				<maml:uri></maml:uri>
+				<maml:description/>
+			</dev:type>
+			<maml:description>
+<maml:para />
+			</maml:description>
+		</command:inputType>
+	</command:inputTypes>
+	<command:returnValues>
+		<command:returnValue>
+			<dev:type>
+				<maml:name></maml:name>
+				<maml:uri></maml:uri>
+				<maml:description/>
+			</dev:type>
+			<maml:description>
+<maml:para />
+			</maml:description>
+		</command:returnValue>
+	</command:returnValues>
+	<command:terminatingErrors></command:terminatingErrors>
+	<command:nonTerminatingErrors></command:nonTerminatingErrors>
+	<maml:alertSet>
+		<maml:title></maml:title>
+		<maml:alert>
+			<maml:para />
+		</maml:alert>
+	</maml:alertSet>
+	<command:examples>
+	</command:examples>
+	<maml:relatedLinks>
+	</maml:relatedLinks>
+</command:command>
+<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<!--Generated by PS Cmdlet Help Editor-->
+	<command:details>
+		<command:name>New-OPNsenseHAProxyObject</command:name>
+		<maml:description>
+			<maml:para />
+		</maml:description>
+		<maml:copyright>
+			<maml:para />
+		</maml:copyright>
+		<command:verb>New</command:verb>
+		<command:noun>OPNsenseHAProxyObject</command:noun>
+		<dev:version />
+	</command:details>
+	<maml:description>
+		<maml:para />
+	</maml:description>
+	<command:syntax>
+		<command:syntaxItem>
+			<maml:name>New-OPNsenseHAProxyObject</maml:name>
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="0">
+				<maml:name>ObjectType</maml:name>
+				<maml:description>
+					<maml:para />
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="false" position="named">
+				<maml:name>InputObject</maml:name>
+				<maml:description>
+					<maml:para />
+				</maml:description>
+				<command:parameterValue required="true" variableLength="true">PSObject[]</command:parameterValue>
+			</command:parameter>
+		</command:syntaxItem>
+	</command:syntax>
+	<command:parameters>
+		<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="0">
+			<maml:name>ObjectType</maml:name>
+			<maml:description>
+				<maml:para />
+			</maml:description>
+			<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			<dev:type>
+				<maml:name>String</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+		<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="false" position="named">
+			<maml:name>InputObject</maml:name>
+			<maml:description>
+				<maml:para />
+			</maml:description>
+			<command:parameterValue required="true" variableLength="true">PSObject[]</command:parameterValue>
+			<dev:type>
+				<maml:name>PSObject[]</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+	</command:parameters>
+	<command:inputTypes>
+		<command:inputType>
+			<dev:type>
+				<maml:name></maml:name>
+				<maml:uri></maml:uri>
+				<maml:description/>
+			</dev:type>
+			<maml:description>
+<maml:para />
+			</maml:description>
+		</command:inputType>
+	</command:inputTypes>
+	<command:returnValues>
+		<command:returnValue>
+			<dev:type>
+				<maml:name></maml:name>
+				<maml:uri></maml:uri>
+				<maml:description/>
+			</dev:type>
+			<maml:description>
+<maml:para />
+			</maml:description>
+		</command:returnValue>
+	</command:returnValues>
+	<command:terminatingErrors></command:terminatingErrors>
+	<command:nonTerminatingErrors></command:nonTerminatingErrors>
+	<maml:alertSet>
+		<maml:title></maml:title>
+		<maml:alert>
+			<maml:para />
+		</maml:alert>
+	</maml:alertSet>
+	<command:examples>
+	</command:examples>
+	<maml:relatedLinks>
+	</maml:relatedLinks>
+</command:command>
+<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<!--Generated by PS Cmdlet Help Editor-->
+	<command:details>
+		<command:name>New-OPNsenseHAProxyServer</command:name>
+		<maml:description>
+			<maml:para />
+		</maml:description>
+		<maml:copyright>
+			<maml:para />
+		</maml:copyright>
+		<command:verb>New</command:verb>
+		<command:noun>OPNsenseHAProxyServer</command:noun>
+		<dev:version />
+	</command:details>
+	<maml:description>
+		<maml:para />
+	</maml:description>
+	<command:syntax>
+		<command:syntaxItem>
+			<maml:name>New-OPNsenseHAProxyServer</maml:name>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="0">
+				<maml:name>Parameters</maml:name>
+				<maml:description>
+					<maml:para />
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">PSObject</command:parameterValue>
+			</command:parameter>
+		</command:syntaxItem>
+	</command:syntax>
+	<command:parameters>
+		<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="0">
+			<maml:name>Parameters</maml:name>
+			<maml:description>
+				<maml:para />
+			</maml:description>
+			<command:parameterValue required="true" variableLength="false">PSObject</command:parameterValue>
+			<dev:type>
+				<maml:name>PSObject</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+	</command:parameters>
+	<command:inputTypes>
+		<command:inputType>
+			<dev:type>
+				<maml:name></maml:name>
+				<maml:uri></maml:uri>
+				<maml:description/>
+			</dev:type>
+			<maml:description>
+<maml:para />
+			</maml:description>
+		</command:inputType>
+	</command:inputTypes>
+	<command:returnValues>
+		<command:returnValue>
+			<dev:type>
+				<maml:name></maml:name>
+				<maml:uri></maml:uri>
+				<maml:description/>
+			</dev:type>
+			<maml:description>
+<maml:para />
+			</maml:description>
+		</command:returnValue>
+	</command:returnValues>
+	<command:terminatingErrors></command:terminatingErrors>
+	<command:nonTerminatingErrors></command:nonTerminatingErrors>
+	<maml:alertSet>
+		<maml:title></maml:title>
+		<maml:alert>
+			<maml:para />
+		</maml:alert>
+	</maml:alertSet>
+	<command:examples>
+	</command:examples>
+	<maml:relatedLinks>
+	</maml:relatedLinks>
+</command:command>
+<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<!--Generated by PS Cmdlet Help Editor-->
+	<command:details>
+		<command:name>Remove-OPNsenseHAProxyAcl</command:name>
+		<maml:description>
+			<maml:para />
+		</maml:description>
+		<maml:copyright>
+			<maml:para />
+		</maml:copyright>
+		<command:verb>Remove</command:verb>
+		<command:noun>OPNsenseHAProxyAcl</command:noun>
+		<dev:version />
+	</command:details>
+	<maml:description>
+		<maml:para />
+	</maml:description>
+	<command:syntax>
+		<command:syntaxItem>
+			<maml:name>Remove-OPNsenseHAProxyAcl</maml:name>
+			<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
+				<maml:name>Uuid</maml:name>
+				<maml:description>
+					<maml:para />
+				</maml:description>
+				<command:parameterValue required="true" variableLength="true">String[]</command:parameterValue>
+			</command:parameter>
+		</command:syntaxItem>
+	</command:syntax>
+	<command:parameters>
+		<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
+			<maml:name>Uuid</maml:name>
+			<maml:description>
+				<maml:para />
+			</maml:description>
+			<command:parameterValue required="true" variableLength="true">String[]</command:parameterValue>
+			<dev:type>
+				<maml:name>String[]</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+	</command:parameters>
+	<command:inputTypes>
+		<command:inputType>
+			<dev:type>
+				<maml:name></maml:name>
+				<maml:uri></maml:uri>
+				<maml:description/>
+			</dev:type>
+			<maml:description>
+<maml:para />
+			</maml:description>
+		</command:inputType>
+	</command:inputTypes>
+	<command:returnValues>
+		<command:returnValue>
+			<dev:type>
+				<maml:name></maml:name>
+				<maml:uri></maml:uri>
+				<maml:description/>
+			</dev:type>
+			<maml:description>
+<maml:para />
+			</maml:description>
+		</command:returnValue>
+	</command:returnValues>
+	<command:terminatingErrors></command:terminatingErrors>
+	<command:nonTerminatingErrors></command:nonTerminatingErrors>
+	<maml:alertSet>
+		<maml:title></maml:title>
+		<maml:alert>
+			<maml:para />
+		</maml:alert>
+	</maml:alertSet>
+	<command:examples>
+	</command:examples>
+	<maml:relatedLinks>
+	</maml:relatedLinks>
+</command:command>
+<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<!--Generated by PS Cmdlet Help Editor-->
+	<command:details>
+		<command:name>Remove-OPNsenseHAProxyAction</command:name>
+		<maml:description>
+			<maml:para />
+		</maml:description>
+		<maml:copyright>
+			<maml:para />
+		</maml:copyright>
+		<command:verb>Remove</command:verb>
+		<command:noun>OPNsenseHAProxyAction</command:noun>
+		<dev:version />
+	</command:details>
+	<maml:description>
+		<maml:para />
+	</maml:description>
+	<command:syntax>
+		<command:syntaxItem>
+			<maml:name>Remove-OPNsenseHAProxyAction</maml:name>
+			<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
+				<maml:name>Uuid</maml:name>
+				<maml:description>
+					<maml:para />
+				</maml:description>
+				<command:parameterValue required="true" variableLength="true">String[]</command:parameterValue>
+			</command:parameter>
+		</command:syntaxItem>
+	</command:syntax>
+	<command:parameters>
+		<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
+			<maml:name>Uuid</maml:name>
+			<maml:description>
+				<maml:para />
+			</maml:description>
+			<command:parameterValue required="true" variableLength="true">String[]</command:parameterValue>
+			<dev:type>
+				<maml:name>String[]</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+	</command:parameters>
+	<command:inputTypes>
+		<command:inputType>
+			<dev:type>
+				<maml:name></maml:name>
+				<maml:uri></maml:uri>
+				<maml:description/>
+			</dev:type>
+			<maml:description>
+<maml:para />
+			</maml:description>
+		</command:inputType>
+	</command:inputTypes>
+	<command:returnValues>
+		<command:returnValue>
+			<dev:type>
+				<maml:name></maml:name>
+				<maml:uri></maml:uri>
+				<maml:description/>
+			</dev:type>
+			<maml:description>
+<maml:para />
+			</maml:description>
+		</command:returnValue>
+	</command:returnValues>
+	<command:terminatingErrors></command:terminatingErrors>
+	<command:nonTerminatingErrors></command:nonTerminatingErrors>
+	<maml:alertSet>
+		<maml:title></maml:title>
+		<maml:alert>
+			<maml:para />
+		</maml:alert>
+	</maml:alertSet>
+	<command:examples>
+	</command:examples>
+	<maml:relatedLinks>
+	</maml:relatedLinks>
+</command:command>
+<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<!--Generated by PS Cmdlet Help Editor-->
+	<command:details>
+		<command:name>Remove-OPNsenseHAProxyBackend</command:name>
+		<maml:description>
+			<maml:para />
+		</maml:description>
+		<maml:copyright>
+			<maml:para />
+		</maml:copyright>
+		<command:verb>Remove</command:verb>
+		<command:noun>OPNsenseHAProxyBackend</command:noun>
+		<dev:version />
+	</command:details>
+	<maml:description>
+		<maml:para />
+	</maml:description>
+	<command:syntax>
+		<command:syntaxItem>
+			<maml:name>Remove-OPNsenseHAProxyBackend</maml:name>
+			<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
+				<maml:name>Uuid</maml:name>
+				<maml:description>
+					<maml:para />
+				</maml:description>
+				<command:parameterValue required="true" variableLength="true">String[]</command:parameterValue>
+			</command:parameter>
+		</command:syntaxItem>
+	</command:syntax>
+	<command:parameters>
+		<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
+			<maml:name>Uuid</maml:name>
+			<maml:description>
+				<maml:para />
+			</maml:description>
+			<command:parameterValue required="true" variableLength="true">String[]</command:parameterValue>
+			<dev:type>
+				<maml:name>String[]</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+	</command:parameters>
+	<command:inputTypes>
+		<command:inputType>
+			<dev:type>
+				<maml:name></maml:name>
+				<maml:uri></maml:uri>
+				<maml:description/>
+			</dev:type>
+			<maml:description>
+<maml:para />
+			</maml:description>
+		</command:inputType>
+	</command:inputTypes>
+	<command:returnValues>
+		<command:returnValue>
+			<dev:type>
+				<maml:name></maml:name>
+				<maml:uri></maml:uri>
+				<maml:description/>
+			</dev:type>
+			<maml:description>
+<maml:para />
+			</maml:description>
+		</command:returnValue>
+	</command:returnValues>
+	<command:terminatingErrors></command:terminatingErrors>
+	<command:nonTerminatingErrors></command:nonTerminatingErrors>
+	<maml:alertSet>
+		<maml:title></maml:title>
+		<maml:alert>
+			<maml:para />
+		</maml:alert>
+	</maml:alertSet>
+	<command:examples>
+	</command:examples>
+	<maml:relatedLinks>
+	</maml:relatedLinks>
+</command:command>
+<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<!--Generated by PS Cmdlet Help Editor-->
+	<command:details>
+		<command:name>Remove-OPNsenseHAProxyErrorfile</command:name>
+		<maml:description>
+			<maml:para />
+		</maml:description>
+		<maml:copyright>
+			<maml:para />
+		</maml:copyright>
+		<command:verb>Remove</command:verb>
+		<command:noun>OPNsenseHAProxyErrorfile</command:noun>
+		<dev:version />
+	</command:details>
+	<maml:description>
+		<maml:para />
+	</maml:description>
+	<command:syntax>
+		<command:syntaxItem>
+			<maml:name>Remove-OPNsenseHAProxyErrorfile</maml:name>
+			<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
+				<maml:name>Uuid</maml:name>
+				<maml:description>
+					<maml:para />
+				</maml:description>
+				<command:parameterValue required="true" variableLength="true">String[]</command:parameterValue>
+			</command:parameter>
+		</command:syntaxItem>
+	</command:syntax>
+	<command:parameters>
+		<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
+			<maml:name>Uuid</maml:name>
+			<maml:description>
+				<maml:para />
+			</maml:description>
+			<command:parameterValue required="true" variableLength="true">String[]</command:parameterValue>
+			<dev:type>
+				<maml:name>String[]</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+	</command:parameters>
+	<command:inputTypes>
+		<command:inputType>
+			<dev:type>
+				<maml:name></maml:name>
+				<maml:uri></maml:uri>
+				<maml:description/>
+			</dev:type>
+			<maml:description>
+<maml:para />
+			</maml:description>
+		</command:inputType>
+	</command:inputTypes>
+	<command:returnValues>
+		<command:returnValue>
+			<dev:type>
+				<maml:name></maml:name>
+				<maml:uri></maml:uri>
+				<maml:description/>
+			</dev:type>
+			<maml:description>
+<maml:para />
+			</maml:description>
+		</command:returnValue>
+	</command:returnValues>
+	<command:terminatingErrors></command:terminatingErrors>
+	<command:nonTerminatingErrors></command:nonTerminatingErrors>
+	<maml:alertSet>
+		<maml:title></maml:title>
+		<maml:alert>
+			<maml:para />
+		</maml:alert>
+	</maml:alertSet>
+	<command:examples>
+	</command:examples>
+	<maml:relatedLinks>
+	</maml:relatedLinks>
+</command:command>
+<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<!--Generated by PS Cmdlet Help Editor-->
+	<command:details>
+		<command:name>Remove-OPNsenseHAProxyFrontend</command:name>
+		<maml:description>
+			<maml:para />
+		</maml:description>
+		<maml:copyright>
+			<maml:para />
+		</maml:copyright>
+		<command:verb>Remove</command:verb>
+		<command:noun>OPNsenseHAProxyFrontend</command:noun>
+		<dev:version />
+	</command:details>
+	<maml:description>
+		<maml:para />
+	</maml:description>
+	<command:syntax>
+		<command:syntaxItem>
+			<maml:name>Remove-OPNsenseHAProxyFrontend</maml:name>
+			<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
+				<maml:name>Uuid</maml:name>
+				<maml:description>
+					<maml:para />
+				</maml:description>
+				<command:parameterValue required="true" variableLength="true">String[]</command:parameterValue>
+			</command:parameter>
+		</command:syntaxItem>
+	</command:syntax>
+	<command:parameters>
+		<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
+			<maml:name>Uuid</maml:name>
+			<maml:description>
+				<maml:para />
+			</maml:description>
+			<command:parameterValue required="true" variableLength="true">String[]</command:parameterValue>
+			<dev:type>
+				<maml:name>String[]</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+	</command:parameters>
+	<command:inputTypes>
+		<command:inputType>
+			<dev:type>
+				<maml:name></maml:name>
+				<maml:uri></maml:uri>
+				<maml:description/>
+			</dev:type>
+			<maml:description>
+<maml:para />
+			</maml:description>
+		</command:inputType>
+	</command:inputTypes>
+	<command:returnValues>
+		<command:returnValue>
+			<dev:type>
+				<maml:name></maml:name>
+				<maml:uri></maml:uri>
+				<maml:description/>
+			</dev:type>
+			<maml:description>
+<maml:para />
+			</maml:description>
+		</command:returnValue>
+	</command:returnValues>
+	<command:terminatingErrors></command:terminatingErrors>
+	<command:nonTerminatingErrors></command:nonTerminatingErrors>
+	<maml:alertSet>
+		<maml:title></maml:title>
+		<maml:alert>
+			<maml:para />
+		</maml:alert>
+	</maml:alertSet>
+	<command:examples>
+	</command:examples>
+	<maml:relatedLinks>
+	</maml:relatedLinks>
+</command:command>
+<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<!--Generated by PS Cmdlet Help Editor-->
+	<command:details>
+		<command:name>Remove-OPNsenseHAProxyHealthCheck</command:name>
+		<maml:description>
+			<maml:para />
+		</maml:description>
+		<maml:copyright>
+			<maml:para />
+		</maml:copyright>
+		<command:verb>Remove</command:verb>
+		<command:noun>OPNsenseHAProxyHealthCheck</command:noun>
+		<dev:version />
+	</command:details>
+	<maml:description>
+		<maml:para />
+	</maml:description>
+	<command:syntax>
+		<command:syntaxItem>
+			<maml:name>Remove-OPNsenseHAProxyHealthCheck</maml:name>
+			<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
+				<maml:name>Uuid</maml:name>
+				<maml:description>
+					<maml:para />
+				</maml:description>
+				<command:parameterValue required="true" variableLength="true">String[]</command:parameterValue>
+			</command:parameter>
+		</command:syntaxItem>
+	</command:syntax>
+	<command:parameters>
+		<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
+			<maml:name>Uuid</maml:name>
+			<maml:description>
+				<maml:para />
+			</maml:description>
+			<command:parameterValue required="true" variableLength="true">String[]</command:parameterValue>
+			<dev:type>
+				<maml:name>String[]</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+	</command:parameters>
+	<command:inputTypes>
+		<command:inputType>
+			<dev:type>
+				<maml:name></maml:name>
+				<maml:uri></maml:uri>
+				<maml:description/>
+			</dev:type>
+			<maml:description>
+<maml:para />
+			</maml:description>
+		</command:inputType>
+	</command:inputTypes>
+	<command:returnValues>
+		<command:returnValue>
+			<dev:type>
+				<maml:name></maml:name>
+				<maml:uri></maml:uri>
+				<maml:description/>
+			</dev:type>
+			<maml:description>
+<maml:para />
+			</maml:description>
+		</command:returnValue>
+	</command:returnValues>
+	<command:terminatingErrors></command:terminatingErrors>
+	<command:nonTerminatingErrors></command:nonTerminatingErrors>
+	<maml:alertSet>
+		<maml:title></maml:title>
+		<maml:alert>
+			<maml:para />
+		</maml:alert>
+	</maml:alertSet>
+	<command:examples>
+	</command:examples>
+	<maml:relatedLinks>
+	</maml:relatedLinks>
+</command:command>
+<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<!--Generated by PS Cmdlet Help Editor-->
+	<command:details>
+		<command:name>Remove-OPNsenseHAProxyLuaScript</command:name>
+		<maml:description>
+			<maml:para />
+		</maml:description>
+		<maml:copyright>
+			<maml:para />
+		</maml:copyright>
+		<command:verb>Remove</command:verb>
+		<command:noun>OPNsenseHAProxyLuaScript</command:noun>
+		<dev:version />
+	</command:details>
+	<maml:description>
+		<maml:para />
+	</maml:description>
+	<command:syntax>
+		<command:syntaxItem>
+			<maml:name>Remove-OPNsenseHAProxyLuaScript</maml:name>
+			<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
+				<maml:name>Uuid</maml:name>
+				<maml:description>
+					<maml:para />
+				</maml:description>
+				<command:parameterValue required="true" variableLength="true">String[]</command:parameterValue>
+			</command:parameter>
+		</command:syntaxItem>
+	</command:syntax>
+	<command:parameters>
+		<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
+			<maml:name>Uuid</maml:name>
+			<maml:description>
+				<maml:para />
+			</maml:description>
+			<command:parameterValue required="true" variableLength="true">String[]</command:parameterValue>
+			<dev:type>
+				<maml:name>String[]</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+	</command:parameters>
+	<command:inputTypes>
+		<command:inputType>
+			<dev:type>
+				<maml:name></maml:name>
+				<maml:uri></maml:uri>
+				<maml:description/>
+			</dev:type>
+			<maml:description>
+<maml:para />
+			</maml:description>
+		</command:inputType>
+	</command:inputTypes>
+	<command:returnValues>
+		<command:returnValue>
+			<dev:type>
+				<maml:name></maml:name>
+				<maml:uri></maml:uri>
+				<maml:description/>
+			</dev:type>
+			<maml:description>
+<maml:para />
+			</maml:description>
+		</command:returnValue>
+	</command:returnValues>
+	<command:terminatingErrors></command:terminatingErrors>
+	<command:nonTerminatingErrors></command:nonTerminatingErrors>
+	<maml:alertSet>
+		<maml:title></maml:title>
+		<maml:alert>
+			<maml:para />
+		</maml:alert>
+	</maml:alertSet>
+	<command:examples>
+	</command:examples>
+	<maml:relatedLinks>
+	</maml:relatedLinks>
+</command:command>
+<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<!--Generated by PS Cmdlet Help Editor-->
+	<command:details>
+		<command:name>Remove-OPNsenseHAProxyServer</command:name>
+		<maml:description>
+			<maml:para />
+		</maml:description>
+		<maml:copyright>
+			<maml:para />
+		</maml:copyright>
+		<command:verb>Remove</command:verb>
+		<command:noun>OPNsenseHAProxyServer</command:noun>
+		<dev:version />
+	</command:details>
+	<maml:description>
+		<maml:para />
+	</maml:description>
+	<command:syntax>
+		<command:syntaxItem>
+			<maml:name>Remove-OPNsenseHAProxyServer</maml:name>
+			<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
+				<maml:name>Uuid</maml:name>
+				<maml:description>
+					<maml:para />
+				</maml:description>
+				<command:parameterValue required="true" variableLength="true">String[]</command:parameterValue>
+			</command:parameter>
+		</command:syntaxItem>
+	</command:syntax>
+	<command:parameters>
+		<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
+			<maml:name>Uuid</maml:name>
+			<maml:description>
+				<maml:para />
+			</maml:description>
+			<command:parameterValue required="true" variableLength="true">String[]</command:parameterValue>
+			<dev:type>
+				<maml:name>String[]</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+	</command:parameters>
+	<command:inputTypes>
+		<command:inputType>
+			<dev:type>
+				<maml:name></maml:name>
+				<maml:uri></maml:uri>
+				<maml:description/>
+			</dev:type>
+			<maml:description>
+<maml:para />
+			</maml:description>
+		</command:inputType>
+	</command:inputTypes>
+	<command:returnValues>
+		<command:returnValue>
+			<dev:type>
+				<maml:name></maml:name>
+				<maml:uri></maml:uri>
+				<maml:description/>
+			</dev:type>
+			<maml:description>
+<maml:para />
+			</maml:description>
+		</command:returnValue>
+	</command:returnValues>
+	<command:terminatingErrors></command:terminatingErrors>
+	<command:nonTerminatingErrors></command:nonTerminatingErrors>
+	<maml:alertSet>
+		<maml:title></maml:title>
+		<maml:alert>
+			<maml:para />
+		</maml:alert>
+	</maml:alertSet>
+	<command:examples>
+	</command:examples>
+	<maml:relatedLinks>
+	</maml:relatedLinks>
+</command:command>
+<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<!--Generated by PS Cmdlet Help Editor-->
+	<command:details>
+		<command:name>Set-OPNsenseHAProxyServer</command:name>
+		<maml:description>
+			<maml:para />
+		</maml:description>
+		<maml:copyright>
+			<maml:para />
+		</maml:copyright>
+		<command:verb>Set</command:verb>
+		<command:noun>OPNsenseHAProxyServer</command:noun>
+		<dev:version />
+	</command:details>
+	<maml:description>
+		<maml:para />
+	</maml:description>
+	<command:syntax>
+		<command:syntaxItem>
+			<maml:name>Set-OPNsenseHAProxyServer</maml:name>
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="0">
+				<maml:name>Uuid</maml:name>
+				<maml:description>
+					<maml:para />
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
+				<maml:name>Address</maml:name>
+				<maml:description>
+					<maml:para />
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
+				<maml:name>Advanced</maml:name>
+				<maml:description>
+					<maml:para />
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
+				<maml:name>CheckDownInterval</maml:name>
+				<maml:description>
+					<maml:para />
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
+				<maml:name>CheckInterval</maml:name>
+				<maml:description>
+					<maml:para />
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
+				<maml:name>CheckPort</maml:name>
+				<maml:description>
+					<maml:para />
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
+				<maml:name>Description</maml:name>
+				<maml:description>
+					<maml:para />
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
+				<maml:name>Mode</maml:name>
+				<maml:description>
+					<maml:para />
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
+				<maml:name>Name</maml:name>
+				<maml:description>
+					<maml:para />
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
+				<maml:name>Port</maml:name>
+				<maml:description>
+					<maml:para />
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
+				<maml:name>Source</maml:name>
+				<maml:description>
+					<maml:para />
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
+				<maml:name>Ssl</maml:name>
+				<maml:description>
+					<maml:para />
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
+				<maml:name>sslCA</maml:name>
+				<maml:description>
+					<maml:para />
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
+				<maml:name>sslClientCertificate</maml:name>
+				<maml:description>
+					<maml:para />
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
+				<maml:name>sslCRL</maml:name>
+				<maml:description>
+					<maml:para />
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
+				<maml:name>SslVerify</maml:name>
+				<maml:description>
+					<maml:para />
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
+				<maml:name>Weight</maml:name>
+				<maml:description>
+					<maml:para />
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+			</command:parameter>
+		</command:syntaxItem>
+		<command:syntaxItem>
+			<maml:name>Set-OPNsenseHAProxyServer</maml:name>
+			<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="true (ByPropertyName)" position="0">
+				<maml:name>InputObject</maml:name>
+				<maml:description>
+					<maml:para />
+				</maml:description>
+				<command:parameterValue required="true" variableLength="true">PSObject[]</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
+				<maml:name>Address</maml:name>
+				<maml:description>
+					<maml:para />
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
+				<maml:name>Advanced</maml:name>
+				<maml:description>
+					<maml:para />
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
+				<maml:name>CheckDownInterval</maml:name>
+				<maml:description>
+					<maml:para />
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
+				<maml:name>CheckInterval</maml:name>
+				<maml:description>
+					<maml:para />
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
+				<maml:name>CheckPort</maml:name>
+				<maml:description>
+					<maml:para />
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
+				<maml:name>Description</maml:name>
+				<maml:description>
+					<maml:para />
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
+				<maml:name>Mode</maml:name>
+				<maml:description>
+					<maml:para />
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
+				<maml:name>Name</maml:name>
+				<maml:description>
+					<maml:para />
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
+				<maml:name>Port</maml:name>
+				<maml:description>
+					<maml:para />
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
+				<maml:name>Source</maml:name>
+				<maml:description>
+					<maml:para />
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
+				<maml:name>Ssl</maml:name>
+				<maml:description>
+					<maml:para />
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
+				<maml:name>sslCA</maml:name>
+				<maml:description>
+					<maml:para />
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
+				<maml:name>sslClientCertificate</maml:name>
+				<maml:description>
+					<maml:para />
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
+				<maml:name>sslCRL</maml:name>
+				<maml:description>
+					<maml:para />
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
+				<maml:name>SslVerify</maml:name>
+				<maml:description>
+					<maml:para />
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
+				<maml:name>Weight</maml:name>
+				<maml:description>
+					<maml:para />
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+			</command:parameter>
+		</command:syntaxItem>
+	</command:syntax>
+	<command:parameters>
+		<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="0">
+			<maml:name>Uuid</maml:name>
+			<maml:description>
+				<maml:para />
+			</maml:description>
+			<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			<dev:type>
+				<maml:name>String</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+		<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
+			<maml:name>Address</maml:name>
+			<maml:description>
+				<maml:para />
+			</maml:description>
+			<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			<dev:type>
+				<maml:name>String</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+		<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
+			<maml:name>Advanced</maml:name>
+			<maml:description>
+				<maml:para />
+			</maml:description>
+			<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			<dev:type>
+				<maml:name>String</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+		<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
+			<maml:name>CheckDownInterval</maml:name>
+			<maml:description>
+				<maml:para />
+			</maml:description>
+			<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+			<dev:type>
+				<maml:name>Int32</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+		<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
+			<maml:name>CheckInterval</maml:name>
+			<maml:description>
+				<maml:para />
+			</maml:description>
+			<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+			<dev:type>
+				<maml:name>Int32</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+		<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
+			<maml:name>CheckPort</maml:name>
+			<maml:description>
+				<maml:para />
+			</maml:description>
+			<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+			<dev:type>
+				<maml:name>Int32</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+		<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
+			<maml:name>Description</maml:name>
+			<maml:description>
+				<maml:para />
+			</maml:description>
+			<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			<dev:type>
+				<maml:name>String</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+		<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
+			<maml:name>Mode</maml:name>
+			<maml:description>
+				<maml:para />
+			</maml:description>
+			<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			<dev:type>
+				<maml:name>String</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+		<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
+			<maml:name>Name</maml:name>
+			<maml:description>
+				<maml:para />
+			</maml:description>
+			<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			<dev:type>
+				<maml:name>String</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+		<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
+			<maml:name>Port</maml:name>
+			<maml:description>
+				<maml:para />
+			</maml:description>
+			<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+			<dev:type>
+				<maml:name>Int32</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+		<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
+			<maml:name>Source</maml:name>
+			<maml:description>
+				<maml:para />
+			</maml:description>
+			<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			<dev:type>
+				<maml:name>String</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+		<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
+			<maml:name>Ssl</maml:name>
+			<maml:description>
+				<maml:para />
+			</maml:description>
+			<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			<dev:type>
+				<maml:name>String</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+		<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
+			<maml:name>sslCA</maml:name>
+			<maml:description>
+				<maml:para />
+			</maml:description>
+			<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			<dev:type>
+				<maml:name>String</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+		<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
+			<maml:name>sslClientCertificate</maml:name>
+			<maml:description>
+				<maml:para />
+			</maml:description>
+			<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			<dev:type>
+				<maml:name>String</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+		<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
+			<maml:name>sslCRL</maml:name>
+			<maml:description>
+				<maml:para />
+			</maml:description>
+			<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			<dev:type>
+				<maml:name>String</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+		<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
+			<maml:name>SslVerify</maml:name>
+			<maml:description>
+				<maml:para />
+			</maml:description>
+			<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			<dev:type>
+				<maml:name>String</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+		<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
+			<maml:name>Weight</maml:name>
+			<maml:description>
+				<maml:para />
+			</maml:description>
+			<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+			<dev:type>
+				<maml:name>Int32</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+		<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="true (ByPropertyName)" position="0">
+			<maml:name>InputObject</maml:name>
+			<maml:description>
+				<maml:para />
+			</maml:description>
+			<command:parameterValue required="true" variableLength="true">PSObject[]</command:parameterValue>
+			<dev:type>
+				<maml:name>PSObject[]</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+	</command:parameters>
+	<command:inputTypes>
+		<command:inputType>
+			<dev:type>
+				<maml:name></maml:name>
+				<maml:uri></maml:uri>
+				<maml:description/>
+			</dev:type>
+			<maml:description>
+<maml:para />
+			</maml:description>
+		</command:inputType>
+	</command:inputTypes>
+	<command:returnValues>
+		<command:returnValue>
+			<dev:type>
+				<maml:name></maml:name>
+				<maml:uri></maml:uri>
+				<maml:description/>
+			</dev:type>
+			<maml:description>
+<maml:para />
+			</maml:description>
+		</command:returnValue>
+	</command:returnValues>
+	<command:terminatingErrors></command:terminatingErrors>
+	<command:nonTerminatingErrors></command:nonTerminatingErrors>
+	<maml:alertSet>
+		<maml:title></maml:title>
+		<maml:alert>
+			<maml:para />
+		</maml:alert>
+	</maml:alertSet>
+	<command:examples>
+	</command:examples>
+	<maml:relatedLinks>
+	</maml:relatedLinks>
+</command:command>
+<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<!--Generated by PS Cmdlet Help Editor-->
+	<command:details>
+		<command:name>Set-OPNsenseLldp</command:name>
+		<maml:description>
+			<maml:para />
+		</maml:description>
+		<maml:copyright>
+			<maml:para />
+		</maml:copyright>
+		<command:verb>Set</command:verb>
+		<command:noun>OPNsenseLldp</command:noun>
+		<dev:version />
+	</command:details>
+	<maml:description>
+		<maml:para />
+	</maml:description>
+	<command:syntax>
+		<command:syntaxItem>
+			<maml:name>Set-OPNsenseLldp</maml:name>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>Enable</maml:name>
+				<maml:description>
+					<maml:para />
+				</maml:description>
+				<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>EnableCdp</maml:name>
+				<maml:description>
+					<maml:para />
+				</maml:description>
+				<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>EnableFdp</maml:name>
+				<maml:description>
+					<maml:para />
+				</maml:description>
+				<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>EnableEdp</maml:name>
+				<maml:description>
+					<maml:para />
+				</maml:description>
+				<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>EnableSonmp</maml:name>
+				<maml:description>
+					<maml:para />
+				</maml:description>
+				<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+			</command:parameter>
+		</command:syntaxItem>
+	</command:syntax>
+	<command:parameters>
+		<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+			<maml:name>Enable</maml:name>
+			<maml:description>
+				<maml:para />
+			</maml:description>
+			<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+			<dev:type>
+				<maml:name>SwitchParameter</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+		<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+			<maml:name>EnableCdp</maml:name>
+			<maml:description>
+				<maml:para />
+			</maml:description>
+			<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+			<dev:type>
+				<maml:name>SwitchParameter</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+		<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+			<maml:name>EnableFdp</maml:name>
+			<maml:description>
+				<maml:para />
+			</maml:description>
+			<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+			<dev:type>
+				<maml:name>SwitchParameter</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+		<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+			<maml:name>EnableEdp</maml:name>
+			<maml:description>
+				<maml:para />
+			</maml:description>
+			<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+			<dev:type>
+				<maml:name>SwitchParameter</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+		<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+			<maml:name>EnableSonmp</maml:name>
+			<maml:description>
+				<maml:para />
+			</maml:description>
+			<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+			<dev:type>
+				<maml:name>SwitchParameter</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+	</command:parameters>
+	<command:inputTypes>
+		<command:inputType>
+			<dev:type>
+				<maml:name></maml:name>
+				<maml:uri></maml:uri>
+				<maml:description/>
+			</dev:type>
+			<maml:description>
+<maml:para />
+			</maml:description>
+		</command:inputType>
+	</command:inputTypes>
+	<command:returnValues>
+		<command:returnValue>
+			<dev:type>
+				<maml:name></maml:name>
+				<maml:uri></maml:uri>
+				<maml:description/>
+			</dev:type>
+			<maml:description>
+<maml:para />
+			</maml:description>
+		</command:returnValue>
+	</command:returnValues>
+	<command:terminatingErrors></command:terminatingErrors>
+	<command:nonTerminatingErrors></command:nonTerminatingErrors>
+	<maml:alertSet>
+		<maml:title></maml:title>
+		<maml:alert>
+			<maml:para />
+		</maml:alert>
+	</maml:alertSet>
+	<command:examples>
+	</command:examples>
+	<maml:relatedLinks>
+	</maml:relatedLinks>
+</command:command>
+<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<!--Generated by PS Cmdlet Help Editor-->
+	<command:details>
+		<command:name>Test-OPNsenseService</command:name>
+		<maml:description>
+			<maml:para />
+		</maml:description>
+		<maml:copyright>
+			<maml:para />
+		</maml:copyright>
+		<command:verb>Test</command:verb>
+		<command:noun>OPNsenseService</command:noun>
+		<dev:version />
+	</command:details>
+	<maml:description>
+		<maml:para />
+	</maml:description>
+	<command:syntax>
+		<command:syntaxItem>
+			<maml:name>Test-OPNsenseService</maml:name>
+			<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="true (ByValue, ByPropertyName)" position="1">
+				<maml:name>Name</maml:name>
+				<maml:description>
+					<maml:para />
+				</maml:description>
+				<command:parameterValue required="true" variableLength="true">String[]</command:parameterValue>
+			</command:parameter>
+		</command:syntaxItem>
+	</command:syntax>
+	<command:parameters>
+		<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="true (ByValue, ByPropertyName)" position="1">
+			<maml:name>Name</maml:name>
+			<maml:description>
+				<maml:para />
+			</maml:description>
+			<command:parameterValue required="true" variableLength="true">String[]</command:parameterValue>
+			<dev:type>
+				<maml:name>String[]</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+	</command:parameters>
+	<command:inputTypes>
+		<command:inputType>
+			<dev:type>
+				<maml:name></maml:name>
+				<maml:uri></maml:uri>
+				<maml:description/>
+			</dev:type>
+			<maml:description>
+<maml:para />
+			</maml:description>
+		</command:inputType>
+	</command:inputTypes>
+	<command:returnValues>
+		<command:returnValue>
+			<dev:type>
+				<maml:name></maml:name>
+				<maml:uri></maml:uri>
+				<maml:description/>
+			</dev:type>
+			<maml:description>
+<maml:para />
+			</maml:description>
+		</command:returnValue>
+	</command:returnValues>
+	<command:terminatingErrors></command:terminatingErrors>
+	<command:nonTerminatingErrors></command:nonTerminatingErrors>
+	<maml:alertSet>
+		<maml:title></maml:title>
+		<maml:alert>
+			<maml:para />
+		</maml:alert>
+	</maml:alertSet>
+	<command:examples>
+	</command:examples>
+	<maml:relatedLinks>
 	</maml:relatedLinks>
 </command:command>
 </helpItems>

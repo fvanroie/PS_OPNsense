@@ -21,6 +21,51 @@
     SOFTWARE.
 #>
 
+Function Remove-OPNsenseObject {
+    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
+    [CmdletBinding(
+        SupportsShouldProcess = $true,
+        ConfirmImpact = "Medium"
+    )]
+    Param(
+        [parameter(Mandatory = $true, position = 0)][String]$Module,
+        [parameter(Mandatory = $true, position = 1)][String]$Controller,
+        [Parameter(Mandatory = $true, position = 2)]
+        #[ValidateSet('Server', 'Backend', 'Frontend', 'Healthcheck', 'Errorfile', 'Lua', 'Acl', 'Action', 'Healthcheck')]
+        [String]$ObjectType,
+
+        [Parameter(Mandatory = $true, position = 3)]
+        [AllowEmptyCollection()]
+        [String[]]$Uuid
+    )
+    BEGIN {
+        $results = @()
+        # Get object list to match uuid to object name
+        #Some Plugins implement search commands in singular, default is plural
+        switch ($Module) {
+            { @("AcmeClient", "Freeradius", "IDS", "Monit", "Postfix", "ProxyUserACL", "Quagga", "Routes", "Siproxd", "Tinc", "Tor", "Zerotier") -Contains $_ } {           
+                $metadata = $(Invoke-OPNsenseCommand $Module $Controller $("search{0}" -f $ObjectType.ToLower())).rows
+            }
+            default {           
+                $metadata = $(Invoke-OPNsenseCommand $Module $Controller $("search{0}s" -f $ObjectType.ToLower())).rows
+            }
+        }
+    }
+    PROCESS {
+        foreach ($id in $Uuid) {
+            $item = $metadata | Where-Object { $_.Uuid -eq $id }
+            if ($PSCmdlet.ShouldProcess(("{0} {{{1}}}" -f $item.name, $id), "Remove $ObjectType")) {
+                $result = Invoke-OPNsenseCommand $Module $Controller $("del{0}/{1}" -f $ObjectType.ToLower(), $id) -Json $ObjectType.ToLower() -AddProperty @{ 'Uuid' = "$id"; 'Name' = "{0}" -f $item.Name }
+                #Test-Result $result | Out-Null
+                $results += $result
+            }    
+        }
+    }    
+    END {
+        return $results
+    }
+}
+
 Function Connect-OPNsense() {
     # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
     [CmdletBinding(DefaultParameterSetName = "Modern")]
@@ -58,7 +103,7 @@ Function Connect-OPNsense() {
     if ($OPNsenseApi) {
         Throw "ERROR : Already connected to $OPNsenseApi. Please use Disconnect-OPNsense first."
     }
-    $minversion = [System.Version]'18.2'
+    $minversion = [System.Version]'18.1.1'
     
     #$bytes = [System.Text.Encoding]::UTF8.GetBytes($Key + ":" + $Secret)
     #$Credentials = [System.Convert]::ToBase64String($bytes)
@@ -76,7 +121,7 @@ Function Connect-OPNsense() {
     if ($Result) {
         # Validate the connection result
         if ($Result.product_version) {
-            $warning = @"
+            Write-Warning @"
 
             THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
             IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -85,9 +130,8 @@ Function Connect-OPNsense() {
             LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
             OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
             SOFTWARE.
-            
+
 "@
-            Write-Warning $warning
 
             try {
                 $temp = Select-String -InputObject $result.product_version -pattern '[0-9\.]*' -AllMatches

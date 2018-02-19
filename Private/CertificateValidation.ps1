@@ -49,7 +49,7 @@ Function Set-CertificatePolicy() {
     Write-Debug ("Expect100Continue: " + $([System.Net.ServicePointManager]::Expect100Continue))
 }
 
-# Temporariy Disable certificate validation
+# Temporarily Disable certificate validation
 Function Disable-CertificateValidation() {
     [CmdletBinding()]
     Param()

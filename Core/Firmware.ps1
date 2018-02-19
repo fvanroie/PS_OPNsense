@@ -154,6 +154,36 @@ Function Invoke-OPNsenseAudit {
     return $result | Add-ObjectDetail -TypeName 'OPNsense.Firmware.Audit'
 }
 
+
+Function Get-OPNsenseUpdate {
+    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
+    param (
+        [SupportsWildcards()]    
+        [Parameter(Mandatory = $false, position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)]
+        [String[]]$Name,
+        [String]$Reason
+    )
+    BEGIN {
+        # Get all packages
+        $opn = Get-OPNsense
+        $updpkgnames = Get-Member -InputObject $opn.all_packages -MemberType NoteProperty | Select-Object -ExpandProperty name
+        
+        # No Name was passed
+        if (-Not $PSBoundParameters.ContainsKey('Name')) { $Name = '*' }
+
+        $allupdates = @()
+    }
+    PROCESS {
+        # Multiple Names can be passed
+        foreach ($updname in $updpkgnames) {
+            $allupdates += $opn.all_packages.$updname
+        }
+    }
+    END {
+        return $allupdates | Add-ObjectDetail -TypeName 'OPNsense.Firmware.Update' | Sort-Object Reason, Name
+    }
+}
+
 Function Get-OPNsense {
     # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
     [CmdletBinding(DefaultParameterSetName = 'Mirror')]

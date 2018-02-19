@@ -83,3 +83,27 @@ Function Update-OPNsenseIdsRule {
     # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
 
 }
+
+##### REMOVE Functions #####
+Function Remove-OPNsenseIdsUserRule {
+    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
+    [CmdletBinding(
+        SupportsShouldProcess = $true,
+        ConfirmImpact = "Medium"
+    )]
+    Param(
+        [parameter(Mandatory = $true, Position = 0, ValueFromPipelineByPropertyname = $true, ParameterSetName = "AsParam")]
+        [AllowEmptyCollection()]
+        [String[]]$Uuid
+    )
+    BEGIN {
+        $results = @()
+    }
+    PROCESS {
+        foreach ($id in $uuid) { $results += $id }
+    }
+    END {
+        if ($false) { $PSCmdlet.ShouldProcess() }         # Hide PSScriptAlalyzer warning
+        return Remove-OPNsenseObject ids settings UserRule -Uuid $results
+    }
+}
