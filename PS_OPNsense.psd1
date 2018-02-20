@@ -148,6 +148,7 @@
         'Enable-OPNsense', 'Get-OPNsenseUpdateStatus',
         'New-OPNsenseHAProxyObject',
         'Enable-OPNsenseObject',
+        'Get-MultiOption'
 
         'Enable-OPNsenseAcmeClient',
         'Enable-OPNsenseBgpAspath',

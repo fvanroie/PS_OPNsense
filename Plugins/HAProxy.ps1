@@ -28,7 +28,7 @@ Function ConvertTo-Boolean {
     )
     Return [String]$( if (([Int]$Val) -gt 0) {'1'} else {'0'} )
 }
-function Select-InputObject {
+function ConvertTo-InputObject {
     [CmdletBinding()]
     Param(
         [String]$paramset,
@@ -150,7 +150,7 @@ function Get-OPNsenseHAProxyDetail {
         $result = Invoke-OPNsenseCommand haproxy settings ("get{0}/{1}" -f $ObjectType.ToLower(), $Uuid) | Select-Object -ExpandProperty $ObjectType
         $result | Add-Member -MemberType NoteProperty -Name 'uuid' -Value $Uuid
         #Write-Host (ConvertTo-Json $result)
-        $result = Format-OPNsenseProperty $result
+        #$result = Format-OPNsenseProperty $result
         $results += $result
     }
     END {
@@ -369,7 +369,7 @@ Function New-OPNsenseHAProxyServer {
     }
     PROCESS {
         # Convert parameters to InputObject
-        $obj = Select-InputObject -paramset $PSCmdlet.ParameterSetName -psbounds $PSBoundParameters -InputObject $InputObject
+        $obj = ConvertTo-InputObject -paramset $PSCmdlet.ParameterSetName -psbounds $PSBoundParameters -InputObject $InputObject
         # Create new Object
         $result = New-OPNsenseHAProxyObject -ObjectType Server -InputObject $obj
         $results += $result
@@ -381,11 +381,42 @@ Function New-OPNsenseHAProxyServer {
 
 Function New-OPNsenseHAProxyBackend {
     # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
-    [CmdletBinding()]
-    param (
-        [PsObject]$Parameters
+    [CmdletBinding(DefaultParameterSetName = "AsParam")]  
+    Param(
+        [parameter(Position = 0, Mandatory = $true, ValueFromPipelineByPropertyname = $true, ParameterSetName = "AsObject")]
+        [PSObject[]]$InputObject,
+
+        [parameter(Mandatory = $true, ValueFromPipelineByPropertyname = $true)]
+        [ValidateSet(0, 1, '0', '1', $False, $True)]$Enabled,
+        [parameter(ValueFromPipelineByPropertyname = $true)][String]$Name,
+        [parameter(ValueFromPipelineByPropertyname = $true)][String]$Description,
+        [parameter(ValueFromPipelineByPropertyname = $true)]
+        [ValidateSet("HTTP", "TCP")][String]$Mode = "HTTP",
+        [parameter(ValueFromPipelineByPropertyname = $true)]
+        [ValidateSet("source", "roundrobin", "static-rr", "leastconn", "uri")][String]$Algorithm = "http",
+        [parameter(ValueFromPipelineByPropertyname = $true)][String]$Source,
+        [parameter(ValueFromPipelineByPropertyname = $true)][String[]]$LinkedServers,
+        [parameter(Mandatory = $true, ValueFromPipelineByPropertyname = $true)]
+        [ValidateSet(0, 1, '0', '1', $False, $True)]$HealthCheckEnabled,
+        [parameter(ValueFromPipelineByPropertyname = $true)][String[]]$HealthCheck,
+        [parameter(Mandatory = $true, ValueFromPipelineByPropertyname = $true)]
+        [ValidateSet(0, 1, '0', '1', $False, $True)]$HealthCheckLogStatus,
+        [parameter(ValueFromPipelineByPropertyname = $true)][String[]]$linkedActions,
+        [parameter(ValueFromPipelineByPropertyname = $true)][String[]]$linkedErrorfiles      
     )
-    return New-OPNsenseHAProxyObject Backend -InputObject $Parameters
+    BEGIN {
+        $results = @()
+    }
+    PROCESS {
+        # Convert parameters to InputObject
+        $obj = ConvertTo-InputObject -paramset $PSCmdlet.ParameterSetName -psbounds $PSBoundParameters -InputObject $InputObject
+        # Create new Object
+        $result = New-OPNsenseHAProxyObject -ObjectType Backend -InputObject $obj
+        $results += $result
+    }   
+    END {
+        return $results
+    } 
 }
 Function New-OPNsenseHAProxyFrontend {
     # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
@@ -413,7 +444,7 @@ Function New-OPNsenseHAProxyErrorfile {
     }
     PROCESS {
         # Convert parameters to InputObject
-        $obj = Select-InputObject -paramset $PSCmdlet.ParameterSetName -psbounds $PSBoundParameters -InputObject $InputObject
+        $obj = ConvertTo-InputObject -paramset $PSCmdlet.ParameterSetName -psbounds $PSBoundParameters -InputObject $InputObject
         # Create new Object
         $result = New-OPNsenseHAProxyObject -ObjectType Errorfile -InputObject $obj
         $results += $result
@@ -440,7 +471,7 @@ Function New-OPNsenseHAProxyLuaScript {
     }
     PROCESS {
         # Convert parameters to InputObject
-        $obj = Select-InputObject -paramset $PSCmdlet.ParameterSetName -psbounds $PSBoundParameters -InputObject $InputObject
+        $obj = ConvertTo-InputObject -paramset $PSCmdlet.ParameterSetName -psbounds $PSBoundParameters -InputObject $InputObject
         # Create new Object
         $result = New-OPNsenseHAProxyObject -ObjectType "Lua" -InputObject $obj
         $results += $result
@@ -471,7 +502,7 @@ Function New-OPNsenseHAProxyHealthCheck {
     }
     PROCESS {
         # Convert parameters to InputObject
-        $obj = Select-InputObject -paramset $PSCmdlet.ParameterSetName -psbounds $PSBoundParameters -InputObject $InputObject
+        $obj = ConvertTo-InputObject -paramset $PSCmdlet.ParameterSetName -psbounds $PSBoundParameters -InputObject $InputObject
         # Create new Object
         $result = New-OPNsenseHAProxyObject -ObjectType "Healthcheck" -InputObject $obj
         $results += $result
@@ -504,7 +535,7 @@ Function New-OPNsenseHAProxyAcl {
     }
     PROCESS {
         # Convert parameters to InputObject
-        $obj = Select-InputObject -paramset $PSCmdlet.ParameterSetName -psbounds $PSBoundParameters -InputObject $InputObject
+        $obj = ConvertTo-InputObject -paramset $PSCmdlet.ParameterSetName -psbounds $PSBoundParameters -InputObject $InputObject
         # Create new Object
         $result = New-OPNsenseHAProxyObject -ObjectType "Acl" -InputObject $obj
         $results += $result

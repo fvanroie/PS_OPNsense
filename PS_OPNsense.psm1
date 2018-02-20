@@ -30,12 +30,16 @@ if ($IsPSCoreEdition) {}
 ForEach ($Folder in 'Core', 'Plugins', 'Private', 'Public') {
     $Scripts = Get-ChildItem -Recurse -Filter '*.ps1' -Path ("{0}/{1}/" -f $PSScriptRoot, $Folder)
     ForEach ($Script in $Scripts) {
-        . $Script.FullName
+        Try {
+            . $Script.fullname
+        } Catch {
+            Write-Error -Message "Failed to import function {0}: {1}" -f $Script.name, $_
+        }
     }
 }
 
 
-Function Connect-OPNsense() {
+Function Connect-OPNsense {
     # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
     [CmdletBinding(DefaultParameterSetName = "Modern")]
     param (
@@ -131,7 +135,7 @@ Function Connect-OPNsense() {
     return $result  | Add-ObjectDetail -TypeName 'OPNsense.Core.Version'
 }
 
-Function Disconnect-OPNsense() {
+Function Disconnect-OPNsense {
     # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
     [CmdletBinding()]
     Param()
