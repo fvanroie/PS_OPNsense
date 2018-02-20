@@ -45,6 +45,8 @@ function ConvertTo-InputObject {
                 $key -notin [System.Management.Automation.PSCmdlet]::OptionalCommonParameters) {
                 if ($key -in 'enabled') {
                     $obj | Add-Member -MemberType NoteProperty -Name $key.tolower() -Value $PSBounds[$key] -Force
+                } elseif ($key -in 'bind', 'linkedErrorFiles') {
+                    $obj | Add-Member -MemberType NoteProperty -Name $key.tolower() -Value ($PSBounds[$key] -Join ',') -Force
                 } else {
                     $obj | Add-Member -MemberType NoteProperty -Name $key.tolower() -Value $PSBounds[$key] -Force
                 }
@@ -420,11 +422,60 @@ Function New-OPNsenseHAProxyBackend {
 }
 Function New-OPNsenseHAProxyFrontend {
     # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
-    [CmdletBinding()]
-    param (
-        [PsObject]$Parameters
+    [CmdletBinding(DefaultParameterSetName = "AsParam")]  
+    Param(
+        [parameter(Position = 0, Mandatory = $true, ValueFromPipelineByPropertyname = $true, ParameterSetName = "AsObject")]
+        [PSObject[]]$InputObject,
+
+        [parameter(Mandatory = $true, ValueFromPipelineByPropertyname = $true)]
+        [ValidateSet(0, 1, '0', '1', $False, $True)]$Enabled,
+        [parameter(Mandatory = $true, ValueFromPipelineByPropertyname = $true)][String]$Name,
+        [parameter(ValueFromPipelineByPropertyname = $true)][String]$Description,
+        [parameter(Mandatory = $true, ValueFromPipelineByPropertyname = $true)][String[]]$Bind,
+        [parameter(ValueFromPipelineByPropertyname = $true)][String]$BindOptions,
+        [parameter(Mandatory = $true, ValueFromPipelineByPropertyname = $true)]
+        [ValidateSet("HTTP", "SSL", "TCP")][String]$Mode = "HTTP",
+        [parameter(ValueFromPipelineByPropertyname = $true)][String]$DefaultBackend,
+        [parameter( ValueFromPipelineByPropertyname = $true)]
+        [ValidateSet(0, 1, '0', '1', $False, $True)]$sslEnabled,
+        [parameter(ValueFromPipelineByPropertyname = $true)][String]$ssl_customOptions,
+        [parameter(ValueFromPipelineByPropertyname = $true)]
+        [ValidateSet(0, 1, '0', '1', $False, $True)]$ssl_advancedEnabled,
+
+        [parameter(ValueFromPipelineByPropertyname = $true)][String]$CustomOptions,
+
+        [parameter(ValueFromPipelineByPropertyname = $true)]
+        [ValidateSet("http-keep-alive", "http-tunnel", "httpclose", "http-server-close", "foreclose")][String]$ConnectionBehaviour = "http-keep-alive",
+        [parameter(ValueFromPipelineByPropertyname = $true)][String]$ssl_default_certificate,
+        [parameter(ValueFromPipelineByPropertyname = $true)][String[]]$LinkedServers,
+
+        [parameter(ValueFromPipelineByPropertyname = $true)]
+        [ValidateSet(0, 1, '0', '1', $False, $True)]$logging_dontLogNull,
+        [parameter(ValueFromPipelineByPropertyname = $true)]
+        [ValidateSet(0, 1, '0', '1', $False, $True)]$logging_dontLogNormal,
+        [parameter(ValueFromPipelineByPropertyname = $true)]
+        [ValidateSet(0, 1, '0', '1', $False, $True)]$logging_logSeparateErrors,
+        [parameter(ValueFromPipelineByPropertyname = $true)]
+        [ValidateSet(0, 1, '0', '1', $False, $True)]$logging_detailedLog,
+        [parameter(ValueFromPipelineByPropertyname = $true)]
+        [ValidateSet(0, 1, '0', '1', $False, $True)]$logging_socketStats,
+
+        [parameter(ValueFromPipelineByPropertyname = $true)][String[]]$linkedActions,
+        [parameter(ValueFromPipelineByPropertyname = $true)][String[]]$linkedErrorfiles      
     )
-    return New-OPNsenseHAProxyObject Frontend -InputObject $Parameters
+    BEGIN {
+        $results = @()
+    }
+    PROCESS {
+        # Convert parameters to InputObject
+        $obj = ConvertTo-InputObject -paramset $PSCmdlet.ParameterSetName -psbounds $PSBoundParameters -InputObject $InputObject
+        # Create new Object
+        $result = New-OPNsenseHAProxyObject -ObjectType Frontend -InputObject $obj
+        $results += $result
+    }   
+    END {
+        return $results
+    } 
 }
 Function New-OPNsenseHAProxyErrorfile {
     # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml

@@ -1,20 +1,32 @@
 ### Do not remove the next line
 #Requires -Modules PS_OPNsense
 
-## Connect to OPNsense first
-# See Connect-OPNsense.ps1 script for an example of how to connect to OPNsense
+# # #   W A R N I N G   # # # # # # # # # # # # # # # # # # # # # # # #
+#
+#  This script makes changes on your OPNsense server,
+#  do NOT run this script against a production machine !
+#
+# New objects to be created are defined in the script below
+# They can also be imported from a file, database, other script, ...
+#
+# Connect to OPNsense first
+# See Connect-OPNsense.ps1 script for an example of how to connect
 
 $beVerbose = $false
 
-# Objects to be created are defined in the script below
-# They could also be imported from a file, database, other script, ...
+# Make sure HAproxy is installed
+$haproxy = Get-OPNsensePackage 'os-haproxy'
+If (-Not $haproxy.installed) {
+    $haproxy | Install-OPNsensePackage -Verbose:$beVerbose
+} else {
+    Write-Host "HAProxy plugin-in is already installed!"
+}
 
-
-# Create 10 Backend server objects
+# Create some Backend server objects
 $webservers = 1..3 | foreach-Object {
     [PSCustomObject]@{
         'name'        = ("web" + $_.tostring("000"));
-        'address'     = "10.1.0.$_";
+        'address'     = "192.168.0.$_";
         'port'        = '80';
         'description' = "Created {0}" -f [DateTime]::now
     }
@@ -65,15 +77,15 @@ $luascripts | Format-Table *
 # Create Frontend service
 
 
-
+# Test and Apply the new configuration
 Write-Host -ForegroundColor Green ("Checking configuration...")
 Test-OPNsenseService -Name HAProxy | Select-Object -ExpandProperty Result
 
-Write-Host -ForegroundColor Green ("Applying configuration...")
+Write-Host -ForegroundColor Green ("Applying the configuration...")
 Update-OPNsenseService -Name HAProxy | Select-Object -Property Status | Format-List
 
 
-# Remove the created objects, request confirmation
+# Optionally remove the created objects, request confirmation
 $webservers | Remove-OPNsenseHAProxyServer -Confirm -Verbose:$beVerbose
 $errorfiles | Remove-OPNsenseHAProxyErrorfile -Confirm -Verbose:$beVerbose
 $luascripts | Remove-OPNsenseHAProxyLuaScript -Confirm -Verbose:$beVerbose
