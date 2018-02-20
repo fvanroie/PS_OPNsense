@@ -1,6 +1,6 @@
 <#  MIT License
 
-    Copyright (c) 2017 fvanroie
+    Copyright (c) 2018 fvanroie, NetwiZe.be
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -672,14 +672,15 @@ Function Remove-OPNsenseHAProxyServer {
         [String[]]$Uuid
     )
     BEGIN {
-        $results = @()
+        $uuids = @()
     }
     PROCESS {
-        foreach ($id in $uuid) { $results += $id }
+        #foreach ($id in $uuid) { $results += $id }
+        $uuids += $uuid
     }
     END {
         if ($false) { $PSCmdlet.ShouldProcess() }         # Hide PSScriptAlalyzer warning
-        return Remove-OPNsenseObject haproxy settings Server -Uuid $results
+        return Remove-OPNsenseObject haproxy settings server "HAProxy Server" -Uuid $uuids
     }
 }
 Function Remove-OPNsenseHAProxyBackend {
@@ -694,14 +695,15 @@ Function Remove-OPNsenseHAProxyBackend {
         [String[]]$Uuid
     )
     BEGIN {
-        $results = @()
+        $uuids = @()
     }
     PROCESS {
-        foreach ($id in $uuid) { $results += $id }
+        #foreach ($id in $uuid) { $results += $id }
+        $uuids += $uuid
     }
     END {
         if ($false) { $PSCmdlet.ShouldProcess() }         # Hide PSScriptAlalyzer warning
-        return Remove-OPNsenseObject haproxy settings Backend -Uuid $results
+        return Remove-OPNsenseObject haproxy settings backend "HAProxy Backend" -Uuid $uuids
     }
 }
 Function Remove-OPNsenseHAProxyFrontend {
@@ -716,14 +718,15 @@ Function Remove-OPNsenseHAProxyFrontend {
         [String[]]$Uuid
     )
     BEGIN {
-        $results = @()
+        $uuids = @()
     }
     PROCESS {
-        foreach ($id in $uuid) { $results += $id }
+        #foreach ($id in $uuid) { $results += $id }
+        $uuids += $uuid
     }
     END {
         if ($false) { $PSCmdlet.ShouldProcess() }         # Hide PSScriptAlalyzer warning
-        return Remove-OPNsenseObject haproxy settings Frontend -Uuid $results
+        return Remove-OPNsenseObject haproxy settings frontend "HAProxy Frontend" -Uuid $uuids
     }
 }
 Function Remove-OPNsenseHAProxyHealthCheck {
@@ -738,14 +741,15 @@ Function Remove-OPNsenseHAProxyHealthCheck {
         [String[]]$Uuid
     )
     BEGIN {
-        $results = @()
+        $uuids = @()
     }
     PROCESS {
-        foreach ($id in $uuid) { $results += $id }
+        #foreach ($id in $uuid) { $results += $id }
+        $uuids += $uuid
     }
     END {
         if ($false) { $PSCmdlet.ShouldProcess() }         # Hide PSScriptAlalyzer warning
-        return Remove-OPNsenseObject haproxy settings HealthCheck -Uuid $results
+        return Remove-OPNsenseObject haproxy settings healthcheck "HAProxy HealthCheck" -Uuid $uuids
     }
 }
 Function Remove-OPNsenseHAProxyAcl {
@@ -760,14 +764,15 @@ Function Remove-OPNsenseHAProxyAcl {
         [String[]]$Uuid
     )
     BEGIN {
-        $results = @()
+        $uuids = @()
     }
     PROCESS {
-        foreach ($id in $uuid) { $results += $id }
+        #foreach ($id in $uuid) { $results += $id }
+        $uuids += $uuid
     }
     END {
         if ($false) { $PSCmdlet.ShouldProcess() }         # Hide PSScriptAlalyzer warning
-        return Remove-OPNsenseObject haproxy settings Acl -Uuid $results
+        return Remove-OPNsenseObject haproxy settings acl "HAProxy Acl" -Uuid $uuids
     }
 }
 Function Remove-OPNsenseHAProxyAction {
@@ -782,14 +787,15 @@ Function Remove-OPNsenseHAProxyAction {
         [String[]]$Uuid
     )
     BEGIN {
-        $results = @()
+        $uuids = @()
     }
     PROCESS {
-        foreach ($id in $uuid) { $results += $id }
+        #foreach ($id in $uuid) { $results += $id }
+        $uuids += $uuid
     }
     END {
         if ($false) { $PSCmdlet.ShouldProcess() }         # Hide PSScriptAlalyzer warning
-        return Remove-OPNsenseObject haproxy settings Action -Uuid $results
+        return Remove-OPNsenseObject haproxy settings action "HAProxy Action" -Uuid $uuids
     }
 }
 Function Remove-OPNsenseHAProxyErrorfile {
@@ -804,14 +810,15 @@ Function Remove-OPNsenseHAProxyErrorfile {
         [String[]]$Uuid
     )
     BEGIN {
-        $results = @()
+        $uuids = @()
     }
     PROCESS {
-        foreach ($id in $uuid) { $results += $id }
+        #foreach ($id in $uuid) { $results += $id }
+        $uuids += $uuid
     }
     END {
         if ($false) { $PSCmdlet.ShouldProcess() }         # Hide PSScriptAlalyzer warning
-        return Remove-OPNsenseObject haproxy settings Errorfile -Uuid $results
+        return Remove-OPNsenseObject haproxy settings errorfile "HAProxy Errorfile" -Uuid $uuids
     }
 }
 Function Remove-OPNsenseHAProxyLuaScript {
@@ -826,13 +833,14 @@ Function Remove-OPNsenseHAProxyLuaScript {
         [String[]]$Uuid
     )
     BEGIN {
-        $results = @()
+        $uuids = @()
     }
     PROCESS {
-        foreach ($id in $uuid) { $results += $id }
+        #foreach ($id in $uuid) { $results += $id }
+        $uuids += $uuid
     }
     END {
         if ($false) { $PSCmdlet.ShouldProcess() }         # Hide PSScriptAlalyzer warning
-        return Remove-OPNsenseObject haproxy settings Lua -Uuid $results
+        return Remove-OPNsenseObject haproxy settings lua "HAProxy Lua Script" -Uuid $uuids
     }
 }

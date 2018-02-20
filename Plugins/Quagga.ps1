@@ -35,14 +35,15 @@ Function Remove-OPNsenseBgpNeighbor {
         [String[]]$Uuid
     )
     BEGIN {
-        $results = @()
+        $uuids = @()
     }
     PROCESS {
-        foreach ($id in $uuid) { $results += $id }
+        #foreach ($id in $uuid) { $results += $id }
+        $uuids += $uuid
     }
     END {
         if ($false) { $PSCmdlet.ShouldProcess() }         # Hide PSScriptAlalyzer warning
-        return Remove-OPNsenseObject quagga bgp Neighbor -Uuid $results
+        return Remove-OPNsenseObject quagga bgp neighbor "BGP Neighbor" -Uuid $uuids
     }
 }
 Function Remove-OPNsenseBgpAspath {
@@ -57,14 +58,15 @@ Function Remove-OPNsenseBgpAspath {
         [String[]]$Uuid
     )
     BEGIN {
-        $results = @()
+        $uuids = @()
     }
     PROCESS {
-        foreach ($id in $uuid) { $results += $id }
+        #foreach ($id in $uuid) { $results += $id }
+        $uuids += $uuid
     }
     END {
         if ($false) { $PSCmdlet.ShouldProcess() }         # Hide PSScriptAlalyzer warning
-        return Remove-OPNsenseObject quagga bgp Aspath -Uuid $results
+        return Remove-OPNsenseObject quagga bgp aspath "BGP Aspath" -Uuid $uuids
     }
 }
 Function Remove-OPNsenseBgpPrefixlist {
@@ -79,14 +81,15 @@ Function Remove-OPNsenseBgpPrefixlist {
         [String[]]$Uuid
     )
     BEGIN {
-        $results = @()
+        $uuids = @()
     }
     PROCESS {
-        foreach ($id in $uuid) { $results += $id }
+        #foreach ($id in $uuid) { $results += $id }
+        $uuids += $uuid
     }
     END {
         if ($false) { $PSCmdlet.ShouldProcess() }         # Hide PSScriptAlalyzer warning
-        return Remove-OPNsenseObject quagga bgp Prefixlist -Uuid $results
+        return Remove-OPNsenseObject quagga bgp prefixlist "BGP Prefixlist" -Uuid $uuids
     }
 }
 Function Remove-OPNsenseBgpRoutemap {
@@ -101,14 +104,15 @@ Function Remove-OPNsenseBgpRoutemap {
         [String[]]$Uuid
     )
     BEGIN {
-        $results = @()
+        $uuids = @()
     }
     PROCESS {
-        foreach ($id in $uuid) { $results += $id }
+        #foreach ($id in $uuid) { $results += $id }
+        $uuids += $uuid
     }
     END {
         if ($false) { $PSCmdlet.ShouldProcess() }         # Hide PSScriptAlalyzer warning
-        return Remove-OPNsenseObject quagga bgp Routemap -Uuid $results
+        return Remove-OPNsenseObject quagga bgp routemap "BGP Routemap" -Uuid $uuids
     }
 }
 Function Remove-OPNsenseOspf6Interface {
@@ -123,14 +127,15 @@ Function Remove-OPNsenseOspf6Interface {
         [String[]]$Uuid
     )
     BEGIN {
-        $results = @()
+        $uuids = @()
     }
     PROCESS {
-        foreach ($id in $uuid) { $results += $id }
+        #foreach ($id in $uuid) { $results += $id }
+        $uuids += $uuid
     }
     END {
         if ($false) { $PSCmdlet.ShouldProcess() }         # Hide PSScriptAlalyzer warning
-        return Remove-OPNsenseObject quagga ospf6settings Interface -Uuid $results
+        return Remove-OPNsenseObject quagga ospf6settings interface "Ospf6 Interface" -Uuid $uuids
     }
 }
 Function Remove-OPNsenseOspfNetwork {
@@ -145,14 +150,15 @@ Function Remove-OPNsenseOspfNetwork {
         [String[]]$Uuid
     )
     BEGIN {
-        $results = @()
+        $uuids = @()
     }
     PROCESS {
-        foreach ($id in $uuid) { $results += $id }
+        #foreach ($id in $uuid) { $results += $id }
+        $uuids += $uuid
     }
     END {
         if ($false) { $PSCmdlet.ShouldProcess() }         # Hide PSScriptAlalyzer warning
-        return Remove-OPNsenseObject quagga ospfsettings Network -Uuid $results
+        return Remove-OPNsenseObject quagga ospfsettings network "Ospf Network" -Uuid $uuids
     }
 }
 Function Remove-OPNsenseOspfInterface {
@@ -167,14 +173,15 @@ Function Remove-OPNsenseOspfInterface {
         [String[]]$Uuid
     )
     BEGIN {
-        $results = @()
+        $uuids = @()
     }
     PROCESS {
-        foreach ($id in $uuid) { $results += $id }
+        #foreach ($id in $uuid) { $results += $id }
+        $uuids += $uuid
     }
     END {
         if ($false) { $PSCmdlet.ShouldProcess() }         # Hide PSScriptAlalyzer warning
-        return Remove-OPNsenseObject quagga ospfsettings Interface -Uuid $results
+        return Remove-OPNsenseObject quagga ospfsettings interface "Ospf Interface" -Uuid $uuids
     }
 }
 Function Remove-OPNsenseOspfPrefixlist {
@@ -189,13 +196,14 @@ Function Remove-OPNsenseOspfPrefixlist {
         [String[]]$Uuid
     )
     BEGIN {
-        $results = @()
+        $uuids = @()
     }
     PROCESS {
-        foreach ($id in $uuid) { $results += $id }
+        #foreach ($id in $uuid) { $results += $id }
+        $uuids += $uuid
     }
     END {
         if ($false) { $PSCmdlet.ShouldProcess() }         # Hide PSScriptAlalyzer warning
-        return Remove-OPNsenseObject quagga ospfsettings Prefixlist -Uuid $results
+        return Remove-OPNsenseObject quagga ospfsettings prefixlist "Ospf Prefixlist" -Uuid $uuids
     }
 }

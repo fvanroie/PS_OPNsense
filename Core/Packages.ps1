@@ -150,7 +150,7 @@ Function Install-OPNsensePackage {
     }
 }
 
-Function Remove-OPNsensePackage {
+Function Uninstall-OPNsensePackage {
     # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
     param (
         [Parameter(Mandatory = $true, position = 1, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)][String[]]$Name
