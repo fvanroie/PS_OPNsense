@@ -1,16 +1,15 @@
-### Do not remove the next line
 #Requires -Modules PS_OPNsense
 
 # # #   W A R N I N G   # # # # # # # # # # # # # # # # # # # # # # # #
 #
-#  This script makes changes on your OPNsense server,
+#  This script makes changes on your OPNsense appliance,
 #  do NOT run this script against a production machine !
 #
 # New objects to be created are defined in the script below
 # They can also be imported from a file, database, other script, ...
 #
-# Connect to OPNsense first
-# See Connect-OPNsense.ps1 script for an example of how to connect
+# Note: Connect to OPNsense first
+#       See Connect.Example.ps1 file for an example of how to connect
 
 $beVerbose = $false
 
@@ -31,7 +30,7 @@ $webservers = 1..3 | foreach-Object {
         'description' = "Created {0}" -f [DateTime]::now
     }
 }
-Write-Host -ForegroundColor Green ("Creating {0} {1}..." -f $webservers.count, "webservers")
+Write-Host -ForegroundColor Green ("Creating {0} webservers..." -f $webservers.count)
 
 # Actually create these Servers in OPNsense and capture the generated UUIDs
 $webservers = $webservers | New-OPNsenseHAProxyServer -Verbose:$beVerbose
@@ -48,10 +47,10 @@ $errorfiles = 200, 400, 403, 405, 408, 429, 500, 502, 503, 504 | foreach-Object 
         'content'     = '### Error template {0}' -f $_
     }
 }
-Write-Host -ForegroundColor Green ("Creating {0} {1}..." -f $errorfiles.count, "errorfiles")
+Write-Host -ForegroundColor Green ("Creating {0} errorfiles..." -f $errorfiles.count)
 
 # Actually create these ErrorFiles in OPNsense and capture the generated UUIDs
-$errorfiles = $errorfiles | New-OPNsenseHAProxyErrorfile -Verbose:$beVerbose    # Capture the UUIDs
+$errorfiles = $errorfiles | New-OPNsenseHAProxyErrorfile -Verbose:$beVerbose
 # Display the result
 $errorfiles | Format-Table *
 
@@ -65,10 +64,10 @@ $luascripts = 1..2 | foreach-Object {
         'description' = "Created {0}" -f [DateTime]::now
     }
 }
-Write-Host -ForegroundColor Green ("Creating {0} {1}..." -f $luascripts.count, "luascripts")
+Write-Host -ForegroundColor Green ("Creating {0} luascripts..." -f $luascripts.count)
 
 # Actually create these LuaScripts in OPNsense and capture the generated UUIDs
-$luascripts = $luascripts | New-OPNsenseHAProxyLuaScript -Verbose:$beVerbose    # Capture the UUIDs
+$luascripts = $luascripts | New-OPNsenseHAProxyLuaScript -Verbose:$beVerbose
 # Display the result
 $luascripts | Format-Table *
 
