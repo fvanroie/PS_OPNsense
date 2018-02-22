@@ -22,12 +22,6 @@
 #>
 
 
-Function ConvertTo-Boolean {
-    Param(
-        $Val
-    )
-    Return [String]$( if (([Int]$Val) -gt 0) {'1'} else {'0'} )
-}
 function ConvertTo-InputObject {
     [CmdletBinding()]
     Param(
@@ -35,7 +29,7 @@ function ConvertTo-InputObject {
         [HashTable]$psbounds,
         [PSObject]$InputObject
     )
-    Write-Verbose $paramset
+    Write-Verbose "Parameterset : $paramset"
     Write-Verbose (ConvertTo-Json $psbounds)
     if ($InputObject) { Write-Verbose (ConvertTo-Json $InputObject) }
     if ($paramSet -eq "AsParam") {

@@ -28,7 +28,7 @@ if ($IsPSCoreEdition) {}
 
 # Load individual functions from scriptfiles
 ForEach ($Folder in 'Core', 'Plugins', 'Private', 'Public') {
-    $Scripts = Get-ChildItem -Recurse -Filter '*.ps1' -Path ("{0}/{1}/" -f $PSScriptRoot, $Folder)
+    $Scripts = Get-ChildItem -Recurse -Filter '*.ps1' -Path ("{0}/{1}/" -f $PSScriptRoot, $Folder) | Where-Object { $_.Name -notlike '*.Tests.ps1' }
     ForEach ($Script in $Scripts) {
         Try {
             . $Script.fullname

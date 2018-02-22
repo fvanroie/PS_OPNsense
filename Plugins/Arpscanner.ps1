@@ -21,6 +21,7 @@
     SOFTWARE.
 #>
 
+<#
 function Get-OPNsenseArpScanner {
     # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
     [CmdletBinding()]
@@ -33,7 +34,7 @@ function Get-OPNsenseArpScanner {
 
     }
     Return $arpscanner.general | Add-ObjectDetail -TypeName 'OPNsense.Plugin.ArpScanner.Peer'
-}
+} #>
 
 Function Start-OPNsenseArpScanner {
     # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
