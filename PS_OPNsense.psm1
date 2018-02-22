@@ -40,7 +40,7 @@ ForEach ($Folder in 'Core', 'Plugins', 'Private', 'Public') {
             }
 
         } Catch {
-            Write-Error -Message "Failed to import function {0}: {1}" -f $Script.name, $_
+            Write-Error -Message ("Failed to import function {0}: {1}" -f $Script.name, $_)
         }
     }
 }
