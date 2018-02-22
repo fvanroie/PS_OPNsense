@@ -31,13 +31,19 @@ ForEach ($Folder in 'Core', 'Plugins', 'Private', 'Public') {
     $Scripts = Get-ChildItem -Recurse -Filter '*.ps1' -Path ("{0}/{1}/" -f $PSScriptRoot, $Folder) | Where-Object { $_.Name -notlike '*.Tests.ps1' }
     ForEach ($Script in $Scripts) {
         Try {
+            # Dot Source the function
             . $Script.fullname
+
+            # Export Public Function only
+            if ($Folder -eq 'Public') {
+                Export-ModuleMember $script.basename
+            }
+
         } Catch {
             Write-Error -Message "Failed to import function {0}: {1}" -f $Script.name, $_
         }
     }
 }
-
 
 Function Connect-OPNsense {
     # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
@@ -270,3 +276,52 @@ Function Enable-OPNsense {
         return $result
     }
 }
+
+Export-ModuleMember -Function Connect-OPNsense, Disconnect-OPNsense, Invoke-OPNsenseCommand, Invoke-OPNsenseAudit
+$f = @(########## PLUGINS ##########
+    # ArpScanner
+    'Update-OPNsenseArp', #'Get-OPNsenseArpScanner', 'Start-OPNsenseArpScanner', 'Wait-OPNsenseArpScanner', 'Stop-OPNsenseArpScanner',
+    # ClamAV
+    'Get-OPNsenseClamAV', 'Set-OPNsenseClamAV',
+    # Collectd
+    'Get-OPNsenseCollectd', 'Set-OPNsenseCollectd',
+    # Lldpd
+    'Get-OPNsenseLldp', 'Set-OPNsenseLldp',
+    # HAProxy
+    'New-OPNsenseHAProxyServer', 'New-OPNsenseHAProxyFrontend', 'New-OPNsenseHAProxyBackend', 'New-OPNsenseHAProxyErrorfile', 'New-OPNsenseHAProxyLuaScript', 'New-OPNsenseHAProxyAcl', 'New-OPNsenseHAProxyHealthCheck',
+    'Get-OPNsenseHAProxyServer', 'Get-OPNsenseHAProxyFrontend', 'Get-OPNsenseHAProxyBackend', 'Get-OPNsenseHAProxyErrorfile', 'Get-OPNsenseHAProxyLuaScript', 'Get-OPNsenseHAProxyAcl', 'Get-OPNsenseHAProxyHealthCheck', 'Get-OPNsenseHAProxyAction', 
+    'Set-OPNsenseHAProxyServer', 'Set-OPNsenseHAProxyLuaScript',
+   
+
+    ########## CORE ##########
+    # PS_OPNsense
+    #'Connect-OPNsense', 'Disconnect-OPNsense',
+    # RestApi
+    'Invoke-OPNsenseCommand',
+    # Firmware
+    'Get-OPNsense', 'Stop-OPNsense', 'Restart-OPNsense', 
+    'Set-OPNsense',
+    'Update-OPNsense', 'Invoke-OPNsenseAudit', 'Get-OPNsenseUpdate'
+    # Packages
+    'Get-OPNsensePackage', 'Lock-OPNsensePackage', 'Unlock-OPNsensePackage', 'Install-OPNsensePackage', 'Uninstall-OPNsensePackage',
+    'Get-OPNsensePlugin',
+    # Cron
+    'Get-OPNsenseCronJob', 'Enable-OPNsenseCronJob', 'Disable-OPNsenseCronJob', 'Remove-OPNsenseCronJob',
+    'New-OPNsenseCronJob', 'Set-OPNsenseCronJob',
+    #IDS
+    'Get-OPNsenseIdsUserRule', 'New-OPNsenseIdsUserRule', 'Remove-OPNsenseIdsUserRule',
+    'Get-OPNsenseIdsAlert',
+    # Proxy
+    'New-OPNsenseProxyRemoteBlacklist', 'Get-OPNsenseProxyRemoteBlacklist', 'Remove-OPNsenseProxyRemoteBlacklist',
+    'Sync-OPNsenseProxyRemoteBlacklist',
+    # CaptivePortal
+    'New-OPNsenseCaptivePortalZone', 'Remove-OPNsenseCaptivePortalZone',
+    'New-OPNsenseCaptivePortalTemplate', 'Get-OPNsenseCaptivePortalTemplate', 'Set-OPNsenseCaptivePortalTemplate', 'Remove-OPNsenseCaptivePortalTemplate', 'Save-OPNsenseCaptivePortalTemplate',
+    'Get-OPNsenseCaptivePortal',
+    # Diagnostics
+    'Get-OPNsenseSystemHealth', 'Get-OPNsenseResource', 'Get-OPNsenseInterface', 'Get-OPNsenseRoute', 'Get-OPNsenseARP', 'Clear-OPNsenseARP',
+    # Services
+    'Get-OPNsenseService', 'Start-OPNsenseService', 'Update-OPNsenseService', 'Test-OPNsenseService', 'Restart-OPNsenseService', 'Stop-OPNsenseService', 'Invoke-OPNsenseService',
+    # TrafficShaper
+    'Remove-OPNsenseTrafficShaperPipe', 'Remove-OPNsenseTrafficShaperQueue', 'Remove-OPNsenseTrafficShaperRule')
+Export-ModuleMember -Function $f

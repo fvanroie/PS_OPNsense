@@ -142,6 +142,8 @@
         #'Legacy/Backup.ps1'
     )
 
+    FunctionsToExport      = '*'
+    <#
     # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
     FunctionsToExport      = @(
         ########## TEST ##########
@@ -292,7 +294,7 @@
 
         ########## CORE ##########
         # PS_OPNsense
-        'Connect-OPNsense', 'Disconnect-OPNsense',
+        #'Connect-OPNsense', 'Disconnect-OPNsense',
         # RestApi
         'Invoke-OPNsenseCommand',
         # Firmware
@@ -327,6 +329,7 @@
         # TrafficShaper
         'Remove-OPNsenseTrafficShaperPipe', 'Remove-OPNsenseTrafficShaperQueue', 'Remove-OPNsenseTrafficShaperRule'
     )
+#>
 
     # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
     CmdletsToExport        = @()
