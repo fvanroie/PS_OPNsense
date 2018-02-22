@@ -1,4 +1,4 @@
-# Examples Scripts
+# Example Scripts
 
 ## Disclaimer
 Some of these examples **will** make permanent changes to your OPNsense server.
