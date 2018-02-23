@@ -56,7 +56,7 @@ Function Remove-OPNsenseObject {
         foreach ($id in $Uuid) {
             $item = $metadata | Where-Object { $_.Uuid -eq $id }
             if ($PSCmdlet.ShouldProcess(("{0} {{{1}}}" -f $item.name, $id), "Remove $ObjectType")) {
-                $result = Invoke-OPNsenseCommand $Module $Controller $("del{0}/{1}" -f $Command.ToLower(), $id) -Json $ObjectType.ToLower() -AddProperty @{ 'Uuid' = "$id"; 'Name' = "{0}" -f $item.Name }
+                $result = Invoke-OPNsenseCommand $Module $Controller $("del{0}/{1}" -f $Command.ToLower(), $id) -Json 'del' -AddProperty @{ 'Uuid' = "$id"; 'Name' = "{0}" -f $item.Name }
                 #Test-Result $result | Out-Null
                 $results += $result
             }    

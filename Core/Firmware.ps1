@@ -135,16 +135,17 @@ Function Invoke-OPNsenseAudit {
         # Raw Output
         if ([bool]::Parse($Raw)) { Return $log }
 
-        # Parsed Output
-        $AuditPattern = '(.*):\n(.*)\nCVE: (.*)\nWWW: (.*)'
+        # Parse Output
+        $AuditPattern = '(?i)(.*):\n(.*)\n((CVE: .*\n)*)WWW: (.*)\n\n'
         $cves = Select-String -InputObject $log -Pattern $AuditPattern -AllMatches
         $result = @()
         foreach ($cve in $cves.matches) {
+            $cvenrs = Select-String -InputObject $cve.groups[3].value -Pattern 'CVE: (.*)' -AllMatches | Select-Object -expand matches | ForEach-Object { $_.groups[1].value }
             $argHash = @{
-                CVE   = $cve.groups[3].value;
-                Issue = $cve.groups[1].value;
+                CVE   = $cvenrs;
+                Issue = $cve.groups[1].value -join ',';
                 Title = $cve.groups[2].value;
-                Url   = $cve.groups[4].value
+                Url   = $cve.groups[5].value
             }
             $result += New-Object PSObject -Property $argHash
         }

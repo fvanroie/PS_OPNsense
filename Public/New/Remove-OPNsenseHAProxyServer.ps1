@@ -25,7 +25,7 @@ Function Remove-OPNsenseHAProxyServer {
     # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
     [CmdletBinding(
         SupportsShouldProcess = $true,
-        ConfirmImpact = "Medium"
+        ConfirmImpact = "High"
     )]
     Param(
         [parameter(Mandatory = $true, Position = 0, ValueFromPipelineByPropertyname = $true, ParameterSetName = "AsParam")]
