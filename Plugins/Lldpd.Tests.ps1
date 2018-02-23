@@ -1,5 +1,12 @@
 InModuleScope PS_OPNsense {
 
+    Function Compare-Json ($value, $expected) {
+        [String]::Compare(($value | ConvertTo-Json -Depth 15), ($expected | ConvertTo-Json -Depth 15), $true)
+    }
+
+    Function Test-ObjectType ($obj) {
+        return ($obj | Get-Member | Select-Object -ExpandProperty TypeName -First 1)
+    }
 
     Describe "LLDP plugin" {
         Context "Get-OPNsenseLlpd" {
