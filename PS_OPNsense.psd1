@@ -1,6 +1,6 @@
 <#  MIT License
 
-    Copyright (c) 2017 fvanroie
+    Copyright (c) 2018 fvanroie, NetwiZe.be
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -30,7 +30,6 @@
 #
 
 @{
-
     # Script module or binary module file associated with this manifest.
     RootModule             = 'PS_OPNsense.psm1'
 
@@ -50,7 +49,7 @@
     CompanyName            = 'netwiZe.be'
 
     # Copyright statement for this module
-    Copyright              = '(c) 2018 fvanroie. All rights reserved.'
+    Copyright              = '(c) 2018 fvanroie, NetwiZe.be. All rights reserved.'
 
     # Description of the functionality provided by this module
     Description            = 'PowerShell Module for OPNsense REST api'
@@ -100,34 +99,7 @@
 
     # Modules to import as nested modules of the module specified in RootModule/ModuleToProcess
     NestedModules          = @(
-        # Main Module
-        #'PS_OPNsense.ps1',
-        <#
-        # Core Functionality
-        'Core/CaptivePortal.ps1',
-        'Core/Cron.ps1',
-        'Core/Diagnostics.ps1',
-        'Core/Firmware.ps1',
-        'Core/Ids.ps1',
-        'Core/Packages.ps1',
-        'Core/Proxy.ps1',
-        'Core/Services.ps1',
-        'Core/TrafficShaper.ps1',
-
-        # Optional Installable Plugin Packages 
-        'Plugins/ArpScanner.ps1',
-        'Plugins/ClamAV.ps1',
-        'Plugins/Collectd.ps1',
-        'Plugins/Freeradius.ps1',
-        'Plugins/HAProxy.ps1',
-        'Plugins/Lldpd.ps1',
-        'Plugins/Postfix.ps1',
-        'Plugins/Quagga.ps1',
-        'Plugins/Siproxd.ps1',
-        'Plugins/Tinc.ps1',
-        'Plugins/Tor.ps1',
-        'Plugins/Zerotier.ps1',
-        
+        <# These are now dor sourced from the .psm1 loader sript
         # Private Helper Function
         'Private/Add-ObjectDetail.ps1',
         'Private/CertificateValidation.ps1',
@@ -135,11 +107,7 @@
         'Private/Remove-OPNsenseObject.ps1',
         'Private/Enable-OPNsenseObject.ps1',
         'Private/RestApi.ps1'
-  
         #>
-
-        # Legacy WebGUI Commands
-        #'Legacy/Backup.ps1'
     )
 
     FunctionsToExport      = '*'
@@ -151,115 +119,6 @@
         'New-OPNsenseHAProxyObject',
         'Enable-OPNsenseObject',
         'Get-MultiOption'
-
-        'Enable-OPNsenseAcmeClient',
-        'Enable-OPNsenseBgpAspath',
-        'Enable-OPNsenseBgpNeighbor',
-        'Enable-OPNsenseBgpPrefixlist',
-        'Enable-OPNsenseBgpRoutemap',
-        'Enable-OPNsenseCaptivePortalZone',
-        'Enable-OPNsenseCronJob',
-        'Enable-OPNsenseFreeradiusClient',
-        'Enable-OPNsenseFreeradiusUser',
-        'Enable-OPNsenseHAProxyBackend',
-        'Enable-OPNsenseHAProxyFrontend',
-        'Enable-OPNsenseHAProxyLua',
-        'Enable-OPNsenseIDSRule',
-        'Enable-OPNsenseIDSRuleset',
-        'Enable-OPNsenseIDSUserRule',
-        'Enable-OPNsenseMonit',
-        'Enable-OPNsenseOspf6Interface',
-        'Enable-OPNsenseOspfInterface',
-        'Enable-OPNsenseOspfNetwork',
-        'Enable-OPNsenseOspfPrefixlist',
-        'Enable-OPNsensePostfixDomain',
-        'Enable-OPNsensePostfixRecipient',
-        'Enable-OPNsensePostfixSender',
-        'Enable-OPNsenseProxyRemoteBlacklist',
-        'Enable-OPNsenseRelayd',
-        'Enable-OPNsenseRoutesroute',
-        'Enable-OPNsenseSiproxdDomain',
-        'Enable-OPNsenseSiproxdUser',
-        'Enable-OPNsenseTincHost',
-        'Enable-OPNsenseTincNetwork',
-        'Enable-OPNsenseTorExitacl',
-        'Enable-OPNsenseTorHiddenservice',
-        'Enable-OPNsenseTorHiddenserviceacl',
-        'Enable-OPNsenseTorHiddenServiceAuth',
-        'Enable-OPNsenseTorSocksacl',
-        'Enable-OPNsenseTrafficShaperPipe',
-        'Enable-OPNsenseTrafficShaperQueue',
-        'Enable-OPNsenseZerotier',
-
-        'Disable-OPNsenseAcmeClient',
-        'Disable-OPNsenseBgpAspath',
-        'Disable-OPNsenseBgpNeighbor',
-        'Disable-OPNsenseBgpPrefixlist',
-        'Disable-OPNsenseBgpRoutemap',
-        'Disable-OPNsenseCaptivePortalZone',
-        'Disable-OPNsenseCronJob',
-        'Disable-OPNsenseFreeradiusClient',
-        'Disable-OPNsenseFreeradiusUser',
-        'Disable-OPNsenseHAProxyBackend',
-        'Disable-OPNsenseHAProxyFrontend',
-        'Disable-OPNsenseHAProxyLua',
-        'Disable-OPNsenseIDSRule',
-        'Disable-OPNsenseIDSRuleset',
-        'Disable-OPNsenseIDSUserRule',
-        'Disable-OPNsenseMonit',
-        'Disable-OPNsenseOspf6Interface',
-        'Disable-OPNsenseOspfInterface',
-        'Disable-OPNsenseOspfNetwork',
-        'Disable-OPNsenseOspfPrefixlist',
-        'Disable-OPNsensePostfixDomain',
-        'Disable-OPNsensePostfixRecipient',
-        'Disable-OPNsensePostfixSender',
-        'Disable-OPNsenseProxyRemoteBlacklist',
-        'Disable-OPNsenseRelayd',
-        'Disable-OPNsenseRoutesroute',
-        'Disable-OPNsenseSiproxdDomain',
-        'Disable-OPNsenseSiproxdUser',
-        'Disable-OPNsenseTincHost',
-        'Disable-OPNsenseTincNetwork',
-        'Disable-OPNsenseTorExitacl',
-        'Disable-OPNsenseTorHiddenservice',
-        'Disable-OPNsenseTorHiddenserviceacl',
-        'Disable-OPNsenseTorHiddenServiceAuth',
-        'Disable-OPNsenseTorSocksacl',
-        'Disable-OPNsenseTrafficShaperPipe',
-        'Disable-OPNsenseTrafficShaperQueue',
-        'Disable-OPNsenseZerotier',
-
-        'Remove-OPNsenseAcmeClient',
-        'Remove-OPNsenseCaptivePortalTemplate',
-        'Remove-OPNsenseCaptivePortalZone',
-        'Remove-OPNsenseCronJob',
-        'Remove-OPNsenseFreeradiusClient',
-        'Remove-OPNsenseFreeradiusUser',
-        'Remove-OPNsenseIDSUserRule',
-        'Remove-OPNsenseMonit',
-        'Remove-OPNsensePostfixDomain',
-        'Remove-OPNsensePostfixRecipient',
-        'Remove-OPNsensePostfixSender',
-        'Remove-OPNsenseProxyRemoteBlacklist',
-        'Remove-OPNsenseProxySSOetekeytab',
-        'Remove-OPNsenseProxyUserACLACL',
-        'Remove-OPNsenseRelayd',
-        'Remove-OPNsenseRoutesroute',
-        'Remove-OPNsenseSiproxdDomain',
-        'Remove-OPNsenseSiproxdUser',
-        'Remove-OPNsenseTincHost',
-        'Remove-OPNsenseTincNetwork',
-        'Remove-OPNsenseTorExitacl',
-        'Remove-OPNsenseTorHiddenservice',
-        'Remove-OPNsenseTorHiddenserviceacl',
-        'Remove-OPNsenseTorHiddenServiceAuth',
-        'Remove-OPNsenseTorSocksacl',
-        'Remove-OPNsenseTrafficShaperPipe',
-        'Remove-OPNsenseTrafficShaperQueue',
-        'Remove-OPNsenseTrafficShaperRule',
-        'Remove-OPNsenseZerotier',
-
         #'New-OPNsenseHAProxyObject', 'Get-OPNsenseHAProxyObject', 'Set-OPNsenseHAProxyObject', #'Remove-OPNsenseHAProxyObject', 
 
         ########## LEGACY ##########

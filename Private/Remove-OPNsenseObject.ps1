@@ -32,13 +32,12 @@ Function Remove-OPNsenseObject {
         [parameter(Mandatory = $true, position = 0)][String]$Module,
         [parameter(Mandatory = $true, position = 1)][String]$Controller,
         [parameter(Mandatory = $true, position = 2)][String]$Command,
+
         [Parameter(Mandatory = $true, position = 3)]
-        #[ValidateSet('Server', 'Backend', 'Frontend', 'Healthcheck', 'Errorfile', 'Lua', 'Acl', 'Action', 'Healthcheck')]
-        [String]$ObjectType,
+        [AllowEmptyString()][String]$ObjectType,
 
         [Parameter(Mandatory = $true, position = 4)]
-        [AllowEmptyCollection()]
-        [String[]]$Uuid
+        [AllowEmptyCollection()][String[]]$Uuid
     )
     BEGIN {
         $results = @()
