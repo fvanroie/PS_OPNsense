@@ -40,6 +40,6 @@ Function Remove-OPNsenseHAProxyAcl {
     }
     END {
         if ($false) { $PSCmdlet.ShouldProcess() }         # Hide PSScriptAlalyzer warning
-        return Remove-OPNsenseObject haproxy settings acl "" -Uuid $uuids 
+        return Remove-OPNsenseObject haproxy settings acl "HAProxy Acl" -Uuid $uuids 
     }
 }

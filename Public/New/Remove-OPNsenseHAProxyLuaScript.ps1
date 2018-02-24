@@ -40,6 +40,6 @@ Function Remove-OPNsenseHAProxyLuaScript {
     }
     END {
         if ($false) { $PSCmdlet.ShouldProcess() }         # Hide PSScriptAlalyzer warning
-        return Remove-OPNsenseObject haproxy settings lua "" -Uuid $uuids 
+        return Remove-OPNsenseObject haproxy settings lua "HAProxy Lua Script" -Uuid $uuids 
     }
 }

@@ -40,6 +40,6 @@ Function Enable-OPNsenseHAProxyBackend {
     }
     END {
         if ($false) { $PSCmdlet.ShouldProcess() }         # Hide PSScriptAlalyzer warning
-        return Enable-OPNsenseObject haproxy settings backend "" -Uuid $uuids -Enable $True
+        return Enable-OPNsenseObject haproxy settings backend "HAProxy Backend" -Uuid $uuids -Enable $True
     }
 }

@@ -40,6 +40,6 @@ Function Remove-OPNsenseHAProxyErrorfile {
     }
     END {
         if ($false) { $PSCmdlet.ShouldProcess() }         # Hide PSScriptAlalyzer warning
-        return Remove-OPNsenseObject haproxy settings errorfile "" -Uuid $uuids 
+        return Remove-OPNsenseObject haproxy settings errorfile "HAProxy Error File" -Uuid $uuids 
     }
 }

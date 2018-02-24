@@ -21,7 +21,7 @@
 	SOFTWARE.
 #>
 
-Function Enable-OPNsenseHAProxyLua {
+Function Disable-OPNsenseHAProxyLuaScript {
     # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
     [CmdletBinding(
         SupportsShouldProcess = $true,
@@ -40,6 +40,6 @@ Function Enable-OPNsenseHAProxyLua {
     }
     END {
         if ($false) { $PSCmdlet.ShouldProcess() }         # Hide PSScriptAlalyzer warning
-        return Enable-OPNsenseObject haproxy settings lua "" -Uuid $uuids -Enable $True
+        return Enable-OPNsenseObject haproxy settings lua "HAProxy Lua Script" -Uuid $uuids -Enable $False
     }
 }

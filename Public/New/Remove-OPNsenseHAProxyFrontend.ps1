@@ -40,6 +40,6 @@ Function Remove-OPNsenseHAProxyFrontend {
     }
     END {
         if ($false) { $PSCmdlet.ShouldProcess() }         # Hide PSScriptAlalyzer warning
-        return Remove-OPNsenseObject haproxy settings frontend "" -Uuid $uuids 
+        return Remove-OPNsenseObject haproxy settings frontend "HAProxy Frontend" -Uuid $uuids 
     }
 }

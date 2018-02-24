@@ -25,7 +25,7 @@ Function Remove-OPNsenseHAProxyServer {
     # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
     [CmdletBinding(
         SupportsShouldProcess = $true,
-        ConfirmImpact = "High"
+        ConfirmImpact = "Medium"
     )]
     Param(
         [parameter(Mandatory = $true, Position = 0, ValueFromPipelineByPropertyname = $true, ParameterSetName = "AsParam")]
@@ -40,6 +40,6 @@ Function Remove-OPNsenseHAProxyServer {
     }
     END {
         if ($false) { $PSCmdlet.ShouldProcess() }         # Hide PSScriptAlalyzer warning
-        return Remove-OPNsenseObject haproxy settings server "" -Uuid $uuids 
+        return Remove-OPNsenseObject haproxy settings server "HAProxy Server" -Uuid $uuids 
     }
 }

@@ -40,6 +40,6 @@ Function Remove-OPNsenseHAProxyHealthcheck {
     }
     END {
         if ($false) { $PSCmdlet.ShouldProcess() }         # Hide PSScriptAlalyzer warning
-        return Remove-OPNsenseObject haproxy settings healthcheck "" -Uuid $uuids 
+        return Remove-OPNsenseObject haproxy settings healthcheck "HAProxy Healthcheck" -Uuid $uuids 
     }
 }
