@@ -36,13 +36,13 @@ Function Get-OPNsenseHAProxyLuaScript {
         [ValidateSet(0, 1, '0', '1', $False, $True)]$Enabled
     )
     BEGIN {
-        $allobj = Get-OPNsenseHAProxyObject -ObjectType 'LuaScript'    # Get all Objects
+        $allobj = Get-OPNsenseHAProxyObject -ObjectType 'Lua'    # Get all Objects
         $result = @()
     }
     PROCESS {
         $result += Select-OPNsenseHAProxyObject -InputObject $allobj @PSBoundParameters   # Filter on properties
     }  
     END {
-        return $result | Add-ObjectDetail -TypeName 'OPNsense.HAProxy.LuaScript.List'
+        return $result | Add-ObjectDetail -TypeName 'OPNsense.HAProxy.Lua.List'
     }
 }
