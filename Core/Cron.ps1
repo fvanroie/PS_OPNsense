@@ -72,7 +72,7 @@ Function New-OPNsenseCronJob {
 
     $job = Get-OPNsenseCronJob -Id $uuid
     if ($job.enabled -ne $enabled) {
-        $result = ToggleOPNsenseCronJob -id $uuid
+        ToggleOPNsenseCronJob -id $uuid | Out-Null
     }
     return Get-OPNsenseCronJob -uuid $uuid
 }
@@ -88,7 +88,7 @@ Function Set-OPNsenseCronJob {
 
     $job = Get-OPNsenseCronJob -uuid $uuid
     if ([System.Convert]::ToBoolean($job.enabled) -ne [System.Convert]::ToBoolean($Enabled)) {
-        $result = ToggleOPNsenseCronJob -uuid $uuid
+        ToggleOPNsenseCronJob -uuid $uuid | Out-Null
     }
     return Get-OPNsenseCronJob -uuid $uuid
 }
