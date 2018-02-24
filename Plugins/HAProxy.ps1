@@ -38,11 +38,11 @@ function ConvertTo-InputObject {
             if ($key -notin [System.Management.Automation.PSCmdlet]::CommonParameters -and
                 $key -notin [System.Management.Automation.PSCmdlet]::OptionalCommonParameters) {
                 if ($key -in 'enabled') {
-                    $obj | Add-Member -MemberType NoteProperty -Name $key.tolower() -Value $PSBounds[$key] -Force
-                } elseif ($key -in 'bind', 'linkedErrorFiles') {
-                    $obj | Add-Member -MemberType NoteProperty -Name $key.tolower() -Value ($PSBounds[$key] -Join ',') -Force
+                    $obj | Add-Member -MemberType NoteProperty -Name $key -Value $PSBounds[$key] -Force
+                } elseif ($key -in 'bind', 'linkedErrorFiles', 'linkedServers') {
+                    $obj | Add-Member -MemberType NoteProperty -Name $key -Value ($PSBounds[$key] -Join ',') -Force
                 } else {
-                    $obj | Add-Member -MemberType NoteProperty -Name $key.tolower() -Value $PSBounds[$key] -Force
+                    $obj | Add-Member -MemberType NoteProperty -Name $key -Value $PSBounds[$key] -Force
                 }
             }
         }        
@@ -125,7 +125,7 @@ function Select-OPNsenseHAProxyObject {
     [CmdletBinding()]
     param (
         [Parameter(Mandatory = $true, position = 0)]
-        $InputObject,
+        [AllowNull()]$InputObject,
 
         [parameter(Mandatory = $false)]
         [AllowEmptyCollection()][string[]]$Uuid,
@@ -139,6 +139,11 @@ function Select-OPNsenseHAProxyObject {
     
     Write-Verbose "- UUID : $Uuid`n`t - Name : $Name`n`t - Description : $Description"
     $result = @()
+
+    # Test if the InputObject is defined
+    if (-Not $InputObject) {
+        return $resul
+    }
 
     # UUID filter
     If ($Uuid) {
@@ -250,26 +255,26 @@ Function New-OPNsenseHAProxyServer {
         [parameter(Position = 0, Mandatory = $true, ValueFromPipelineByPropertyname = $true, ParameterSetName = "AsObject")]
         [PSObject[]]$InputObject,
 
-        [parameter(ValueFromPipelineByPropertyname = $true)][String]$Address,
-        [parameter(ValueFromPipelineByPropertyname = $true)][String]$Advanced,
-        [parameter(ValueFromPipelineByPropertyname = $true)][int]$CheckDownInterval,
-        [parameter(ValueFromPipelineByPropertyname = $true)][int]$CheckInterval,
+        [parameter(ValueFromPipelineByPropertyname = $true)][String]$address,
+        [parameter(ValueFromPipelineByPropertyname = $true)][String]$advanced,
+        [parameter(ValueFromPipelineByPropertyname = $true)][int]$checkDownInterval,
+        [parameter(ValueFromPipelineByPropertyname = $true)][int]$checkInterval,
         [parameter(ValueFromPipelineByPropertyname = $true)]
-        [ValidateRange(0, 65535)][int]$CheckPort,
-        [parameter(ValueFromPipelineByPropertyname = $true)][String]$Description,
+        [ValidateRange(0, 65535)][int]$checkPort,
+        [parameter(ValueFromPipelineByPropertyname = $true)][String]$description,
         [parameter(ValueFromPipelineByPropertyname = $true)]
-        [ValidateSet("Active", "Backup", "Disabled")][String]$Mode,
-        [parameter(ValueFromPipelineByPropertyname = $true)][String]$Name,
+        [ValidateSet("Active", "Backup", "Disabled")][String]$mode,
+        [parameter(ValueFromPipelineByPropertyname = $true)][String]$name,
         [parameter(ValueFromPipelineByPropertyname = $true)]
-        [ValidateRange(0, 65535)][int]$Port,
-        [parameter(ValueFromPipelineByPropertyname = $true)][String]$Source,
-        [parameter(ValueFromPipelineByPropertyname = $true)][String]$Ssl,
+        [ValidateRange(0, 65535)][int]$port,
+        [parameter(ValueFromPipelineByPropertyname = $true)][String]$source,
+        [parameter(ValueFromPipelineByPropertyname = $true)][String]$ssl,
         [parameter(ValueFromPipelineByPropertyname = $true)][String]$sslCA,
         [parameter(ValueFromPipelineByPropertyname = $true)][String]$sslClientCertificate,
         [parameter(ValueFromPipelineByPropertyname = $true)][String]$sslCRL,
-        [parameter(ValueFromPipelineByPropertyname = $true)][String]$SslVerify,
+        [parameter(ValueFromPipelineByPropertyname = $true)][String]$sslVerify,
         [parameter(ValueFromPipelineByPropertyname = $true)]
-        [ValidateRange(0, 256)][int]$Weight
+        [ValidateRange(0, 256)][int]$weight
     )
     BEGIN {
         $results = @()
@@ -294,20 +299,20 @@ Function New-OPNsenseHAProxyBackend {
         [PSObject[]]$InputObject,
 
         [parameter(Mandatory = $true, ValueFromPipelineByPropertyname = $true)]
-        [ValidateSet(0, 1, '0', '1', $False, $True)]$Enabled,
-        [parameter(ValueFromPipelineByPropertyname = $true)][String]$Name,
-        [parameter(ValueFromPipelineByPropertyname = $true)][String]$Description,
+        [ValidateSet(0, 1, '0', '1', $False, $True)]$enabled,
+        [parameter(ValueFromPipelineByPropertyname = $true)][String]$name,
+        [parameter(ValueFromPipelineByPropertyname = $true)][String]$description,
         [parameter(ValueFromPipelineByPropertyname = $true)]
-        [ValidateSet("HTTP", "TCP")][String]$Mode = "HTTP",
+        [ValidateSet("HTTP", "TCP")][String]$mode = "HTTP",
         [parameter(ValueFromPipelineByPropertyname = $true)]
-        [ValidateSet("source", "roundrobin", "static-rr", "leastconn", "uri")][String]$Algorithm = "http",
-        [parameter(ValueFromPipelineByPropertyname = $true)][String]$Source,
-        [parameter(ValueFromPipelineByPropertyname = $true)][String[]]$LinkedServers,
-        [parameter(Mandatory = $true, ValueFromPipelineByPropertyname = $true)]
-        [ValidateSet(0, 1, '0', '1', $False, $True)]$HealthCheckEnabled,
-        [parameter(ValueFromPipelineByPropertyname = $true)][String[]]$HealthCheck,
-        [parameter(Mandatory = $true, ValueFromPipelineByPropertyname = $true)]
-        [ValidateSet(0, 1, '0', '1', $False, $True)]$HealthCheckLogStatus,
+        [ValidateSet("source", "roundrobin", "static-rr", "leastconn", "uri")][String]$algorithm = "http",
+        [parameter(ValueFromPipelineByPropertyname = $true)][String]$source,
+        [parameter(ValueFromPipelineByPropertyname = $true)][String[]]$linkedServers,
+        [parameter(ValueFromPipelineByPropertyname = $true)]
+        [ValidateSet(0, 1, '0', '1', $False, $True)]$healthCheckEnabled,
+        [parameter(ValueFromPipelineByPropertyname = $true)][String[]]$healthCheck,
+        [parameter(ValueFromPipelineByPropertyname = $true)]
+        [ValidateSet(0, 1, '0', '1', $False, $True)]$healthCheckLogStatus,
         [parameter(ValueFromPipelineByPropertyname = $true)][String[]]$linkedActions,
         [parameter(ValueFromPipelineByPropertyname = $true)][String[]]$linkedErrorfiles      
     )
@@ -389,11 +394,11 @@ Function New-OPNsenseHAProxyErrorfile {
         [parameter(Position = 0, Mandatory = $true, ValueFromPipelineByPropertyname = $true, ParameterSetName = "AsObject")]
         [PSObject[]]$InputObject,
 
-        [parameter(Position = 0, Mandatory = $true, ValueFromPipelineByPropertyname = $true, ParameterSetName = "AsParam")][String]$Name,
-        [parameter(Position = 1, ValueFromPipelineByPropertyname = $true)][String]$Description,
+        [parameter(Position = 0, Mandatory = $true, ValueFromPipelineByPropertyname = $true, ParameterSetName = "AsParam")][String]$name,
+        [parameter(Position = 1, ValueFromPipelineByPropertyname = $true)][String]$description,
         [parameter(Position = 2, Mandatory = $true, ValueFromPipelineByPropertyname = $true)]
-        [ValidateSet(200, 400, 403, 405, 408, 429, 500, 502, 503, 504)][int]$Code,
-        [parameter(Position = 3, Mandatory = $true, ValueFromPipelineByPropertyname = $true)][String]$Content
+        [ValidateSet(200, 400, 403, 405, 408, 429, 500, 502, 503, 504)][int]$code,
+        [parameter(Position = 3, Mandatory = $true, ValueFromPipelineByPropertyname = $true)][String]$content
     )
     BEGIN {
         $results = @()
@@ -416,11 +421,11 @@ Function New-OPNsenseHAProxyLuaScript {
         [parameter(Position = 0, Mandatory = $true, ValueFromPipelineByPropertyname = $true, ParameterSetName = "AsObject")]
         [PSObject[]]$InputObject,
 
-        [parameter(Position = 0, Mandatory = $true, ValueFromPipelineByPropertyname = $true, ParameterSetName = "AsParam")][String]$Name,
-        [parameter(Position = 1, ValueFromPipelineByPropertyname = $true)][String]$Description,
+        [parameter(Position = 0, Mandatory = $true, ValueFromPipelineByPropertyname = $true, ParameterSetName = "AsParam")][String]$name,
+        [parameter(Position = 1, ValueFromPipelineByPropertyname = $true)][String]$description,
         [parameter(Position = 2, Mandatory = $true, ValueFromPipelineByPropertyname = $true)]
-        [ValidateSet(0, 1, '0', '1', $False, $True)]$Enabled,
-        [parameter(Position = 3, Mandatory = $true, ValueFromPipelineByPropertyname = $true)][String]$Content
+        [ValidateSet(0, 1, '0', '1', $False, $True)]$enabled,
+        [parameter(Position = 3, Mandatory = $true, ValueFromPipelineByPropertyname = $true)][String]$content
     )
     BEGIN {
         $results = @()
@@ -443,12 +448,12 @@ Function New-OPNsenseHAProxyHealthCheck {
         [parameter(Position = 0, Mandatory = $true, ValueFromPipelineByPropertyname = $true, ParameterSetName = "AsObject")]
         [PSObject[]]$InputObject,
 
-        [parameter(Position = 0, Mandatory = $true, ValueFromPipelineByPropertyname = $true, ParameterSetName = "AsParam")][String]$Name,
-        [parameter(Position = 1, ValueFromPipelineByPropertyname = $true)][String]$Description,
+        [parameter(Position = 0, Mandatory = $true, ValueFromPipelineByPropertyname = $true, ParameterSetName = "AsParam")][String]$name,
+        [parameter(Position = 1, ValueFromPipelineByPropertyname = $true)][String]$description,
         [parameter(Position = 2, Mandatory = $true, ValueFromPipelineByPropertyname = $true)]
-        [ValidateSet('tcp', 'http', 'agent', 'ldap', 'mysql', 'pgsql', 'redis', 'smtp', 'esmtp', 'ssl')][String]$Type,
-        [parameter(Position = 3, Mandatory = $true, ValueFromPipelineByPropertyname = $true)][String]$Interval,
-        [parameter(Position = 4, Mandatory = $true, ValueFromPipelineByPropertyname = $true)][Int]$CheckPort
+        [ValidateSet('tcp', 'http', 'agent', 'ldap', 'mysql', 'pgsql', 'redis', 'smtp', 'esmtp', 'ssl')][String]$type,
+        [parameter(Position = 3, Mandatory = $true, ValueFromPipelineByPropertyname = $true)][String]$interval,
+        [parameter(Position = 4, Mandatory = $true, ValueFromPipelineByPropertyname = $true)][Int]$checkPort
 
         ## Additional options need to be implemented using Dynamic Parameters
         ## Currently they can be set using $InputObject
@@ -474,14 +479,14 @@ Function New-OPNsenseHAProxyAcl {
         [parameter(Position = 0, Mandatory = $true, ValueFromPipelineByPropertyname = $true, ParameterSetName = "AsObject")]
         [PSObject[]]$InputObject,
 
-        [parameter(Position = 0, Mandatory = $true, ValueFromPipelineByPropertyname = $true, ParameterSetName = "AsParam")][String]$Name,
-        [parameter(Position = 1, ValueFromPipelineByPropertyname = $true)][String]$Description,
+        [parameter(Position = 0, Mandatory = $true, ValueFromPipelineByPropertyname = $true, ParameterSetName = "AsParam")][String]$name,
+        [parameter(Position = 1, ValueFromPipelineByPropertyname = $true)][String]$description,
         [parameter(Position = 2, Mandatory = $true, ValueFromPipelineByPropertyname = $true)]
         [ValidateSet('hdr_end', 'hdr_reg', 'path_beg', 'path', 'path_dir', 'url_param', 'ssl_c_verify', 'ssl_c_ca_commonname',
             'src_is_local', 'src_bytes_in_rate', 'src_kbytes_in', 'src_conn_cnt', 'src_conn_rate', 'src_http_err_rate', 'src_http_req_rate', 'src_sess_rate',
-            'traffic_is_http', 'ssl_sni', 'ssl_sni_beg', 'ssl_sni_reg', 'custom_acl')][String]$Expression,
+            'traffic_is_http', 'ssl_sni', 'ssl_sni_beg', 'ssl_sni_reg', 'custom_acl')][String]$expression,
         [parameter(Position = 3, Mandatory = $true, ValueFromPipelineByPropertyname = $true)]
-        [ValidateSet(0, 1, '0', '1', $False, $True)]$Negate
+        [ValidateSet(0, 1, '0', '1', $False, $True)]$negate
 
         ## Additional options need to be implemented using Dynamic Parameters
         ## Currently they can be set using $InputObject
