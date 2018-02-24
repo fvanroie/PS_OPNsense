@@ -87,7 +87,7 @@ function Test-Result {
 function Get-NoteProperty {
     [CmdletBinding()]
     param (
-        $obj
+        [psobject]$obj
     )
     return Get-Member -InputObject $obj -MemberType NoteProperty | Select-Object -ExpandProperty Name
 }
@@ -138,175 +138,272 @@ function Get-OPNsenseHAProxyDetail {
         [String]$ObjectType,
         [parameter(Mandatory = $true)][string]$Uuid
     )
-    BEGIN {
-        $results = @()
-    }
-    PROCESS {
-        $result = Invoke-OPNsenseCommand haproxy settings ("get{0}/{1}" -f $ObjectType.ToLower(), $Uuid) | Select-Object -ExpandProperty $ObjectType
-        $result | Add-Member -MemberType NoteProperty -Name 'uuid' -Value $Uuid
-        #Write-Host (ConvertTo-Json $result)
-        #$result = Format-OPNsenseProperty $result
-        $results += $result
-    }
-    END {
-        return $results | Add-ObjectDetail -TypeName ('OPNsense.HAProxy.{0}.Detail' -f $ObjectType)
+    Switch ($ObjectType) {
+        'Server' { Get-OPNsenseHAProxyServer -Uuid $Uuid }    
+        'Backend' { Get-OPNsenseHAProxyBackend -Uuid $Uuid }    
+        'Frontend' { Get-OPNsenseHAProxyFrontend -Uuid $Uuid }    
+        'Healthcheck' { Get-OPNsenseHAProxyHealthCheck -Uuid $Uuid }    
+        'Errorfile' { Get-OPNsenseHAProxyErrorfile -Uuid $Uuid }    
+        'Lua' { Get-OPNsenseHAProxyLuaScript -Uuid $Uuid }    
+        'Acl' { Get-OPNsenseHAProxyAcl -Uuid $Uuid }    
+        'Action' { Get-OPNsenseHAProxyAction -Uuid $Uuid }    
+        default { }
     }
 }
+
+function Select-OPNsenseHAProxyObject {
+    [CmdletBinding()]
+    param (
+        [Parameter(Mandatory = $true, position = 0)]
+        $InputObject,
+
+        [parameter(Mandatory = $false)]
+        [AllowEmptyCollection()][string[]]$Uuid,
+
+        [parameter(Mandatory = $false)]
+        [AllowEmptyCollection()][string[]]$Name,
+
+        [parameter(Mandatory = $false)]
+        [AllowEmptyCollection()][string[]]$Description 
+    )
+    
+    Write-Verbose "- UUID : $Uuid`n`t - Name : $Name`n`t - Description : $Description"
+    $result = @()
+
+    # UUID filter
+    If ($Uuid) {
+        $ids = $Uuid
+    } else {
+        $ids = Get-NoteProperty $InputObject
+    }
+
+    ForEach ($id in $ids) {
+        # Skip objects that do not satisfy the filters passed
+        If (Skip-OPNsenseObject -Value $InputObject.$id.Name -Like $Name) { continue }
+        If (Skip-OPNsenseObject -Value $InputObject.$id.Description -Like $Description) { continue }
+
+        # PassThru is needed to capture the object
+        $result += $InputObject.$id | Add-Member -MemberType NoteProperty -Name 'Uuid' -Value $id -PassThru
+    }
+
+    return $result
+}
+
 function Get-OPNsenseHAProxyObject {
     [CmdletBinding()]
     param (
         [Parameter(Mandatory = $true, position = 0)]
         [ValidateSet('Server', 'Backend', 'Frontend', 'Healthcheck', 'Errorfile', 'Lua', 'Acl', 'Action')]
-        [String]$ObjectType,
-        
-        [parameter(Mandatory = $false)][string[]]$Uuid,
-        [parameter(Mandatory = $false)][string[]]$Name,
-        [parameter(Mandatory = $false)][string[]]$Description,
-
-        [parameter(Mandatory = $false)]
-        [ValidateSet(0, 1, '0', '1', $False, $True)]$Enabled
+        [String]$ObjectType
     )
     
-    $obj = Invoke-OPNsenseCommand haproxy settings get |
+    Invoke-OPNsenseCommand haproxy settings get |
         Select-Object -ExpandProperty haproxy |
         Select-Object -ExpandProperty ('{0}s' -f $ObjectType.ToLower()) |
         Select-Object -ExpandProperty $ObjectType.ToLower()
-
-    $items = Get-NoteProperty $obj | ForEach-Object {
-        $obj.$_ | Add-Member -MemberType NoteProperty -Name 'uuid' -Value $_ -PassThru
-    }
-
-    return $items | Add-ObjectDetail -TypeName ('OPNsense.HAProxy.{0}.List' -f $ObjectType)
 }
+<#
 Function Get-OPNsenseHAProxyServer {
     # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
-    [CmdletBinding(    )]
+    [CmdletBinding()]
     Param(
         [parameter(Mandatory = $false, ValueFromPipelineByPropertyname = $true)]
-        [AllowEmptyCollection()]
-        [string[]]$Uuid,
-
-        [parameter(Mandatory = $false, ValueFromPipelineByPropertyname = $true)][string[]]
-        [AllowEmptyCollection()]
-        $Name,
-
-        [parameter(Mandatory = $false, ValueFromPipelineByPropertyname = $true)][string[]]
-        [AllowEmptyCollection()]
-        $Description
+        [AllowEmptyCollection()][string[]]$Uuid,
+        [parameter(Mandatory = $false, ValueFromPipelineByPropertyname = $true)]
+        [AllowEmptyCollection()][string[]]$Name,
+        [parameter(Mandatory = $false, ValueFromPipelineByPropertyname = $true)]
+        [AllowEmptyCollection()][string[]]$Description
     )
     BEGIN {
-        $uuids = @()
+        $allobj = Get-OPNsenseHAProxyObject -ObjectType 'Server'    # Get all Objects
+        $result = @()
     }
     PROCESS {
-        $uuids += Get-OPNsenseHAProxyObject 'Server' @PSBoundParameters | Select-Object -ExpandProperty uuid
-    }
+        $result += Select-OPNsenseHAProxyObject -InputObject $allobj @PSBoundParameters   # Filter on properties
+    }  
     END {
-        $uuids = $uuids | Select-Object -Unique
-        return Get-OPNsenseHAProxyObject 'Server' -Uuid $uuids
+        return $result | Add-ObjectDetail -TypeName ('OPNsense.HAProxy.{0}.List' -f $ObjectType)
     }
-}Function Get-OPNsenseHAProxyBackend {
+}
+Function Get-OPNsenseHAProxyBackend {
     # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
     [CmdletBinding()]
     param (
-        [parameter(Mandatory = $false)][string[]]$Uuid,
-        [parameter(Mandatory = $false)][string[]]$Name,
-        [parameter(Mandatory = $false)][string[]]$Description,
+        [parameter(Mandatory = $false, ValueFromPipelineByPropertyname = $true)]
+        [AllowEmptyCollection()][string[]]$Uuid,
+        [parameter(Mandatory = $false, ValueFromPipelineByPropertyname = $true)]
+        [AllowEmptyCollection()][string[]]$Name,
+        [parameter(Mandatory = $false, ValueFromPipelineByPropertyname = $true)]
+        [AllowEmptyCollection()][string[]]$Description,
 
         [parameter(Mandatory = $false)]
         [ValidateSet(0, 1, '0', '1', $False, $True)]$Enabled
     )
-    return Get-OPNsenseHAProxyObject "Backend" @PSBoundParameters
+
+    BEGIN {
+        $allobj = Get-OPNsenseHAProxyObject -ObjectType 'Backend'    # Get all Objects
+        $result = @()
+    }
+    PROCESS {
+        $result += Select-OPNsenseHAProxyObject -InputObject $allobj @PSBoundParameters   # Filter on properties
+    }  
+    END {
+        return $result | Add-ObjectDetail -TypeName ('OPNsense.HAProxy.{0}.List' -f $ObjectType)
+    }
 }
 Function Get-OPNsenseHAProxyFrontend {
     # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
     [CmdletBinding()]
     param (
-        [parameter(Mandatory = $false)][string[]]$Uuid,
-        [parameter(Mandatory = $false)][string[]]$Name,
-        [parameter(Mandatory = $false)][string[]]$Description,
+        [parameter(Mandatory = $false, ValueFromPipelineByPropertyname = $true)]
+        [AllowEmptyCollection()][string[]]$Uuid,
+        [parameter(Mandatory = $false, ValueFromPipelineByPropertyname = $true)]
+        [AllowEmptyCollection()][string[]]$Name,
+        [parameter(Mandatory = $false, ValueFromPipelineByPropertyname = $true)]
+        [AllowEmptyCollection()][string[]]$Description,
 
         [parameter(Mandatory = $false)]
         [ValidateSet(0, 1, '0', '1', $False, $True)]$Enabled
     )
-    return Get-OPNsenseHAProxyObject "Frontend" @PSBoundParameters
+
+    BEGIN {
+        $allobj = Get-OPNsenseHAProxyObject -ObjectType 'FrontEnd'    # Get all Objects
+        $result = @()
+    }
+    PROCESS {
+        $result += Select-OPNsenseHAProxyObject -InputObject $allobj @PSBoundParameters   # Filter on properties
+    }  
+    END {
+        return $result | Add-ObjectDetail -TypeName ('OPNsense.HAProxy.{0}.List' -f $ObjectType)
+    }
 }
 Function Get-OPNsenseHAProxyErrorfile {
     # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
     [CmdletBinding()]
     param (
-        [parameter(Mandatory = $false)][string[]]$Uuid,
-        [parameter(Mandatory = $false)][string[]]$Name,
-        [parameter(Mandatory = $false)][string[]]$Description,
+        [parameter(Mandatory = $false, ValueFromPipelineByPropertyname = $true)]
+        [AllowEmptyCollection()][string[]]$Uuid,
+        [parameter(Mandatory = $false, ValueFromPipelineByPropertyname = $true)]
+        [AllowEmptyCollection()][string[]]$Name,
+        [parameter(Mandatory = $false, ValueFromPipelineByPropertyname = $true)]
+        [AllowEmptyCollection()][string[]]$Description,
 
         [parameter(Mandatory = $false)]
         [ValidateSet(0, 1, '0', '1', $False, $True)]$Enabled
     )
-    return Get-OPNsenseHAProxyObject "Errorfile" @PSBoundParameters
+
+    BEGIN {
+        $allobj = Get-OPNsenseHAProxyObject -ObjectType 'Server'    # Get all Objects
+        $result = @()
+    }
+    PROCESS {
+        $result += Select-OPNsenseHAProxyObject -InputObject $allobj @PSBoundParameters   # Filter on properties
+    }  
+    END {
+        return $result | Add-ObjectDetail -TypeName ('OPNsense.HAProxy.{0}.List' -f $ObjectType)
+    }
 }
 Function Get-OPNsenseHAProxyHealthCheck {
     # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
     [CmdletBinding()]
     param (
-        [parameter(Mandatory = $false)][string[]]$Uuid,
-        [parameter(Mandatory = $false)][string[]]$Name,
-        [parameter(Mandatory = $false)][string[]]$Description,
-
-        [parameter(Mandatory = $false)]
-        [ValidateSet(0, 1, '0', '1', $False, $True)]$Enabled
-    )
-    return Get-OPNsenseHAProxyObject "HealthCheck" @PSBoundParameters
-}
-Function Get-OPNsenseHAProxyAcl {
-    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
-    [CmdletBinding(    )]
-    Param(
-        [parameter(Mandatory = $false, ValueFromPipelineByPropertyname = $true)]        [AllowEmptyCollection()]
-        [string[]]$Uuid,
-        [parameter(Mandatory = $false, ValueFromPipelineByPropertyname = $true)][string[]]        [AllowEmptyCollection()]
-        $Name,
-        [parameter(Mandatory = $false, ValueFromPipelineByPropertyname = $true)][string[]]        [AllowEmptyCollection()]
-        $Description,
+        [parameter(Mandatory = $false, ValueFromPipelineByPropertyname = $true)]
+        [AllowEmptyCollection()][string[]]$Uuid,
+        [parameter(Mandatory = $false, ValueFromPipelineByPropertyname = $true)]
+        [AllowEmptyCollection()][string[]]$Name,
+        [parameter(Mandatory = $false, ValueFromPipelineByPropertyname = $true)]
+        [AllowEmptyCollection()][string[]]$Description,
 
         [parameter(Mandatory = $false)]
         [ValidateSet(0, 1, '0', '1', $False, $True)]$Enabled
     )
     BEGIN {
+        $allobj = Get-OPNsenseHAProxyObject -ObjectType 'Server'    # Get all Objects
         $result = @()
     }
     PROCESS {
-        $result += Get-OPNsenseHAProxyObject 'Acl' @PSBoundParameters
-    }
+        $result += Select-OPNsenseHAProxyObject -InputObject $allobj @PSBoundParameters   # Filter on properties
+    }  
     END {
-        return $result
+        return $result | Add-ObjectDetail -TypeName ('OPNsense.HAProxy.{0}.List' -f $ObjectType)
+    }
+}
+Function Get-OPNsenseHAProxyAcl {
+    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
+    [CmdletBinding(    )]
+    Param(
+        [parameter(Mandatory = $false, ValueFromPipelineByPropertyname = $true)]
+        [AllowEmptyCollection()][string[]]$Uuid,
+        [parameter(Mandatory = $false, ValueFromPipelineByPropertyname = $true)]
+        [AllowEmptyCollection()][string[]]$Name,
+        [parameter(Mandatory = $false, ValueFromPipelineByPropertyname = $true)]
+        [AllowEmptyCollection()][string[]]$Description,
+
+        [parameter(Mandatory = $false)]
+        [ValidateSet(0, 1, '0', '1', $False, $True)]$Enabled
+    )
+    BEGIN {
+        $allobj = Get-OPNsenseHAProxyObject -ObjectType 'Server'    # Get all Objects
+        $result = @()
+    }
+    PROCESS {
+        $result += Select-OPNsenseHAProxyObject -InputObject $allobj @PSBoundParameters   # Filter on properties
+    }  
+    END {
+        return $result | Add-ObjectDetail -TypeName ('OPNsense.HAProxy.{0}.List' -f $ObjectType)
     }
 }
 Function Get-OPNsenseHAProxyAction {
     # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
     [CmdletBinding()]
     param (
-        [parameter(Mandatory = $false)][string[]]$Uuid,
-        [parameter(Mandatory = $false)][string[]]$Name,
-        [parameter(Mandatory = $false)][string[]]$Description,
+        [parameter(Mandatory = $false, ValueFromPipelineByPropertyname = $true)]
+        [AllowEmptyCollection()][string[]]$Uuid,
+        [parameter(Mandatory = $false, ValueFromPipelineByPropertyname = $true)]
+        [AllowEmptyCollection()][string[]]$Name,
+        [parameter(Mandatory = $false, ValueFromPipelineByPropertyname = $true)]
+        [AllowEmptyCollection()][string[]]$Description,
 
         [parameter(Mandatory = $false)]
         [ValidateSet(0, 1, '0', '1', $False, $True)]$Enabled
     )
-    return Get-OPNsenseHAProxyObject "Action" @PSBoundParameters
+    BEGIN {
+        $allobj = Get-OPNsenseHAProxyObject -ObjectType 'Server'    # Get all Objects
+        $result = @()
+    }
+    PROCESS {
+        $result += Select-OPNsenseHAProxyObject -InputObject $allobj @PSBoundParameters   # Filter on properties
+    }  
+    END {
+        return $result | Add-ObjectDetail -TypeName ('OPNsense.HAProxy.{0}.List' -f $ObjectType)
+    }
 }
 Function Get-OPNsenseHAProxyLuaScript {
     # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
     [CmdletBinding()]
     param (
-        [parameter(Mandatory = $false)][string[]]$Uuid,
-        [parameter(Mandatory = $false)][string[]]$Name,
-        [parameter(Mandatory = $false)][string[]]$Description,
+        [parameter(Mandatory = $false, ValueFromPipelineByPropertyname = $true)]
+        [AllowEmptyCollection()][string[]]$Uuid,
+        [parameter(Mandatory = $false, ValueFromPipelineByPropertyname = $true)]
+        [AllowEmptyCollection()][string[]]$Name,
+        [parameter(Mandatory = $false, ValueFromPipelineByPropertyname = $true)]
+        [AllowEmptyCollection()][string[]]$Description,
 
         [parameter(Mandatory = $false)]
         [ValidateSet(0, 1, '0', '1', $False, $True)]$Enabled
     )
-    return Get-OPNsenseHAProxyObject "Lua" @PSBoundParameters
+    BEGIN {
+        $allobj = Get-OPNsenseHAProxyObject -ObjectType 'Server'    # Get all Objects
+        $result = @()
+    }
+    PROCESS {
+        $result += Select-OPNsenseHAProxyObject -InputObject $allobj @PSBoundParameters   # Filter on properties
+    }  
+    END {
+        return $result | Add-ObjectDetail -TypeName ('OPNsense.HAProxy.{0}.List' -f $ObjectType)
+    }
 }
-
+#>
 
 
 ##### NEW Functions #####
@@ -359,13 +456,12 @@ function New-OPNsenseHAProxyObject {
             }
             
             $snapBefore = $(Invoke-OPNsenseCommand haproxy settings $("search{0}s" -f $ObjectType.ToLower()) -Form @{ searchPhrase = $Item.Name} ).rows
-            #    return Invoke-OPNsenseCommand haproxy settings get | Select-Object -ExpandProperty haproxy | Select-Object -ExpandProperty $("{0}s" -f $ObjectType) | Select-Object -ExpandProperty $("{0}s" -f $ObjectType)
             $result = Invoke-OPNsenseCommand haproxy settings $("add{0}" -f $ObjectType.ToLower()) -Json @{ $ObjectType.ToLower() = $Item }
-            $snapAfter = $(Invoke-OPNsenseCommand haproxy settings $("search{0}s" -f $ObjectType.ToLower()) -Form @{ searchPhrase = $Item.Name} ).rows
-
-            $uuid = Compare-Object -ReferenceObject $snapBefore -DifferenceObject $snapAfter -Property Uuid | Select-Object -ExpandProperty Uuid
             
             if (Test-Result $result) {
+                $snapAfter = $(Invoke-OPNsenseCommand haproxy settings $("search{0}s" -f $ObjectType.ToLower()) -Form @{ searchPhrase = $Item.Name} ).rows
+                $uuid = Compare-Object -ReferenceObject $snapBefore -DifferenceObject $snapAfter -Property Uuid | Select-Object -ExpandProperty Uuid
+
                 $result = Get-OPNsenseHAProxyDetail -ObjectType $ObjectType -Uuid $Uuid
                 #if ($PassThru) {
                 $results += $result
@@ -779,192 +875,4 @@ Function Set-OPNsenseHAProxyLuaScript {
     END {
         return $results
     } 
-}
-
-
-
-##### REMOVE Functions #####
-Function Remove-OPNsenseHAProxyServer {
-    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
-    [CmdletBinding(
-        SupportsShouldProcess = $true,
-        ConfirmImpact = "Medium"
-    )]
-    Param(
-        [parameter(Mandatory = $true, Position = 0, ValueFromPipelineByPropertyname = $true, ParameterSetName = "AsParam")]
-        [AllowEmptyCollection()]
-        [String[]]$Uuid
-    )
-    BEGIN {
-        $uuids = @()
-    }
-    PROCESS {
-        #foreach ($id in $uuid) { $results += $id }
-        $uuids += $uuid
-    }
-    END {
-        if ($false) { $PSCmdlet.ShouldProcess() }         # Hide PSScriptAlalyzer warning
-        return Remove-OPNsenseObject haproxy settings server "HAProxy Server" -Uuid $uuids
-    }
-}
-Function Remove-OPNsenseHAProxyBackend {
-    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
-    [CmdletBinding(
-        SupportsShouldProcess = $true,
-        ConfirmImpact = "Medium"
-    )]
-    Param(
-        [parameter(Mandatory = $true, Position = 0, ValueFromPipelineByPropertyname = $true, ParameterSetName = "AsParam")]
-        [AllowEmptyCollection()]
-        [String[]]$Uuid
-    )
-    BEGIN {
-        $uuids = @()
-    }
-    PROCESS {
-        #foreach ($id in $uuid) { $results += $id }
-        $uuids += $uuid
-    }
-    END {
-        if ($false) { $PSCmdlet.ShouldProcess() }         # Hide PSScriptAlalyzer warning
-        return Remove-OPNsenseObject haproxy settings backend "HAProxy Backend" -Uuid $uuids
-    }
-}
-Function Remove-OPNsenseHAProxyFrontend {
-    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
-    [CmdletBinding(
-        SupportsShouldProcess = $true,
-        ConfirmImpact = "Medium"
-    )]
-    Param(
-        [parameter(Mandatory = $true, Position = 0, ValueFromPipelineByPropertyname = $true, ParameterSetName = "AsParam")]
-        [AllowEmptyCollection()]
-        [String[]]$Uuid
-    )
-    BEGIN {
-        $uuids = @()
-    }
-    PROCESS {
-        #foreach ($id in $uuid) { $results += $id }
-        $uuids += $uuid
-    }
-    END {
-        if ($false) { $PSCmdlet.ShouldProcess() }         # Hide PSScriptAlalyzer warning
-        return Remove-OPNsenseObject haproxy settings frontend "HAProxy Frontend" -Uuid $uuids
-    }
-}
-Function Remove-OPNsenseHAProxyHealthCheck {
-    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
-    [CmdletBinding(
-        SupportsShouldProcess = $true,
-        ConfirmImpact = "Medium"
-    )]
-    Param(
-        [parameter(Mandatory = $true, Position = 0, ValueFromPipelineByPropertyname = $true, ParameterSetName = "AsParam")]
-        [AllowEmptyCollection()]
-        [String[]]$Uuid
-    )
-    BEGIN {
-        $uuids = @()
-    }
-    PROCESS {
-        #foreach ($id in $uuid) { $results += $id }
-        $uuids += $uuid
-    }
-    END {
-        if ($false) { $PSCmdlet.ShouldProcess() }         # Hide PSScriptAlalyzer warning
-        return Remove-OPNsenseObject haproxy settings healthcheck "HAProxy HealthCheck" -Uuid $uuids
-    }
-}
-Function Remove-OPNsenseHAProxyAcl {
-    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
-    [CmdletBinding(
-        SupportsShouldProcess = $true,
-        ConfirmImpact = "Medium"
-    )]
-    Param(
-        [parameter(Mandatory = $true, Position = 0, ValueFromPipelineByPropertyname = $true, ParameterSetName = "AsParam")]
-        [AllowEmptyCollection()]
-        [String[]]$Uuid
-    )
-    BEGIN {
-        $uuids = @()
-    }
-    PROCESS {
-        #foreach ($id in $uuid) { $results += $id }
-        $uuids += $uuid
-    }
-    END {
-        if ($false) { $PSCmdlet.ShouldProcess() }         # Hide PSScriptAlalyzer warning
-        return Remove-OPNsenseObject haproxy settings acl "HAProxy Acl" -Uuid $uuids
-    }
-}
-Function Remove-OPNsenseHAProxyAction {
-    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
-    [CmdletBinding(
-        SupportsShouldProcess = $true,
-        ConfirmImpact = "Medium"
-    )]
-    Param(
-        [parameter(Mandatory = $true, Position = 0, ValueFromPipelineByPropertyname = $true, ParameterSetName = "AsParam")]
-        [AllowEmptyCollection()]
-        [String[]]$Uuid
-    )
-    BEGIN {
-        $uuids = @()
-    }
-    PROCESS {
-        #foreach ($id in $uuid) { $results += $id }
-        $uuids += $uuid
-    }
-    END {
-        if ($false) { $PSCmdlet.ShouldProcess() }         # Hide PSScriptAlalyzer warning
-        return Remove-OPNsenseObject haproxy settings action "HAProxy Action" -Uuid $uuids
-    }
-}
-Function Remove-OPNsenseHAProxyErrorfile {
-    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
-    [CmdletBinding(
-        SupportsShouldProcess = $true,
-        ConfirmImpact = "Medium"
-    )]
-    Param(
-        [parameter(Mandatory = $true, Position = 0, ValueFromPipelineByPropertyname = $true, ParameterSetName = "AsParam")]
-        [AllowEmptyCollection()]
-        [String[]]$Uuid
-    )
-    BEGIN {
-        $uuids = @()
-    }
-    PROCESS {
-        #foreach ($id in $uuid) { $results += $id }
-        $uuids += $uuid
-    }
-    END {
-        if ($false) { $PSCmdlet.ShouldProcess() }         # Hide PSScriptAlalyzer warning
-        return Remove-OPNsenseObject haproxy settings errorfile "HAProxy Errorfile" -Uuid $uuids
-    }
-}
-Function Remove-OPNsenseHAProxyLuaScript {
-    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
-    [CmdletBinding(
-        SupportsShouldProcess = $true,
-        ConfirmImpact = "Medium"
-    )]
-    Param(
-        [parameter(Mandatory = $true, Position = 0, ValueFromPipelineByPropertyname = $true, ParameterSetName = "AsParam")]
-        [AllowEmptyCollection()]
-        [String[]]$Uuid
-    )
-    BEGIN {
-        $uuids = @()
-    }
-    PROCESS {
-        #foreach ($id in $uuid) { $results += $id }
-        $uuids += $uuid
-    }
-    END {
-        if ($false) { $PSCmdlet.ShouldProcess() }         # Hide PSScriptAlalyzer warning
-        return Remove-OPNsenseObject haproxy settings lua "HAProxy Lua Script" -Uuid $uuids
-    }
 }
