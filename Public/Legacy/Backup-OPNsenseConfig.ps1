@@ -29,7 +29,7 @@ Function Backup-OPNsenseConfig {
 
         [ValidateNotNullOrEmpty()]
         [parameter(Mandatory = $false)]
-        [String]$Password
+        [SecureString]$Password
     )
 
     if ($DebugPreference -eq "Inquire") { $DebugPreference = "Continue" }
@@ -37,6 +37,10 @@ Function Backup-OPNsenseConfig {
     $SkipCertificateCheck = $MyInvocation.MyCommand.Module.PrivateData['OPNsenseSkipCert']
     $Credential = $MyInvocation.MyCommand.Module.PrivateData['WebCredentials']
     $Uri = $MyInvocation.MyCommand.Module.PrivateData['OPNsenseUri']
+
+    if (-not $Credential) {
+        Throw "No web password has been set."
+    }
 
     if ($PSBoundParameters.ContainsKey('Password')) {
         $encrypt = $true
@@ -55,6 +59,7 @@ Function Backup-OPNsenseConfig {
         } else {
             $webpage = Invoke-WebRequest -Uri $Uri -SessionVariable cookieJar
         }
+
         $xssToken = $webpage.InputFields | Where-Object { $_.type -eq 'hidden'}
         $form = @{
             $xssToken.name = $xssToken.value;
@@ -84,8 +89,8 @@ Function Backup-OPNsenseConfig {
             $xssToken[0].name = $xssToken[0].value ;
             donotbackuprrd = if ([bool]::Parse($RRDdata)) { '' } else { 'on' } ;
             encrypt = if ($encrypt) { 'on' } else { '' };
-            encrypt_password = if ($encrypt) { $Password } else { '' };
-            encrypt_passconf = if ($encrypt) { $Password } else { '' };
+            encrypt_password = if ($encrypt) { $Password.GetNetworkCredential().Password } else { '' };
+            encrypt_passconf = if ($encrypt) { $Password.GetNetworkCredential().Password } else { '' };
             download = "Download configuration"
         }
         if ($IsPSCoreEdition) {

@@ -1,6 +1,6 @@
 <#  MIT License
 
-    Copyright (c) 2018 fvanroie, NetwiZe.be
+    Copyright (c) 2017 fvanroie
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -42,6 +42,10 @@ Function Reset-OPNsenseConfig {
     $Credential = $MyInvocation.MyCommand.Module.PrivateData['WebCredentials']
     $Uri = $MyInvocation.MyCommand.Module.PrivateData['OPNsenseUri']
 
+    if (-not $Credential) {
+        Throw "No web password has been set."
+    }
+
     if ($PSBoundParameters.ContainsKey('Password')) {
         $encrypt = $true
     } else {
@@ -54,13 +58,13 @@ Function Reset-OPNsenseConfig {
     }
 
     Write-Warning '!!! YOU ARE ABOUT TO COMPLETELY ERASE THE OPNSENSE CONFIGURATION !!!'
-    if (-Not $pscmdlet.ShouldProcess($MyInvocation.MyCommand.Module.PrivateData['OPNsenseUri'])) {
+    if ($PSCmdlet.ShouldProcess($Uri, "Reset OPNsense to factory defaults")) {
         Write-Warning 'Aborting Reset-OPNsenseConfig'
         Return
     }
 
     Write-Warning '!!! YOU ARE ABOUT TO COMPLETELY ERASE THE OPNSENSE CONFIGURATION !!!'
-    if (-Not $pscmdlet.ShouldProcess($MyInvocation.MyCommand.Module.PrivateData['OPNsenseUri'] + "!!! Last warning !!!")) {
+    if ($PSCmdlet.ShouldProcess($Uri, "LAST WARNING: Reset OPNsense to factory defaults")) {
         Write-Warning 'Aborting Reset-OPNsenseConfig'
         Return
     }
@@ -73,6 +77,11 @@ Function Reset-OPNsenseConfig {
     Try {
         $webpage = Invoke-WebRequest -Uri $Uri -SessionVariable cookieJar
         $xssToken = $webpage.InputFields | Where-Object { $_.type -eq 'hidden'}
+        
+        if (-not $Credential) {
+            Throw "No web password has been set."
+        }
+
         $form = @{
             $xssToken.name = $xssToken.value;
             usernamefld = $Credential.Username;

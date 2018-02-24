@@ -48,7 +48,7 @@ Function Restore-OPNsenseConfig {
 
         [ValidateNotNullOrEmpty()]
         [parameter(Mandatory = $false)]
-        [String]$Password
+        [SecureString]$Password
     )
 
     if ($DebugPreference -eq "Inquire") { $DebugPreference = "Continue" }
@@ -82,7 +82,15 @@ Content-Disposition: form-data; name="{1}"
 
 '@
 
-    if (-Not $pscmdlet.ShouldProcess($MyInvocation.MyCommand.Module.PrivateData['OPNsenseUri'])) {
+    $SkipCertificateCheck = $MyInvocation.MyCommand.Module.PrivateData['OPNsenseSkipCert']
+    $Credential = $MyInvocation.MyCommand.Module.PrivateData['WebCredentials']
+    $Uri = $MyInvocation.MyCommand.Module.PrivateData['OPNsenseUri']
+
+    if (-not $Credential) {
+        Throw "No web password has been set."
+    }
+
+    if ($PSCmdlet.ShouldProcess($Uri, "Restore OPNsense configuration")) {
         Write-Warning 'Aborting Restore-OPNsenseConfig'
         Return
     }
@@ -95,6 +103,7 @@ Content-Disposition: form-data; name="{1}"
     Try {
         $webpage = Invoke-WebRequest -Uri $Uri -SessionVariable cookieJar
         $xssToken = $webpage.InputFields | Where-Object { $_.type -eq 'hidden'}
+
         $form = @{
             $xssToken.name = $xssToken.value;
             usernamefld = $Credential.Username;
@@ -115,8 +124,8 @@ Content-Disposition: form-data; name="{1}"
             restorearea = '' ;
             rebootafterrestore = 'checked';
             decrypt = if ($decrypt) { 'on' } else { '' };
-            decrypt_password = if ($decrypt) { $Password } else { '' };
-            decrypt_passconf = if ($decrypt) { $Password } else { '' };
+            decrypt_password = if ($decrypt) { $Password.GetNetworkCredential().Password } else { '' };
+            decrypt_passconf = if ($decrypt) { $Password.GetNetworkCredential().Password } else { '' };
             restore = "Restore configuration"
         }
 

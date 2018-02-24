@@ -24,7 +24,7 @@
 
 # Module Variables
 $IsPSCoreEdition = ($PSVersionTable.PSEdition -eq 'Core')
-if ($IsPSCoreEdition) {}
+$minversion = [System.Version]'18.1.2'
 
 # Load individual functions from scriptfiles
 ForEach ($Folder in 'Core', 'Plugins', 'Private', 'Public') {
@@ -82,7 +82,6 @@ Function Connect-OPNsense {
     if ($OPNsenseApi) {
         Throw "ERROR : Already connected to $OPNsenseApi. Please use Disconnect-OPNsense first."
     }
-    $minversion = [System.Version]'18.1.1'
     
     #$bytes = [System.Text.Encoding]::UTF8.GetBytes($Key + ":" + $Secret)
     #$Credentials = [System.Convert]::ToBase64String($bytes)
@@ -114,7 +113,7 @@ Function Connect-OPNsense {
 
             try {
                 $temp = Select-String -InputObject $result.product_version -pattern '[0-9\.]*' -AllMatches
-                $shortversion = [System.Version]$temp.Matches[0].Value.Trim('.')                
+                $shortversion = [System.Version]$temp.Matches[0].Value.TrimEnd('.')                
                 Write-Verbose ("OPNsense version : " + $Result.product_version )
 
                 if ($shortversion -lt $minversion) {
@@ -277,7 +276,7 @@ Function Enable-OPNsense {
     }
 }
 
-Export-ModuleMember -Function Connect-OPNsense, Disconnect-OPNsense, Invoke-OPNsenseCommand, Invoke-OPNsenseAudit
+Export-ModuleMember -Function Connect-OPNsense, Disconnect-OPNsense, Invoke-OPNsenseCommand
 $f = @(########## PLUGINS ##########
     # ArpScanner
     'Update-OPNsenseArp', #'Get-OPNsenseArpScanner', 'Start-OPNsenseArpScanner', 'Wait-OPNsenseArpScanner', 'Stop-OPNsenseArpScanner',
@@ -299,9 +298,7 @@ $f = @(########## PLUGINS ##########
     # RestApi
     'Invoke-OPNsenseCommand',
     # Firmware
-    'Get-OPNsense', 'Stop-OPNsense', 'Restart-OPNsense', 
-    'Set-OPNsense',
-    'Update-OPNsense', 'Invoke-OPNsenseAudit', 'Get-OPNsenseUpdate'
+    'Get-OPNsense', 'Set-OPNsense', 'Update-OPNsense', 'Get-OPNsenseUpdate'
     # Packages
     'Get-OPNsensePackage', 'Lock-OPNsensePackage', 'Unlock-OPNsensePackage', 'Install-OPNsensePackage', 'Uninstall-OPNsensePackage',
     'Get-OPNsensePlugin',
