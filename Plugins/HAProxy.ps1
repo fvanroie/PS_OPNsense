@@ -338,26 +338,26 @@ Function New-OPNsenseHAProxyFrontend {
         [PSObject[]]$InputObject,
 
         [parameter(Mandatory = $true, ValueFromPipelineByPropertyname = $true)]
-        [ValidateSet(0, 1, '0', '1', $False, $True)]$Enabled,
-        [parameter(Mandatory = $true, ValueFromPipelineByPropertyname = $true)][String]$Name,
-        [parameter(ValueFromPipelineByPropertyname = $true)][String]$Description,
-        [parameter(Mandatory = $true, ValueFromPipelineByPropertyname = $true)][String[]]$Bind,
-        [parameter(ValueFromPipelineByPropertyname = $true)][String]$BindOptions,
+        [ValidateSet(0, 1, '0', '1', $False, $True)]$enabled,
+        [parameter(Mandatory = $true, ValueFromPipelineByPropertyname = $true)][String]$name,
+        [parameter(ValueFromPipelineByPropertyname = $true)][String]$description,
+        [parameter(Mandatory = $true, ValueFromPipelineByPropertyname = $true)][String[]]$bind,
+        [parameter(ValueFromPipelineByPropertyname = $true)][String]$bindOptions,
         [parameter(Mandatory = $true, ValueFromPipelineByPropertyname = $true)]
-        [ValidateSet("HTTP", "SSL", "TCP")][String]$Mode = "HTTP",
-        [parameter(ValueFromPipelineByPropertyname = $true)][String]$DefaultBackend,
+        [ValidateSet("http", "ssl", "tcp")][String]$mode = "http",
+        [parameter(ValueFromPipelineByPropertyname = $true)][String]$defaultBackend,
         [parameter( ValueFromPipelineByPropertyname = $true)]
         [ValidateSet(0, 1, '0', '1', $False, $True)]$sslEnabled,
         [parameter(ValueFromPipelineByPropertyname = $true)][String]$ssl_customOptions,
         [parameter(ValueFromPipelineByPropertyname = $true)]
         [ValidateSet(0, 1, '0', '1', $False, $True)]$ssl_advancedEnabled,
 
-        [parameter(ValueFromPipelineByPropertyname = $true)][String]$CustomOptions,
+        [parameter(ValueFromPipelineByPropertyname = $true)][String]$customOptions,
 
         [parameter(ValueFromPipelineByPropertyname = $true)]
-        [ValidateSet("http-keep-alive", "http-tunnel", "httpclose", "http-server-close", "foreclose")][String]$ConnectionBehaviour = "http-keep-alive",
+        [ValidateSet("http-keep-alive", "http-tunnel", "httpclose", "http-server-close", "foreclose")][String]$connectionBehaviour = "http-keep-alive",
         [parameter(ValueFromPipelineByPropertyname = $true)][String]$ssl_default_certificate,
-        [parameter(ValueFromPipelineByPropertyname = $true)][String[]]$LinkedServers,
+        [parameter(ValueFromPipelineByPropertyname = $true)][String[]]$linkedServers,
 
         [parameter(ValueFromPipelineByPropertyname = $true)]
         [ValidateSet(0, 1, '0', '1', $False, $True)]$logging_dontLogNull,

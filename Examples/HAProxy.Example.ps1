@@ -87,12 +87,31 @@ $backends = 1..2 | foreach-Object {
 }
 Write-Host -ForegroundColor Green ("Creating {0} backends..." -f $backends.count)
 
-# Actually create these LuaScripts in OPNsense and capture the generated UUIDs
+# Actually create these Backends in OPNsense and capture the generated UUIDs
 $backends = $backends | New-OPNsenseHAProxyBackend -Verbose:$beVerbose
 # Display the result
 $backends | Format-Table *
 
+
 # Create Frontend service
+$frontends = 1..2 | foreach-Object {
+    [PSCustomObject]@{
+        'name'                = ("public" + $_.tostring("00"))
+        'enabled'             = $_ % 2 # Enable every other script
+        'description'         = "Created {0}" -f [DateTime]::now
+        'bind'                = ('127.0.0.1:8{0},10.1.1.{0}:80' -f $_)
+        'mode'                = 'http'
+        'defaultBackend'      = $backends[0].uuid
+        'connectionBehaviour' = 'http-keep-alive'
+        'linkedErrorfiles'    = $errorfiles.uuid | Select-Object -Last $_  # pick some errorfiles
+    }
+}
+Write-Host -ForegroundColor Green ("Creating {0} frontends..." -f $frontends.count)
+
+# Actually create these Frontends in OPNsense and capture the generated UUIDs
+$frontends = $frontends | New-OPNsenseHAProxyFrontend -Verbose #:$beVerbose
+# Display the result
+$frontends | Format-Table *
 
 
 # Test and Apply the new configuration
@@ -102,9 +121,11 @@ Test-OPNsenseService -Name HAProxy | Select-Object -ExpandProperty Result
 Write-Host -ForegroundColor Green ("Applying the configuration...")
 Update-OPNsenseService -Name HAProxy | Select-Object -Property Status | Format-List
 
+Get-OPNsenseService haproxy
 
 # Optionally remove the created objects, request confirmation
 Write-Host -ForegroundColor Green ("Removing test objects...")
+$frontends | Remove-OPNsenseHAProxyFrontend -Confirm -Verbose:$beVerbose
 $backends | Remove-OPNsenseHAProxyBackend -Confirm -Verbose:$beVerbose
 $webservers | Remove-OPNsenseHAProxyServer -Confirm -Verbose:$beVerbose
 $errorfiles | Remove-OPNsenseHAProxyErrorfile -Confirm -Verbose:$beVerbose
