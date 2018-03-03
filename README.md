@@ -47,6 +47,10 @@ To load this module in PowerShell type:
 Import-Module -Name PS_OPNsense
 ```
 
+In OPNsense, go to System > Access > Users. Create or click on a user that will be used for accessing the REST api.
+Under the section API keys, click on the Add [+] button to generate a key/secret pair and download the txt file.
+Use the key and secret values to connect to OPNsense REST api using the PS_OPNsense PowerShell module.
+
 ## Examples
 Connecting to an OPNsense server:
 ```powershell
