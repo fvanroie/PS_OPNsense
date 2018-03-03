@@ -1,6 +1,6 @@
 <#  MIT License
 
-    Copyright (c) 2017 fvanroie
+    Copyright (c) 2018 fvanroie, NetwiZe.be
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -113,29 +113,4 @@ Function Sync-OPNsenseProxyRemoteBlacklist {
     }
 
     Return $result
-}
-
-
-##### REMOVE Functions #####
-Function Remove-OPNsenseProxyRemoteBlacklist {
-    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
-    [CmdletBinding(
-        SupportsShouldProcess = $true,
-        ConfirmImpact = "Medium"
-    )]
-    Param(
-        [parameter(Mandatory = $true, Position = 0, ValueFromPipelineByPropertyname = $true, ParameterSetName = "AsParam")]
-        [AllowEmptyCollection()]
-        [String[]]$Uuid
-    )
-    BEGIN {
-        $results = @()
-    }
-    PROCESS {
-        foreach ($id in $uuid) { $results += $id }
-    }
-    END {
-        if ($false) { $PSCmdlet.ShouldProcess() }         # Hide PSScriptAlalyzer warning
-        return Remove-OPNsenseObject proxy settings RemoteBlacklist -Uuid $results
-    }
 }

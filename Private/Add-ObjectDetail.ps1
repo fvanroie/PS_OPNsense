@@ -100,7 +100,8 @@ function Add-ObjectDetail {
         [Parameter( Mandatory = $true,
             Position = 0,
             ValueFromPipeline = $true )]
-        [ValidateNotNullOrEmpty()]
+        #[ValidateNotNullOrEmpty()]  # Commented by fvanroie
+        [AllowNull()]                # Added by fvanroie
         [psobject[]]$InputObject,
 
         [Parameter( Mandatory = $false,

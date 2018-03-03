@@ -1,6 +1,6 @@
 <#  MIT License
 
-    Copyright (c) 2017 fvanroie
+    Copyright (c) 2018 fvanroie, NetwiZe.be
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -21,49 +21,6 @@
     SOFTWARE.
 #>
 
-Function Invoke-OPNsenseCoreCommand {
-    [CmdletBinding()]
-    Param (
-        [Parameter(Mandatory = $true, position = 1)][String]$Module,
-        [parameter(Mandatory = $true, position = 2)][String]$Controller,
-        [parameter(Mandatory = $true, position = 3)][String]$Command
-    )
-    $result = Invoke-OPNsenseCommand $Module $Controller $Command -Form $Command -Verbose:$VerbosePreference
-    if ($result.status -eq "failure") {
-        Write-Error "Failed to execute $Module/$Controller/$Command command"
-        return $false
-    }
-    if ($result.status -eq "ok") {
-        return $true
-    }
-    return $result
-}
-
-Function Stop-OPNsense {
-    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
-    [CmdletBinding(
-        SupportsShouldProcess = $true,
-        ConfirmImpact = "High"
-    )]
-    Param()
-    if ($pscmdlet.ShouldProcess($MyInvocation.MyCommand.Module.PrivateData['OPNsenseApi'])) {
-        return Invoke-OPNsenseCoreCommand core firmware poweroff -Verbose:$VerbosePreference
-    }
-}
-
-Function Restart-OPNsense {
-    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
-    [CmdletBinding(
-        SupportsShouldProcess = $true,
-        ConfirmImpact = "High"
-    )]
-    Param()
-    if ($pscmdlet.ShouldProcess($MyInvocation.MyCommand.Module.PrivateData['OPNsenseApi'])) {
-        return Invoke-OPNsenseCoreCommand core firmware reboot -Verbose:$VerbosePreference
-    } else {
-        return $false
-    }
-}
 
 Function Get-OPNsenseUpdateStatus {
     [CmdletBinding()]
@@ -117,41 +74,6 @@ Function Update-OPNsense {
         }
         return $result
     }
-}
-
-# Performs pkg audit -F
-# FreeBSD registers vulnerabilities for its packages and this command visualizes the security issues found.
-Function Invoke-OPNsenseAudit {
-    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
-    [CmdletBinding()]
-    Param(
-        [Switch]$Raw
-    )
-    $result = Invoke-OPNsenseCommand core firmware audit -Form audit -Verbose:$VerbosePreference
-
-    if ($result.status -eq 'ok') {
-        $log = Get-OPNsenseUpdateStatus -Message "Running Audit in OPNsense:" -Verbose:$VerbosePreference
-
-        # Raw Output
-        if ([bool]::Parse($Raw)) { Return $log }
-
-        # Parsed Output
-        $AuditPattern = '(.*):\n(.*)\nCVE: (.*)\nWWW: (.*)'
-        $cves = Select-String -InputObject $log -Pattern $AuditPattern -AllMatches
-        $result = @()
-        foreach ($cve in $cves.matches) {
-            $argHash = @{
-                CVE   = $cve.groups[3].value;
-                Issue = $cve.groups[1].value;
-                Title = $cve.groups[2].value;
-                Url   = $cve.groups[4].value
-            }
-            $result += New-Object PSObject -Property $argHash
-        }
-    } else {
-        Write-Error "Failed to audit OPNsense"
-    }
-    return $result | Add-ObjectDetail -TypeName 'OPNsense.Firmware.Audit'
 }
 
 

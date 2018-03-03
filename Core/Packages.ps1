@@ -1,6 +1,6 @@
 <#  MIT License
 
-    Copyright (c) 2017 fvanroie
+    Copyright (c) 2018 fvanroie, NetwiZe.be
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -150,7 +150,7 @@ Function Install-OPNsensePackage {
     }
 }
 
-Function Remove-OPNsensePackage {
+Function Uninstall-OPNsensePackage {
     # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
     param (
         [Parameter(Mandatory = $true, position = 1, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)][String[]]$Name

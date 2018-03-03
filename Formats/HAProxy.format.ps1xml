@@ -12,9 +12,10 @@
             <TableColumnHeader/>
             <TableColumnHeader/>
             <TableColumnHeader/>
+            <TableColumnHeader><Label>Mode</Label></TableColumnHeader>
             <TableColumnHeader/>
             <TableColumnHeader/>
-            <TableColumnHeader/>
+            <TableColumnHeader><Label>sslClientCertificate</Label></TableColumnHeader>
         </TableHeaders>
         <TableRowEntries>
             <TableRowEntry>
@@ -29,7 +30,9 @@
                         <PropertyName>Port</PropertyName>
                     </TableColumnItem>
                     <TableColumnItem>
-                        <PropertyName>Mode</PropertyName>
+                        <ScriptBlock>
+                            Get-MultiOption $_.mode
+                        </ScriptBlock>
                     </TableColumnItem>
                     <TableColumnItem>
                         <PropertyName>Weight</PropertyName>
@@ -37,6 +40,12 @@
                     <TableColumnItem>
                         <PropertyName>Description</PropertyName>
                     </TableColumnItem>
+                    <TableColumnItem>
+                        <ScriptBlock>
+                            Get-MultiOption $_.sslClientCertificate
+                        </ScriptBlock>
+                    </TableColumnItem>
+
                 </TableColumnItems>
             </TableRowEntry>
         </TableRowEntries>

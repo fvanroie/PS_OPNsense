@@ -1,6 +1,6 @@
 <#  MIT License
 
-    Copyright (c) 2017 fvanroie
+    Copyright (c) 2018 fvanroie, NetwiZe.be
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -56,8 +56,7 @@ Function Disable-CertificateValidation() {
     #[System.Net.ServicePointManager]::ServerCertificateValidationCallback = { $true }
     Try {
         [System.Net.ServicePointManager]::CertificatePolicy = New-Object OPNsenseTrustAllCertsPolicy
-    }
-    Catch {
+    } Catch {
         Add-Type @"
     using System.Net;
     using System.Security.Cryptography.X509Certificates;

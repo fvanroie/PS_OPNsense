@@ -1,6 +1,6 @@
 <#  MIT License
 
-    Copyright (c) 2017 fvanroie
+    Copyright (c) 2018 fvanroie, NetwiZe.be
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -21,6 +21,7 @@
     SOFTWARE.
 #>
 
+<#
 function Get-OPNsenseArpScanner {
     # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
     [CmdletBinding()]
@@ -33,7 +34,7 @@ function Get-OPNsenseArpScanner {
 
     }
     Return $arpscanner.general | Add-ObjectDetail -TypeName 'OPNsense.Plugin.ArpScanner.Peer'
-}
+} #>
 
 Function Start-OPNsenseArpScanner {
     # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml

@@ -1,6 +1,6 @@
 <#  MIT License
 
-    Copyright (c) 2017 fvanroie
+    Copyright (c) 2018 fvanroie, NetwiZe.be
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -30,12 +30,11 @@
 #
 
 @{
-
     # Script module or binary module file associated with this manifest.
-    # RootModule = ''
+    RootModule             = 'PS_OPNsense.psm1'
 
     # Version number of this module.
-    ModuleVersion          = '0.1.3'
+    ModuleVersion          = '0.1.4'
 
     # Supported PSEditions
     CompatiblePSEditions   = @('Core', 'Desktop')
@@ -50,7 +49,7 @@
     CompanyName            = 'netwiZe.be'
 
     # Copyright statement for this module
-    Copyright              = '(c) 2018 fvanroie. All rights reserved.'
+    Copyright              = '(c) 2018 fvanroie, NetwiZe.be. All rights reserved.'
 
     # Description of the functionality provided by this module
     Description            = 'PowerShell Module for OPNsense REST api'
@@ -100,48 +99,26 @@
 
     # Modules to import as nested modules of the module specified in RootModule/ModuleToProcess
     NestedModules          = @(
-        # Main Module
-        'PS_OPNsense.ps1',
-
-        # Core Functionality
-        'Core/CaptivePortal.ps1',
-        'Core/Cron.ps1',
-        'Core/Diagnostics.ps1',
-        'Core/Firmware.ps1',
-        'Core/Ids.ps1',
-        'Core/Packages.ps1',
-        'Core/Proxy.ps1',
-        'Core/Services.ps1',
-
-        # Optional Installable Plugin Packages
-        'Plugins/ArpScanner.ps1',
-        'Plugins/ClamAV.ps1',
-        'Plugins/Collectd.ps1',
-        'Plugins/Freeradius.ps1',
-        'Plugins/HAProxy.ps1',
-        'Plugins/Lldpd.ps1',
-        'Plugins/Postfix.ps1',
-        'Plugins/Quagga.ps1',
-        'Plugins/Siproxd.ps1',
-        'Plugins/Tinc.ps1',
-        'Plugins/Zerotier.ps1',
-
-        # Legacy WebGUI Commands
-        'Legacy/Backup.ps1',
-
+        <# These are now dor sourced from the .psm1 loader sript
         # Private Helper Function
         'Private/Add-ObjectDetail.ps1',
         'Private/CertificateValidation.ps1',
         'Private/New-ValidationDynamicParam.ps1',
+        'Private/Remove-OPNsenseObject.ps1',
+        'Private/Enable-OPNsenseObject.ps1',
         'Private/RestApi.ps1'
+        #>
     )
 
+    FunctionsToExport      = '*'
+    <#
     # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
     FunctionsToExport      = @(
         ########## TEST ##########
         'Enable-OPNsense', 'Get-OPNsenseUpdateStatus',
         'New-OPNsenseHAProxyObject',
-
+        'Enable-OPNsenseObject',
+        'Get-MultiOption'
         #'New-OPNsenseHAProxyObject', 'Get-OPNsenseHAProxyObject', 'Set-OPNsenseHAProxyObject', #'Remove-OPNsenseHAProxyObject', 
 
         ########## LEGACY ##########
@@ -168,12 +145,15 @@
         'Remove-OPNsenseSiproxdDomain', 'Remove-OPNsenseSiproxdUser',
         # Tinc
         'Remove-OPNsenseTincNetwork', 'Remove-OPNsenseTincHost',
+        # Tor
+        'Remove-OPNsenseTorExitAcl', 'Remove-OPNsenseTorHiddenService', 'Remove-OPNsenseTorHiddenServiceAcl', 'Remove-OPNsenseTorHiddenServiceAuth', 'Remove-OPNsenseTorSocksAcl',
+
         # Zerotier
         'Remove-OPNsenseZerotierNetwork',
 
         ########## CORE ##########
         # PS_OPNsense
-        'Connect-OPNsense', 'Disconnect-OPNsense',
+        #'Connect-OPNsense', 'Disconnect-OPNsense',
         # RestApi
         'Invoke-OPNsenseCommand',
         # Firmware
@@ -186,7 +166,7 @@
         'Set-OPNsenseHAProxyServer', 'Set-OPNsenseHAProxyLuaScript',
         'Remove-OPNsenseHAProxyServer', 'Remove-OPNsenseHAProxyFrontend', 'Remove-OPNsenseHAProxyBackend', 'Remove-OPNsenseHAProxyErrorfile', 'Remove-OPNsenseHAProxyLuaScript', 'Remove-OPNsenseHAProxyAcl', 'Remove-OPNsenseHAProxyHealthCheck', 'Remove-OPNsenseHAProxyAction', 
         # Packages
-        'Get-OPNsensePackage', 'Lock-OPNsensePackage', 'Unlock-OPNsensePackage', 'Install-OPNsensePackage', 'Remove-OPNsensePackage',
+        'Get-OPNsensePackage', 'Lock-OPNsensePackage', 'Unlock-OPNsensePackage', 'Install-OPNsensePackage', 'Uninstall-OPNsensePackage',
         'Get-OPNsensePlugin',
         # Cron
         'Get-OPNsenseCronJob', 'Enable-OPNsenseCronJob', 'Disable-OPNsenseCronJob', 'Remove-OPNsenseCronJob',
@@ -204,8 +184,11 @@
         # Diagnostics
         'Get-OPNsenseSystemHealth', 'Get-OPNsenseResource', 'Get-OPNsenseInterface', 'Get-OPNsenseRoute', 'Get-OPNsenseARP', 'Clear-OPNsenseARP',
         # Services
-        'Get-OPNsenseService', 'Start-OPNsenseService', 'Update-OPNsenseService', 'Test-OPNsenseService', 'Restart-OPNsenseService', 'Stop-OPNsenseService', 'Invoke-OPNsenseService'
+        'Get-OPNsenseService', 'Start-OPNsenseService', 'Update-OPNsenseService', 'Test-OPNsenseService', 'Restart-OPNsenseService', 'Stop-OPNsenseService', 'Invoke-OPNsenseService',
+        # TrafficShaper
+        'Remove-OPNsenseTrafficShaperPipe', 'Remove-OPNsenseTrafficShaperQueue', 'Remove-OPNsenseTrafficShaperRule'
     )
+#>
 
     # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
     CmdletsToExport        = @()
