@@ -1,6 +1,15 @@
 Import-Module PS_OPNsense -force
 
-. ..\..\..\Wiki\PS_OPNsense.wiki\Test-Module.ps1
+# Define connection parameters
+$apiKey = $env:OPNkey
+$apiPwd = $env:OPNpwd | ConvertTo-SecureString -AsPlainText -Force
+$Url = $env:OPNurl
+
+# Convert the connection parameters into a PowerShell Credentials Object
+$apiCred = New-Object System.Management.Automation.PSCredential -ArgumentList $apiKey, $apiPwd
+
+# Connect to OPNsense server
+$conn = Connect-OPNsense -Url $Url -Credential $apiCred -SkipCertificateCheck -Verbose:$beVerbose  #-WebCredential $webCred
 
 Function Compare-Json ($value, $expected) {
     [String]::Compare(($value | ConvertTo-Json -Depth 15), ($expected | ConvertTo-Json -Depth 15), $true)
