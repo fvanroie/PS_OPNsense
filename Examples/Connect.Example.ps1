@@ -8,7 +8,7 @@ Import-Module -Name PS_OPNsense -Verbose:$beVerbose
 # Define connection parameters
 $apiKey = '<my OPNsense api key>'
 $apiPwd = '<my OPNsense api secret>' | ConvertTo-SecureString -AsPlainText -Force
-$Url = 'https://opnsense.localdomain:80'
+$Url = 'https://opnsense.localdomain:443'
 
 # Convert the connection parameters into a PowerShell Credentials Object
 $apiCred = New-Object System.Management.Automation.PSCredential -ArgumentList $apiKey, $apiPwd
@@ -31,4 +31,4 @@ Invoke-OPNsenseAudit -Raw -Verbose:$beVerbose | Format-List
 
 
 ## Disconnect from OPNsense server
-Disconnect-OPNsense -Verbose:$beVerbose
+# Disconnect-OPNsense -Verbose:$beVerbose
