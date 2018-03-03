@@ -51,7 +51,11 @@ git clone https://github.com/fvanroie/PS_OPNsense.git .\PS_OPNsense
 
 To load this module in PowerShell type:
 ```powershell
-Import-Module -Name PS_OPNsense
+Import-Module -Name PS_OPNsense -PassThru
+```
+Get all the commands in the PS_OPNsense module type:
+```powershell
+Get-Command -Module PS_OPNsense
 ```
 
 From the OPNsense GUI, create an API key for a user that will run PowerShell scripts:
