@@ -109,7 +109,7 @@ $frontends = 1..2 | foreach-Object {
 Write-Host -ForegroundColor Green ("Creating {0} frontends..." -f $frontends.count)
 
 # Actually create these Frontends in OPNsense and capture the generated UUIDs
-$frontends = $frontends | New-OPNsenseHAProxyFrontend -Verbose #:$beVerbose
+$frontends = $frontends | New-OPNsenseHAProxyFrontend -Verbose:$beVerbose
 # Display the result
 $frontends | Format-Table *
 
