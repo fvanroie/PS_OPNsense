@@ -34,7 +34,7 @@
     RootModule             = 'PS_OPNsense.psm1'
 
     # Version number of this module.
-    ModuleVersion          = '0.1.4'
+    ModuleVersion          = '0.1.5'
 
     # Supported PSEditions
     CompatiblePSEditions   = @('Core', 'Desktop')
@@ -99,7 +99,7 @@
 
     # Modules to import as nested modules of the module specified in RootModule/ModuleToProcess
     NestedModules          = @(
-        <# These are now dor sourced from the .psm1 loader sript
+        <# These are now automatically dot sourced from the .psm1 loader sript
         # Private Helper Function
         'Private/Add-ObjectDetail.ps1',
         'Private/CertificateValidation.ps1',

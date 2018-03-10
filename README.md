@@ -49,6 +49,11 @@ You can download and unzip the module into the PowerShell Modules folder or clon
 git clone https://github.com/fvanroie/PS_OPNsense.git .\PS_OPNsense
 ```
 
+Depending on your ExecutionPolicy, you might need to unblock the downloaded module files:
+```powershell
+Get-ChildItem .\PS_OPNsense -Recurse | Unblock-File -Verbose
+```
+
 To load this module in PowerShell type:
 ```powershell
 Import-Module -Name PS_OPNsense -PassThru
