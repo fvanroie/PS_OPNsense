@@ -24,7 +24,13 @@
 Function ConvertTo-Boolean {
     Param(
         [parameter(Mandatory = $true, Position = 0)]
-        [ValidateSet(0, 1, '0', '1', $False, $True)]$bool
+        [ValidateSet(0, 1, '0', '1', $False, $True, 'True', 'False')]$bool
     )
-    Return [String]$( if (([Int]$bool) -gt 0) {'1'} else {'0'} )
+    switch ($bool) {
+        'True' { return '1' }
+        'False' { return '0' }
+        default {
+            Return [String]$( if (([Int]$bool) -gt 0) {'1'} else {'0'} ) 
+        }
+    }
 }

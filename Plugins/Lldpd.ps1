@@ -28,7 +28,7 @@ function Get-OPNsenseLldp {
         [Switch]$Neighbor
     )
     if ([bool]::Parse($Neighbor)) {
-        Return $(Invoke-OPNsenseCommand lldpd service neighbor).response #| Add-ObjectDetail -TypeName 'OPNsense.Service.Lldpd.Neighbor'
+        Return $(Invoke-OPNsenseCommand lldpd service neighbor).response | Add-ObjectDetail -TypeName 'OPNsense.Service.Lldpd.Neighbor'
     } else {
         Return $(Invoke-OPNsenseCommand lldpd general get).general | Add-ObjectDetail -TypeName 'OPNsense.Service.Lldpd.Option'
     }
@@ -42,29 +42,37 @@ Function Set-OPNsenseLldp {
         [parameter(Mandatory = $false)][Switch]$EnableCdp,
         [parameter(Mandatory = $false)][Switch]$EnableFdp,
         [parameter(Mandatory = $false)][Switch]$EnableEdp,
-        [parameter(Mandatory = $false)][Switch]$EnableSonmp
+        [parameter(Mandatory = $false)][Switch]$EnableSonmp,
+        [parameter(Mandatory = $false)][String]$Interface
     )
 
     $args = Invoke-OPNsenseCommand lldpd general get
 
     if ($PSBoundParameters.ContainsKey('Enable')) {
-        $args.general.enabled = $( if ([bool]::Parse($Enable)) {'1'} else {'0'} ) 
+        $args.general.enabled = ConvertTo-Boolean $Enable
     }
     if ($PSBoundParameters.ContainsKey('EnableCdp')) {
-        $args.general.cdp = $( if ([bool]::Parse($EnableCdp)) {'1'} else {'0'} ) 
+        $args.general.cdp = ConvertTo-Boolean $EnableCdp 
     }
     if ($PSBoundParameters.ContainsKey('EnableEdp')) {
-        $args.general.edp = $( if ([bool]::Parse($EnableEdp)) {'1'} else {'0'} ) 
+        $args.general.edp = ConvertTo-Boolean $EnableEdp
     }
     if ($PSBoundParameters.ContainsKey('EnableFdp')) {
-        $args.general.fdp = $( if ([bool]::Parse($EnableFdp)) {'1'} else {'0'} )
+        $args.general.fdp = ConvertTo-Boolean $EnableFdp
     }
     if ($PSBoundParameters.ContainsKey('EnableSonmp')) {
-        $args.general.sonmp = $( if ([bool]::Parse($EnableSonmp)) {'1'} else {'0'} )
+        $args.general.sonmp = ConvertTo-Boolean $EnableSonmp
+    }
+    if ($PSBoundParameters.ContainsKey('Interface')) {
+        $args.general.interface = $Interface
     }
 
     $result = Invoke-OPNsenseCommand lldpd general set -Json $args
     Update-OPNsenseService lldpd | Out-Null
-
-    return $result
+    
+    if (Test-OPNsenseApiResult $result) {
+        Get-OPNsenseLldp
+    } else {
+        Write-Error $result
+    }
 }

@@ -11,13 +11,13 @@ InModuleScope PS_OPNsense {
     Describe "LLDP plugin" {
         Context "Get-OPNsenseLlpd" {
 
-            $expected = [ordered]@{enabled = "1"; cdp = "1"; fdp = "1"; edp = "1"; sonmp = "1"}
+            $expected = [ordered]@{enabled = "1"; cdp = "1"; fdp = "1"; edp = "1"; sonmp = "1"; interface = ""}
             $result = Get-OPNsenseLldp
             It 'Get-OPNsenseLlpd values' {
                 Compare-Json $result $expected | Should Be 0
             }
             It 'Has Custom OPNsense ObjectType' {
-                Test-ObjectType $result | Should Match 'OPNsense.'
+                Test-ObjectType $result | Should Match 'OPNsense.Service.Lldpd.Option'
             }
 
             $result = Get-OPNsenseLldp -Neighbor
@@ -26,7 +26,7 @@ InModuleScope PS_OPNsense {
 
             }
             It 'Has Custom OPNsense ObjectType' {
-                Test-ObjectType $result | Should Match 'OPNsense.'
+                Test-ObjectType $result | Should Match 'OPNsense.Service.Lldpd.Neighbor'
             }
 
             It 'Cmdlet has a Get-Help entry' {
@@ -36,10 +36,10 @@ InModuleScope PS_OPNsense {
 
         Context "Get- & Set-OPNsenseLlpd" {
 
-            $expected0 = [ordered]@{enabled = "0"; cdp = "0"; fdp = "0"; edp = "0"; sonmp = "0"}
-            $expected1 = [ordered]@{enabled = "1"; cdp = "1"; fdp = "1"; edp = "1"; sonmp = "1"}
+            $expected0 = [ordered]@{enabled = "0"; cdp = "0"; fdp = "0"; edp = "0"; sonmp = "0"; interface = "*"}
+            $expected1 = [ordered]@{enabled = "1"; cdp = "1"; fdp = "1"; edp = "1"; sonmp = "1"; interface = ""}
             
-            $result = Set-OPNsenseLldp -Enable:$false -EnableCdp:$false -EnableFdp:$false -EnableEdp:$tfalse -EnableSonmp:$false
+            $result = Set-OPNsenseLldp -Enable:$false -EnableCdp:$false -EnableFdp:$false -EnableEdp:$tfalse -EnableSonmp:$false -Interface '*'
             It 'Set-OPNsenseLlpd values to 0' {
                 $result.result | Should Be 'saved'
             }
@@ -49,7 +49,7 @@ InModuleScope PS_OPNsense {
                 Compare-Json $result $expected0 | Should Be 0
             }
 
-            $result = Set-OPNsenseLldp -Enable:$true -EnableCdp:$true -EnableFdp:$true -EnableEdp:$true -EnableSonmp:$true
+            $result = Set-OPNsenseLldp -Enable:$true -EnableCdp:$true -EnableFdp:$true -EnableEdp:$true -EnableSonmp:$true -Interface ''
             It 'Set-OPNsenseLlpd values to 1' {
                 $result.result | Should Be 'saved'
             }
@@ -60,16 +60,7 @@ InModuleScope PS_OPNsense {
             }
 
             It 'Has Custom OPNsense ObjectType' {
-                Test-ObjectType $result | Should Match 'OPNsense.'
-            }
-
-            $result = Get-OPNsenseLldp -Neighbor
-            It 'Get-OPNsenseLlpd -Neighbor contains "LLDP neighbors"' {
-                $result | Should Match 'LLDP neighbors:'
-
-            }
-            It 'Has Custom OPNsense ObjectType' {
-                Test-ObjectType $result | Should Match 'OPNsense.'
+                Test-ObjectType $result | Should Match 'OPNsense.Service.Lldpd.Option'
             }
 
             It 'Set-OPNsenseLldp has a Get-Help entry' {
