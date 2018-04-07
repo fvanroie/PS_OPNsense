@@ -40,27 +40,23 @@ InModuleScope PS_OPNsense {
             $expected1 = [ordered]@{enabled = "1"; cdp = "1"; fdp = "1"; edp = "1"; sonmp = "1"; interface = ""}
             
             $result = Set-OPNsenseLldp -Enable:$false -EnableCdp:$false -EnableFdp:$false -EnableEdp:$tfalse -EnableSonmp:$false -Interface '*'
-            It 'Set-OPNsenseLlpd values to 0' {
-                $result.result | Should Be 'saved'
+
+            It 'Has Custom OPNsense ObjectType' {
+                Test-ObjectType $result | Should Match 'OPNsense.Service.Lldpd.Option'
             }
 
-            $result = Get-OPNsenseLldp
             It 'Get-OPNsenseLlpd values are 0' {
                 Compare-Json $result $expected0 | Should Be 0
             }
 
             $result = Set-OPNsenseLldp -Enable:$true -EnableCdp:$true -EnableFdp:$true -EnableEdp:$true -EnableSonmp:$true -Interface ''
-            It 'Set-OPNsenseLlpd values to 1' {
-                $result.result | Should Be 'saved'
-            }
-            
-            $result = Get-OPNsenseLldp
-            It 'Get-OPNsenseLlpd values are 1' {
-                Compare-Json $result $expected1 | Should Be 0
-            }
 
             It 'Has Custom OPNsense ObjectType' {
                 Test-ObjectType $result | Should Match 'OPNsense.Service.Lldpd.Option'
+            }
+            
+            It 'Get-OPNsenseLlpd values are 1' {
+                Compare-Json $result $expected1 | Should Be 0
             }
 
             It 'Set-OPNsenseLldp has a Get-Help entry' {

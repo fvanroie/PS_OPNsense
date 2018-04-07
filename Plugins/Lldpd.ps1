@@ -22,7 +22,24 @@
 #>
 
 function Get-OPNsenseLldp {
-    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
+    <#
+        .SYNOPSIS
+
+        Retieves the settings for LLDP.
+        .DESCRIPTION
+
+        Use the Get-OPNsenseLldp cmdlet to list the options of the the Link Layer Discovery Protocol (LLDP) plugin.
+        
+        .PARAMETER Neighbor
+        If this switch parameter is specified, a list of the neighboring devices is returned.
+        Without this switch parameter, the configuration options of the LLDP plugin are shown.
+
+        .EXAMPLE
+        Get-OPNsenseLldp
+        .EXAMPLE
+        Get-OPNsenseLldp -Neighbor
+    #>
+
     [CmdletBinding()]
     param (
         [Switch]$Neighbor
@@ -35,7 +52,29 @@ function Get-OPNsenseLldp {
 }
 
 Function Set-OPNsenseLldp {
-    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
+    <#
+        .SYNOPSIS
+
+        Sets the options for LLDP on one or more interfaces.
+        .DESCRIPTION
+
+        Use the Set-OPNsenseLldp cmdlet to configure the Link Layer Discovery Protocol (LLDP) on one or more physical interfaces.
+        Set the name of the hardware interface instead of the logical OPNsense interface names as the protocol runs on the physical port(s).
+
+        .PARAMETER Enable
+        Enable the LLDP plugin.
+        .PARAMETER Interface
+        The name(s) of the physical interface(s). Multiple names seperated by a comma are allowed and you can use wildcards.
+        If the interface is empty, all interfaces are used for LLDP.
+        
+        Preceed the interface with an exclamation mark (!) to excluded it from LLDP.
+        Preceed the interface with a double exclamation mark (!!) to include the interface, even if it maches on exclusion wildcard.
+        .EXAMPLE
+
+        Set-OPNsenseLldp -Interface em*,!em0 -Enable -EnableCdp -EnableFdp -EnableEdp -EnableSonmp
+        .EXAMPLE
+        Set-OPNsenseLldp -Interface em*,!igp*,!!igp1 -Enable -EnableCdp -EnableFdp:$false -EnableEdp -EnableSonmp:$false
+    #>
     [CmdletBinding()]
     param (
         [parameter(Mandatory = $false)][Switch]$Enable,
@@ -69,7 +108,7 @@ Function Set-OPNsenseLldp {
 
     $result = Invoke-OPNsenseCommand lldpd general set -Json $args
     Update-OPNsenseService lldpd | Out-Null
-    
+
     if (Test-OPNsenseApiResult $result) {
         Get-OPNsenseLldp
     } else {
