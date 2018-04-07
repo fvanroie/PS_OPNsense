@@ -46,8 +46,9 @@ Function Set-OPNsenseCollectd {
     # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
     [CmdletBinding()]
     param (
+        [ValidateSet('network', 'graphite', 'cpu', 'df', 'interface', 'load', 'memory', 'processes', 'uptime', 'users')]
         [parameter(Mandatory = $false)][string[]]$Plugin,
-        [parameter(Mandatory = $false)][Switch]$Enabled        
+        [parameter(Mandatory = $false)][Switch]$Enabled
     )
 
     $theObject = Get-OPNsenseCollectd
