@@ -1,4 +1,4 @@
-Import-Module PS_OPNsense -force
+Import-Module PS_OPNsense
 
 InModuleScope PS_OPNsense {
 
