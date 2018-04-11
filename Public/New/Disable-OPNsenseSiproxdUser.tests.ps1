@@ -2,11 +2,11 @@
 
 InModuleScope PS_OPNsense {
     $objects = @{
-        function = "Enable-OPNsenseBgpRoutemap";
-        module = "quagga";
-        controller = "bgp"
+        function = "Disable-OPNsenseSiproxdUser";
+        module = "siproxd";
+        controller = "user"
     }
-    switch ("Enable-OPNsenseBgpRoutemap".Substring(0,6)) {
+    switch ("Disable-OPNsenseSiproxdUser".Substring(0,6)) {
         "Enable"  {
             $objects.add('state','1')
         }
@@ -14,16 +14,16 @@ InModuleScope PS_OPNsense {
             $objects.add('state','0')
         }
     }
-    switch ("quagga") {
+    switch ("siproxd") {
         { @("AcmeClient", "Freeradius", "IDS", "Monit", "Postfix", "ProxyUserACL", "Quagga", "Routes", "Siproxd", "Tinc", "Tor", "Zerotier") -Contains $_ } {           
-            $objects.add('command',"searchroutemap")
+            $objects.add('command',"searchuser")
         }
         default {           
-            $objects.add('command',"searchroutemaps")
+            $objects.add('command',"searchusers")
         }
     }
 
-    Describe -Tag "quagga" "Enable-OPNsenseBgpRoutemap" {
+    Describe -Tag "siproxd" "Disable-OPNsenseSiproxdUser" {
         $uuid = @()
 
         Context "Get UUIDs" {
@@ -39,7 +39,7 @@ InModuleScope PS_OPNsense {
 
             It "<module> : <function>" -TestCases $objects {
                 param($function, $module, $controller, $command, $state)
-                { Enable-OPNsenseBgpRoutemap -Uuid $uuid } | should Not Throw
+                { Disable-OPNsenseSiproxdUser -Uuid $uuid } | should Not Throw
             }
 
             It "Check <function> is <state>" -TestCases $objects {

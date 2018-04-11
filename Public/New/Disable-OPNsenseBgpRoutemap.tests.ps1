@@ -2,11 +2,11 @@
 
 InModuleScope PS_OPNsense {
     $objects = @{
-        function = "Enable-OPNsenseBgpRoutemap";
+        function = "Disable-OPNsenseBgpRoutemap";
         module = "quagga";
         controller = "bgp"
     }
-    switch ("Enable-OPNsenseBgpRoutemap".Substring(0,6)) {
+    switch ("Disable-OPNsenseBgpRoutemap".Substring(0,6)) {
         "Enable"  {
             $objects.add('state','1')
         }
@@ -23,7 +23,7 @@ InModuleScope PS_OPNsense {
         }
     }
 
-    Describe -Tag "quagga" "Enable-OPNsenseBgpRoutemap" {
+    Describe -Tag "quagga" "Disable-OPNsenseBgpRoutemap" {
         $uuid = @()
 
         Context "Get UUIDs" {
@@ -39,7 +39,7 @@ InModuleScope PS_OPNsense {
 
             It "<module> : <function>" -TestCases $objects {
                 param($function, $module, $controller, $command, $state)
-                { Enable-OPNsenseBgpRoutemap -Uuid $uuid } | should Not Throw
+                { Disable-OPNsenseBgpRoutemap -Uuid $uuid } | should Not Throw
             }
 
             It "Check <function> is <state>" -TestCases $objects {

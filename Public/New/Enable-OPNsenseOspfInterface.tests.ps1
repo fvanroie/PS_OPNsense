@@ -2,11 +2,11 @@
 
 InModuleScope PS_OPNsense {
     $objects = @{
-        function = "Enable-OPNsenseBgpRoutemap";
+        function = "Enable-OPNsenseOspfInterface";
         module = "quagga";
-        controller = "bgp"
+        controller = "ospfsettings"
     }
-    switch ("Enable-OPNsenseBgpRoutemap".Substring(0,6)) {
+    switch ("Enable-OPNsenseOspfInterface".Substring(0,6)) {
         "Enable"  {
             $objects.add('state','1')
         }
@@ -16,14 +16,14 @@ InModuleScope PS_OPNsense {
     }
     switch ("quagga") {
         { @("AcmeClient", "Freeradius", "IDS", "Monit", "Postfix", "ProxyUserACL", "Quagga", "Routes", "Siproxd", "Tinc", "Tor", "Zerotier") -Contains $_ } {           
-            $objects.add('command',"searchroutemap")
+            $objects.add('command',"searchinterface")
         }
         default {           
-            $objects.add('command',"searchroutemaps")
+            $objects.add('command',"searchinterfaces")
         }
     }
 
-    Describe -Tag "quagga" "Enable-OPNsenseBgpRoutemap" {
+    Describe -Tag "quagga" "Enable-OPNsenseOspfInterface" {
         $uuid = @()
 
         Context "Get UUIDs" {
@@ -39,7 +39,7 @@ InModuleScope PS_OPNsense {
 
             It "<module> : <function>" -TestCases $objects {
                 param($function, $module, $controller, $command, $state)
-                { Enable-OPNsenseBgpRoutemap -Uuid $uuid } | should Not Throw
+                { Enable-OPNsenseOspfInterface -Uuid $uuid } | should Not Throw
             }
 
             It "Check <function> is <state>" -TestCases $objects {

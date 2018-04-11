@@ -68,11 +68,32 @@ Function Enable-OPNsenseObject {
     PROCESS {
         foreach ($id in $Uuid) {
             $item = $metadata | Where-Object { $_.Uuid -eq $id }
-            if ($PSCmdlet.ShouldProcess(("{0} {{{1}}}" -f $item.name, $id), "$Toggle $ObjectType")) {
-                $result = Invoke-OPNsenseCommand $Module $Controller $("toggle{0}/{1}/{2}" -f $Command.ToLower(), $id, $newStatus) -Form $Command.ToLower() -AddProperty @{ 'Uuid' = "$id"; 'Name' = "{0}" -f $item.Name }
-                #Test-Result $result | Out-Null
-                $results += $result
-            }    
+            if (-not $item) {
+                Write-Warning ('{2} "{{{0}}}" can not be {1}d because it cannot be found.' -f $id, $Toggle.ToLower(), $ObjectType)
+            }
+
+            # Get the current state of the object
+            if ($item.enabled) {
+                $currentStatus = $item.enabled
+            } elseif ($item.disabled) {
+                $currentStatus = 1 - $item.disabled
+            } else {
+                $currentStatus = $null  # Unknown
+            }
+
+            # Is Change needed?
+            if ($newStatus -ne $CurrentStatus) {
+                # Request confirmation if needed
+                if ($PSCmdlet.ShouldProcess(("{0} {{{1}}}" -f $item.name, $id), "$Toggle $ObjectType")) {
+                    $result = Invoke-OPNsenseCommand $Module $Controller $("toggle{0}/{1}/{2}" -f $Command.ToLower(), $id, $newStatus) -Form $Command.ToLower() -AddProperty @{ 'Uuid' = "$id"; 'Name' = "{0}" -f $item.Name }
+                    #Test-Result $result | Out-Null
+                    $results += $result
+                }    
+            } else {
+                # Already in the Requested State
+                Write-Verbose ('{3} "{0} {{{1}}}" is already {2}d.' -f $item.name, $id, $Toggle.ToLower(), $ObjectType)
+            }
+
         }
     }    
     END {
