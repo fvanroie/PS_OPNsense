@@ -53,15 +53,6 @@ function ConvertTo-InputObject {
     return $obj
 }
 
-
-function Get-NoteProperty {
-    [CmdletBinding()]
-    param (
-        [psobject]$obj
-    )
-    return Get-Member -InputObject $obj -MemberType NoteProperty | Select-Object -ExpandProperty Name
-}
-
 function Format-OPNsenseProperty {
     [CmdletBinding()]
     param (
@@ -98,72 +89,7 @@ function Get-MultiOption {
     return $result
 }
 
-
-##### GET Functions #####
-function Get-OPNsenseHAProxyDetail {
-    [CmdletBinding()]
-    param (
-        [Parameter(Mandatory = $true, position = 0)]
-        [ValidateSet('Server', 'Backend', 'Frontend', 'Healthcheck', 'Errorfile', 'Lua', 'Acl', 'Action', 'Healthcheck')]
-        [String]$ObjectType,
-        [parameter(Mandatory = $true)][string]$Uuid
-    )
-    Switch ($ObjectType) {
-        'Server' { Get-OPNsenseHAProxyServer -Uuid $Uuid }    
-        'Backend' { Get-OPNsenseHAProxyBackend -Uuid $Uuid }    
-        'Frontend' { Get-OPNsenseHAProxyFrontend -Uuid $Uuid }    
-        'Healthcheck' { Get-OPNsenseHAProxyHealthCheck -Uuid $Uuid }    
-        'Errorfile' { Get-OPNsenseHAProxyErrorfile -Uuid $Uuid }    
-        'Lua' { Get-OPNsenseHAProxyLuaScript -Uuid $Uuid }    
-        'Acl' { Get-OPNsenseHAProxyAcl -Uuid $Uuid }    
-        'Action' { Get-OPNsenseHAProxyAction -Uuid $Uuid }    
-        default { }
-    }
-}
-
-function Select-OPNsenseHAProxyObject {
-    [CmdletBinding()]
-    param (
-        [Parameter(Mandatory = $true, position = 0)]
-        [AllowNull()]$InputObject,
-
-        [parameter(Mandatory = $false)]
-        [AllowEmptyCollection()][string[]]$Uuid,
-
-        [parameter(Mandatory = $false)]
-        [AllowEmptyCollection()][string[]]$Name,
-
-        [parameter(Mandatory = $false)]
-        [AllowEmptyCollection()][string[]]$Description 
-    )
-    
-    Write-Verbose "- UUID : $Uuid`n`t - Name : $Name`n`t - Description : $Description"
-    $result = @()
-
-    # Test if the InputObject is defined
-    if (-Not $InputObject) {
-        return $resul
-    }
-
-    # UUID filter
-    If ($Uuid) {
-        $ids = $Uuid
-    } else {
-        $ids = Get-NoteProperty $InputObject
-    }
-
-    ForEach ($id in $ids) {
-        # Skip objects that do not satisfy the filters passed
-        If (Skip-OPNsenseObject -Value $InputObject.$id.Name -Like $Name) { continue }
-        If (Skip-OPNsenseObject -Value $InputObject.$id.Description -Like $Description) { continue }
-
-        # PassThru is needed to capture the object
-        $result += $InputObject.$id | Add-Member -MemberType NoteProperty -Name 'Uuid' -Value $id -PassThru
-    }
-
-    return $result
-}
-
+<#
 function Get-OPNsenseHAProxyObject {
     [CmdletBinding()]
     param (
@@ -177,6 +103,7 @@ function Get-OPNsenseHAProxyObject {
         Select-Object -ExpandProperty ('{0}s' -f $ObjectType.ToLower()) |
         Select-Object -ExpandProperty $ObjectType.ToLower()
 }
+#>
 
 ##### NEW Functions #####
 <#

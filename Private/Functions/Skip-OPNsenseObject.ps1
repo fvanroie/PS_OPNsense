@@ -25,6 +25,7 @@ Function Skip-OPNsenseObject {
     [CmdletBinding()]
     param (
         [parameter(Mandatory = $true, Position = 0)]
+        [AllowEmptyString()][AllowNull()][AllowEmptyCollection()]
         [String]$value,
 
         [parameter(Mandatory = $true, ParameterSetName = "Like")]
@@ -37,7 +38,7 @@ Function Skip-OPNsenseObject {
     )
 
     switch ($PSCmdlet.ParameterSetName) {
-        "In" {        
+        "In" {
             If ($Value -in $in) {
                 # Value passes the IN filter
                 return $false
