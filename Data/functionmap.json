@@ -1,0 +1,122 @@
+{
+    "Modules": {
+        "AcmeClient": {
+            "Objects": {
+                "Account": {
+                    "objecttype": "OPNsense.AcmeClient.Account",
+                    "objectname": "AcmeClient Account",
+                    "commands": {
+                        "remove": {
+                            "module": "acmeclient",
+                            "controller": "accounts",
+                            "command": "del",
+                            "parameters": "uuid"
+                        },
+                        "get": {
+                            "module": "acmeclient",
+                            "controller": "accounts",
+                            "command": "get",
+                            "parameters": "uuid"
+                        },
+                        "search": {
+                            "module": "acmeclient",
+                            "controller": "accounts",
+                            "command": "search",
+                            "parameters": ""
+                        }
+                    }
+                },
+                "Action": {
+                    "objecttype": "OPNsense.AcmeClient.Action",
+                    "objectname": "AcmeClient Action",
+                    "commands": {
+                        "remove": {
+                            "module": "acmeclient",
+                            "controller": "actions",
+                            "command": "del",
+                            "parameters": "uuid"
+                        },
+                        "get": {
+                            "module": "acmeclient",
+                            "controller": "actions",
+                            "command": "get",
+                            "parameters": "uuid"
+                        },
+                        "search": {
+                            "module": "acmeclient",
+                            "controller": "actions",
+                            "command": "search",
+                            "parameters": ""
+                        }
+                    }
+                },
+                "Certificate": {
+                    "objecttype": "OPNsense.AcmeClient.Certificate",
+                    "objectname": "AcmeClient Certificate",
+                    "commands": {
+                        "remove": {
+                            "module": "acmeclient",
+                            "controller": "certificates",
+                            "command": "del",
+                            "parameters": "uuid"
+                        },
+                        "get": {
+                            "module": "acmeclient",
+                            "controller": "certificates",
+                            "command": "get",
+                            "parameters": "uuid"
+                        },
+                        "search": {
+                            "module": "acmeclient",
+                            "controller": "certificates",
+                            "command": "search",
+                            "parameters": ""
+                        }
+                    }
+                },
+                "Validation": {
+                    "objecttype": "OPNsense.AcmeClient.Validation",
+                    "objectname": "AcmeClient Validation",
+                    "commands": {
+                        "remove": {
+                            "module": "acmeclient",
+                            "controller": "validations",
+                            "command": "del",
+                            "parameters": "uuid"
+                        },
+                        "get": {
+                            "module": "acmeclient",
+                            "controller": "validations",
+                            "command": "get",
+                            "parameters": "uuid"
+                        },
+                        "search": {
+                            "module": "acmeclient",
+                            "controller": "validations",
+                            "command": "search",
+                            "parameters": ""
+                        }
+                    }
+                }
+            }
+        },
+        "CaptivePortal": {},
+        "Cron": {},
+        "FreeRadius": {},
+        "HAProcy": {},
+        "IDS": {},
+        "Monit": {},
+        "Postfix": {},
+        "Proxy": {},
+        "ProxyUserACL": {},
+        "Quagga": {},
+        "Relayd": {},
+        "Routes": {},
+        "Siproxd": {},
+        "Tinc": {},
+        "Tor": {},
+        "TrafficShaper": {},
+        "Wol": {},
+        "ZeroTier": {}
+    }
+}
