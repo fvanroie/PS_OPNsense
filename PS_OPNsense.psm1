@@ -26,6 +26,10 @@
 $IsPSCoreEdition = ($PSVersionTable.PSEdition -eq 'Core')
 $minversion = [System.Version]'18.1.6'
 
+# Load functionmap of api calls
+$FullPath = ("{0}/{1}" -f $PSScriptRoot, 'Data/functionmap.json')
+$FunctionMap = Get-Content $FullPath | ConvertFrom-Json
+
 # Load individual functions from scriptfiles
 ForEach ($Folder in 'Core', 'Plugins', 'Private', 'Public') {
     $FullPath = ("{0}/{1}/" -f $PSScriptRoot, $Folder)
@@ -59,8 +63,6 @@ $f = @(########## PLUGINS ##########
    
 
     ########## CORE ##########
-    # PS_OPNsense
-    #'Connect-OPNsense', 'Disconnect-OPNsense',
     # RestApi
     'Invoke-OPNsenseCommand',
     # Firmware
@@ -84,7 +86,6 @@ $f = @(########## PLUGINS ##########
     # Diagnostics
     'Get-OPNsenseSystemHealth', 'Get-OPNsenseResource', 'Get-OPNsenseInterface', 'Get-OPNsenseRoute', 'Get-OPNsenseARP', 'Clear-OPNsenseARP',
     # Services
-    'Get-OPNsenseService', 'Start-OPNsenseService', 'Update-OPNsenseService', 'Test-OPNsenseService', 'Restart-OPNsenseService', 'Stop-OPNsenseService', 'Invoke-OPNsenseService',
-    # TrafficShaper
-    'Remove-OPNsenseTrafficShaperPipe', 'Remove-OPNsenseTrafficShaperQueue', 'Remove-OPNsenseTrafficShaperRule')
+    'Get-OPNsenseService', 'Start-OPNsenseService', 'Update-OPNsenseService', 'Test-OPNsenseService', 'Restart-OPNsenseService', 'Stop-OPNsenseService', 'Invoke-OPNsenseService'
+)
 Export-ModuleMember -Function $f

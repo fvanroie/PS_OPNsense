@@ -22,40 +22,16 @@
 #>
 
 
-Function Remove-OPNsenseObject {
-    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
-    [CmdletBinding(
-        SupportsShouldProcess = $true,
-        ConfirmImpact = "Medium"
-    )]
-    Param(
+function Get-OPNsenseObjectType {
+    [CmdletBinding()]
+    Param (
         [parameter(Mandatory = $true, position = 0)][String]$Module,
         [parameter(Mandatory = $true, position = 1)][String]$Object,
-
-        [Parameter(Mandatory = $true, position = 2)]
-        [AllowEmptyCollection()][String[]]$Uuid
+        [parameter(Mandatory = $false)][Switch]$Name
     )
-    BEGIN {
-        $results = @()
-        $ObjectName = Get-OPNsenseObjectType $Module $Object -Name
-        $ObjectType = Get-OPNsenseObjectType $Module $Object
-
-        # Get object list to match uuid to object name
-        $metadata = Get-OPNsenseObject $Module search $Object
-    }
-    PROCESS {
-        foreach ($id in $Uuid) {
-            #$item = $metadata | Where-Object { $_.Uuid -eq $id }
-            $item = Select-OPNsenseObject -InputObject $metadata -Uuid $id
-            
-            if ($PSCmdlet.ShouldProcess(("{0} {{{1}}}" -f $item.name, $id), "Remove $ObjectName")) {
-                $result = Invoke-OPNsenseCommand $Module $Controller $("del{0}/{1}" -f $Command.ToLower(), $id) -Json '{}' -AddProperty @{ 'Uuid' = "$id"; 'Name' = "{0}" -f $item.Name }
-                #Test-Result $result | Out-Null
-                $results += $result
-            }
-        }
-    }
-    END {
-        return $results #| Add-ObjectDetail -TypeName $ObjectType
+    if ($Name) {
+        return $functionmap.$Module.$Object.objectname
+    } else {
+        return $functionmap.$Module.$Object.objecttype
     }
 }

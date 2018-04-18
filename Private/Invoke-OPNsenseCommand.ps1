@@ -41,6 +41,8 @@ Function Invoke-OPNsenseCommand {
         $Form,
         [parameter(Mandatory = $false)][System.IO.FileInfo]$OutFile,
 
+        [parameter(Mandatory = $false)][String[]]$Property,
+
         [parameter(Mandatory = $false)][HashTable]$AddProperty
     )
 
@@ -95,6 +97,15 @@ Function Invoke-OPNsenseCommand {
                 $result = ConvertFrom-Json $result -ErrorAction Stop
             } catch {
                 # If ConvertTo-Json still fails return the String already in $result by default
+            }
+        }
+
+        # Drill down to the requested property level
+        foreach ($prop in $Property) {
+            if ($prop -in (Get-NoteProperty $result)) {
+                $result = Select-Object -InputObject $result -ExpandProperty $prop       
+            } else {
+                Throw "$prop is an invalid property for object $Module/$Controller/$Command"
             }
         }
 

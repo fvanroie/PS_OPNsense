@@ -24,10 +24,46 @@
 
 <#
     Retrieve the data for an object from the OPNsense api.
-    The Module/Controller/Command define which api to call.
-
-    The optional Property is the subnode of the data to be returned.
+    The Module/Command/Object define which api to call based on the functionmap.json file.
 #>
+
+
+Function Get-OPNsenseObject {
+    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
+    [CmdletBinding()]
+    Param (
+        [parameter(Mandatory = $true, position = 0)][String]$Module,
+        [parameter(Mandatory = $true, position = 1)][String]$Command,
+        [parameter(Mandatory = $true, position = 2)][String]$Object,
+        [parameter(Mandatory = $false)][String]$Uuid,
+        [parameter(Mandatory = $false)][Boolean]$Enable
+    )
+
+    $list = $Functionmap.$Module.$Object.commands.$Command
+    $splat = @{};
+    if ($list) {
+        $list | Get-Member -MemberType NoteProperty | ForEach-Object { $splat.add($_.name, $list.($_.name))}
+    } else {
+        Write-Error "Undefined api call for $command $Module $Object"
+    }
+
+    if ($uuid) {
+        $splat.command = $splat.command.Replace("<uuid>", $uuid)
+    }
+    
+    if ($Enable) {
+        $splat.command = $splat.command.Replace("<enabled>", '1')
+        $splat.command = $splat.command.Replace("<disabled>", '0')
+    } else {
+        $splat.command = $splat.command.Replace("<enabled>", '0')
+        $splat.command = $splat.command.Replace("<disabled>", '1')     
+    }
+
+    $result = Invoke-OPNsenseCommand @splat
+    return $result
+}
+
+<#
 function Get-OPNsenseObject {
     [CmdletBinding()]
     param (
@@ -67,4 +103,4 @@ function Get-OPNsenseObject {
     # Convert $result into Object
 
     return $result
-}
+#>

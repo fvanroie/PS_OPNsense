@@ -21,31 +21,28 @@
 	SOFTWARE.
 #>
 
-Function Enable-OPNsenseObject {
+Function Get-OPNsenseFreeradiusClient {
     # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
-    [CmdletBinding(
-        SupportsShouldProcess = $true,
-        ConfirmImpact = "Medium"
-    )]
-    Param(
-        [parameter(Mandatory = $true, position = 0)][String]$Module,
-        [parameter(Mandatory = $true, position = 2)][String]$Object,
+    [CmdletBinding()]
+    param (
+        [parameter(Mandatory = $false, ValueFromPipelineByPropertyname = $true)]
+        [AllowEmptyCollection()][string[]]$Uuid,
+        [parameter(Mandatory = $false, ValueFromPipelineByPropertyname = $true)]
+        [AllowEmptyCollection()][string[]]$Name,
+        [parameter(Mandatory = $false, ValueFromPipelineByPropertyname = $true)]
+        [AllowEmptyCollection()][string[]]$Description,
 
-        [Parameter(Mandatory = $true, position = 3)]
-        [AllowEmptyCollection()]
-        [String[]]$Uuid,
-
-        [Parameter(Mandatory = $false, position = 4)]
-        [Boolean]$Enable
+        [parameter(Mandatory = $false)]
+        [ValidateSet(0, 1, '0', '1', $False, $True)]$Enabled
     )
     BEGIN {
-        $uuids = @()
+        $allobj = Invoke-OPNsenseFunction freeradius client search   # Get all Objects
+        $result = @()
     }
     PROCESS {
-        $uuids += $uuid
-    }
+        $result += Select-OPNsenseObject -InputObject $allobj @PSBoundParameters   # Filter on properties
+    }  
     END {
-        if ($false) { $PSCmdlet.ShouldProcess() }         # Hide PSScriptAlalyzer warning
-        return Switch-OPNsenseObjectStatus $module $object -Uuid $uuids -Enable $True
+        return $result | Add-ObjectDetail -TypeName 'OPNsense.Freeradius.Client.List'
     }
 }

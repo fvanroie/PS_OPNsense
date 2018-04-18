@@ -22,7 +22,7 @@
 #>
 
 <#
-    Given a list of objects, filter based on given UUIDs, names and/or descriptions
+    Given a list of objects with UUID property, filter based on given UUIDs, names and/or descriptions
     Return the subset of objects matching the given criteria.
 #>
 function Select-OPNsenseObject {
@@ -41,7 +41,7 @@ function Select-OPNsenseObject {
         [AllowEmptyCollection()][string[]]$Description 
     )
     
-    Write-Verbose "- UUID : $Uuid`n`t - Name : $Name`n`t - Description : $Description"
+    Write-Verbose "Select:`t- UUID : $Uuid`n`t- Name : $Name`n`t- Description : $Description"
     $result = @()
 
     # Test if the InputObject is defined
@@ -51,18 +51,25 @@ function Select-OPNsenseObject {
 
     # UUID filter
     If ($Uuid) {
+        # Only iterate the UUIDs requested
         $ids = $Uuid
     } else {
+        # Iterate all UUIDs of the InputObject
         $ids = Get-NoteProperty $InputObject
     }
 
     ForEach ($id in $ids) {
-        # Skip objects that do not satisfy the filters passed
-        If (Skip-OPNsenseObject -Value $InputObject.$id.Name -Like $Name) { continue }
-        If (Skip-OPNsenseObject -Value $InputObject.$id.Description -Like $Description) { continue }
+        # The UUID exists in the object
+        if ($InputObject.$id) {
+            # Skip objects that do not satisfy the filters passed
+            If (Skip-OPNsenseObject -Value $InputObject.$id.Name -Like $Name) { continue }
+            If (Skip-OPNsenseObject -Value $InputObject.$id.Description -Like $Description) { continue }
 
-        # PassThru is needed to capture the object
-        $result += $InputObject.$id | Add-Member -MemberType NoteProperty -Name 'Uuid' -Value $id -PassThru
+            # PassThru is needed to capture the object
+            $result += $InputObject.$id | Add-Member -MemberType NoteProperty -Name 'Uuid' -Value $id -PassThru
+        } else {
+            Write-Verbose "$id does not exist."
+        }
     }
 
     return $result

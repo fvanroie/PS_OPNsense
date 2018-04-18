@@ -21,41 +21,25 @@
     SOFTWARE.
 #>
 
-
-Function Remove-OPNsenseObject {
+# Public Function that abscracts the API calls
+Function Invoke-OPNsenseFunction {
     # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
-    [CmdletBinding(
-        SupportsShouldProcess = $true,
-        ConfirmImpact = "Medium"
-    )]
-    Param(
+    [CmdletBinding()]
+    Param (
         [parameter(Mandatory = $true, position = 0)][String]$Module,
         [parameter(Mandatory = $true, position = 1)][String]$Object,
-
-        [Parameter(Mandatory = $true, position = 2)]
-        [AllowEmptyCollection()][String[]]$Uuid
+        [parameter(Mandatory = $true, position = 2)][String]$Command,
+        [parameter(Mandatory = $false)][String]$Uuid
     )
-    BEGIN {
-        $results = @()
-        $ObjectName = Get-OPNsenseObjectType $Module $Object -Name
-        $ObjectType = Get-OPNsenseObjectType $Module $Object
 
-        # Get object list to match uuid to object name
-        $metadata = Get-OPNsenseObject $Module search $Object
+    $list = $Functionmap.$Module.$Object.commands.$Command
+    $splat = @{};
+    $list | Get-Member -MemberType NoteProperty | ForEach-Object { $splat.add($_.name, $list.($_.name))}
+
+    if ($uuid) {
+        $splat.command = $splat.command.Replace("<uuid>", $uuid)
     }
-    PROCESS {
-        foreach ($id in $Uuid) {
-            #$item = $metadata | Where-Object { $_.Uuid -eq $id }
-            $item = Select-OPNsenseObject -InputObject $metadata -Uuid $id
-            
-            if ($PSCmdlet.ShouldProcess(("{0} {{{1}}}" -f $item.name, $id), "Remove $ObjectName")) {
-                $result = Invoke-OPNsenseCommand $Module $Controller $("del{0}/{1}" -f $Command.ToLower(), $id) -Json '{}' -AddProperty @{ 'Uuid' = "$id"; 'Name' = "{0}" -f $item.Name }
-                #Test-Result $result | Out-Null
-                $results += $result
-            }
-        }
-    }
-    END {
-        return $results #| Add-ObjectDetail -TypeName $ObjectType
-    }
+
+    $result = Invoke-OPNsenseCommand @splat
+    return $result
 }

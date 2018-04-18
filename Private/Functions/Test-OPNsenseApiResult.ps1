@@ -29,6 +29,7 @@ Function Test-OPNsenseApiResult {
     # Check .result and .status
     switch ($result.result) {
         'saved' { return $True; Break }
+        '' { return $True; Break }
         'deleted' { return $True; Break }
         'failed' { 
             if ($result.validations) {

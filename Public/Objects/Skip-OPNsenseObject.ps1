@@ -41,14 +41,17 @@ Function Skip-OPNsenseObject {
         "In" {
             If ($Value -in $in) {
                 # Value passes the IN filter
+                Write-Verbose "$Value is in $in"
                 return $false
+            } else {
+                Write-Verbose "$Value is not in $in"
             }
         }
         "Like" {
             if ($Like.Count -eq 0) { return $false }
             # Filter on LIKE Parameter
             Foreach ($filter in $Like) {
-                Write-Verbose ('{0} -like {1}' -f $value, $filter)
+                Write-Verbose ('{0} -like {1}' -f $Value, $filter)
                 If ($Value -like $filter) {
                     # Value passes the LIKE filter
                     return $false
