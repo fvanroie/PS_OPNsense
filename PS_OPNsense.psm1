@@ -22,16 +22,24 @@
 #>
 
 
-# Module Variables
+##### Module Variables
 $IsPSCoreEdition = ($PSVersionTable.PSEdition -eq 'Core')
-$minversion = [System.Version]'18.1.6'
+$minversion = [System.Version]'18.1.7'
 
-# Load functionmap of api calls
-$FullPath = ("{0}/{1}" -f $PSScriptRoot, 'Data/functionmap.json')
-$FunctionMap = Get-Content $FullPath | ConvertFrom-Json
+Try {
+    # Load objectmap of api calls
+    $FullPath = ("{0}/{1}" -f $PSScriptRoot, 'Data/objects.json')
+    $OPNsenseObjectMap = Get-Content $FullPath | ConvertFrom-Json
+
+    # Load servicemap of api calls
+    $FullPath = ("{0}/{1}" -f $PSScriptRoot, 'Data/services.json')
+    $OPNsenseServiceMap = Get-Content $FullPath | ConvertFrom-Json
+} Catch {
+    Throw ("Unable to load the API maps :`nError : {0}" -f $_)
+}
 
 # Load individual functions from scriptfiles
-ForEach ($Folder in 'Core', 'Plugins', 'Private', 'Public') {
+ForEach ($Folder in 'Classes', 'Core', 'Plugins', 'Private', 'Public') {
     $FullPath = ("{0}/{1}/" -f $PSScriptRoot, $Folder)
     $Scripts = Get-ChildItem -Recurse -Filter '*.ps1' -Path $FullPath | Where-Object { $_.Name -notlike '*.Tests.ps1' }
     ForEach ($Script in $Scripts) {
@@ -51,6 +59,21 @@ ForEach ($Folder in 'Core', 'Plugins', 'Private', 'Public') {
     }
 }
 
+ForEach ($Folder in 'Classes') {
+    $FullPath = ("{0}/{1}/" -f $PSScriptRoot, $Folder)
+    $Files = Get-ChildItem -Recurse -Filter '*.cs' -Path $FullPath | Where-Object { $_.Name -notlike '*.Tests.ps1' }
+    ForEach ($File in $Files) {
+        Try {
+            Import-Type -Path $file
+
+        } Catch {
+            # Display error
+            Write-Error -Message ("Failed to load class definition file {0}`nError : {1}" -f $file.name, $_)
+        }
+    }
+}
+
+##### Static Export of Module Fucntions (Temporary situation untill all function get a proper script file)
 Export-ModuleMember -Function Connect-OPNsense, Disconnect-OPNsense, Invoke-OPNsenseCommand
 $f = @(########## PLUGINS ##########
     # ArpScanner

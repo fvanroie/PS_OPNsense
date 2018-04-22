@@ -1,0 +1,1476 @@
+{
+    "MinimumVersion": "18.1",
+    "MaximumVersion": "18.1.6",
+    "AcmeClient": {
+        "Account": {
+            "objecttype": "OPNsense.AcmeClient.Account",
+            "objectname": "AcmeClient Account",
+            "mountpoint": "\\\\OPNsense\\AcmeClient\\accounts\\account",
+            "commands": {
+                "remove": {
+                    "module": "acmeclient",
+                    "controller": "accounts",
+                    "command": "del/<uuid>"
+                },
+                "get": {
+                    "module": "acmeclient",
+                    "controller": "accounts",
+                    "command": "get/<uuid>",
+                    "property": "account"
+                },
+                "search": {
+                    "module": "acmeclient",
+                    "controller": "accounts",
+                    "command": "search",
+                    "property": "rows"
+                },
+                "toggle": {
+                    "module": "acmeclient",
+                    "controller": "accounts",
+                    "command": "toggle/<uuid>/<enabled>",
+                    "Form": "toggle"
+                }
+            }
+        },
+        "Action": {
+            "objecttype": "OPNsense.AcmeClient.Action",
+            "objectname": "AcmeClient Action",
+            "mountpoint": "\\\\OPNsense\\AcmeClient\\actions\\action",
+            "commands": {
+                "remove": {
+                    "module": "acmeclient",
+                    "controller": "actions",
+                    "command": "del/<uuid>"
+                },
+                "get": {
+                    "module": "acmeclient",
+                    "controller": "actions",
+                    "command": "get/<uuid>",
+                    "property": "action"
+                },
+                "search": {
+                    "module": "acmeclient",
+                    "controller": "actions",
+                    "command": "search",
+                    "property": "rows"
+                },
+                "toggle": {
+                    "module": "acmeclient",
+                    "controller": "actions",
+                    "command": "toggle/<uuid>/<enabled>",
+                    "Form": "toggle"
+                }
+            }
+        },
+        "Certificate": {
+            "objecttype": "OPNsense.AcmeClient.Certificate",
+            "objectname": "AcmeClient Certificate",
+            "mountpoint": "\\\\OPNsense\\AcmeClient\\certificates\\certificate",
+            "commands": {
+                "remove": {
+                    "module": "acmeclient",
+                    "controller": "certificates",
+                    "command": "del/<uuid>"
+                },
+                "get": {
+                    "module": "acmeclient",
+                    "controller": "certificates",
+                    "command": "get/<uuid>",
+                    "property": "certificate"
+                },
+                "search": {
+                    "module": "acmeclient",
+                    "controller": "certificates",
+                    "command": "search",
+                    "property": "rows"
+                },
+                "toggle": {
+                    "module": "acmeclient",
+                    "controller": "certificates",
+                    "command": "toggle/<uuid>/<enabled>",
+                    "Form": "toggle"
+                }
+            }
+        },
+        "Validation": {
+            "objecttype": "OPNsense.AcmeClient.Validation",
+            "objectname": "AcmeClient Validation",
+            "mountpoint": "\\\\OPNsense\\AcmeClient\\validations\\validation",
+            "commands": {
+                "remove": {
+                    "module": "acmeclient",
+                    "controller": "validations",
+                    "command": "del/<uuid>"
+                },
+                "get": {
+                    "module": "acmeclient",
+                    "controller": "validations",
+                    "command": "get/<uuid>",
+                    "property": "validation"
+                },
+                "search": {
+                    "module": "acmeclient",
+                    "controller": "validations",
+                    "command": "search",
+                    "property": "rows"
+                },
+                "toggle": {
+                    "module": "acmeclient",
+                    "controller": "validations",
+                    "command": "toggle/<uuid>/<enabled>",
+                    "Form": "toggle"
+                }
+            }
+        }
+    },
+    "CaptivePortal": {
+        "Template": {
+            "objecttype": "OPNsense.CaptivePortal.Template.Item",
+            "objectname": "CaptivePortal Template",
+            "mountpoint": "\\\\OPNsense\\captiveportal\\templates\\template",
+            "properties": [
+                "PSEdition",
+                "PSEdition",
+                "PSEdition"
+            ],
+            "commands": {
+                "remove": {
+                    "module": "captiveportal",
+                    "controller": "service",
+                    "command": "deltemplate/<uuid>"
+                },
+                "get": {
+                    "module": "captiveportal",
+                    "controller": "service",
+                    "command": "gettemplate/<uuid>"
+                },
+                "search": {
+                    "module": "captiveportal",
+                    "controller": "service",
+                    "command": "searchtemplates",
+                    "property": "rows"
+                }
+            }
+        },
+        "Zone": {
+            "objecttype": "OPNsense.CaptivePortal.Zone.Item",
+            "objectname": "CaptivePortal Zone",
+            "mountpoint": "\\\\OPNsense\\captiveportal\\zones\\zone",
+            "commands": {
+                "remove": {
+                    "module": "captiveportal",
+                    "controller": "settings",
+                    "command": "delzone/<uuid>"
+                },
+                "get": {
+                    "module": "captiveportal",
+                    "controller": "settings",
+                    "command": "getzone/<uuid>",
+                    "property": "zone"
+                },
+                "search": {
+                    "module": "captiveportal",
+                    "controller": "settings",
+                    "command": "searchzones",
+                    "property": "rows"
+                },
+                "toggle": {
+                    "module": "captiveportal",
+                    "controller": "settings",
+                    "command": "togglezone/<uuid>/<enabled>",
+                    "Form": "toggle"
+                }
+            }
+        }
+    },
+    "Cron": {
+        "Job": {
+            "objecttype": "OPNsense.Cron.Job",
+            "objectname": "CronJob",
+            "mountpoint": "\\\\OPNsense\\cron\\jobs\\job",
+            "commands": {
+                "remove": {
+                    "module": "cron",
+                    "controller": "settings",
+                    "command": "deljob/<uuid>"
+                },
+                "get": {
+                    "module": "cron",
+                    "controller": "settings",
+                    "command": "getjob/<uuid>",
+                    "property": "job"
+                },
+                "search": {
+                    "module": "cron",
+                    "controller": "settings",
+                    "command": "searchjobs",
+                    "property": "rows"
+                },
+                "toggle": {
+                    "module": "cron",
+                    "controller": "settings",
+                    "command": "togglejob/<uuid>/<enabled>",
+                    "Form": "toggle"
+                }
+            }
+        }
+    },
+    "FreeRadius": {
+        "Client": {
+            "objecttype": "OPNsense.FreeRadius.Client",
+            "objectname": "FreeRadius Client",
+            "mountpoint": "\\\\OPNsense\\freeradius\\client\\clients\\client",
+            "commands": {
+                "remove": {
+                    "module": "freeradius",
+                    "controller": "client",
+                    "command": "delclient/<uuid>"
+                },
+                "get": {
+                    "module": "freeradius",
+                    "controller": "client",
+                    "command": "getclient/<uuid>",
+                    "property": "client"
+                },
+                "search": {
+                    "module": "freeradius",
+                    "controller": "client",
+                    "command": "searchclient",
+                    "property": "rows"
+                },
+                "toggle": {
+                    "module": "freeradius",
+                    "controller": "client",
+                    "command": "toggleclient/<uuid>",
+                    "Form": "toggle"
+                }
+            }
+        },
+        "User": {
+            "objecttype": "OPNsense.FreeRadius.User",
+            "objectname": "FreeRadius User",
+            "mountpoint": "\\\\OPNsense\\freeradius\\user\\users\\user",
+            "commands": {
+                "remove": {
+                    "module": "freeradius",
+                    "controller": "user",
+                    "command": "deluser/<uuid>"
+                },
+                "get": {
+                    "module": "freeradius",
+                    "controller": "user",
+                    "command": "getuser/<uuid>",
+                    "property": "user"
+                },
+                "search": {
+                    "module": "freeradius",
+                    "controller": "user",
+                    "command": "searchuser",
+                    "property": "rows"
+                },
+                "toggle": {
+                    "module": "freeradius",
+                    "controller": "user",
+                    "command": "toggleuser/<uuid>",
+                    "Form": "toggle"
+                }
+            }
+        }
+    },
+    "HAProxy": {
+        "Acl": {
+            "objecttype": "OPNsense.HAProxy.Acl",
+            "objectname": "HAProxy Acl",
+            "mountpoint": "\\\\OPNsense\\HAProxy\\acls\\acl",
+            "commands": {
+                "remove": {
+                    "module": "haproxy",
+                    "controller": "settings",
+                    "command": "delacl/<uuid>"
+                },
+                "get": {
+                    "module": "haproxy",
+                    "controller": "settings",
+                    "command": "getacl/<uuid>",
+                    "property": "acl"
+                },
+                "search": {
+                    "module": "haproxy",
+                    "controller": "settings",
+                    "command": "searchacls",
+                    "property": "rows"
+                }
+            }
+        },
+        "Action": {
+            "objecttype": "OPNsense.HAProxy.Action",
+            "objectname": "HAProxy Action",
+            "mountpoint": "\\\\OPNsense\\HAProxy\\actions\\action",
+            "commands": {
+                "remove": {
+                    "module": "haproxy",
+                    "controller": "settings",
+                    "command": "delaction/<uuid>"
+                },
+                "get": {
+                    "module": "haproxy",
+                    "controller": "settings",
+                    "command": "getaction/<uuid>",
+                    "property": "action"
+                },
+                "search": {
+                    "module": "haproxy",
+                    "controller": "settings",
+                    "command": "searchactions",
+                    "property": "rows"
+                }
+            }
+        },
+        "Backend": {
+            "objecttype": "OPNsense.HAProxy.Backend",
+            "objectname": "HAProxy Backend",
+            "mountpoint": "\\\\OPNsense\\HAProxy\\backends\\backend",
+            "commands": {
+                "remove": {
+                    "module": "haproxy",
+                    "controller": "settings",
+                    "command": "delbackend/<uuid>"
+                },
+                "get": {
+                    "module": "haproxy",
+                    "controller": "settings",
+                    "command": "getbackend/<uuid>",
+                    "property": "backend"
+                },
+                "search": {
+                    "module": "haproxy",
+                    "controller": "settings",
+                    "command": "searchbackends",
+                    "property": "rows"
+                },
+                "toggle": {
+                    "module": "haproxy",
+                    "controller": "settings",
+                    "command": "togglebackend/<uuid>/<enabled>",
+                    "Form": "toggle"
+                }
+            }
+        },
+        "ErrorFile": {
+            "objecttype": "OPNsense.HAProxy.ErrorFile",
+            "objectname": "HAProxy ErrorFile",
+            "mountpoint": "\\\\OPNsense\\HAProxy\\errorfiles\\errorfile",
+            "commands": {
+                "remove": {
+                    "module": "haproxy",
+                    "controller": "settings",
+                    "command": "delerrorfile/<uuid>"
+                },
+                "get": {
+                    "module": "haproxy",
+                    "controller": "settings",
+                    "command": "geterrorfile/<uuid>",
+                    "property": "errorfile"
+                },
+                "search": {
+                    "module": "haproxy",
+                    "controller": "settings",
+                    "command": "searcherrorfiles",
+                    "property": "rows"
+                }
+            }
+        },
+        "Frontend": {
+            "objecttype": "OPNsense.HAProxy.Frontend",
+            "objectname": "HAProxy Frontend",
+            "mountpoint": "\\\\OPNsense\\HAProxy\\frontends\\frontend",
+            "commands": {
+                "remove": {
+                    "module": "haproxy",
+                    "controller": "settings",
+                    "command": "delfrontend/<uuid>"
+                },
+                "get": {
+                    "module": "haproxy",
+                    "controller": "settings",
+                    "command": "getfrontend/<uuid>",
+                    "property": "frontend"
+                },
+                "search": {
+                    "module": "haproxy",
+                    "controller": "settings",
+                    "command": "searchfrontends",
+                    "property": "rows"
+                },
+                "toggle": {
+                    "module": "haproxy",
+                    "controller": "settings",
+                    "command": "togglefrontend/<uuid>/<enabled>",
+                    "Form": "toggle"
+                }
+            }
+        },
+        "Healthcheck": {
+            "objecttype": "OPNsense.HAProxy.Healthcheck",
+            "objectname": "HAProxy Healthcheck",
+            "mountpoint": "\\\\OPNsense\\HAProxy\\healthchecks\\healthcheck",
+            "commands": {
+                "remove": {
+                    "module": "haproxy",
+                    "controller": "settings",
+                    "command": "delhealthcheck/<uuid>"
+                },
+                "get": {
+                    "module": "haproxy",
+                    "controller": "settings",
+                    "command": "gethealthcheck/<uuid>",
+                    "property": "healthcheck"
+                },
+                "search": {
+                    "module": "haproxy",
+                    "controller": "settings",
+                    "command": "searchhealthchecks",
+                    "property": "rows"
+                }
+            }
+        },
+        "Lua": {
+            "objecttype": "OPNsense.HAProxy.Lua",
+            "objectname": "HAProxy Lua",
+            "mountpoint": "\\\\OPNsense\\HAProxy\\luas\\lua",
+            "commands": {
+                "remove": {
+                    "module": "haproxy",
+                    "controller": "settings",
+                    "command": "dellua/<uuid>"
+                },
+                "get": {
+                    "module": "haproxy",
+                    "controller": "settings",
+                    "command": "getlua/<uuid>",
+                    "property": "lua"
+                },
+                "search": {
+                    "module": "haproxy",
+                    "controller": "settings",
+                    "command": "searchluas",
+                    "property": [
+                        "rows"
+                    ]
+                },
+                "toggle": {
+                    "module": "haproxy",
+                    "controller": "settings",
+                    "command": "togglelua/<uuid>/<enabled>",
+                    "Form": "toggle"
+                }
+            }
+        },
+        "Server": {
+            "objecttype": "OPNsense.HAProxy.Server",
+            "objectname": "HAProxy Server",
+            "mountpoint": "\\\\OPNsense\\HAProxy\\servers\\server",
+            "commands": {
+                "remove": {
+                    "module": "haproxy",
+                    "controller": "settings",
+                    "command": "delserver/<uuid>"
+                },
+                "get": {
+                    "module": "haproxy",
+                    "controller": "settings",
+                    "command": "getserver/<uuid>",
+                    "property": "server"
+                },
+                "search": {
+                    "module": "haproxy",
+                    "controller": "settings",
+                    "command": "searchservers",
+                    "property": [
+                        "rows"
+                    ]
+                }
+            }
+        }
+    },
+    "IDS": {
+        "InstalledRule": {
+            "objecttype": "OPNsense.IDS.InstalledRule",
+            "objectname": "IDS InstalledRule",
+            "commands": {
+                "search": {
+                    "module": "ids",
+                    "controller": "settings",
+                    "command": "searchinstalledrules",
+                    "property": "rows"
+                }
+            }
+        },
+        "Rule": {
+            "objecttype": "OPNsense.IDS.Rule",
+            "objectname": "IDS Rule",
+            "mountpoint": "\\\\OPNsense\\IDS\\rules\\rule",
+            "commands": {
+                "toggle": {
+                    "module": "ids",
+                    "controller": "settings",
+                    "command": "togglerule/<uuid>/<enabled>",
+                    "Form": "toggle"
+                }
+            }
+        },
+        "RuleSet": {
+            "objecttype": "OPNsense.IDS.RuleSet",
+            "objectname": "IDS RuleSet",
+            "commands": {
+                "get": {
+                    "module": "ids",
+                    "controller": "settings",
+                    "command": "getruleset/<uuid>"
+                },
+                "toggle": {
+                    "module": "ids",
+                    "controller": "settings",
+                    "command": "toggleruleset/<uuid>/<enabled>",
+                    "Form": "toggle"
+                }
+            }
+        },
+        "UserRule": {
+            "objecttype": "OPNsense.IDS.UserRule",
+            "objectname": "IDS UserRule",
+            "mountpoint": "\\\\OPNsense\\IDS\\userDefinedRules\\rule",
+            "commands": {
+                "remove": {
+                    "module": "ids",
+                    "controller": "settings",
+                    "command": "deluserrule/<uuid>"
+                },
+                "get": {
+                    "module": "ids",
+                    "controller": "settings",
+                    "command": "getuserrule/<uuid>",
+                    "property": "rule"
+                },
+                "search": {
+                    "module": "ids",
+                    "controller": "settings",
+                    "command": "searchuserrule",
+                    "property": "rows"
+                },
+                "toggle": {
+                    "module": "ids",
+                    "controller": "settings",
+                    "command": "toggleuserrule/<uuid>/<enabled>",
+                    "Form": "toggle"
+                }
+            }
+        }
+    },
+    "Monit": {
+        "Alert": {
+            "objecttype": "OPNsense.Monit.Alert",
+            "objectname": "Monit Alert",
+            "mountpoint": "\\\\OPNsense\\monit\\alert",
+            "commands": {
+                "remove": {
+                    "module": "monit",
+                    "controller": "settings",
+                    "command": "delalert/<uuid>"
+                },
+                "get": {
+                    "module": "monit",
+                    "controller": "settings",
+                    "command": "getalert/<uuid>",
+                    "property": "alert"
+                },
+                "search": {
+                    "module": "monit",
+                    "controller": "settings",
+                    "command": "searchalert",
+                    "property": "rows"
+                },
+                "toggle": {
+                    "module": "monit",
+                    "controller": "settings",
+                    "command": "togglealert/<uuid>",
+                    "Form": "toggle"
+                }
+            }
+        },
+        "Service": {
+            "objecttype": "OPNsense.Monit.Service",
+            "objectname": "Monit Service",
+            "mountpoint": "\\\\OPNsense\\monit\\service",
+            "commands": {
+                "remove": {
+                    "module": "monit",
+                    "controller": "settings",
+                    "command": "delservice/<uuid>"
+                },
+                "get": {
+                    "module": "monit",
+                    "controller": "settings",
+                    "command": "getservice/<uuid>",
+                    "property": "service"
+                },
+                "search": {
+                    "module": "monit",
+                    "controller": "settings",
+                    "command": "searchservice",
+                    "property": "rows"
+                },
+                "toggle": {
+                    "module": "monit",
+                    "controller": "settings",
+                    "command": "toggleservice/<uuid>",
+                    "Form": "toggle"
+                }
+            }
+        },
+        "Test": {
+            "objecttype": "OPNsense.Monit.Test",
+            "objectname": "Monit Test",
+            "mountpoint": "\\\\OPNsense\\monit\\test",
+            "commands": {
+                "remove": {
+                    "module": "monit",
+                    "controller": "settings",
+                    "command": "deltest/<uuid>"
+                },
+                "get": {
+                    "module": "monit",
+                    "controller": "settings",
+                    "command": "gettest/<uuid>",
+                    "property": "test"
+                },
+                "search": {
+                    "module": "monit",
+                    "controller": "settings",
+                    "command": "searchtest",
+                    "property": "rows"
+                }
+            }
+        }
+    },
+    "Postfix": {
+        "Domain": {
+            "objecttype": "OPNsense.Postfix.Domain",
+            "objectname": "Postfix Domain",
+            "mountpoint": "\\\\OPNsense\\postfix\\domain\\domains\\domain",
+            "commands": {
+                "remove": {
+                    "module": "postfix",
+                    "controller": "domain",
+                    "command": "deldomain/<uuid>"
+                },
+                "get": {
+                    "module": "postfix",
+                    "controller": "domain",
+                    "command": "getdomain/<uuid>",
+                    "property": "domain"
+                },
+                "search": {
+                    "module": "postfix",
+                    "controller": "domain",
+                    "command": "searchdomain",
+                    "property": "rows"
+                },
+                "toggle": {
+                    "module": "postfix",
+                    "controller": "domain",
+                    "command": "toggledomain/<uuid>",
+                    "Form": "toggle"
+                }
+            }
+        },
+        "Recipient": {
+            "objecttype": "OPNsense.Postfix.Recipient",
+            "objectname": "Postfix Recipient",
+            "mountpoint": "\\\\OPNsense\\postfix\\recipient\\recipients\\recipient",
+            "commands": {
+                "remove": {
+                    "module": "postfix",
+                    "controller": "recipient",
+                    "command": "delrecipient/<uuid>"
+                },
+                "get": {
+                    "module": "postfix",
+                    "controller": "recipient",
+                    "command": "getrecipient/<uuid>",
+                    "property": "recipient"
+                },
+                "search": {
+                    "module": "postfix",
+                    "controller": "recipient",
+                    "command": "searchrecipient",
+                    "property": "rows"
+                },
+                "toggle": {
+                    "module": "postfix",
+                    "controller": "recipient",
+                    "command": "togglerecipient/<uuid>",
+                    "Form": "toggle"
+                }
+            }
+        },
+        "Sender": {
+            "objecttype": "OPNsense.Postfix.Sender",
+            "objectname": "Postfix Sender",
+            "mountpoint": "\\\\OPNsense\\postfix\\sender\\senders\\sender",
+            "commands": {
+                "remove": {
+                    "module": "postfix",
+                    "controller": "sender",
+                    "command": "delsender/<uuid>"
+                },
+                "get": {
+                    "module": "postfix",
+                    "controller": "sender",
+                    "command": "getsender/<uuid>",
+                    "property": "sender"
+                },
+                "search": {
+                    "module": "postfix",
+                    "controller": "sender",
+                    "command": "searchsender",
+                    "property": "rows"
+                },
+                "toggle": {
+                    "module": "postfix",
+                    "controller": "sender",
+                    "command": "togglesender/<uuid>",
+                    "Form": "toggle"
+                }
+            }
+        }
+    },
+    "Proxy": {
+        "RemoteBlacklist": {
+            "objecttype": "OPNsense.Proxy.RemoteBlacklist",
+            "objectname": "Proxy RemoteBlacklist",
+            "mountpoint": "\\\\OPNsense\\proxy\\forward\\acl\\remoteACLs\\blacklists\\blacklist",
+            "commands": {
+                "remove": {
+                    "module": "proxy",
+                    "controller": "settings",
+                    "command": "delremoteblacklist/<uuid>"
+                },
+                "get": {
+                    "module": "proxy",
+                    "controller": "settings",
+                    "command": "getremoteblacklist/<uuid>",
+                    "property": "blacklist"
+                },
+                "search": {
+                    "module": "proxy",
+                    "controller": "settings",
+                    "command": "searchremoteblacklists",
+                    "property": "rows"
+                },
+                "toggle": {
+                    "module": "proxy",
+                    "controller": "settings",
+                    "command": "toggleremoteblacklist/<uuid>",
+                    "Form": "toggle"
+                }
+            }
+        }
+    },
+    "ProxyUserACL": {
+        "UserACL": {
+            "objecttype": "OPNsense.ProxyUserACL.UserACL",
+            "objectname": "ProxyUserACL UserACL",
+            "mountpoint": "\\\\OPNsense\\ProxyUserACL\\general\\ACLs\\ACL",
+            "commands": {
+                "remove": {
+                    "module": "proxyuseracl",
+                    "controller": "settings",
+                    "command": "delacl/<uuid>"
+                },
+                "get": {
+                    "module": "proxyuseracl",
+                    "controller": "settings",
+                    "command": "getacl/<uuid>",
+                    "property": "acl"
+                },
+                "search": {
+                    "module": "proxyuseracl",
+                    "controller": "settings",
+                    "command": "searchacl",
+                    "property": "rows"
+                }
+            }
+        }
+    },
+    "Quagga": {
+        "BGPAspath": {
+            "objecttype": "OPNsense.Quagga.BGP.AsPath",
+            "objectname": "BGP AsPath",
+            "mountpoint": "\\\\OPNsense\\quagga\\bgp\\aspaths\\aspath",
+            "commands": {
+                "remove": {
+                    "module": "quagga",
+                    "controller": "bgp",
+                    "command": "delaspath/<uuid>"
+                },
+                "get": {
+                    "module": "quagga",
+                    "controller": "bgp",
+                    "command": "getaspath/<uuid>",
+                    "property": "aspath"
+                },
+                "search": {
+                    "module": "quagga",
+                    "controller": "bgp",
+                    "command": "searchaspath",
+                    "property": "rows"
+                },
+                "toggle": {
+                    "module": "quagga",
+                    "controller": "bgp",
+                    "command": "toggleaspath/<uuid>",
+                    "Form": "toggle"
+                }
+            }
+        },
+        "BGPNeighbor": {
+            "objecttype": "OPNsense.Quagga.BGP.Neighbor",
+            "objectname": "BGP Neighbor",
+            "mountpoint": "\\\\OPNsense\\quagga\\bgp\\neighbors\\neighbor",
+            "commands": {
+                "remove": {
+                    "module": "quagga",
+                    "controller": "bgp",
+                    "command": "delneighbor/<uuid>"
+                },
+                "get": {
+                    "module": "quagga",
+                    "controller": "bgp",
+                    "command": "getneighbor/<uuid>",
+                    "property": "neighbor"
+                },
+                "search": {
+                    "module": "quagga",
+                    "controller": "bgp",
+                    "command": "searchneighbor",
+                    "property": "rows"
+                },
+                "toggle": {
+                    "module": "quagga",
+                    "controller": "bgp",
+                    "command": "toggleneighbor/<uuid>",
+                    "Form": "toggle"
+                }
+            }
+        },
+        "BGPPrefixlist": {
+            "objecttype": "OPNsense.Quagga.BGP.Prefixlist",
+            "objectname": "BGP Prefixlist",
+            "mountpoint": "\\\\OPNsense\\quagga\\bgp\\prefixlists\\prefixlist",
+            "commands": {
+                "remove": {
+                    "module": "quagga",
+                    "controller": "bgp",
+                    "command": "delprefixlist/<uuid>"
+                },
+                "get": {
+                    "module": "quagga",
+                    "controller": "bgp",
+                    "command": "getprefixlist/<uuid>",
+                    "property": "prefixlist"
+                },
+                "search": {
+                    "module": "quagga",
+                    "controller": "bgp",
+                    "command": "searchprefixlist",
+                    "property": "rows"
+                },
+                "toggle": {
+                    "module": "quagga",
+                    "controller": "bgp",
+                    "command": "toggleprefixlist/<uuid>",
+                    "Form": "toggle"
+                }
+            }
+        },
+        "BGPRoutemap": {
+            "objecttype": "OPNsense.Quagga.BGP.Routemap",
+            "objectname": "BGP Routemap",
+            "mountpoint": "\\\\OPNsense\\quagga\\bgp\\routemaps\\routemap",
+            "commands": {
+                "remove": {
+                    "module": "quagga",
+                    "controller": "bgp",
+                    "command": "delroutemap/<uuid>"
+                },
+                "get": {
+                    "module": "quagga",
+                    "controller": "bgp",
+                    "command": "getroutemap/<uuid>",
+                    "property": "routemap"
+                },
+                "search": {
+                    "module": "quagga",
+                    "controller": "bgp",
+                    "command": "searchroutemap",
+                    "property": "rows"
+                },
+                "toggle": {
+                    "module": "quagga",
+                    "controller": "bgp",
+                    "command": "toggleroutemap/<uuid>",
+                    "Form": "toggle"
+                }
+            }
+        },
+        "Ospf6Interface": {
+            "objecttype": "OPNsense.Quagga.Ospf6.Interface",
+            "objectname": "Ospf6 Interface",
+            "mountpoint": "\\\\OPNsense\\quagga\\ospf6\\interfaces\\interface",
+            "commands": {
+                "remove": {
+                    "module": "quagga",
+                    "controller": "ospf6settings",
+                    "command": "delinterface/<uuid>"
+                },
+                "get": {
+                    "module": "quagga",
+                    "controller": "ospf6settings",
+                    "command": "getinterface/<uuid>",
+                    "property": "interface"
+                },
+                "search": {
+                    "module": "quagga",
+                    "controller": "ospf6settings",
+                    "command": "searchinterface",
+                    "property": "rows"
+                },
+                "toggle": {
+                    "module": "quagga",
+                    "controller": "ospf6settings",
+                    "command": "toggleinterface/<uuid>",
+                    "Form": "toggle"
+                }
+            }
+        },
+        "OspfInterface": {
+            "objecttype": "OPNsense.Quagga.Ospf.Interface",
+            "objectname": "Ospf Interface",
+            "mountpoint": "\\\\OPNsense\\quagga\\ospf\\interfaces\\interface",
+            "commands": {
+                "remove": {
+                    "module": "quagga",
+                    "controller": "ospfsettings",
+                    "command": "delinterface/<uuid>"
+                },
+                "get": {
+                    "module": "quagga",
+                    "controller": "ospfsettings",
+                    "command": "getinterface/<uuid>",
+                    "property": "interface"
+                },
+                "search": {
+                    "module": "quagga",
+                    "controller": "ospfsettings",
+                    "command": "searchinterface",
+                    "property": "rows"
+                },
+                "toggle": {
+                    "module": "quagga",
+                    "controller": "ospfsettings",
+                    "command": "toggleinterface/<uuid>",
+                    "Form": "toggle"
+                }
+            }
+        },
+        "OspfNetwork": {
+            "objecttype": "OPNsense.Quagga.Ospf.Network",
+            "objectname": "Ospf Network",
+            "mountpoint": "\\\\OPNsense\\quagga\\ospf\\networks\\network",
+            "commands": {
+                "remove": {
+                    "module": "quagga",
+                    "controller": "ospfsettings",
+                    "command": "delnetwork/<uuid>"
+                },
+                "get": {
+                    "module": "quagga",
+                    "controller": "ospfsettings",
+                    "command": "getnetwork/<uuid>",
+                    "property": "network"
+                },
+                "search": {
+                    "module": "quagga",
+                    "controller": "ospfsettings",
+                    "command": "searchnetwork",
+                    "property": "rows"
+                },
+                "toggle": {
+                    "module": "quagga",
+                    "controller": "ospfsettings",
+                    "command": "togglenetwork/<uuid>",
+                    "Form": "toggle"
+                }
+            }
+        },
+        "OspfPrefixlist": {
+            "objecttype": "OPNsense.Quagga.Ospf.Prefixlist",
+            "objectname": "Ospf Prefixlist",
+            "mountpoint": "\\\\OPNsense\\quagga\\ospf\\prefixlists\\prefixlist",
+            "commands": {
+                "remove": {
+                    "module": "quagga",
+                    "controller": "ospfsettings",
+                    "command": "delprefixlist/<uuid>"
+                },
+                "get": {
+                    "module": "quagga",
+                    "controller": "ospfsettings",
+                    "command": "getprefixlist/<uuid>",
+                    "property": "prefixlist"
+                },
+                "search": {
+                    "module": "quagga",
+                    "controller": "ospfsettings",
+                    "command": "searchprefixlist",
+                    "property": "rows"
+                },
+                "toggle": {
+                    "module": "quagga",
+                    "controller": "ospfsettings",
+                    "command": "toggleprefixlist/<uuid>",
+                    "Form": "toggle"
+                }
+            }
+        }
+    },
+    "Relayd": {},
+    "Routes": {
+        "Route": {
+            "objecttype": "OPNsense.Routes.Route",
+            "objectname": "Routes Route",
+            "mountpoint": "\\\\staticroutes\\route",
+            "commands": {
+                "remove": {
+                    "module": "routes",
+                    "controller": "routes",
+                    "command": "delroute/<uuid>"
+                },
+                "get": {
+                    "module": "routes",
+                    "controller": "routes",
+                    "command": "getroute/<uuid>",
+                    "property": "route"
+                },
+                "search": {
+                    "module": "routes",
+                    "controller": "routes",
+                    "command": "searchroute",
+                    "property": "rows"
+                },
+                "toggle": {
+                    "module": "routes",
+                    "controller": "routes",
+                    "command": "toggleroute/<uuid>/<disabled>",
+                    "Form": "toggle"
+                }
+            }
+        }
+    },
+    "Siproxd": {
+        "Domain": {
+            "objecttype": "OPNsense.Siproxd.Domain",
+            "objectname": "Siproxd Domain",
+            "mountpoint": "\\\\OPNsense\\siproxd\\domain\\domains\\domain",
+            "commands": {
+                "remove": {
+                    "module": "siproxd",
+                    "controller": "domain",
+                    "command": "deldomain/<uuid>"
+                },
+                "get": {
+                    "module": "siproxd",
+                    "controller": "domain",
+                    "command": "getdomain/<uuid>",
+                    "property": "domain"
+                },
+                "search": {
+                    "module": "siproxd",
+                    "controller": "domain",
+                    "command": "searchdomain",
+                    "property": "rows"
+                },
+                "toggle": {
+                    "module": "siproxd",
+                    "controller": "domain",
+                    "command": "toggledomain/<uuid>",
+                    "Form": "toggle"
+                }
+            }
+        },
+        "User": {
+            "objecttype": "OPNsense.Siproxd.User",
+            "objectname": "Siproxd User",
+            "mountpoint": "\\\\OPNsense\\siproxd\\user\\users\\user",
+            "commands": {
+                "remove": {
+                    "module": "siproxd",
+                    "controller": "user",
+                    "command": "deluser/<uuid>"
+                },
+                "get": {
+                    "module": "siproxd",
+                    "controller": "user",
+                    "command": "getuser/<uuid>",
+                    "property": "user"
+                },
+                "search": {
+                    "module": "siproxd",
+                    "controller": "user",
+                    "command": "searchuser",
+                    "property": "rows"
+                },
+                "toggle": {
+                    "module": "siproxd",
+                    "controller": "user",
+                    "command": "toggleuser/<uuid>",
+                    "Form": "toggle"
+                }
+            }
+        }
+    },
+    "Tinc": {
+        "Host": {
+            "objecttype": "OPNsense.Tinc.Host",
+            "objectname": "Tinc Host",
+            "mountpoint": "\\\\OPNsense\\Tinc\\hosts\\host",
+            "commands": {
+                "remove": {
+                    "module": "tinc",
+                    "controller": "settings",
+                    "command": "delhost/<uuid>"
+                },
+                "get": {
+                    "module": "tinc",
+                    "controller": "settings",
+                    "command": "gethost/<uuid>",
+                    "property": "host"
+                },
+                "search": {
+                    "module": "tinc",
+                    "controller": "settings",
+                    "command": "searchhost",
+                    "property": "rows"
+                },
+                "toggle": {
+                    "module": "tinc",
+                    "controller": "settings",
+                    "command": "togglehost/<uuid>/<enabled>",
+                    "Form": "toggle"
+                }
+            }
+        },
+        "Network": {
+            "objecttype": "OPNsense.Tinc.Network",
+            "objectname": "Tinc Network",
+            "mountpoint": "\\\\OPNsense\\Tinc\\networks\\network",
+            "commands": {
+                "remove": {
+                    "module": "tinc",
+                    "controller": "settings",
+                    "command": "delnetwork/<uuid>"
+                },
+                "get": {
+                    "module": "tinc",
+                    "controller": "settings",
+                    "command": "getnetwork/<uuid>",
+                    "property": "network"
+                },
+                "search": {
+                    "module": "tinc",
+                    "controller": "settings",
+                    "command": "searchnetwork",
+                    "property": "rows"
+                },
+                "toggle": {
+                    "module": "tinc",
+                    "controller": "settings",
+                    "command": "togglenetwork/<uuid>/<enabled>",
+                    "Form": "toggle"
+                }
+            }
+        }
+    },
+    "Tor": {
+        "Exitacl": {
+            "objecttype": "OPNsense.Tor.Exitacl",
+            "objectname": "Tor Exitacl",
+            "mountpoint": "\\\\OPNsense\\tor\\exitpolicy\\policy",
+            "commands": {
+                "remove": {
+                    "module": "tor",
+                    "controller": "exitacl",
+                    "command": "delacl/<uuid>"
+                },
+                "get": {
+                    "module": "tor",
+                    "controller": "exitacl",
+                    "command": "getacl/<uuid>",
+                    "property": "exitpolicy"
+                },
+                "search": {
+                    "module": "tor",
+                    "controller": "exitacl",
+                    "command": "searchacl",
+                    "property": "rows"
+                },
+                "toggle": {
+                    "module": "tor",
+                    "controller": "exitacl",
+                    "command": "toggleacl/<uuid>",
+                    "Form": "toggle"
+                }
+            }
+        },
+        "HiddenServiceAuth": {
+            "objecttype": "OPNsense.Tor.HiddenServiceAuth",
+            "objectname": "Tor HiddenServiceAuth",
+            "mountpoint": "\\\\OPNsense\\tor\\general\\client_authentications\\client_auth",
+            "commands": {
+                "remove": {
+                    "module": "tor",
+                    "controller": "general",
+                    "command": "delhidservauth/<uuid>"
+                },
+                "get": {
+                    "module": "tor",
+                    "controller": "general",
+                    "command": "gethidservauth/<uuid>",
+                    "property": "client_auth"
+                },
+                "search": {
+                    "module": "tor",
+                    "controller": "general",
+                    "command": "searchhidservauth",
+                    "property": "rows"
+                },
+                "toggle": {
+                    "module": "tor",
+                    "controller": "general",
+                    "command": "togglehidservauth/<uuid>",
+                    "Form": "toggle"
+                }
+            }
+        },
+        "HiddenService": {
+            "objecttype": "OPNsense.Tor.HiddenService",
+            "objectname": "Tor HiddenService",
+            "mountpoint": "\\\\OPNsense\\tor\\hiddenservice\\service",
+            "commands": {
+                "remove": {
+                    "module": "tor",
+                    "controller": "hiddenservice",
+                    "command": "delservice/<uuid>"
+                },
+                "get": {
+                    "module": "tor",
+                    "controller": "hiddenservice",
+                    "command": "getservice/<uuid>",
+                    "property": "hiddenservice"
+                },
+                "search": {
+                    "module": "tor",
+                    "controller": "hiddenservice",
+                    "command": "searchservice",
+                    "property": "rows"
+                },
+                "toggle": {
+                    "module": "tor",
+                    "controller": "hiddenservice",
+                    "command": "toggleservice/<uuid>",
+                    "Form": "toggle"
+                }
+            }
+        },
+        "HiddenServiceACL": {
+            "objecttype": "OPNsense.Tor.HiddenServiceACL",
+            "objectname": "Tor HiddenServiceACL",
+            "mountpoint": "\\\\OPNsense\\tor\\hiddenserviceacl\\hiddenserviceacl",
+            "commands": {
+                "remove": {
+                    "module": "tor",
+                    "controller": "hiddenserviceacl",
+                    "command": "delacl/<uuid>"
+                },
+                "get": {
+                    "module": "tor",
+                    "controller": "hiddenserviceacl",
+                    "command": "getacl/<uuid>",
+                    "property": "hiddenserviceacl"
+                },
+                "search": {
+                    "module": "tor",
+                    "controller": "hiddenserviceacl",
+                    "command": "searchacl",
+                    "property": "rows"
+                },
+                "toggle": {
+                    "module": "tor",
+                    "controller": "hiddenserviceacl",
+                    "command": "toggleacl/<uuid>",
+                    "Form": "toggle"
+                }
+            }
+        },
+        "SocksACL": {
+            "objecttype": "OPNsense.Tor.SocksACL",
+            "objectname": "Tor SocksACL",
+            "mountpoint": "\\\\OPNsense\\tor\\aclsockspolicy\\policy",
+            "commands": {
+                "remove": {
+                    "module": "tor",
+                    "controller": "socksacl",
+                    "command": "delacl/<uuid>"
+                },
+                "get": {
+                    "module": "tor",
+                    "controller": "socksacl",
+                    "command": "getacl/<uuid>",
+                    "property": "policy"
+                },
+                "search": {
+                    "module": "tor",
+                    "controller": "socksacl",
+                    "command": "searchacl",
+                    "property": "rows"
+                },
+                "toggle": {
+                    "module": "tor",
+                    "controller": "socksacl",
+                    "command": "toggleacl/<uuid>",
+                    "Form": "toggle"
+                }
+            }
+        }
+    },
+    "TrafficShaper": {
+        "Pipe": {
+            "objecttype": "OPNsense.TrafficShaper.Pipe",
+            "objectname": "TrafficShaper Pipe",
+            "mountpoint": "\\\\OPNsense\\TrafficShaper\\pipes\\pipe",
+            "commands": {
+                "remove": {
+                    "module": "trafficshaper",
+                    "controller": "settings",
+                    "command": "delpipe/<uuid>"
+                },
+                "get": {
+                    "module": "trafficshaper",
+                    "controller": "settings",
+                    "command": "getpipe/<uuid>",
+                    "property": "pipe"
+                },
+                "search": {
+                    "module": "trafficshaper",
+                    "controller": "settings",
+                    "command": "searchpipes",
+                    "property": "rows"
+                },
+                "toggle": {
+                    "module": "trafficshaper",
+                    "controller": "settings",
+                    "command": "togglepipe/<uuid>/<enabled>",
+                    "Form": "toggle"
+                }
+            }
+        },
+        "Queue": {
+            "objecttype": "OPNsense.TrafficShaper.Queue",
+            "objectname": "TrafficShaper Queue",
+            "mountpoint": "\\\\OPNsense\\TrafficShaper\\queues\\queue",
+            "commands": {
+                "remove": {
+                    "module": "trafficshaper",
+                    "controller": "settings",
+                    "command": "delqueue/<uuid>"
+                },
+                "get": {
+                    "module": "trafficshaper",
+                    "controller": "settings",
+                    "command": "getqueue/<uuid>",
+                    "property": "queue"
+                },
+                "search": {
+                    "module": "trafficshaper",
+                    "controller": "settings",
+                    "command": "searchqueues",
+                    "property": "rows"
+                },
+                "toggle": {
+                    "module": "trafficshaper",
+                    "controller": "settings",
+                    "command": "togglequeue/<uuid>/<enabled>",
+                    "Form": "toggle"
+                }
+            }
+        },
+        "Rule": {
+            "objecttype": "OPNsense.TrafficShaper.Rule",
+            "objectname": "TrafficShaper Rule",
+            "mountpoint": "\\\\OPNsense\\TrafficShaper\\rules\\rule",
+            "commands": {
+                "remove": {
+                    "module": "trafficshaper",
+                    "controller": "settings",
+                    "command": "delrule/<uuid>"
+                },
+                "get": {
+                    "module": "trafficshaper",
+                    "controller": "settings",
+                    "command": "getrule/<uuid>",
+                    "property": "rule"
+                },
+                "search": {
+                    "module": "trafficshaper",
+                    "controller": "settings",
+                    "command": "searchrules",
+                    "property": "rows"
+                }
+            }
+        }
+    },
+    "Wol": {},
+    "ZeroTier": {
+        "Network": {
+            "objecttype": "OPNsense.ZeroTier.Network",
+            "objectname": "ZeroTier Network",
+            "mountpoint": "\\\\OPNsense\\zerotier\\networks\\network",
+            "commands": {
+                "remove": {
+                    "module": "zerotier",
+                    "controller": "network",
+                    "command": "del/<uuid>"
+                },
+                "get": {
+                    "module": "zerotier",
+                    "controller": "network",
+                    "command": "get/<uuid>",
+                    "property": "network"
+                },
+                "search": {
+                    "module": "zerotier",
+                    "controller": "network",
+                    "command": "search",
+                    "property": "rows"
+                },
+                "toggle": {
+                    "module": "zerotier",
+                    "controller": "network",
+                    "command": "toggle/<uuid>",
+                    "Form": "toggle"
+                }
+            }
+        }
+    }
+}

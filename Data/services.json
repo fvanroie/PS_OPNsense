@@ -1,0 +1,640 @@
+{
+    "MinimumVersion": "18.1",
+    "MaximumVersion": "18.1.6",
+    "AcmeClient": {
+        "commands": {
+            "status": {
+                "module": "acmeclient",
+                "controller": "service",
+                "command": "status"
+            },
+            "start": {
+                "module": "acmeclient",
+                "controller": "service",
+                "command": "start"
+            },
+            "stop": {
+                "module": "acmeclient",
+                "controller": "service",
+                "command": "stop"
+            },
+            "restart": {
+                "module": "acmeclient",
+                "controller": "service",
+                "command": "restart"
+            },
+            "reconfigure": {
+                "module": "acmeclient",
+                "controller": "service",
+                "command": "reconfigure"
+            },
+            "configtest": {
+                "module": "acmeclient",
+                "controller": "service",
+                "command": "configtest"
+            }
+        }
+    },
+    "ARPScanner": {
+        "commands": {
+            "status": {
+                "module": "arpscanner",
+                "controller": "service",
+                "command": "status"
+            },
+            "start": {
+                "module": "arpscanner",
+                "controller": "service",
+                "command": "start"
+            },
+            "stop": {
+                "module": "arpscanner",
+                "controller": "service",
+                "command": "stop"
+            },
+            "check": {
+                "module": "arpscanner",
+                "controller": "service",
+                "command": "check"
+            }
+        }
+    },
+    "CaptivePortal": {
+        "commands": {
+            "reconfigure": {
+                "module": "captiveportal",
+                "controller": "service",
+                "command": "reconfigure"
+            }
+        }
+    },
+    "CICap": {
+        "commands": {
+            "status": {
+                "module": "cicap",
+                "controller": "service",
+                "command": "status"
+            },
+            "start": {
+                "module": "cicap",
+                "controller": "service",
+                "command": "start"
+            },
+            "stop": {
+                "module": "cicap",
+                "controller": "service",
+                "command": "stop"
+            },
+            "restart": {
+                "module": "cicap",
+                "controller": "service",
+                "command": "restart"
+            },
+            "reconfigure": {
+                "module": "cicap",
+                "controller": "service",
+                "command": "reconfigure"
+            }
+        }
+    },
+    "ClamAV": {
+        "commands": {
+            "status": {
+                "module": "clamav",
+                "controller": "service",
+                "command": "status"
+            },
+            "start": {
+                "module": "clamav",
+                "controller": "service",
+                "command": "start"
+            },
+            "stop": {
+                "module": "clamav",
+                "controller": "service",
+                "command": "stop"
+            },
+            "restart": {
+                "module": "clamav",
+                "controller": "service",
+                "command": "restart"
+            },
+            "reconfigure": {
+                "module": "clamav",
+                "controller": "service",
+                "command": "reconfigure"
+            }
+        }
+    },
+    "Collectd": {
+        "commands": {
+            "status": {
+                "module": "collectd",
+                "controller": "service",
+                "command": "status"
+            },
+            "start": {
+                "module": "collectd",
+                "controller": "service",
+                "command": "start"
+            },
+            "stop": {
+                "module": "collectd",
+                "controller": "service",
+                "command": "stop"
+            },
+            "restart": {
+                "module": "collectd",
+                "controller": "service",
+                "command": "restart"
+            },
+            "reconfigure": {
+                "module": "collectd",
+                "controller": "service",
+                "command": "reconfigure"
+            }
+        }
+    },
+    "Cron": {
+        "commands": {
+            "reconfigure": {
+                "module": "cron",
+                "controller": "service",
+                "command": "reconfigure"
+            }
+        }
+    },
+    "FreeRadius": {
+        "commands": {
+            "status": {
+                "module": "freeradius",
+                "controller": "service",
+                "command": "status"
+            },
+            "start": {
+                "module": "freeradius",
+                "controller": "service",
+                "command": "start"
+            },
+            "stop": {
+                "module": "freeradius",
+                "controller": "service",
+                "command": "stop"
+            },
+            "restart": {
+                "module": "freeradius",
+                "controller": "service",
+                "command": "restart"
+            },
+            "reconfigure": {
+                "module": "freeradius",
+                "controller": "service",
+                "command": "reconfigure"
+            }
+        }
+    },
+    "FTPProxy": {
+        "commands": {
+            "status": {
+                "module": "ftpproxy",
+                "controller": "service",
+                "command": "status"
+            },
+            "start": {
+                "module": "ftpproxy",
+                "controller": "service",
+                "command": "start"
+            },
+            "stop": {
+                "module": "ftpproxy",
+                "controller": "service",
+                "command": "stop"
+            },
+            "restart": {
+                "module": "ftpproxy",
+                "controller": "service",
+                "command": "restart"
+            },
+            "reconfigure": {
+                "module": "ftpproxy",
+                "controller": "service",
+                "command": "reload"
+            }
+        }
+    },
+    "HAProxy": {
+        "commands": {
+            "status": {
+                "module": "haproxy",
+                "controller": "service",
+                "command": "status"
+            },
+            "start": {
+                "module": "haproxy",
+                "controller": "service",
+                "command": "start"
+            },
+            "stop": {
+                "module": "haproxy",
+                "controller": "service",
+                "command": "stop"
+            },
+            "restart": {
+                "module": "haproxy",
+                "controller": "service",
+                "command": "restart"
+            },
+            "reconfigure": {
+                "module": "haproxy",
+                "controller": "service",
+                "command": "reconfigure"
+            },
+            "configtest": {
+                "module": "haproxy",
+                "controller": "service",
+                "command": "configtest"
+            }
+        }
+    },
+    "IDS": {
+        "commands": {
+            "status": {
+                "module": "ids",
+                "controller": "service",
+                "command": "status"
+            },
+            "start": {
+                "module": "ids",
+                "controller": "service",
+                "command": "start"
+            },
+            "stop": {
+                "module": "ids",
+                "controller": "service",
+                "command": "stop"
+            },
+            "restart": {
+                "module": "ids",
+                "controller": "service",
+                "command": "restart"
+            },
+            "reconfigure": {
+                "module": "ids",
+                "controller": "service",
+                "command": "reconfigure"
+            }
+        }
+    },
+    "MDNSRepeater": {
+        "commands": {
+            "status": {
+                "module": "mdnsrepeater",
+                "controller": "service",
+                "command": "status"
+            },
+            "start": {
+                "module": "mdnsrepeater",
+                "controller": "service",
+                "command": "start"
+            },
+            "stop": {
+                "module": "mdnsrepeater",
+                "controller": "service",
+                "command": "stop"
+            },
+            "restart": {
+                "module": "mdnsrepeater",
+                "controller": "service",
+                "command": "restart"
+            }
+        }
+    },
+    "Monit": {
+        "commands": {
+            "status": {
+                "module": "monit",
+                "controller": "service",
+                "command": "status"
+            },
+            "start": {
+                "module": "monit",
+                "controller": "service",
+                "command": "start"
+            },
+            "stop": {
+                "module": "monit",
+                "controller": "service",
+                "command": "stop"
+            },
+            "restart": {
+                "module": "monit",
+                "controller": "service",
+                "command": "restart"
+            },
+            "reconfigure": {
+                "module": "monit",
+                "controller": "service",
+                "command": "reconfigure"
+            },
+            "configtest": {
+                "module": "monit",
+                "controller": "service",
+                "command": "configtest"
+            }
+        }
+    },
+    "Postfix": {
+        "commands": {
+            "status": {
+                "module": "postfix",
+                "controller": "service",
+                "command": "status"
+            },
+            "start": {
+                "module": "postfix",
+                "controller": "service",
+                "command": "start"
+            },
+            "stop": {
+                "module": "postfix",
+                "controller": "service",
+                "command": "stop"
+            },
+            "restart": {
+                "module": "postfix",
+                "controller": "service",
+                "command": "restart"
+            },
+            "reconfigure": {
+                "module": "postfix",
+                "controller": "service",
+                "command": "reconfigure"
+            }
+        }
+    },
+    "Proxy": {
+        "commands": {
+            "status": {
+                "module": "proxy",
+                "controller": "service",
+                "command": "status"
+            },
+            "start": {
+                "module": "proxy",
+                "controller": "service",
+                "command": "start"
+            },
+            "stop": {
+                "module": "proxy",
+                "controller": "service",
+                "command": "stop"
+            },
+            "restart": {
+                "module": "proxy",
+                "controller": "service",
+                "command": "restart"
+            },
+            "reconfigure": {
+                "module": "proxy",
+                "controller": "service",
+                "command": "reconfigure"
+            }
+        }
+    },
+    "Quagga": {
+        "commands": {
+            "status": {
+                "module": "quagga",
+                "controller": "service",
+                "command": "status"
+            },
+            "start": {
+                "module": "quagga",
+                "controller": "service",
+                "command": "start"
+            },
+            "stop": {
+                "module": "quagga",
+                "controller": "service",
+                "command": "stop"
+            },
+            "restart": {
+                "module": "quagga",
+                "controller": "service",
+                "command": "restart"
+            },
+            "reconfigure": {
+                "module": "quagga",
+                "controller": "service",
+                "command": "reconfigure"
+            }
+        }
+    },
+    "Rspamd": {
+        "commands": {
+            "status": {
+                "module": "rspamd",
+                "controller": "service",
+                "command": "status"
+            },
+            "start": {
+                "module": "rspamd",
+                "controller": "service",
+                "command": "start"
+            },
+            "stop": {
+                "module": "rspamd",
+                "controller": "service",
+                "command": "stop"
+            },
+            "restart": {
+                "module": "rspamd",
+                "controller": "service",
+                "command": "restart"
+            },
+            "reconfigure": {
+                "module": "rspamd",
+                "controller": "service",
+                "command": "reconfigure"
+            }
+        }
+    },
+    "Siproxd": {
+        "commands": {
+            "status": {
+                "module": "siproxd",
+                "controller": "service",
+                "command": "status"
+            },
+            "start": {
+                "module": "siproxd",
+                "controller": "service",
+                "command": "start"
+            },
+            "stop": {
+                "module": "siproxd",
+                "controller": "service",
+                "command": "stop"
+            },
+            "restart": {
+                "module": "siproxd",
+                "controller": "service",
+                "command": "restart"
+            },
+            "reconfigure": {
+                "module": "siproxd",
+                "controller": "service",
+                "command": "reconfigure"
+            }
+        }
+    },
+    "Telegraf": {
+        "commands": {
+            "status": {
+                "module": "telegraf",
+                "controller": "service",
+                "command": "status"
+            },
+            "start": {
+                "module": "telegraf",
+                "controller": "service",
+                "command": "start"
+            },
+            "stop": {
+                "module": "telegraf",
+                "controller": "service",
+                "command": "stop"
+            },
+            "restart": {
+                "module": "telegraf",
+                "controller": "service",
+                "command": "restart"
+            },
+            "reconfigure": {
+                "module": "telegraf",
+                "controller": "service",
+                "command": "reconfigure"
+            }
+        }
+    },
+    "Tinc": {
+        "commands": {
+            "start": {
+                "module": "tinc",
+                "controller": "service",
+                "command": "start"
+            },
+            "stop": {
+                "module": "tinc",
+                "controller": "service",
+                "command": "stop"
+            },
+            "restart": {
+                "module": "tinc",
+                "controller": "service",
+                "command": "restart"
+            },
+            "reconfigure": {
+                "module": "tinc",
+                "controller": "service",
+                "command": "reconfigure"
+            }
+        }
+    },
+    "Tor": {
+        "commands": {
+            "status": {
+                "module": "tor",
+                "controller": "service",
+                "command": "status"
+            },
+            "start": {
+                "module": "tor",
+                "controller": "service",
+                "command": "start"
+            },
+            "stop": {
+                "module": "tor",
+                "controller": "service",
+                "command": "stop"
+            },
+            "restart": {
+                "module": "tor",
+                "controller": "service",
+                "command": "restart"
+            },
+            "reconfigure": {
+                "module": "tor",
+                "controller": "service",
+                "command": "reconfigure"
+            }
+        }
+    },
+    "TrafficShaper": {
+        "commands": {
+            "reconfigure": {
+                "module": "zabbixproxy",
+                "controller": "service",
+                "command": "reconfigure"
+            }
+        }
+    },
+    "ZabbixAgent": {
+        "commands": {
+            "status": {
+                "module": "zabbixagent",
+                "controller": "service",
+                "command": "status"
+            },
+            "start": {
+                "module": "zabbixagent",
+                "controller": "service",
+                "command": "start"
+            },
+            "stop": {
+                "module": "zabbixagent",
+                "controller": "service",
+                "command": "stop"
+            },
+            "restart": {
+                "module": "zabbixagent",
+                "controller": "service",
+                "command": "restart"
+            },
+            "reconfigure": {
+                "module": "zabbixagent",
+                "controller": "service",
+                "command": "reconfigure"
+            }
+        }
+    },
+    "ZabbixProxy": {
+        "commands": {
+            "status": {
+                "module": "zabbixproxy",
+                "controller": "service",
+                "command": "status"
+            },
+            "start": {
+                "module": "zabbixproxy",
+                "controller": "service",
+                "command": "start"
+            },
+            "stop": {
+                "module": "zabbixproxy",
+                "controller": "service",
+                "command": "stop"
+            },
+            "restart": {
+                "module": "zabbixproxy",
+                "controller": "service",
+                "command": "restart"
+            },
+            "reconfigure": {
+                "module": "zabbixproxy",
+                "controller": "service",
+                "command": "reconfigure"
+            }
+        }
+    }
+}
