@@ -608,7 +608,7 @@ namespace OPNsense.HAProxy {
 	}
 	public class Frontend {
 		#region Parameters
-		public Object[] bind { get; set; }
+		public Object bind { get; set; }
 		public string bindOptions { get; set; }
 		public PSObject connectionBehaviour { get; set; }
 		public string customOptions { get; set; }
@@ -706,7 +706,7 @@ namespace OPNsense.HAProxy {
 		}
 
 		public Frontend (
-			Object[] Bind,
+			Object Bind,
 			string BindOptions,
 			PSObject ConnectionBehaviour,
 			string CustomOptions,

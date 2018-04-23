@@ -26,19 +26,17 @@ Function ConvertTo-OPNsenseObject {
     [OutputType([Object[]])]
     [CmdletBinding()]
     Param(
-        [parameter(Mandatory = $true, position = 0)][String]$Module, # Name
-        [parameter(Mandatory = $true, position = 1)][String]$Object, # Name
-        [parameter(Mandatory = $true, position = 2)][Object[]]$InputObject # Object
+        [parameter(Mandatory = $true, position = 0)][String]$TypeName,
+        [parameter(Mandatory = $true, position = 1)][Object[]]$InputObject # Object
     )
+    # TODO : Add TypeName Validation
 
-    $typename = $OPNsenseObjectMap.$Module.$Object.objecttype
-
+    # Instantiate a reference object to get a list of all the property names
     $ref = $null
     try {
-        # Create a reference object to get a list of all the property names
         $ref = New-Object -TypeName $TypeName
     } catch {
-        Write-Error ("Failed to get an instance of object '{0}'" -f $typename)
+        Write-Error ("Failed to get an instance of object '{0}'" -f $TypeName)
         return $InputObject
     }
 
@@ -52,17 +50,17 @@ Function ConvertTo-OPNsenseObject {
         # Check if the needed reference parameters exist in the input object, add missing properties with default values
         $diff = Compare-Object $objprop.name $refprop.name | Where-Object { $_.SideIndicator -eq '=>' }
         foreach ($item in $diff) {
-            Write-Error ("Property '{0}' was expected but not found. Using the default value instead." -f $item.inputObject)
+            Write-Warning ("Property '{0}' was expected but not found. Using the default value instead." -f $item.inputObject)
             $obj | Add-Member -MemberType NoteProperty -Name $item.inputObject -Value $ref.($item.inputObject)
         }
  
         # Build argument list collection
         $arglist = New-Object System.Collections.Generic.List[System.Object]
         $refprop.name | Foreach-Object {
-            Write-Verbose ("{0} : {1}" -f $_, $obj.$_)
+            Write-Verbose ("* {0} : {1}" -f $_, $obj.$_)
             $arglist.Add($obj.$_)
-            # WARNING: Cannot use += here because you can't do ( $arglist += $null ) to add values that are NULL!!
-            # Using += when the value is $null would result in the property being skipped and the Contructor will fail
+            # WARNING: Cannot use += here because you can't do ( $arglist += $null ) to add values that are NULL !!
+            # Using '+=' when the value is $null would result in the property being skipped and the Contructor will fail due to missing arguments
         }
         try {
             # Create the object with the proper arguments in the order as they appear in the reference object
@@ -81,6 +79,7 @@ Function ConvertTo-OPNsenseObject {
         # Add extra properties as custom NoteProperty
         $diff = Compare-Object $objprop.name $refprop.name | Where-Object { $_.SideIndicator -eq '<=' }
         foreach ($item in $diff) {
+            Write-Verbose ("Adding additional item : {0}" -f $item.inputObject)
             $newobj | Add-Member -MemberType NoteProperty -Name $item.inputObject -Value $obj.($item.inputObject)
         }
  

@@ -5,7 +5,7 @@ namespace OPNsense.ProxyUserACL {
 	public class UserACL {
 		#region Parameters
 		public PSObject Black { get; set; }
-		public Object[] Domains { get; set; }
+		public Object Domains { get; set; }
 		public PSObject Group { get; set; }
 		public string Hex { get; set; }
 		public string Name { get; set; }
@@ -23,7 +23,7 @@ namespace OPNsense.ProxyUserACL {
 
 		public UserACL (
 			PSObject black,
-			Object[] domains,
+			Object domains,
 			PSObject group,
 			string hex,
 			string name,

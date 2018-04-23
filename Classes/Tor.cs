@@ -39,7 +39,7 @@ namespace OPNsense.Tor {
 	}
 	public class HiddenService {
 		#region Parameters
-		public Object[] clients { get; set; }
+		public Object clients { get; set; }
 		public bool enabled { get; set; }
 		public string name { get; set; }
 		public PSObject type { get; set; }
@@ -53,7 +53,7 @@ namespace OPNsense.Tor {
 		}
 
 		public HiddenService (
-			Object[] Clients,
+			Object Clients,
 			bool Enabled,
 			string Name,
 			PSObject Type

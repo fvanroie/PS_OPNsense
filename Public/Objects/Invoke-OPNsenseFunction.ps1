@@ -34,8 +34,11 @@ Function Invoke-OPNsenseFunction {
         [parameter(Mandatory = $false)][Boolean]$Enable
     )
 
+    # TODO : Check if the appropriate plugin is installed
+
     # Get the Invoke Arguments List
-    $arglist = $OPNsenseObjectMap.$Module.$Object.commands.$Command
+    $arglist = $OPNsenseObjectMap.$Module.$Object.$Command.command
+    $returntype = $OPNsenseObjectMap.$Module.$Object.$Command.returntype
 
     # Build Invoke Arguments Splat
     $splat = @{};
@@ -57,13 +60,17 @@ Function Invoke-OPNsenseFunction {
         $splat.command = $splat.command.Replace("<disabled>", '1')     
     }
 
-    if ($command -eq 'get') {
-        $splat.Add("AddProperty", ${ 'uuid' : $Uuid} )
+    # Add UUID, except for OPNsense.CaptivePortal.Template already as it already has a UUID
+    if ($command -eq 'get' -and $returntype -ne 'OPNsense.CaptivePortal.Template') {
+        $splat.Add("AddProperty", @{ 'uuid' = $Uuid} )
     }
-    
+  
     # Invoke splat
     $result = Invoke-OPNsenseCommand @splat
 
-    # Convert object to specified type
-    return ConvertTo-OPNsenseObject -Module $Module -Object $Object -InputObject $result
+    if ($returntype) {
+        Write-Verbose "Converting object to $returntype"
+        return ConvertTo-OPNsenseObject -TypeName $returntype -InputObject $result
+    }
+    return $result
 }

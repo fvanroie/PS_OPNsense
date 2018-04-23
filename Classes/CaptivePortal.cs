@@ -27,8 +27,8 @@ namespace OPNsense.CaptivePortal {
 	}
 	public class Zone {
 		#region Parameters
-		public Object[] allowedAddresses { get; set; }
-		public Object[] allowedMACAddresses { get; set; }
+		public Object allowedAddresses { get; set; }
+		public Object allowedMACAddresses { get; set; }
 		public PSObject authEnforceGroup { get; set; }
 		public PSObject authservers { get; set; }
 		public PSObject certificate { get; set; }
@@ -65,8 +65,8 @@ namespace OPNsense.CaptivePortal {
 		}
 
 		public Zone (
-			Object[] AllowedAddresses,
-			Object[] AllowedMACAddresses,
+			Object AllowedAddresses,
+			Object AllowedMACAddresses,
 			PSObject AuthEnforceGroup,
 			PSObject Authservers,
 			PSObject Certificate,

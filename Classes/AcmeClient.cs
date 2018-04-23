@@ -83,7 +83,7 @@ namespace OPNsense.AcmeClient {
 	public class Certificate {
 		#region Parameters
 		public PSObject account { get; set; }
-		public Object[] altNames { get; set; }
+		public Object altNames { get; set; }
 		public bool autoRenewal { get; set; }
 		public string certRefId { get; set; }
 		public string description { get; set; }
@@ -117,7 +117,7 @@ namespace OPNsense.AcmeClient {
 
 		public Certificate (
 			PSObject Account,
-			Object[] AltNames,
+			Object AltNames,
 			bool AutoRenewal,
 			string CertRefId,
 			string Description,
@@ -215,7 +215,7 @@ namespace OPNsense.AcmeClient {
 		public bool http_haproxyInject { get; set; }
 		public bool http_opn_autodiscovery { get; set; }
 		public PSObject http_opn_interface { get; set; }
-		public Object[] http_opn_ipaddresses { get; set; }
+		public Object http_opn_ipaddresses { get; set; }
 		public PSObject http_service { get; set; }
 		public string id { get; set; }
 		public PSObject method { get; set; }
@@ -363,7 +363,7 @@ namespace OPNsense.AcmeClient {
 			bool Http_HaproxyInject,
 			bool Http_Opn_Autodiscovery,
 			PSObject Http_Opn_Interface,
-			Object[] Http_Opn_Ipaddresses,
+			Object Http_Opn_Ipaddresses,
 			PSObject Http_Service,
 			string Id,
 			PSObject Method,

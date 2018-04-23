@@ -51,6 +51,7 @@ Function Get-OPNsenseObject {
     }
     END {
         foreach ($id in $uuids) {
+            Write-Verbose ""
             Write-Verbose ("Retrieving Object {0}" -f $id)
             Invoke-OPNsenseFunction $Module get $Object -Uuid $id
         }

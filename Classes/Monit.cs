@@ -6,7 +6,7 @@ namespace OPNsense.Monit {
 		#region Parameters
 		public string description { get; set; }
 		public bool enabled { get; set; }
-		public Object[] events { get; set; }
+		public Object events { get; set; }
 		public string format { get; set; }
 		public bool noton { get; set; }
 		public string recipient { get; set; }
@@ -26,7 +26,7 @@ namespace OPNsense.Monit {
 		public Alert (
 			string Description,
 			bool Enabled,
-			Object[] Events,
+			Object Events,
 			string Format,
 			bool Noton,
 			string Recipient,
