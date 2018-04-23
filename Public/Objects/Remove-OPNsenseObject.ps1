@@ -41,7 +41,7 @@ Function Remove-OPNsenseObject {
         $ObjectType = Get-OPNsenseObjectType $Module $Object
 
         # Get object list to match uuid to object name
-        $metadata = Get-OPNsenseObject $Module search $Object
+        $metadata = Invoke-OPNsenseFunction $Module search $Object
     }
     PROCESS {
         foreach ($id in $Uuid) {

@@ -26,6 +26,9 @@
 $IsPSCoreEdition = ($PSVersionTable.PSEdition -eq 'Core')
 $minversion = [System.Version]'18.1.7'
 
+# Load external data files
+# TODO : convert this to a ps1 file so it can be code-signed
+# TODO : add default values to the default constructors
 Try {
     # Load objectmap of api calls
     $FullPath = ("{0}/{1}" -f $PSScriptRoot, 'Data/objects.json')
@@ -39,12 +42,13 @@ Try {
 }
 
 # Load individual functions from scriptfiles
+# TODO : itterate over the objectmap and test if all Objects can be instantiated
 ForEach ($Folder in 'Classes', 'Core', 'Plugins', 'Private', 'Public') {
     $FullPath = ("{0}/{1}/" -f $PSScriptRoot, $Folder)
     $Scripts = Get-ChildItem -Recurse -Filter '*.ps1' -Path $FullPath | Where-Object { $_.Name -notlike '*.Tests.ps1' }
     ForEach ($Script in $Scripts) {
         Try {
-            # Dot Source each function
+            # Dot Source each function file
             . $Script.fullname
 
             # Export Public Functions only

@@ -23,6 +23,7 @@
 
 Function Enable-OPNsenseObject {
     # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
+    [OutputType([Object[]])]
     [CmdletBinding(
         SupportsShouldProcess = $true,
         ConfirmImpact = "Medium"
@@ -35,8 +36,11 @@ Function Enable-OPNsenseObject {
         [AllowEmptyCollection()]
         [String[]]$Uuid,
 
-        [Parameter(Mandatory = $false, position = 4)]
-        [Boolean]$Enable
+        [Parameter(Mandatory = $false)]
+        [Boolean]$Enable,
+
+        [Parameter(Mandatory = $false)]
+        [Switch]$Passthru
     )
     BEGIN {
         $uuids = @()
@@ -46,6 +50,9 @@ Function Enable-OPNsenseObject {
     }
     END {
         if ($false) { $PSCmdlet.ShouldProcess() }         # Hide PSScriptAlalyzer warning
-        return Switch-OPNsenseObjectStatus $module $object -Uuid $uuids -Enable $True
+        $result = Switch-OPNsenseObject $module $object -Uuid $uuids -Enable $True
+        if ($Passthru) {
+            return $result
+        }
     }
 }

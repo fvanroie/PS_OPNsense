@@ -26,6 +26,7 @@
     Return the subset of objects matching the given criteria.
 #>
 function Select-OPNsenseObject {
+    [OutputType([Object[]])]
     [CmdletBinding()]
     param (
         [Parameter(Mandatory = $true, position = 0)]

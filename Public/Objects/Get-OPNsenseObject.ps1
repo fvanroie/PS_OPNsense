@@ -30,37 +30,31 @@
 
 Function Get-OPNsenseObject {
     # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
+    [OutputType([Object[]])]
     [CmdletBinding()]
     Param (
         [parameter(Mandatory = $true, position = 0)][String]$Module,
-        [parameter(Mandatory = $true, position = 1)][String]$Command,
-        [parameter(Mandatory = $true, position = 2)][String]$Object,
-        [parameter(Mandatory = $false)][String]$Uuid,
+        [parameter(Mandatory = $true, position = 1)][String]$Object,
+        [parameter(Mandatory = $false)][String[]]$Uuid,
         [parameter(Mandatory = $false)][Boolean]$Enable
     )
-
-    $list = $Functionmap.$Module.$Object.commands.$Command
-    $splat = @{};
-    if ($list) {
-        $list | Get-Member -MemberType NoteProperty | ForEach-Object { $splat.add($_.name, $list.($_.name))}
-    } else {
-        Write-Error "Undefined api call for $command $Module $Object"
+    BEGIN {
+        $uuids = @()
     }
-
-    if ($uuid) {
-        $splat.command = $splat.command.Replace("<uuid>", $uuid)
+    PROCESS {
+        if (-Not $UUID) {
+            Write-Verbose "Gathering all the UUIDs..."
+            $uuids += $(Invoke-OPNsenseFunction $Module search $Object).UUID
+        } else {
+            $uuids += $UUID
+        }
     }
-    
-    if ($Enable) {
-        $splat.command = $splat.command.Replace("<enabled>", '1')
-        $splat.command = $splat.command.Replace("<disabled>", '0')
-    } else {
-        $splat.command = $splat.command.Replace("<enabled>", '0')
-        $splat.command = $splat.command.Replace("<disabled>", '1')     
+    END {
+        foreach ($id in $uuids) {
+            Write-Verbose ("Retrieving Object {0}" -f $id)
+            Invoke-OPNsenseFunction $Module get $Object -Uuid $id
+        }
     }
-
-    $result = Invoke-OPNsenseCommand @splat
-    return $result
 }
 
 <#

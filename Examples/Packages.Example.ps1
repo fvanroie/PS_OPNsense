@@ -22,7 +22,7 @@ If (-Not $haproxy.installed) {
 }
 
 # Get ALL Plugins, except frr
-$myplugins = Get-OPNsensePlugin  -Verbose:$beVerbose | Where-Object { $_.Name -notin 'os-frr' }
+$myplugins = Get-OPNsensePlugin  -Verbose:$beVerbose | Where-Object { $_.Name -notin 'os-quagga' }
 
 # Install the plugin packages
 $myplugins | Install-OPNsensePackage -Verbose:$beVerbose

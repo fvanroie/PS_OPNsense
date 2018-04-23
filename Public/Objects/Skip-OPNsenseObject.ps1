@@ -22,6 +22,7 @@
 #>
 
 Function Skip-OPNsenseObject {
+    [OutputType([boolean])]
     [CmdletBinding()]
     param (
         [parameter(Mandatory = $true, Position = 0)]
