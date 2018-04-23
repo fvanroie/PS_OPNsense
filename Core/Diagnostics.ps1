@@ -21,26 +21,6 @@
     SOFTWARE.
 #>
 
-Function Convert-UnixSecondstoLocal {
-    param(
-        [parameter(Mandatory = $true)][decimal] $unixSeconds
-    )
-    return [timezone]::CurrentTimeZone.ToLocalTime(([datetime]'1/1/1970').AddSeconds($unixSeconds))
-
-    #$origin = New-Object -Type DateTime -ArgumentList 1970, 1, 1, 0, 0, 0, 0
-    #return $origin.AddSeconds($unixSeconds).toLocalTime()
-}
-
-Function Convert-DateTimetoUnix {
-    param (
-        [parameter(Mandatory = $true)]
-        [ValidateNotNullOrEmpty()]
-        [DateTime]$dt
-    )
-    $origin = New-Object -Type DateTime -ArgumentList 1970, 1, 1, 0, 0, 0, 0
-    [Math]::Round($($dt - $origin).TotalSeconds)
-}
-
 Function Format-SystemHealthData {
     Param (
         [ValidateNotNullOrEmpty()]
