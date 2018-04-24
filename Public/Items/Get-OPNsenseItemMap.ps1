@@ -23,20 +23,27 @@
 #>
 
 
-Function Get-OPNsenseFunctionMap {
+Function Get-OPNsenseItemMap {
     # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
+    [OutputType([Object[]])]
     [CmdletBinding()]
-    Param()
-    $functionmap = Get-Content ..\..\Data\functionmap.json | ConvertFrom-Json
-    
-    foreach ($Module in (Get-NoteProperty $Functionmap)) {
-        foreach ($Object in (Get-NoteProperty $Functionmap.$Module)) {
-            foreach ($Command in (Get-NoteProperty $Functionmap.$Module.$Object.commands)) {
+    Param(
+        [Switch]$Raw
+    )
+    #$functionmap = Get-Content ..\..\Data\functionmap.json | ConvertFrom-Json
+
+    if ($Raw) {
+        return $OPNsenseItemMap
+    }
+
+    foreach ($Module in (Get-NoteProperty $OPNsenseItemMap)) {
+        foreach ($Object in (Get-NoteProperty $OPNsenseItemMap.$Module)) {
+            foreach ($Command in (Get-NoteProperty $OPNsenseItemMap.$Module.$Object | Where-Object { $_ -notin 'objectname', 'mountpoint'})) {
                 $data = New-Object PSObject -Property @{
                     'Module'     = $Module
                     'Object'     = $Object
-                    'ObjectType' = $FunctionMap.$Module.$Object.objecttype
-                    'ObjectName' = $FunctionMap.$Module.$Object.objectname
+                    'ReturnType' = $OPNsenseItemMap.$Module.$Object.$Command.returntype
+                    'ObjectName' = $OPNsenseItemMap.$Module.$Object.objectname
                     'Command'    = $Command
                 }
                 $data

@@ -31,8 +31,8 @@ $minversion = [System.Version]'18.1.7'
 # TODO : add default values to the default constructors
 Try {
     # Load objectmap of api calls
-    $FullPath = ("{0}/{1}" -f $PSScriptRoot, 'Data/objects.json')
-    $OPNsenseObjectMap = Get-Content $FullPath | ConvertFrom-Json
+    $FullPath = ("{0}/{1}" -f $PSScriptRoot, 'Data/items.json')
+    $OPNsenseItemMap = Get-Content $FullPath | ConvertFrom-Json
 
     # Load servicemap of api calls
     $FullPath = ("{0}/{1}" -f $PSScriptRoot, 'Data/services.json')

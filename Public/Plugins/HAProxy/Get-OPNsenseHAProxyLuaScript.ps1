@@ -36,7 +36,7 @@ Function Get-OPNsenseHAProxyLuaScript {
         [ValidateSet(0, 1, '0', '1', $False, $True)]$Enabled
     )
     BEGIN {
-        $allobj = Get-OPNsenseObject HAProxy search Lua
+        $allobj = Invoke-OPNsenseFunction HAProxy search Lua
         $result = @()
     }
     PROCESS {

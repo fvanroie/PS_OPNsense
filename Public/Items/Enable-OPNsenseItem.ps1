@@ -21,7 +21,7 @@
 	SOFTWARE.
 #>
 
-Function Disable-OPNsenseObject {
+Function Enable-OPNsenseItem {
     # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
     [OutputType([Object[]])]
     [CmdletBinding(
@@ -50,7 +50,7 @@ Function Disable-OPNsenseObject {
     }
     END {
         if ($false) { $PSCmdlet.ShouldProcess() }         # Hide PSScriptAlalyzer warning
-        $result = Switch-OPNsenseObject $module $object -Uuid $uuids -Enable $False
+        $result = Switch-OPNsenseItem $module $object -Uuid $uuids -Enable $True
         if ($Passthru) {
             return $result
         }

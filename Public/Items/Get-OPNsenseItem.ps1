@@ -1,6 +1,6 @@
 <#  MIT License
 
-	Copyright (c) 2018 fvanroie, NetwiZe.be
+    Copyright (c) 2018 fvanroie, NetwiZe.be
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -22,27 +22,38 @@
 #>
 
 
-Function Search-OPNsenseObject {
+<#
+    Retrieve the data for an object from the OPNsense api.
+    The Module/Command/Object define which api to call based on the functionmap.json file.
+#>
+
+
+Function Get-OPNsenseItem {
     # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
+    [OutputType([Object[]])]
     [CmdletBinding()]
-    Param(
+    Param (
         [parameter(Mandatory = $true, position = 0)][String]$Module,
-        [parameter(Mandatory = $true, position = 1)][String]$Controller,
-        [parameter(Mandatory = $true, position = 2)][String]$Command
+        [parameter(Mandatory = $true, position = 1)][String]$Object,
+        [parameter(Mandatory = $false)][String[]]$Uuid,
+        [parameter(Mandatory = $false)][Boolean]$Enable
     )
-
-    # Get object list to match uuid to object name
-    #Some Plugins implement search commands in singular, default is plural
-    <#    switch ($Module) {
-        { @("AcmeClient", "Freeradius", "IDS", "Monit", "Postfix", "ProxyUserACL", "Quagga", "Routes", "Siproxd", "Tinc", "Tor", "Wol", "Zerotier") -Contains $_ } {           
-            $metadata = $(Invoke-OPNsenseCommand $Module $Controller $("search{0}" -f $Command.ToLower())).rows
+    BEGIN {
+        $uuids = @()
+    }
+    PROCESS {
+        if (-Not $UUID) {
+            Write-Verbose "Gathering all the UUIDs..."
+            $uuids += $(Invoke-OPNsenseFunction $Module search $Object).UUID
+        } else {
+            $uuids += $UUID
         }
-        default {           
-            $metadata = $(Invoke-OPNsenseCommand $Module $Controller $("search{0}s" -f $Command.ToLower())).rows
+    }
+    END {
+        foreach ($id in $uuids) {
+            Write-Verbose ""
+            Write-Verbose ("Retrieving Object {0}" -f $id)
+            Invoke-OPNsenseFunction $Module get $Object -Uuid $id
         }
-} #>
-    $splat = Get-OPNsenseFunctionMap
-    $metadata = Invoke-OPNsenseCommand @splat
-
-    return $metadata
+    }
 }

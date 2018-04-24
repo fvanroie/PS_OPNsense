@@ -24,22 +24,58 @@
 # Public Function that abscracts the API calls
 Function Invoke-OPNsenseFunction {
     # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
+    [OutputType([Object[]])]
     [CmdletBinding()]
     Param (
         [parameter(Mandatory = $true, position = 0)][String]$Module,
-        [parameter(Mandatory = $true, position = 1)][String]$Object,
-        [parameter(Mandatory = $true, position = 2)][String]$Command,
-        [parameter(Mandatory = $false)][String]$Uuid
+        [parameter(Mandatory = $true, position = 1)][String]$Command,
+        [parameter(Mandatory = $true, position = 2)][String]$Object,
+        [parameter(Mandatory = $false)][String]$Uuid,
+        [parameter(Mandatory = $false)][Boolean]$Enable
     )
 
-    $list = $Functionmap.$Module.$Object.commands.$Command
-    $splat = @{};
-    $list | Get-Member -MemberType NoteProperty | ForEach-Object { $splat.add($_.name, $list.($_.name))}
+    # TODO : Check if the appropriate plugin is installed
 
-    if ($uuid) {
-        $splat.command = $splat.command.Replace("<uuid>", $uuid)
+    # Get the Invoke Arguments List
+    $arglist = $OPNsenseItemMap.$Module.$Object.$Command.command
+    $returntype = $OPNsenseItemMap.$Module.$Object.$Command.returntype
+
+    # Build Invoke Arguments Splat
+    $splat = @{};
+    if ($arglist) {
+        $arglist | Get-Member -MemberType NoteProperty | ForEach-Object { $splat.add($_.name, $arglist.($_.name))}
+    } else {
+        Throw "Undefined api call for $command $Module $Object"
     }
 
+    # Replace parameters in splat
+    $splat.command = $splat.command.Replace("<uuid>", $id)
+            
+    # Replace parameters in splat
+    if ($Enable) {
+        $splat.command = $splat.command.Replace("<enabled>", '1')
+        $splat.command = $splat.command.Replace("<disabled>", '0')
+    } else {
+        $splat.command = $splat.command.Replace("<enabled>", '0')
+        $splat.command = $splat.command.Replace("<disabled>", '1')     
+    }
+
+    # Add UUID, except for OPNsense.CaptivePortal.Template already as it already has a UUID
+    if ($command -eq 'get' -and $returntype -ne 'OPNsense.CaptivePortal.Template') {
+        $splat.Add("AddProperty", @{ 'uuid' = $Uuid} )
+    }
+  
+    # Invoke splat
     $result = Invoke-OPNsenseCommand @splat
+
+    # for OPNsense.CaptivePortal.Template all Templates are returned, select the one with the correct UUID
+    if ($command -eq 'get' -and $returntype -eq 'OPNsense.CaptivePortal.Template') {
+        $result = $result | Where-Object { $_.UUID -eq $Uuid }
+    }
+
+    if ($returntype) {
+        Write-Verbose "Converting object to $returntype"
+        return ConvertTo-OPNsenseObject -TypeName $returntype -InputObject $result
+    }
     return $result
 }

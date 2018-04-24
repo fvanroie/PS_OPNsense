@@ -22,7 +22,7 @@
 #>
 
 
-function Get-OPNsenseObjectType {
+function Get-OPNsenseItemType {
     [OutputType([Object[]])]
     [CmdletBinding()]
     Param (
@@ -32,10 +32,10 @@ function Get-OPNsenseObjectType {
         [parameter(Mandatory = $false)][Switch]$Property
     )
     if ($Name) {
-        return $OPNsenseObjectMap.$Module.$Object.objectname
+        return $OPNsenseItemMap.$Module.$Object.objectname
     } elseif ($Property) {
-        return $OPNsenseObjectMap.$Module.$Object.properties
+        return $OPNsenseItemMap.$Module.$Object.properties
     } else {
-        return $OPNsenseObjectMap.$Module.$Object.objecttype
+        return $OPNsenseItemMap.$Module.$Object.objecttype
     }
 }

@@ -36,7 +36,7 @@ Function Get-OPNsenseHAProxyServer {
         [ValidateSet(0, 1, '0', '1', $False, $True)]$Enabled
     )
     BEGIN {
-        $allobj = Get-OPNsenseObject HAProxy search Server
+        $allobj = Invoke-OPNsenseFunction HAProxy search Server
         $result = @()
     }
     PROCESS {

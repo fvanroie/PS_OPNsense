@@ -103,10 +103,7 @@
         # Private Helper Function
         'Private/Add-ObjectDetail.ps1',
         'Private/CertificateValidation.ps1',
-        'Private/New-ValidationDynamicParam.ps1',
-        'Private/Remove-OPNsenseObject.ps1',
-        'Private/Enable-OPNsenseObject.ps1',
-        'Private/RestApi.ps1'
+        'Private/New-ValidationDynamicParam.ps1'
         #>
     )
 
@@ -114,81 +111,8 @@
     <#
     # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
     FunctionsToExport      = @(
-        ########## TEST ##########
-        'Enable-OPNsense', 'Get-OPNsenseUpdateStatus',
-        'New-OPNsenseHAProxyObject',
-        'Enable-OPNsenseObject',
-        'Get-MultiOption'
-        #'New-OPNsenseHAProxyObject', 'Get-OPNsenseHAProxyObject', 'Set-OPNsenseHAProxyObject', #'Remove-OPNsenseHAProxyObject', 
-
-        ########## LEGACY ##########
-        # Backup
-        'Backup-OPNsenseConfig', 'Restore-OPNsenseConfig', 'Reset-OPNsenseConfig',
-
-        ########## PLUGINS ##########
-        # ArpScanner
-        'Update-OPNsenseArp', #'Get-OPNsenseArpScanner', 'Start-OPNsenseArpScanner', 'Wait-OPNsenseArpScanner', 'Stop-OPNsenseArpScanner',
-        # ClamAV
-        'Get-OPNsenseClamAV', 'Set-OPNsenseClamAV',
-        # Collectd
-        'Get-OPNsenseCollectd', 'Set-OPNsenseCollectd',
-        # Freeraius
-        'Remove-OPNsenseFreeradiusClient', 'Remove-OPNsenseFreeradiusUser',
-        # Lldpd
-        'Get-OPNsenseLldp', 'Set-OPNsenseLldp',
-        # Postfix
-        'Remove-OPNsensePostfixDomain', 'Remove-OPNsensePostfixRecipient', 'Remove-OPNsensePostfixSender',
-        # Quagga
-        'Remove-OPNsenseBgpNeighbor', 'Remove-OPNsenseBgpAspath', 'Remove-OPNsenseBgpPrefixlist', 'Remove-OPNsenseBgpRoutemap',
-        'Remove-OPNsenseOspf6Interface', 'Remove-OPNsenseOspfNetwork', 'Remove-OPNsenseOspfInterface', 'Remove-OPNsenseOspfPrefixlist',
-        # Siproxd
-        'Remove-OPNsenseSiproxdDomain', 'Remove-OPNsenseSiproxdUser',
-        # Tinc
-        'Remove-OPNsenseTincNetwork', 'Remove-OPNsenseTincHost',
-        # Tor
-        'Remove-OPNsenseTorExitAcl', 'Remove-OPNsenseTorHiddenService', 'Remove-OPNsenseTorHiddenServiceAcl', 'Remove-OPNsenseTorHiddenServiceAuth', 'Remove-OPNsenseTorSocksAcl',
-
-        # Zerotier
-        'Remove-OPNsenseZerotierNetwork',
-
-        ########## CORE ##########
-        # PS_OPNsense
-        #'Connect-OPNsense', 'Disconnect-OPNsense',
-        # RestApi
-        'Invoke-OPNsenseCommand',
-        # Firmware
-        'Get-OPNsense', 'Stop-OPNsense', 'Restart-OPNsense', 
-        'Set-OPNsense',
-        'Update-OPNsense', 'Invoke-OPNsenseAudit', 'Get-OPNsenseUpdate'
-        # HAProxy
-        'New-OPNsenseHAProxyServer', 'New-OPNsenseHAProxyFrontend', 'New-OPNsenseHAProxyBackend', 'New-OPNsenseHAProxyErrorfile', 'New-OPNsenseHAProxyLuaScript', 'New-OPNsenseHAProxyAcl', 'New-OPNsenseHAProxyHealthCheck',
-        'Get-OPNsenseHAProxyServer', 'Get-OPNsenseHAProxyFrontend', 'Get-OPNsenseHAProxyBackend', 'Get-OPNsenseHAProxyErrorfile', 'Get-OPNsenseHAProxyLuaScript', 'Get-OPNsenseHAProxyAcl', 'Get-OPNsenseHAProxyHealthCheck', 'Get-OPNsenseHAProxyAction', 
-        'Set-OPNsenseHAProxyServer', 'Set-OPNsenseHAProxyLuaScript',
-        'Remove-OPNsenseHAProxyServer', 'Remove-OPNsenseHAProxyFrontend', 'Remove-OPNsenseHAProxyBackend', 'Remove-OPNsenseHAProxyErrorfile', 'Remove-OPNsenseHAProxyLuaScript', 'Remove-OPNsenseHAProxyAcl', 'Remove-OPNsenseHAProxyHealthCheck', 'Remove-OPNsenseHAProxyAction', 
-        # Packages
-        'Get-OPNsensePackage', 'Lock-OPNsensePackage', 'Unlock-OPNsensePackage', 'Install-OPNsensePackage', 'Uninstall-OPNsensePackage',
-        'Get-OPNsensePlugin',
-        # Cron
-        'Get-OPNsenseCronJob', 'Enable-OPNsenseCronJob', 'Disable-OPNsenseCronJob', 'Remove-OPNsenseCronJob',
-        'New-OPNsenseCronJob', 'Set-OPNsenseCronJob',
-        #IDS
-        'Get-OPNsenseIdsUserRule', 'New-OPNsenseIdsUserRule', 'Remove-OPNsenseIdsUserRule',
-        'Get-OPNsenseIdsAlert',
-        # Proxy
-        'New-OPNsenseProxyRemoteBlacklist', 'Get-OPNsenseProxyRemoteBlacklist', 'Remove-OPNsenseProxyRemoteBlacklist',
-        'Sync-OPNsenseProxyRemoteBlacklist',
-        # CaptivePortal
-        'New-OPNsenseCaptivePortalZone', 'Remove-OPNsenseCaptivePortalZone',
-        'New-OPNsenseCaptivePortalTemplate', 'Get-OPNsenseCaptivePortalTemplate', 'Set-OPNsenseCaptivePortalTemplate', 'Remove-OPNsenseCaptivePortalTemplate', 'Save-OPNsenseCaptivePortalTemplate',
-        'Get-OPNsenseCaptivePortal',
-        # Diagnostics
-        'Get-OPNsenseSystemHealth', 'Get-OPNsenseResource', 'Get-OPNsenseInterface', 'Get-OPNsenseRoute', 'Get-OPNsenseARP', 'Clear-OPNsenseARP',
-        # Services
-        'Get-OPNsenseService', 'Start-OPNsenseService', 'Update-OPNsenseService', 'Test-OPNsenseService', 'Restart-OPNsenseService', 'Stop-OPNsenseService', 'Invoke-OPNsenseService',
-        # TrafficShaper
-        'Remove-OPNsenseTrafficShaperPipe', 'Remove-OPNsenseTrafficShaperQueue', 'Remove-OPNsenseTrafficShaperRule'
     )
-#>
+    #>
 
     # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
     CmdletsToExport        = @()

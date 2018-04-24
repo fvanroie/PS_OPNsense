@@ -36,7 +36,7 @@ Function Get-OPNsenseHAProxyAcl {
         [ValidateSet(0, 1, '0', '1', $False, $True)]$Enabled
     )
     BEGIN {
-        $allobj = Get-OPNsenseObject HAProxy search ACL
+        $allobj = Invoke-OPNsenseFunction HAProxy search ACL
         $result = @()
     }
     PROCESS {
