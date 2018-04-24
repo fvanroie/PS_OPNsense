@@ -68,6 +68,11 @@ Function Invoke-OPNsenseFunction {
     # Invoke splat
     $result = Invoke-OPNsenseCommand @splat
 
+    # for OPNsense.CaptivePortal.Template all Templates are returned, select the one with the correct UUID
+    if ($command -eq 'get' -and $returntype -eq 'OPNsense.CaptivePortal.Template') {
+        $result = $result | Where-Object { $_.UUID -eq $Uuid }
+    }
+
     if ($returntype) {
         Write-Verbose "Converting object to $returntype"
         return ConvertTo-OPNsenseObject -TypeName $returntype -InputObject $result

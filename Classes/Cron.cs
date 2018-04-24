@@ -19,16 +19,16 @@ namespace OPNsense.Cron {
 
 		public Job () {
 			command = null;
-			days = null;
+			days = "*";
 			description = null;
-			enabled = false;
-			hours = null;
-			minutes = null;
-			months = null;
-			origin = null;
+			enabled = true;
+			hours = "0";
+			minutes = "0";
+			months = "*";
+			origin = "cron";
 			parameters = null;
-			weekdays = null;
-			who = null;
+			weekdays = "*";
+			who = "root";
 		}
 
 		public Job (

@@ -11,10 +11,10 @@ namespace OPNsense.Siproxd {
 		#endregion Parameters
 
 		public Domain () {
-			enabled = false;
+			enabled = true;
 			host = null;
 			name = null;
-			port = 0;
+			port = 5060;
 		}
 
 		public Domain (
@@ -29,6 +29,8 @@ namespace OPNsense.Siproxd {
 			port = Port;
 		}
 	}
+}
+namespace OPNsense.Siproxd {
 	public class User {
 		#region Parameters
 		public bool enabled { get; set; }
@@ -37,7 +39,7 @@ namespace OPNsense.Siproxd {
 		#endregion Parameters
 
 		public User () {
-			enabled = false;
+			enabled = true;
 			password = null;
 			username = null;
 		}

@@ -11,7 +11,7 @@ namespace OPNsense.FreeRadius {
 		#endregion Parameters
 
 		public Client () {
-			enabled = false;
+			enabled = true;
 			ip = null;
 			name = null;
 			secret = null;
@@ -29,6 +29,8 @@ namespace OPNsense.FreeRadius {
 			secret = Secret;
 		}
 	}
+}
+namespace OPNsense.FreeRadius {
 	public class User {
 		#region Parameters
 		public int chillispot_bw_max_down { get; set; }
@@ -40,7 +42,7 @@ namespace OPNsense.FreeRadius {
 		public int sessionlimit_max_session_limit { get; set; }
 		public string subnet { get; set; }
 		public string username { get; set; }
-		public int vlan { get; set; }
+		public uint vlan { get; set; }
 		public int wispr_bw_max_down { get; set; }
 		public int wispr_bw_max_up { get; set; }
 		public int wispr_bw_min_down { get; set; }
@@ -51,7 +53,7 @@ namespace OPNsense.FreeRadius {
 			chillispot_bw_max_down = 0;
 			chillispot_bw_max_up = 0;
 			description = null;
-			enabled = false;
+			enabled = true;
 			ip = null;
 			password = null;
 			sessionlimit_max_session_limit = 0;
@@ -74,7 +76,7 @@ namespace OPNsense.FreeRadius {
 			int Sessionlimit_Max_Session_Limit,
 			string Subnet,
 			string Username,
-			int Vlan,
+			uint Vlan,
 			int Wispr_Bw_Max_Down,
 			int Wispr_Bw_Max_Up,
 			int Wispr_Bw_Min_Down,

@@ -1,27 +1,27 @@
 ﻿using System;
 using System.Management.Automation;
 
-namespace OPNsense.Quagga {
-	public class BGPAspath {
+namespace OPNsense.Quagga.BGP {
+	public class AsPath {
 		#region Parameters
 		public PSObject action { get; set; }
 		public string AS { get; set; }
 		public bool enabled { get; set; }
-		public int number { get; set; }
+		public uint number { get; set; }
 		#endregion Parameters
 
-		public BGPAspath () {
+		public AsPath () {
 			action = null;
 			AS = null;
-			enabled = false;
+			enabled = true;
 			number = 0;
 		}
 
-		public BGPAspath (
+		public AsPath (
 			PSObject Action,
 			string AS_,
 			bool Enabled,
-			int Number
+			uint Number
 		) {
 			action = Action;
 			AS = AS_;
@@ -29,7 +29,9 @@ namespace OPNsense.Quagga {
 			number = Number;
 		}
 	}
-	public class BGPNeighbor {
+}
+namespace OPNsense.Quagga.BGP {
+	public class Neighbor {
 		#region Parameters
 		public string address { get; set; }
 		public bool defaultoriginate { get; set; }
@@ -39,24 +41,24 @@ namespace OPNsense.Quagga {
 		public PSObject linkedRoutemapIn { get; set; }
 		public PSObject linkedRoutemapOut { get; set; }
 		public bool nexthopself { get; set; }
-		public int remoteas { get; set; }
+		public uint remoteas { get; set; }
 		public PSObject updatesource { get; set; }
 		#endregion Parameters
 
-		public BGPNeighbor () {
+		public Neighbor () {
 			address = null;
-			defaultoriginate = false;
-			enabled = false;
+			defaultoriginate = true;
+			enabled = true;
 			linkedPrefixlistIn = null;
 			linkedPrefixlistOut = null;
 			linkedRoutemapIn = null;
 			linkedRoutemapOut = null;
-			nexthopself = false;
+			nexthopself = true;
 			remoteas = 0;
 			updatesource = null;
 		}
 
-		public BGPNeighbor (
+		public Neighbor (
 			string Address,
 			bool Defaultoriginate,
 			bool Enabled,
@@ -65,7 +67,7 @@ namespace OPNsense.Quagga {
 			PSObject LinkedRoutemapIn,
 			PSObject LinkedRoutemapOut,
 			bool Nexthopself,
-			int Remoteas,
+			uint Remoteas,
 			PSObject Updatesource
 		) {
 			address = Address;
@@ -80,29 +82,31 @@ namespace OPNsense.Quagga {
 			updatesource = Updatesource;
 		}
 	}
-	public class BGPPrefixlist {
+}
+namespace OPNsense.Quagga.BGP {
+	public class Prefixlist {
 		#region Parameters
 		public PSObject action { get; set; }
 		public bool enabled { get; set; }
 		public string name { get; set; }
 		public string network { get; set; }
-		public int seqnumber { get; set; }
+		public uint seqnumber { get; set; }
 		#endregion Parameters
 
-		public BGPPrefixlist () {
+		public Prefixlist () {
 			action = null;
-			enabled = false;
+			enabled = true;
 			name = null;
 			network = null;
 			seqnumber = 0;
 		}
 
-		public BGPPrefixlist (
+		public Prefixlist (
 			PSObject Action,
 			bool Enabled,
 			string Name,
 			string Network,
-			int Seqnumber
+			uint Seqnumber
 		) {
 			action = Action;
 			enabled = Enabled;
@@ -111,29 +115,31 @@ namespace OPNsense.Quagga {
 			seqnumber = Seqnumber;
 		}
 	}
-	public class BGPRoutemap {
+}
+namespace OPNsense.Quagga.BGP {
+	public class Routemap {
 		#region Parameters
 		public PSObject action { get; set; }
 		public bool enabled { get; set; }
-		public int id { get; set; }
+		public uint id { get; set; }
 		public PSObject match { get; set; }
 		public string name { get; set; }
 		public string set { get; set; }
 		#endregion Parameters
 
-		public BGPRoutemap () {
+		public Routemap () {
 			action = null;
-			enabled = false;
+			enabled = true;
 			id = 0;
 			match = null;
 			name = null;
 			set = null;
 		}
 
-		public BGPRoutemap (
+		public Routemap (
 			PSObject Action,
 			bool Enabled,
-			int Id,
+			uint Id,
 			PSObject Match,
 			string Name,
 			string Set
@@ -146,25 +152,27 @@ namespace OPNsense.Quagga {
 			set = Set;
 		}
 	}
-	public class Ospf6Interface {
+}
+namespace OPNsense.Quagga.Ospf6 {
+	public class Interface {
 		#region Parameters
 		public string area { get; set; }
-		public int cost { get; set; }
-		public int deadinterval { get; set; }
+		public uint cost { get; set; }
+		public uint deadinterval { get; set; }
 		public bool enabled { get; set; }
-		public int hellointerval { get; set; }
+		public uint hellointerval { get; set; }
 		public PSObject interfacename { get; set; }
 		public PSObject networktype { get; set; }
-		public int priority { get; set; }
-		public int retransmitinterval { get; set; }
-		public int transmitdelay { get; set; }
+		public uint priority { get; set; }
+		public uint retransmitinterval { get; set; }
+		public uint transmitdelay { get; set; }
 		#endregion Parameters
 
-		public Ospf6Interface () {
+		public Interface () {
 			area = null;
 			cost = 0;
 			deadinterval = 0;
-			enabled = false;
+			enabled = true;
 			hellointerval = 0;
 			interfacename = null;
 			networktype = null;
@@ -173,17 +181,17 @@ namespace OPNsense.Quagga {
 			transmitdelay = 0;
 		}
 
-		public Ospf6Interface (
+		public Interface (
 			string Area,
-			int Cost,
-			int Deadinterval,
+			uint Cost,
+			uint Deadinterval,
 			bool Enabled,
-			int Hellointerval,
+			uint Hellointerval,
 			PSObject Interfacename,
 			PSObject Networktype,
-			int Priority,
-			int Retransmitinterval,
-			int Transmitdelay
+			uint Priority,
+			uint Retransmitinterval,
+			uint Transmitdelay
 		) {
 			area = Area;
 			cost = Cost;
@@ -197,27 +205,29 @@ namespace OPNsense.Quagga {
 			transmitdelay = Transmitdelay;
 		}
 	}
-	public class OspfInterface {
+}
+namespace OPNsense.Quagga.Ospf {
+	public class Interface {
 		#region Parameters
 		public string authkey { get; set; }
 		public PSObject authtype { get; set; }
-		public int cost { get; set; }
-		public int deadinterval { get; set; }
+		public uint cost { get; set; }
+		public uint deadinterval { get; set; }
 		public bool enabled { get; set; }
-		public int hellointerval { get; set; }
+		public uint hellointerval { get; set; }
 		public PSObject interfacename { get; set; }
 		public PSObject networktype { get; set; }
-		public int priority { get; set; }
-		public int retransmitinterval { get; set; }
-		public int transmitdelay { get; set; }
+		public uint priority { get; set; }
+		public uint retransmitinterval { get; set; }
+		public uint transmitdelay { get; set; }
 		#endregion Parameters
 
-		public OspfInterface () {
+		public Interface () {
 			authkey = null;
 			authtype = null;
 			cost = 0;
 			deadinterval = 0;
-			enabled = false;
+			enabled = true;
 			hellointerval = 0;
 			interfacename = null;
 			networktype = null;
@@ -226,18 +236,18 @@ namespace OPNsense.Quagga {
 			transmitdelay = 0;
 		}
 
-		public OspfInterface (
+		public Interface (
 			string Authkey,
 			PSObject Authtype,
-			int Cost,
-			int Deadinterval,
+			uint Cost,
+			uint Deadinterval,
 			bool Enabled,
-			int Hellointerval,
+			uint Hellointerval,
 			PSObject Interfacename,
 			PSObject Networktype,
-			int Priority,
-			int Retransmitinterval,
-			int Transmitdelay
+			uint Priority,
+			uint Retransmitinterval,
+			uint Transmitdelay
 		) {
 			authkey = Authkey;
 			authtype = Authtype;
@@ -252,32 +262,34 @@ namespace OPNsense.Quagga {
 			transmitdelay = Transmitdelay;
 		}
 	}
-	public class OspfNetwork {
+}
+namespace OPNsense.Quagga.Ospf {
+	public class Network {
 		#region Parameters
 		public string area { get; set; }
 		public bool enabled { get; set; }
 		public string ipaddr { get; set; }
 		public PSObject linkedPrefixlistIn { get; set; }
 		public PSObject linkedPrefixlistOut { get; set; }
-		public int netmask { get; set; }
+		public uint netmask { get; set; }
 		#endregion Parameters
 
-		public OspfNetwork () {
+		public Network () {
 			area = null;
-			enabled = false;
+			enabled = true;
 			ipaddr = null;
 			linkedPrefixlistIn = null;
 			linkedPrefixlistOut = null;
-			netmask = 0;
+			netmask = 24;
 		}
 
-		public OspfNetwork (
+		public Network (
 			string Area,
 			bool Enabled,
 			string Ipaddr,
 			PSObject LinkedPrefixlistIn,
 			PSObject LinkedPrefixlistOut,
-			int Netmask
+			uint Netmask
 		) {
 			area = Area;
 			enabled = Enabled;
@@ -287,29 +299,31 @@ namespace OPNsense.Quagga {
 			netmask = Netmask;
 		}
 	}
-	public class OspfPrefixlist {
+}
+namespace OPNsense.Quagga.Ospf {
+	public class Prefixlist {
 		#region Parameters
 		public PSObject action { get; set; }
 		public bool enabled { get; set; }
 		public string name { get; set; }
 		public string network { get; set; }
-		public int seqnumber { get; set; }
+		public uint seqnumber { get; set; }
 		#endregion Parameters
 
-		public OspfPrefixlist () {
+		public Prefixlist () {
 			action = null;
-			enabled = false;
+			enabled = true;
 			name = null;
 			network = null;
 			seqnumber = 0;
 		}
 
-		public OspfPrefixlist (
+		public Prefixlist (
 			PSObject Action,
 			bool Enabled,
 			string Name,
 			string Network,
-			int Seqnumber
+			uint Seqnumber
 		) {
 			action = Action;
 			enabled = Enabled;

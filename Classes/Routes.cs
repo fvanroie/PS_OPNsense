@@ -12,7 +12,7 @@ namespace OPNsense.Routes {
 
 		public Route () {
 			descr = null;
-			disabled = false;
+			disabled = true;
 			gateway = null;
 			network = null;
 		}

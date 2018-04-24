@@ -10,17 +10,17 @@ namespace OPNsense.Monit {
 		public string format { get; set; }
 		public bool noton { get; set; }
 		public string recipient { get; set; }
-		public int reminder { get; set; }
+		public uint reminder { get; set; }
 		#endregion Parameters
 
 		public Alert () {
 			description = null;
-			enabled = false;
+			enabled = true;
 			events = null;
 			format = null;
-			noton = false;
-			recipient = null;
-			reminder = 0;
+			noton = true;
+			recipient = "root@localhost.local";
+			reminder = 10;
 		}
 
 		public Alert (
@@ -30,7 +30,7 @@ namespace OPNsense.Monit {
 			string Format,
 			bool Noton,
 			string Recipient,
-			int Reminder
+			uint Reminder
 		) {
 			description = Description;
 			enabled = Enabled;
@@ -41,6 +41,8 @@ namespace OPNsense.Monit {
 			reminder = Reminder;
 		}
 	}
+}
+namespace OPNsense.Monit {
 	public class Service {
 		#region Parameters
 		public string address { get; set; }
@@ -58,7 +60,7 @@ namespace OPNsense.Monit {
 
 		public Service () {
 			address = null;
-			enabled = false;
+			enabled = true;
 			Interface = null;
 			match = null;
 			name = null;
@@ -96,6 +98,8 @@ namespace OPNsense.Monit {
 			type = Type;
 		}
 	}
+}
+namespace OPNsense.Monit {
 	public class Test {
 		#region Parameters
 		public PSObject action { get; set; }

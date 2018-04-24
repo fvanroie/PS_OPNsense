@@ -11,7 +11,7 @@ namespace OPNsense.IDS {
 
 		public Rule () {
 			action = null;
-			enabled = false;
+			enabled = true;
 			sid = 0;
 		}
 
@@ -25,6 +25,8 @@ namespace OPNsense.IDS {
 			sid = Sid;
 		}
 	}
+}
+namespace OPNsense.IDS {
 	public class UserRule {
 		#region Parameters
 		public PSObject action { get; set; }
@@ -38,7 +40,7 @@ namespace OPNsense.IDS {
 		public UserRule () {
 			action = null;
 			description = null;
-			enabled = false;
+			enabled = true;
 			fingerprint = null;
 			geoip = null;
 			geoip_direction = null;

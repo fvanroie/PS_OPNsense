@@ -4,23 +4,23 @@ using System.Management.Automation;
 namespace OPNsense.TrafficShaper {
 	public class Pipe {
 		#region Parameters
-		public int bandwidth { get; set; }
+		public uint bandwidth { get; set; }
 		public PSObject bandwidthMetric { get; set; }
-		public int buckets { get; set; }
+		public uint buckets { get; set; }
 		public bool codel_ecn_enable { get; set; }
 		public bool codel_enable { get; set; }
-		public int codel_interval { get; set; }
-		public int codel_target { get; set; }
-		public int delay { get; set; }
+		public uint codel_interval { get; set; }
+		public uint codel_target { get; set; }
+		public uint delay { get; set; }
 		public string description { get; set; }
 		public bool enabled { get; set; }
-		public int fqcodel_flows { get; set; }
-		public int fqcodel_limit { get; set; }
-		public int fqcodel_quantum { get; set; }
+		public uint fqcodel_flows { get; set; }
+		public uint fqcodel_limit { get; set; }
+		public uint fqcodel_quantum { get; set; }
 		public PSObject mask { get; set; }
-		public int number { get; set; }
+		public uint number { get; set; }
 		public string origin { get; set; }
-		public int queue { get; set; }
+		public uint queue { get; set; }
 		public PSObject scheduler { get; set; }
 		#endregion Parameters
 
@@ -28,13 +28,13 @@ namespace OPNsense.TrafficShaper {
 			bandwidth = 0;
 			bandwidthMetric = null;
 			buckets = 0;
-			codel_ecn_enable = false;
-			codel_enable = false;
+			codel_ecn_enable = true;
+			codel_enable = true;
 			codel_interval = 0;
 			codel_target = 0;
 			delay = 0;
 			description = null;
-			enabled = false;
+			enabled = true;
 			fqcodel_flows = 0;
 			fqcodel_limit = 0;
 			fqcodel_quantum = 0;
@@ -46,23 +46,23 @@ namespace OPNsense.TrafficShaper {
 		}
 
 		public Pipe (
-			int Bandwidth,
+			uint Bandwidth,
 			PSObject BandwidthMetric,
-			int Buckets,
+			uint Buckets,
 			bool Codel_Ecn_Enable,
 			bool Codel_Enable,
-			int Codel_Interval,
-			int Codel_Target,
-			int Delay,
+			uint Codel_Interval,
+			uint Codel_Target,
+			uint Delay,
 			string Description,
 			bool Enabled,
-			int Fqcodel_Flows,
-			int Fqcodel_Limit,
-			int Fqcodel_Quantum,
+			uint Fqcodel_Flows,
+			uint Fqcodel_Limit,
+			uint Fqcodel_Quantum,
 			PSObject Mask,
-			int Number,
+			uint Number,
 			string Origin,
-			int Queue,
+			uint Queue,
 			PSObject Scheduler
 		) {
 			bandwidth = Bandwidth;
@@ -85,50 +85,52 @@ namespace OPNsense.TrafficShaper {
 			scheduler = Scheduler;
 		}
 	}
+}
+namespace OPNsense.TrafficShaper {
 	public class Queue {
 		#region Parameters
-		public int buckets { get; set; }
+		public uint buckets { get; set; }
 		public bool codel_ecn_enable { get; set; }
 		public bool codel_enable { get; set; }
-		public int codel_interval { get; set; }
-		public int codel_target { get; set; }
+		public uint codel_interval { get; set; }
+		public uint codel_target { get; set; }
 		public string description { get; set; }
 		public bool enabled { get; set; }
 		public PSObject mask { get; set; }
-		public int number { get; set; }
+		public uint number { get; set; }
 		public string origin { get; set; }
 		public PSObject pipe { get; set; }
-		public int weight { get; set; }
+		public uint weight { get; set; }
 		#endregion Parameters
 
 		public Queue () {
 			buckets = 0;
-			codel_ecn_enable = false;
-			codel_enable = false;
+			codel_ecn_enable = true;
+			codel_enable = true;
 			codel_interval = 0;
 			codel_target = 0;
 			description = null;
-			enabled = false;
+			enabled = true;
 			mask = null;
 			number = 0;
 			origin = null;
 			pipe = null;
-			weight = 0;
+			weight = 100;
 		}
 
 		public Queue (
-			int Buckets,
+			uint Buckets,
 			bool Codel_Ecn_Enable,
 			bool Codel_Enable,
-			int Codel_Interval,
-			int Codel_Target,
+			uint Codel_Interval,
+			uint Codel_Target,
 			string Description,
 			bool Enabled,
 			PSObject Mask,
-			int Number,
+			uint Number,
 			string Origin,
 			PSObject Pipe,
-			int Weight
+			uint Weight
 		) {
 			buckets = Buckets;
 			codel_ecn_enable = Codel_Ecn_Enable;
@@ -144,6 +146,8 @@ namespace OPNsense.TrafficShaper {
 			weight = Weight;
 		}
 	}
+}
+namespace OPNsense.TrafficShaper {
 	public class Rule {
 		#region Parameters
 		public string description { get; set; }
@@ -155,7 +159,7 @@ namespace OPNsense.TrafficShaper {
 		public PSObject interface2 { get; set; }
 		public string origin { get; set; }
 		public PSObject proto { get; set; }
-		public int sequence { get; set; }
+		public uint sequence { get; set; }
 		public PSObject source { get; set; }
 		public bool source_not { get; set; }
 		public PSObject src_port { get; set; }
@@ -165,16 +169,16 @@ namespace OPNsense.TrafficShaper {
 		public Rule () {
 			description = null;
 			destination = null;
-			destination_not = false;
+			destination_not = true;
 			direction = null;
 			dst_port = null;
 			Interface = null;
 			interface2 = null;
 			origin = null;
 			proto = null;
-			sequence = 0;
+			sequence = 1;
 			source = null;
-			source_not = false;
+			source_not = true;
 			src_port = null;
 			target = null;
 		}
@@ -189,7 +193,7 @@ namespace OPNsense.TrafficShaper {
 			PSObject Interface2,
 			string Origin,
 			PSObject Proto,
-			int Sequence,
+			uint Sequence,
 			PSObject Source,
 			bool Source_Not,
 			PSObject Src_Port,

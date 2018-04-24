@@ -6,15 +6,15 @@ namespace OPNsense.Tor {
 		#region Parameters
 		public PSObject action { get; set; }
 		public bool enabled { get; set; }
-		public int endport { get; set; }
+		public uint endport { get; set; }
 		public PSObject network { get; set; }
-		public int startport { get; set; }
+		public uint startport { get; set; }
 		public PSObject type { get; set; }
 		#endregion Parameters
 
 		public Exitacl () {
 			action = null;
-			enabled = false;
+			enabled = true;
 			endport = 0;
 			network = null;
 			startport = 0;
@@ -24,9 +24,9 @@ namespace OPNsense.Tor {
 		public Exitacl (
 			PSObject Action,
 			bool Enabled,
-			int Endport,
+			uint Endport,
 			PSObject Network,
-			int Startport,
+			uint Startport,
 			PSObject Type
 		) {
 			action = Action;
@@ -37,6 +37,8 @@ namespace OPNsense.Tor {
 			type = Type;
 		}
 	}
+}
+namespace OPNsense.Tor {
 	public class HiddenService {
 		#region Parameters
 		public Object clients { get; set; }
@@ -47,7 +49,7 @@ namespace OPNsense.Tor {
 
 		public HiddenService () {
 			clients = null;
-			enabled = false;
+			enabled = true;
 			name = null;
 			type = null;
 		}
@@ -64,29 +66,31 @@ namespace OPNsense.Tor {
 			type = Type;
 		}
 	}
+}
+namespace OPNsense.Tor {
 	public class HiddenServiceACL {
 		#region Parameters
 		public bool enabled { get; set; }
 		public PSObject hiddenservice { get; set; }
-		public int port { get; set; }
+		public uint port { get; set; }
 		public PSObject target_host { get; set; }
-		public int target_port { get; set; }
+		public uint target_port { get; set; }
 		#endregion Parameters
 
 		public HiddenServiceACL () {
-			enabled = false;
+			enabled = true;
 			hiddenservice = null;
-			port = 0;
+			port = 80;
 			target_host = null;
-			target_port = 0;
+			target_port = 80;
 		}
 
 		public HiddenServiceACL (
 			bool Enabled,
 			PSObject Hiddenservice,
-			int Port,
+			uint Port,
 			PSObject Target_Host,
-			int Target_Port
+			uint Target_Port
 		) {
 			enabled = Enabled;
 			hiddenservice = Hiddenservice;
@@ -95,6 +99,8 @@ namespace OPNsense.Tor {
 			target_port = Target_Port;
 		}
 	}
+}
+namespace OPNsense.Tor {
 	public class HiddenServiceAuth {
 		#region Parameters
 		public string auth_cookie { get; set; }
@@ -103,9 +109,9 @@ namespace OPNsense.Tor {
 		#endregion Parameters
 
 		public HiddenServiceAuth () {
-			auth_cookie = null;
-			enabled = false;
-			onion_service = null;
+			auth_cookie = "0000000000000000000000";
+			enabled = true;
+			onion_service = "exampleexample23.onion";
 		}
 
 		public HiddenServiceAuth (
@@ -118,6 +124,8 @@ namespace OPNsense.Tor {
 			onion_service = Onion_Service;
 		}
 	}
+}
+namespace OPNsense.Tor {
 	public class SocksACL {
 		#region Parameters
 		public PSObject action { get; set; }
@@ -128,7 +136,7 @@ namespace OPNsense.Tor {
 
 		public SocksACL () {
 			action = null;
-			enabled = false;
+			enabled = true;
 			network = null;
 			type = null;
 		}

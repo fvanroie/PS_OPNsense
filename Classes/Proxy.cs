@@ -16,11 +16,11 @@ namespace OPNsense.Proxy {
 
 		public RemoteBlacklist () {
 			description = null;
-			enabled = false;
+			enabled = true;
 			filename = null;
 			filter = null;
 			password = null;
-			sslNoVerify = false;
+			sslNoVerify = true;
 			url = null;
 			username = null;
 		}

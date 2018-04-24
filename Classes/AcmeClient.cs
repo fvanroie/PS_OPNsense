@@ -18,7 +18,7 @@ namespace OPNsense.AcmeClient {
 			certificateAuthority = null;
 			description = null;
 			email = null;
-			enabled = false;
+			enabled = true;
 			id = null;
 			key = null;
 			lastUpdate = 0;
@@ -45,6 +45,8 @@ namespace OPNsense.AcmeClient {
 			name = Name;
 		}
 	}
+}
+namespace OPNsense.AcmeClient {
 	public class Action {
 		#region Parameters
 		public PSObject configd { get; set; }
@@ -58,7 +60,7 @@ namespace OPNsense.AcmeClient {
 		public Action () {
 			configd = null;
 			description = null;
-			enabled = false;
+			enabled = true;
 			id = null;
 			name = null;
 			type = null;
@@ -80,6 +82,8 @@ namespace OPNsense.AcmeClient {
 			type = Type;
 		}
 	}
+}
+namespace OPNsense.AcmeClient {
 	public class Certificate {
 		#region Parameters
 		public PSObject account { get; set; }
@@ -91,9 +95,9 @@ namespace OPNsense.AcmeClient {
 		public string id { get; set; }
 		public int lastUpdate { get; set; }
 		public string name { get; set; }
-		public int renewInterval { get; set; }
+		public uint renewInterval { get; set; }
 		public PSObject restartActions { get; set; }
-		public int statusCode { get; set; }
+		public uint statusCode { get; set; }
 		public int statusLastUpdate { get; set; }
 		public PSObject validationMethod { get; set; }
 		#endregion Parameters
@@ -101,14 +105,14 @@ namespace OPNsense.AcmeClient {
 		public Certificate () {
 			account = null;
 			altNames = null;
-			autoRenewal = false;
+			autoRenewal = true;
 			certRefId = null;
 			description = null;
-			enabled = false;
+			enabled = true;
 			id = null;
 			lastUpdate = 0;
 			name = null;
-			renewInterval = 0;
+			renewInterval = 60;
 			restartActions = null;
 			statusCode = 0;
 			statusLastUpdate = 0;
@@ -125,9 +129,9 @@ namespace OPNsense.AcmeClient {
 			string Id,
 			int LastUpdate,
 			string Name,
-			int RenewInterval,
+			uint RenewInterval,
 			PSObject RestartActions,
-			int StatusCode,
+			uint StatusCode,
 			int StatusLastUpdate,
 			PSObject ValidationMethod
 		) {
@@ -147,6 +151,8 @@ namespace OPNsense.AcmeClient {
 			validationMethod = ValidationMethod;
 		}
 	}
+}
+namespace OPNsense.AcmeClient {
 	public class Validation {
 		#region Parameters
 		public string description { get; set; }
@@ -207,7 +213,7 @@ namespace OPNsense.AcmeClient {
 		public string dns_pdns_token { get; set; }
 		public string dns_pdns_url { get; set; }
 		public PSObject dns_service { get; set; }
-		public int dns_sleep { get; set; }
+		public uint dns_sleep { get; set; }
 		public string dns_vscale_key { get; set; }
 		public string dns_yandex_token { get; set; }
 		public bool enabled { get; set; }
@@ -257,7 +263,7 @@ namespace OPNsense.AcmeClient {
 			dns_infoblox_credentials = null;
 			dns_infoblox_server = null;
 			dns_ispconfig_api = null;
-			dns_ispconfig_insecure = false;
+			dns_ispconfig_insecure = true;
 			dns_ispconfig_password = null;
 			dns_ispconfig_user = null;
 			dns_lexicon_provider = null;
@@ -281,13 +287,13 @@ namespace OPNsense.AcmeClient {
 			dns_pdns_token = null;
 			dns_pdns_url = null;
 			dns_service = null;
-			dns_sleep = 0;
+			dns_sleep = 120;
 			dns_vscale_key = null;
 			dns_yandex_token = null;
-			enabled = false;
+			enabled = true;
 			http_haproxyFrontends = null;
-			http_haproxyInject = false;
-			http_opn_autodiscovery = false;
+			http_haproxyInject = true;
+			http_opn_autodiscovery = true;
 			http_opn_interface = null;
 			http_opn_ipaddresses = null;
 			http_service = null;
@@ -355,7 +361,7 @@ namespace OPNsense.AcmeClient {
 			string Dns_Pdns_Token,
 			string Dns_Pdns_Url,
 			PSObject Dns_Service,
-			int Dns_Sleep,
+			uint Dns_Sleep,
 			string Dns_Vscale_Key,
 			string Dns_Yandex_Token,
 			bool Enabled,

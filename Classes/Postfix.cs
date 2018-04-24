@@ -12,7 +12,7 @@ namespace OPNsense.Postfix {
 		public Domain () {
 			destination = null;
 			domainname = null;
-			enabled = false;
+			enabled = true;
 		}
 
 		public Domain (
@@ -25,6 +25,8 @@ namespace OPNsense.Postfix {
 			enabled = Enabled;
 		}
 	}
+}
+namespace OPNsense.Postfix {
 	public class Recipient {
 		#region Parameters
 		public PSObject action { get; set; }
@@ -35,7 +37,7 @@ namespace OPNsense.Postfix {
 		public Recipient () {
 			action = null;
 			address = null;
-			enabled = false;
+			enabled = true;
 		}
 
 		public Recipient (
@@ -48,6 +50,8 @@ namespace OPNsense.Postfix {
 			enabled = Enabled;
 		}
 	}
+}
+namespace OPNsense.Postfix {
 	public class Sender {
 		#region Parameters
 		public PSObject action { get; set; }
@@ -58,7 +62,7 @@ namespace OPNsense.Postfix {
 		public Sender () {
 			action = null;
 			address = null;
-			enabled = false;
+			enabled = true;
 		}
 
 		public Sender (

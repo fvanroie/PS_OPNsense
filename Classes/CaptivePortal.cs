@@ -25,6 +25,8 @@ namespace OPNsense.CaptivePortal {
 			name = Name;
 		}
 	}
+}
+namespace OPNsense.CaptivePortal {
 	public class Zone {
 		#region Parameters
 		public Object allowedAddresses { get; set; }
@@ -35,8 +37,8 @@ namespace OPNsense.CaptivePortal {
 		public bool concurrentlogins { get; set; }
 		public string description { get; set; }
 		public bool enabled { get; set; }
-		public int hardtimeout { get; set; }
-		public int idletimeout { get; set; }
+		public uint hardtimeout { get; set; }
+		public uint idletimeout { get; set; }
 		public PSObject interfaces { get; set; }
 		public string servername { get; set; }
 		public PSObject template { get; set; }
@@ -51,16 +53,16 @@ namespace OPNsense.CaptivePortal {
 			authEnforceGroup = null;
 			authservers = null;
 			certificate = null;
-			concurrentlogins = false;
+			concurrentlogins = true;
 			description = null;
-			enabled = false;
+			enabled = true;
 			hardtimeout = 0;
 			idletimeout = 0;
 			interfaces = null;
 			servername = null;
 			template = null;
-			transparentHTTPProxy = false;
-			transparentHTTPSProxy = false;
+			transparentHTTPProxy = true;
+			transparentHTTPSProxy = true;
 			zoneid = 0;
 		}
 
@@ -73,8 +75,8 @@ namespace OPNsense.CaptivePortal {
 			bool Concurrentlogins,
 			string Description,
 			bool Enabled,
-			int Hardtimeout,
-			int Idletimeout,
+			uint Hardtimeout,
+			uint Idletimeout,
 			PSObject Interfaces,
 			string Servername,
 			PSObject Template,

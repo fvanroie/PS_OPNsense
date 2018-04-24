@@ -8,7 +8,7 @@ namespace OPNsense.Tinc {
 		public bool connectTo { get; set; }
 		public bool enabled { get; set; }
 		public string extaddress { get; set; }
-		public int extport { get; set; }
+		public uint extport { get; set; }
 		public string hostname { get; set; }
 		public PSObject network { get; set; }
 		public string pubkey { get; set; }
@@ -17,10 +17,10 @@ namespace OPNsense.Tinc {
 
 		public Host () {
 			cipher = null;
-			connectTo = false;
-			enabled = false;
+			connectTo = true;
+			enabled = true;
 			extaddress = null;
-			extport = 0;
+			extport = 655;
 			hostname = null;
 			network = null;
 			pubkey = null;
@@ -32,7 +32,7 @@ namespace OPNsense.Tinc {
 			bool ConnectTo,
 			bool Enabled,
 			string Extaddress,
-			int Extport,
+			uint Extport,
 			string Hostname,
 			PSObject Network,
 			string Pubkey,
@@ -49,19 +49,21 @@ namespace OPNsense.Tinc {
 			subnet = Subnet;
 		}
 	}
+}
+namespace OPNsense.Tinc {
 	public class Network {
 		#region Parameters
 		public PSObject cipher { get; set; }
 		public PSObject debuglevel { get; set; }
 		public bool enabled { get; set; }
 		public string extaddress { get; set; }
-		public int extport { get; set; }
+		public uint extport { get; set; }
 		public string hostname { get; set; }
 		public int id { get; set; }
 		public PSObject intaddress { get; set; }
 		public PSObject mode { get; set; }
 		public string name { get; set; }
-		public int pingtimeout { get; set; }
+		public uint pingtimeout { get; set; }
 		public bool PMTUDiscovery { get; set; }
 		public string privkey { get; set; }
 		public string pubkey { get; set; }
@@ -71,16 +73,16 @@ namespace OPNsense.Tinc {
 		public Network () {
 			cipher = null;
 			debuglevel = null;
-			enabled = false;
+			enabled = true;
 			extaddress = null;
-			extport = 0;
+			extport = 655;
 			hostname = null;
 			id = 0;
 			intaddress = null;
 			mode = null;
 			name = null;
-			pingtimeout = 0;
-			PMTUDiscovery = false;
+			pingtimeout = 5;
+			PMTUDiscovery = true;
 			privkey = null;
 			pubkey = null;
 			subnet = null;
@@ -91,13 +93,13 @@ namespace OPNsense.Tinc {
 			PSObject Debuglevel,
 			bool Enabled,
 			string Extaddress,
-			int Extport,
+			uint Extport,
 			string Hostname,
 			int Id,
 			PSObject Intaddress,
 			PSObject Mode,
 			string Name,
-			int Pingtimeout,
+			uint Pingtimeout,
 			bool pmtudiscovery,
 			string Privkey,
 			string Pubkey,
