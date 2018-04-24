@@ -25,7 +25,7 @@
     Toggles the enabled/disabled status of an OPNsense Object
     or switches it to the desired state if explicitly specified.
 #>
-Function Switch-OPNsenseObject {
+Function Switch-OPNsenseItem {
     # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
     [OutputType([Object[]])]
     [CmdletBinding(
@@ -48,10 +48,10 @@ Function Switch-OPNsenseObject {
     )
     BEGIN {
         $results = @()
-        $ObjectName = Get-OPNsenseObjectType $Module $Object -Name
+        $ObjectName = Get-OPNsenseItemType $Module $Object -Name
 
         # Get object list to match uuid to object name
-        #$metadata = Search-OPNsenseObject $Module $Controller $Command
+        #$metadata = Search-OPNsenseItem $Module $Controller $Command
         $metadata = Invoke-OPNsenseFunction $Module search $Object
 
         if ($Enable -eq $true) {
@@ -66,7 +66,7 @@ Function Switch-OPNsenseObject {
     PROCESS {
         foreach ($id in $Uuid) {
             #$item = $metadata | Where-Object { $_.Uuid -eq $id }
-            $item = Select-OPNsenseObject -InputObject $metadata -Uuid $id
+            $item = Select-OPNsenseItem -InputObject $metadata -Uuid $id
 
             # Check if the object was found
             if (-not $item) {

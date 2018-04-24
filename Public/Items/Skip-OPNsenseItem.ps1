@@ -21,7 +21,7 @@
     SOFTWARE.
 #>
 
-Function Skip-OPNsenseObject {
+Function Skip-OPNsenseItem {
     [OutputType([boolean])]
     [CmdletBinding()]
     param (

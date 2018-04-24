@@ -25,7 +25,7 @@
     Given a list of objects with UUID property, filter based on given UUIDs, names and/or descriptions
     Return the subset of objects matching the given criteria.
 #>
-function Select-OPNsenseObject {
+function Select-OPNsenseItem {
     [OutputType([Object[]])]
     [CmdletBinding()]
     param (
@@ -63,8 +63,8 @@ function Select-OPNsenseObject {
         # The UUID exists in the object
         if ($InputObject.$id) {
             # Skip objects that do not satisfy the filters passed
-            If (Skip-OPNsenseObject -Value $InputObject.$id.Name -Like $Name) { continue }
-            If (Skip-OPNsenseObject -Value $InputObject.$id.Description -Like $Description) { continue }
+            If (Skip-OPNsenseItem -Value $InputObject.$id.Name -Like $Name) { continue }
+            If (Skip-OPNsenseItem -Value $InputObject.$id.Description -Like $Description) { continue }
 
             # PassThru is needed to capture the object
             $result += $InputObject.$id | Add-Member -MemberType NoteProperty -Name 'Uuid' -Value $id -PassThru

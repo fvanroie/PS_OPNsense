@@ -164,7 +164,8 @@
                 "command": {
                     "module": "captiveportal",
                     "controller": "service",
-                    "command": "deltemplate/<uuid>"
+                    "command": "deltemplate/<uuid>",
+                    "Form": "remove"
                 }
             },
             "download": {
@@ -200,7 +201,8 @@
                 "command": {
                     "module": "captiveportal",
                     "controller": "settings",
-                    "command": "delzone/<uuid>"
+                    "command": "delzone/<uuid>",
+                    "Form": "remove"
                 }
             },
             "get": {
@@ -240,7 +242,8 @@
                 "command": {
                     "module": "cron",
                     "controller": "settings",
-                    "command": "deljob/<uuid>"
+                    "command": "deljob/<uuid>",
+                    "Form": "remove"
                 }
             },
             "get": {
@@ -358,7 +361,8 @@
                 "command": {
                     "module": "haproxy",
                     "controller": "settings",
-                    "command": "delacl/<uuid>"
+                    "command": "delacl/<uuid>",
+                    "Form": "remove"
                 }
             },
             "get": {
@@ -387,7 +391,8 @@
                 "command": {
                     "module": "haproxy",
                     "controller": "settings",
-                    "command": "delaction/<uuid>"
+                    "command": "delaction/<uuid>",
+                    "Form": "remove"
                 }
             },
             "get": {
@@ -416,7 +421,8 @@
                 "command": {
                     "module": "haproxy",
                     "controller": "settings",
-                    "command": "delbackend/<uuid>"
+                    "command": "delbackend/<uuid>",
+                    "Form": "remove"
                 }
             },
             "get": {
@@ -454,7 +460,8 @@
                 "command": {
                     "module": "haproxy",
                     "controller": "settings",
-                    "command": "delerrorfile/<uuid>"
+                    "command": "delerrorfile/<uuid>",
+                    "Form": "remove"
                 }
             },
             "get": {
@@ -483,7 +490,8 @@
                 "command": {
                     "module": "haproxy",
                     "controller": "settings",
-                    "command": "delfrontend/<uuid>"
+                    "command": "delfrontend/<uuid>",
+                    "Form": "remove"
                 }
             },
             "get": {
@@ -521,7 +529,8 @@
                 "command": {
                     "module": "haproxy",
                     "controller": "settings",
-                    "command": "delhealthcheck/<uuid>"
+                    "command": "delhealthcheck/<uuid>",
+                    "Form": "remove"
                 }
             },
             "get": {
@@ -550,7 +559,8 @@
                 "command": {
                     "module": "haproxy",
                     "controller": "settings",
-                    "command": "dellua/<uuid>"
+                    "command": "dellua/<uuid>",
+                    "Form": "remove"
                 }
             },
             "get": {
@@ -588,7 +598,8 @@
                 "command": {
                     "module": "haproxy",
                     "controller": "settings",
-                    "command": "delserver/<uuid>"
+                    "command": "delserver/<uuid>",
+                    "Form": "remove"
                 }
             },
             "get": {
@@ -663,7 +674,8 @@
                 "command": {
                     "module": "ids",
                     "controller": "settings",
-                    "command": "deluserrule/<uuid>"
+                    "command": "deluserrule/<uuid>",
+                    "Form": "remove"
                 }
             },
             "get": {
@@ -703,7 +715,8 @@
                 "command": {
                     "module": "monit",
                     "controller": "settings",
-                    "command": "del/alert/<uuid>"
+                    "command": "del/alert/<uuid>",
+                    "Form": "remove"
                 }
             },
             "get": {
@@ -744,7 +757,8 @@
                 "command": {
                     "module": "monit",
                     "controller": "settings",
-                    "command": "del/service/<uuid>"
+                    "command": "del/service/<uuid>",
+                    "Form": "remove"
                 }
             },
             "get": {
@@ -785,7 +799,8 @@
                 "command": {
                     "module": "monit",
                     "controller": "settings",
-                    "command": "del/test/<uuid>"
+                    "command": "del/test/<uuid>",
+                    "Form": "remove"
                 }
             },
             "get": {
@@ -819,7 +834,8 @@
                 "command": {
                     "module": "postfix",
                     "controller": "domain",
-                    "command": "deldomain/<uuid>"
+                    "command": "deldomain/<uuid>",
+                    "Form": "remove"
                 }
             },
             "get": {
@@ -857,7 +873,8 @@
                 "command": {
                     "module": "postfix",
                     "controller": "recipient",
-                    "command": "delrecipient/<uuid>"
+                    "command": "delrecipient/<uuid>",
+                    "Form": "remove"
                 }
             },
             "get": {
@@ -895,7 +912,8 @@
                 "command": {
                     "module": "postfix",
                     "controller": "sender",
-                    "command": "delsender/<uuid>"
+                    "command": "delsender/<uuid>",
+                    "Form": "remove"
                 }
             },
             "get": {
@@ -935,7 +953,8 @@
                 "command": {
                     "module": "proxy",
                     "controller": "settings",
-                    "command": "delremoteblacklist/<uuid>"
+                    "command": "delremoteblacklist/<uuid>",
+                    "Form": "remove"
                 }
             },
             "get": {
@@ -975,7 +994,8 @@
                 "command": {
                     "module": "proxyuseracl",
                     "controller": "settings",
-                    "command": "delacl/<uuid>"
+                    "command": "delacl/<uuid>",
+                    "Form": "remove"
                 }
             },
             "get": {
@@ -1006,7 +1026,8 @@
                 "command": {
                     "module": "quagga",
                     "controller": "bgp",
-                    "command": "delaspath/<uuid>"
+                    "command": "delaspath/<uuid>",
+                    "Form": "remove"
                 }
             },
             "get": {
@@ -1044,7 +1065,8 @@
                 "command": {
                     "module": "quagga",
                     "controller": "bgp",
-                    "command": "delneighbor/<uuid>"
+                    "command": "delneighbor/<uuid>",
+                    "Form": "remove"
                 }
             },
             "get": {
@@ -1082,7 +1104,8 @@
                 "command": {
                     "module": "quagga",
                     "controller": "bgp",
-                    "command": "delprefixlist/<uuid>"
+                    "command": "delprefixlist/<uuid>",
+                    "Form": "remove"
                 }
             },
             "get": {
@@ -1120,7 +1143,8 @@
                 "command": {
                     "module": "quagga",
                     "controller": "bgp",
-                    "command": "delroutemap/<uuid>"
+                    "command": "delroutemap/<uuid>",
+                    "Form": "remove"
                 }
             },
             "get": {
@@ -1158,7 +1182,8 @@
                 "command": {
                     "module": "quagga",
                     "controller": "ospf6settings",
-                    "command": "delinterface/<uuid>"
+                    "command": "delinterface/<uuid>",
+                    "Form": "remove"
                 }
             },
             "get": {
@@ -1196,7 +1221,8 @@
                 "command": {
                     "module": "quagga",
                     "controller": "ospfsettings",
-                    "command": "delinterface/<uuid>"
+                    "command": "delinterface/<uuid>",
+                    "Form": "remove"
                 }
             },
             "get": {
@@ -1234,7 +1260,8 @@
                 "command": {
                     "module": "quagga",
                     "controller": "ospfsettings",
-                    "command": "delnetwork/<uuid>"
+                    "command": "delnetwork/<uuid>",
+                    "Form": "remove"
                 }
             },
             "get": {
@@ -1272,7 +1299,8 @@
                 "command": {
                     "module": "quagga",
                     "controller": "ospfsettings",
-                    "command": "delprefixlist/<uuid>"
+                    "command": "delprefixlist/<uuid>",
+                    "Form": "remove"
                 }
             },
             "get": {
@@ -1313,7 +1341,8 @@
                 "command": {
                     "module": "routes",
                     "controller": "routes",
-                    "command": "delroute/<uuid>"
+                    "command": "delroute/<uuid>",
+                    "Form": "remove"
                 }
             },
             "get": {
@@ -1353,7 +1382,8 @@
                 "command": {
                     "module": "siproxd",
                     "controller": "domain",
-                    "command": "deldomain/<uuid>"
+                    "command": "deldomain/<uuid>",
+                    "Form": "remove"
                 }
             },
             "get": {
@@ -1391,7 +1421,8 @@
                 "command": {
                     "module": "siproxd",
                     "controller": "user",
-                    "command": "deluser/<uuid>"
+                    "command": "deluser/<uuid>",
+                    "Form": "remove"
                 }
             },
             "get": {
@@ -1431,7 +1462,8 @@
                 "command": {
                     "module": "tinc",
                     "controller": "settings",
-                    "command": "delhost/<uuid>"
+                    "command": "delhost/<uuid>",
+                    "Form": "remove"
                 }
             },
             "get": {
@@ -1469,7 +1501,8 @@
                 "command": {
                     "module": "tinc",
                     "controller": "settings",
-                    "command": "delnetwork/<uuid>"
+                    "command": "delnetwork/<uuid>",
+                    "Form": "remove"
                 }
             },
             "get": {
@@ -1509,7 +1542,8 @@
                 "command": {
                     "module": "tor",
                     "controller": "exitacl",
-                    "command": "delacl/<uuid>"
+                    "command": "delacl/<uuid>",
+                    "Form": "remove"
                 }
             },
             "get": {
@@ -1547,7 +1581,8 @@
                 "command": {
                     "module": "tor",
                     "controller": "general",
-                    "command": "delhidservauth/<uuid>"
+                    "command": "delhidservauth/<uuid>",
+                    "Form": "remove"
                 }
             },
             "get": {
@@ -1585,7 +1620,8 @@
                 "command": {
                     "module": "tor",
                     "controller": "hiddenservice",
-                    "command": "delservice/<uuid>"
+                    "command": "delservice/<uuid>",
+                    "Form": "remove"
                 }
             },
             "get": {
@@ -1623,7 +1659,8 @@
                 "command": {
                     "module": "tor",
                     "controller": "hiddenserviceacl",
-                    "command": "delacl/<uuid>"
+                    "command": "delacl/<uuid>",
+                    "Form": "remove"
                 }
             },
             "get": {
@@ -1661,7 +1698,8 @@
                 "command": {
                     "module": "tor",
                     "controller": "socksacl",
-                    "command": "delacl/<uuid>"
+                    "command": "delacl/<uuid>",
+                    "Form": "remove"
                 }
             },
             "get": {
@@ -1701,7 +1739,8 @@
                 "command": {
                     "module": "trafficshaper",
                     "controller": "settings",
-                    "command": "delpipe/<uuid>"
+                    "command": "delpipe/<uuid>",
+                    "Form": "remove"
                 }
             },
             "get": {
@@ -1739,7 +1778,8 @@
                 "command": {
                     "module": "trafficshaper",
                     "controller": "settings",
-                    "command": "delqueue/<uuid>"
+                    "command": "delqueue/<uuid>",
+                    "Form": "remove"
                 }
             },
             "get": {
@@ -1777,7 +1817,8 @@
                 "command": {
                     "module": "trafficshaper",
                     "controller": "settings",
-                    "command": "delrule/<uuid>"
+                    "command": "delrule/<uuid>",
+                    "Form": "remove"
                 }
             },
             "get": {
@@ -1809,7 +1850,8 @@
                 "command": {
                     "module": "zerotier",
                     "controller": "network",
-                    "command": "del/<uuid>"
+                    "command": "del/<uuid>",
+                    "Form": "remove"
                 }
             },
             "get": {

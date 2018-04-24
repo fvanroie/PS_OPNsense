@@ -49,7 +49,7 @@ Function Invoke-OPNsenseFunction {
     }
 
     # Replace parameters in splat
-    $splat.command = $splat.command.Replace("<uuid>", $id)
+    $splat.command = $splat.command.Replace("<uuid>", $uuid)
             
     # Replace parameters in splat
     if ($Enable) {

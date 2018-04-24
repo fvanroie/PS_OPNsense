@@ -21,8 +21,61 @@
     SOFTWARE.
 #>
 
+Function Remove-OPNsenseItem {
+    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
+    [CmdletBinding(
+        SupportsShouldProcess = $true,
+        ConfirmImpact = "High"
+    )]
+    Param(
+        [parameter(Mandatory = $true, position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)]
+        [Object[]]$InputObject,
 
-Function Remove-OPNsenseObject {
+        [parameter(Mandatory = $false)]
+        [Switch]$PassThru
+    )
+    BEGIN {
+        $results = New-Object System.Collections.Generic.List[System.Object]
+
+        $removecommands = Get-OPNsenseItemMap | Where-Object { $_.command -eq 'remove' }
+    }
+    PROCESS {
+        foreach ($obj in $InputObject) {
+            $cmd = $removecommands | Where-Object { $_.returntype -eq $obj.gettype().FullName }
+
+            # Check if an api command was found for this TypeName
+            if (!$cmd) {
+                Write-Warning ("Unable to process object of type {0}" -f $obj.gettype().FullName)
+                Continue # With next object
+            }
+
+            # Ask confirmation before removal, if needed
+            if ($pscmdlet.ShouldProcess( ("{{{0}}}" -f $obj.Uuid) , ("Removing {0}" -f $cmd.ObjectName) ) ) {
+
+                # Be Verbose
+                Write-Verbose ("Removing {0} {{{1}}}" -f $cmd.ObjectName, $obj.Uuid)
+
+                $result = Invoke-OPNsenseFunction -Module $cmd.Module -Command remove -Object $cmd.Object -Uuid $obj.Uuid
+
+                # Keep results
+                if ($PassThru) {
+                    $row = [PSCustomObject]@{ 'Uuid' = $obj.Uuid; 'Result' = $obj.gettype().FullName}
+                    $results.Add($row)
+                }
+            } # ShouldProcess
+
+        }
+    }
+    END {
+        # Return results
+        if ($PassThru) {
+            return $results
+        }   
+    }
+}
+
+<#
+Function Remove-OPNsenseItem {
     # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
     [CmdletBinding(
         SupportsShouldProcess = $true,
@@ -37,8 +90,8 @@ Function Remove-OPNsenseObject {
     )
     BEGIN {
         $results = @()
-        $ObjectName = Get-OPNsenseObjectType $Module $Object -Name
-        $ObjectType = Get-OPNsenseObjectType $Module $Object
+        $ObjectName = Get-OPNsenseItemType $Module $Object -Name
+        $ObjectType = Get-OPNsenseItemType $Module $Object
 
         # Get object list to match uuid to object name
         $metadata = Invoke-OPNsenseFunction $Module search $Object
@@ -46,7 +99,7 @@ Function Remove-OPNsenseObject {
     PROCESS {
         foreach ($id in $Uuid) {
             #$item = $metadata | Where-Object { $_.Uuid -eq $id }
-            $item = Select-OPNsenseObject -InputObject $metadata -Uuid $id
+            $item = Select-OPNsenseItem -InputObject $metadata -Uuid $id
             
             if ($PSCmdlet.ShouldProcess(("{0} {{{1}}}" -f $item.name, $id), "Remove $ObjectName")) {
                 $result = Invoke-OPNsenseCommand $Module $Controller $("del{0}/{1}" -f $Command.ToLower(), $id) -Json '{}' -AddProperty @{ 'Uuid' = "$id"; 'Name' = "{0}" -f $item.Name }
@@ -58,4 +111,4 @@ Function Remove-OPNsenseObject {
     END {
         return $results #| Add-ObjectDetail -TypeName $ObjectType
     }
-}
+} #>
