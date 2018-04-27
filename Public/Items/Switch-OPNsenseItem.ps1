@@ -34,16 +34,16 @@ Function Switch-OPNsenseItem {
     )]
     Param(
         [parameter(Mandatory = $true, position = 0)][String]$Module,
-        [parameter(Mandatory = $true, position = 2)][String]$Object,
+        [parameter(Mandatory = $true, position = 1)][String]$Object,
 
-        [Parameter(Mandatory = $true, position = 3)]
+        [Parameter(Mandatory = $true, position = 2)]
         [AllowEmptyCollection()]
         [String[]]$Uuid,
 
-        [Parameter(Mandatory = $false, position = 4)]
+        [Parameter(Mandatory = $false, position = 3)]
         [Boolean]$Enable,
         
-        [Parameter(Mandatory = $false, position = 5)]
+        [Parameter(Mandatory = $false, position = 4)]
         [Switch]$Passthru
     )
     BEGIN {
