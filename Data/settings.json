@@ -1,0 +1,606 @@
+{
+    "Compatibility": {
+        "MinimumVersion": "18.1",
+        "MaximumVersion": "18.1.6"
+    },
+    "Settings": {
+        "AcmeClient": {
+            "plugin": "os-acme-client",
+            "General": {
+                "objectname": "AcmeClient General Settings",
+                "mountpoint": "\\\\OPNsense\\AcmeClient\\settings",
+                "get": {
+                    "returntype": "OPNsense.Settings.AcmeClient.General",
+                    "command": {
+                        "module": "acmeclient",
+                        "controller": "settings",
+                        "command": "get",
+                        "property": "acmeclient"
+                    }
+                }
+            }
+        },
+        "C-ICAP": {
+            "plugin": "os-freeradius",
+            "General": {
+                "objectname": "C-ICAP General Settings",
+                "mountpoint": "\\\\OPNsense\\cicap\\general",
+                "get": {
+                    "returntype": "OPNsense.Settings.Cicap.General",
+                    "command": {
+                        "module": "cicap",
+                        "controller": "general",
+                        "command": "get",
+                        "property": "general"
+                    }
+                }
+            },
+            "Antivirus": {
+                "objectname": "C-ICAP Antivirus Settings",
+                "mountpoint": "\\\\OPNsense\\cicap\\antivirus",
+                "get": {
+                    "returntype": "OPNsense.Settings.Cicap.Antivirus",
+                    "command": {
+                        "module": "cicap",
+                        "controller": "antivirus",
+                        "command": "get",
+                        "property": "antivirus"
+                    }
+                }
+            }
+        },
+        "ClamAV": {
+            "plugin": "os-clamav",
+            "General": {
+                "objectname": "ClamAV General Settings",
+                "mountpoint": "\\\\OPNsense\\clamav\\general",
+                "get": {
+                    "returntype": "OPNsense.Settings.Clamav.General",
+                    "command": {
+                        "module": "clamav",
+                        "controller": "general",
+                        "command": "get",
+                        "property": "general"
+                    }
+                }
+            }
+        },
+        "Collectd": {
+            "plugin": "os-collectd",
+            "General": {
+                "objectname": "Collectd General Settings",
+                "mountpoint": "\\\\OPNsense\\collectd\\general",
+                "get": {
+                    "returntype": "OPNsense.Settings.Collectd.General",
+                    "command": {
+                        "module": "collectd",
+                        "controller": "general",
+                        "command": "get",
+                        "property": "general"
+                    }
+                }
+            }
+        },
+        "FreeRadius": {
+            "plugin": "os-freeradius",
+            "General": {
+                "objectname": "FreeRadius General Settings",
+                "mountpoint": "\\\\OPNsense\\freeradius",
+                "get": {
+                    "returntype": "OPNsense.Settings.FreeRadius.General",
+                    "command": {
+                        "module": "freeradius",
+                        "controller": "general",
+                        "command": "get",
+                        "property": "general"
+                    }
+                }
+            },
+            "EAP": {
+                "objectname": "FreeRadius EAP Settings",
+                "mountpoint": "\\\\OPNsense\\freeradius",
+                "get": {
+                    "returntype": "OPNsense.Settings.FreeRadius.Eap",
+                    "command": {
+                        "module": "freeradius",
+                        "controller": "eap",
+                        "command": "get",
+                        "property": "eap"
+                    }
+                }
+            },
+            "LDAP": {
+                "objectname": "FreeRadius LDAP Settings",
+                "mountpoint": "\\\\OPNsense\\freeradius",
+                "get": {
+                    "returntype": "OPNsense.Settings.FreeRadius.Ldap",
+                    "command": {
+                        "module": "freeradius",
+                        "controller": "ldap",
+                        "command": "get",
+                        "property": "ldap"
+                    }
+                }
+            }
+        },
+        "HAProxy": {
+            "plugin": "os-haproxy",
+            "General": {
+                "objectname": "HAProxy General Settings",
+                "mountpoint": "\\\\OPNsense\\HAProxy\\general",
+                "get": {
+                    "returntype": "OPNsense.Settings.HAProxy.General",
+                    "command": {
+                        "module": "haproxy",
+                        "controller": "settings",
+                        "command": "get",
+                        "property": [
+                            "haproxy",
+                            "general"
+                        ]
+                    }
+                }
+            },
+            "Peers": {
+                "objectname": "HAProxy Peers Settings",
+                "mountpoint": "\\\\OPNsense\\HAProxy\\general\\peers",
+                "get": {
+                    "returntype": "OPNsense.Settings.HAProxy.Peers",
+                    "command": {
+                        "module": "haproxy",
+                        "controller": "settings",
+                        "command": "get",
+                        "property": [
+                            "haproxy",
+                            "general",
+                            "peers"
+                        ]
+                    }
+                }
+            },
+            "Tuning": {
+                "objectname": "HAProxy Tuning Settings",
+                "mountpoint": "\\\\OPNsense\\HAProxy\\general\\tuning",
+                "get": {
+                    "returntype": "OPNsense.Settings.HAProxy.Tuning",
+                    "command": {
+                        "module": "haproxy",
+                        "controller": "settings",
+                        "command": "get",
+                        "property": [
+                            "haproxy",
+                            "general",
+                            "tuning"
+                        ]
+                    }
+                }
+            },
+            "Defaults": {
+                "objectname": "HAProxy Defaults Settings",
+                "mountpoint": "\\\\OPNsense\\HAProxy\\general\\defaults",
+                "get": {
+                    "returntype": "OPNsense.Settings.HAProxy.Defaults",
+                    "command": {
+                        "module": "haproxy",
+                        "controller": "settings",
+                        "command": "get",
+                        "property": [
+                            "haproxy",
+                            "general",
+                            "defaults"
+                        ]
+                    }
+                }
+            },
+            "Logging": {
+                "objectname": "HAProxy Logging Settings",
+                "mountpoint": "\\\\OPNsense\\HAProxy\\general\\logging",
+                "get": {
+                    "returntype": "OPNsense.Settings.HAProxy.Logging",
+                    "command": {
+                        "module": "haproxy",
+                        "controller": "settings",
+                        "command": "get",
+                        "property": [
+                            "haproxy",
+                            "general",
+                            "logging"
+                        ]
+                    }
+                }
+            },
+            "Statistics": {
+                "objectname": "HAProxy Statistics Settings",
+                "mountpoint": "\\\\OPNsense\\HAProxy\\general\\stats",
+                "get": {
+                    "returntype": "OPNsense.Settings.HAProxy.Statistics",
+                    "command": {
+                        "module": "haproxy",
+                        "controller": "settings",
+                        "command": "get",
+                        "property": [
+                            "haproxy",
+                            "general",
+                            "stats"
+                        ]
+                    }
+                }
+            }
+        },
+        "IDS": {
+            "RuleSet": {
+                "objectname": "IDS General Settings",
+                "mountpoint": "\\\\OPNsense\\IDS\\userDefinedRules\\rule",
+                "get": {
+                    "returntype": "OPNsense.Settings.IDS.General",
+                    "command": {
+                        "module": "ids",
+                        "controller": "settings",
+                        "command": "get",
+                        "property": "ids"
+                    }
+                }
+            }
+        },
+        "MDNSrepeater": {
+            "plugin": "os-mdns-repeater",
+            "General": {
+                "objectname": "MDNS Repeater Settings",
+                "mountpoint": "\\\\OPNsense\\MDNSRepeater",
+                "get": {
+                    "returntype": "OPNsense.Settings.Mdnsrepeater.General",
+                    "command": {
+                        "module": "mdnsrepeater",
+                        "controller": "settings",
+                        "command": "get",
+                        "property": "mdnsrepeater"
+                    }
+                }
+            }
+        },
+        "Monit": {
+            "plugin": "os-monit",
+            "General": {
+                "objectname": "Monit General Settings",
+                "mountpoint": "\\\\OPNsense\\IDS\\userDefinedRules\\rule",
+                "get": {
+                    "returntype": "OPNsense.Settings.Monit.General",
+                    "command": {
+                        "module": "monit",
+                        "controller": "settings",
+                        "command": "get/general",
+                        "property": [
+                            "monit",
+                            "general"
+                        ]
+                    }
+                }
+            }
+        },
+        "Netflow": {
+            "Capture": {
+                "objectname": "Netflow Capture Settings",
+                "mountpoint": "\\\\OPNsense\\postfix\\domain\\domains\\domain",
+                "get": {
+                    "returntype": "OPNsense.Settings.Netflow.Capture",
+                    "command": {
+                        "module": "diagnostics",
+                        "controller": "netflow",
+                        "command": "getconfig",
+                        "property": [
+                            "netflow",
+                            "capture"
+                        ]
+                    }
+                }
+            },
+            "Callect": {
+                "objectname": "Netflow Collect Settings",
+                "mountpoint": "\\\\OPNsense\\postfix\\recipient\\recipients\\recipient",
+                "get": {
+                    "returntype": "OPNsense.Settings.Netflow.Collect",
+                    "command": {
+                        "module": "diagnostics",
+                        "controller": "netflow",
+                        "command": "getconfig",
+                        "property": [
+                            "netflow",
+                            "collect"
+                        ]
+                    }
+                }
+            }
+        },
+        "NodeExporter": {
+            "plugin": "os-node-exporter",
+            "General": {
+                "objectname": "Node Exporter General Settings",
+                "mountpoint": "\\\\OPNsense\\NodeExporter",
+                "get": {
+                    "returntype": "OPNsense.Settings.Nodeexporter.General",
+                    "command": {
+                        "module": "nodeexporter",
+                        "controller": "general",
+                        "command": "get",
+                        "property": "general"
+                    }
+                }
+            }
+        },
+        "OpenConnect": {
+            "plugin": "os-openconnect",
+            "General": {
+                "objectname": "OpenConnect General Settings",
+                "mountpoint": "\\\\OPNsense\\openconnect\\general",
+                "get": {
+                    "returntype": "OPNsense.Settings.Openconnect.General",
+                    "command": {
+                        "module": "openconnect",
+                        "controller": "general",
+                        "command": "get",
+                        "property": "general"
+                    }
+                }
+            }
+        },
+        "Postfix": {
+            "plugin": "os-postfix",
+            "General": {
+                "objectname": "Postfix General Settings",
+                "mountpoint": "\\\\OPNsense\\postfix\\domain\\domains\\domain",
+                "get": {
+                    "returntype": "OPNsense.Postfix.Domain",
+                    "command": {
+                        "module": "postfix",
+                        "controller": "general",
+                        "command": "get",
+                        "property": "general"
+                    }
+                }
+            },
+            "Antispam": {
+                "objectname": "Postfix Antispam Settings",
+                "mountpoint": "\\\\OPNsense\\postfix\\recipient\\recipients\\recipient",
+                "get": {
+                    "returntype": "OPNsense.Postfix.Recipient",
+                    "command": {
+                        "module": "postfix",
+                        "controller": "antispam",
+                        "command": "get",
+                        "property": "antispam"
+                    }
+                }
+            }
+        },
+        "ProxySSO": {
+            "General": {
+                "objectname": "ProxySSO General Settings",
+                "mountpoint": "\\\\OPNsense\\ProxySSO",
+                "get": {
+                    "returntype": "OPNsense.Settings.ProxySSO.General",
+                    "command": {
+                        "module": "proxysso",
+                        "controller": "settings",
+                        "command": "get",
+                        "property": "proxysso"
+                    }
+                }
+            }
+        },
+        "Quagga": {
+            "plugin": "os-frr",
+            "General": {
+                "objectname": "Quagga General Settings",
+                "mountpoint": "\\\\OPNsense\\quagga\\general",
+                "get": {
+                    "returntype": "OPNsense.Quagga.BGP.AsPath",
+                    "command": {
+                        "module": "quagga",
+                        "controller": "general",
+                        "command": "get",
+                        "property": "general"
+                    }
+                }
+            },
+            "RIP": {
+                "objectname": "Quagga RIP Settings",
+                "mountpoint": "\\\\OPNsense\\quagga\\rip",
+                "get": {
+                    "returntype": "OPNsense.Quagga.BGP.Neighbor",
+                    "command": {
+                        "module": "quagga",
+                        "controller": "rip",
+                        "command": "get",
+                        "property": "rip"
+                    }
+                }
+            },
+            "OSPF": {
+                "objectname": "Quagga OSPF Settings",
+                "mountpoint": "\\\\OPNsense\\quagga\\ospf",
+                "get": {
+                    "returntype": "OPNsense.Quagga.BGP.Prefixlist",
+                    "command": {
+                        "module": "quagga",
+                        "controller": "ospfsettings",
+                        "command": "get",
+                        "property": "ospf"
+                    }
+                }
+            },
+            "BGP": {
+                "objectname": "Quagga BGP Settings",
+                "mountpoint": "\\\\OPNsense\\quagga\\bgp",
+                "get": {
+                    "returntype": "OPNsense.Settings.Quagga.Bgp",
+                    "command": {
+                        "module": "quagga",
+                        "controller": "bgp",
+                        "command": "get",
+                        "property": "bgp"
+                    }
+                }
+            }
+        },
+        "Redis": {
+            "plugin": "os-redis",
+            "General": {
+                "objectname": "Redis General Settings",
+                "mountpoint": "\\\\OPNsense\\redis\\general",
+                "get": {
+                    "returntype": "OPNsense.Settings.Redis.General",
+                    "command": {
+                        "module": "redis",
+                        "controller": "settings",
+                        "command": "get",
+                        "property": [
+                            "haproxy",
+                            "general"
+                        ]
+                    }
+                }
+            },
+            "Limits": {
+                "objectname": "Redis Limit Settings",
+                "mountpoint": "\\\\OPNsense\\redis\\limits",
+                "get": {
+                    "returntype": "OPNsense.Settings.Redis.Limits",
+                    "command": {
+                        "module": "redis",
+                        "controller": "settings",
+                        "command": "get",
+                        "property": [
+                            "haproxy",
+                            "general",
+                            "peers"
+                        ]
+                    }
+                }
+            },
+            "Security": {
+                "objectname": "Redis Security Settings",
+                "mountpoint": "\\\\OPNsense\\redis\\security",
+                "get": {
+                    "returntype": "OPNsense.Settings.Redis.Security",
+                    "command": {
+                        "module": "redis",
+                        "controller": "settings",
+                        "command": "get",
+                        "property": [
+                            "haproxy",
+                            "general",
+                            "tuning"
+                        ]
+                    }
+                }
+            },
+            "SlowLog": {
+                "objectname": "Redis Slow Log Settings",
+                "mountpoint": "\\\\OPNsense\\redis\\slowlog",
+                "get": {
+                    "returntype": "OPNsense.Settings.Redis.SlowLog",
+                    "command": {
+                        "module": "redis",
+                        "controller": "settings",
+                        "command": "get",
+                        "property": [
+                            "haproxy",
+                            "general",
+                            "defaults"
+                        ]
+                    }
+                }
+            }
+        },
+        "ShadowSocks": {
+            "plugin": "os-postfix",
+            "General": {
+                "objectname": "ShadowSocks General Settings",
+                "mountpoint": "\\\\OPNsense\\shadowsocks\\general",
+                "get": {
+                    "returntype": "OPNsense.Settings.Shadowsocks.General",
+                    "command": {
+                        "module": "shadowsocks",
+                        "controller": "general",
+                        "command": "get",
+                        "property": "general"
+                    }
+                }
+            },
+            "Local": {
+                "objectname": "ShadowSocks Local Settings",
+                "mountpoint": "\\\\OPNsense\\shadowsocks\\local",
+                "get": {
+                    "returntype": "OPNsense.Settings.Shadowsocks.Local",
+                    "command": {
+                        "module": "shadowsocks",
+                        "controller": "local",
+                        "command": "get",
+                        "property": "local"
+                    }
+                }
+            }
+        },
+        "Siproxd": {
+            "plugin": "os-siproxd",
+            "General": {
+                "objectname": "Siproxd General Settings",
+                "mountpoint": "\\\\OPNsense\\siproxd\\general",
+                "get": {
+                    "returntype": "OPNsense.Settings.Siproxd.General",
+                    "command": {
+                        "module": "siproxd",
+                        "controller": "general",
+                        "command": "get",
+                        "Property": "general"
+                    }
+                }
+            }
+        },
+        "Tor": {
+            "plugin": "os-tor",
+            "General": {
+                "objectname": "Tor General Settings",
+                "mountpoint": "\\\\OPNsense\\tor\\general",
+                "get": {
+                    "returntype": "OPNsense.Settings.Tor.General",
+                    "command": {
+                        "module": "tor",
+                        "controller": "general",
+                        "command": "get",
+                        "property": "general"
+                    }
+                }
+            },
+            "Relay": {
+                "objectname": "Tor Relay Settings",
+                "mountpoint": "\\\\OPNsense\\tor\\relay",
+                "get": {
+                    "returntype": "OPNsense.Settings.Tor.Relay",
+                    "command": {
+                        "module": "tor",
+                        "controller": "relay",
+                        "command": "get",
+                        "property": "relay"
+                    }
+                }
+            }
+        },
+        "ZeroTier": {
+            "plugin": "os-zerotier",
+            "General": {
+                "objectname": "ZeroTier General Settings",
+                "mountpoint": "\\\\OPNsense\\zerotier",
+                "get": {
+                    "returntype": "OPNsense.Settings.Zerotier",
+                    "command": {
+                        "module": "zerotier",
+                        "controller": "settings",
+                        "command": "get",
+                        "property": "zerotier"
+                    }
+                }
+            }
+        }
+    }
+}
