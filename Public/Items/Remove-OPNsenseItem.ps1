@@ -35,13 +35,14 @@ Function Remove-OPNsenseItem {
         [Switch]$PassThru
     )
     BEGIN {
-        $results = New-Object System.Collections.Generic.List[System.Object]
-
-        $removecommands = Get-OPNsenseItemMap | Where-Object { $_.command -eq 'remove' }
+        # Get the Verb of the cmdlet
+        $verb, $null = $MyInvocation.MyCommand -split "-", 2
+        $command = "remove"
+        $commands = Get-OPNsenseItemMap | Where-Object { $_.command -eq 'remove' }
     }
     PROCESS {
         foreach ($obj in $InputObject) {
-            $cmd = $removecommands | Where-Object { $_.returntype -eq $obj.gettype().FullName }
+            $cmd = $commands | Where-Object { $_.returntype -eq $obj.gettype().FullName }
 
             # Check if an api command was found for this TypeName
             if (!$cmd) {
@@ -50,65 +51,21 @@ Function Remove-OPNsenseItem {
             }
 
             # Ask confirmation before removal, if needed
-            if ($pscmdlet.ShouldProcess( ("{{{0}}}" -f $obj.Uuid) , ("Removing {0}" -f $cmd.ObjectName) ) ) {
+            if ($pscmdlet.ShouldProcess( ("{{{0}}}" -f $obj.Uuid) , ("{0} {1}" -f $verb, $cmd.ObjectName) ) ) {
 
                 # Be Verbose
-                Write-Verbose ("Removing {0} {{{1}}}" -f $cmd.ObjectName, $obj.Uuid)
+                Write-Verbose ("{0} {1} {{{2}}}" -f $verb, $cmd.ObjectName, $obj.Uuid)
 
-                $result = Invoke-OPNsenseFunction -Module $cmd.Module -Command remove -Object $cmd.Object -Uuid $obj.Uuid
+                $result = Invoke-OPNsenseFunction -Module $cmd.Module -Command $command -Object $cmd.Object -Uuid $obj.Uuid -Enable $false
 
-                # Keep results
+                # Output results
                 if ($PassThru) {
-                    $row = [PSCustomObject]@{ 'Uuid' = $obj.Uuid; 'Result' = $obj.gettype().FullName}
-                    $results.Add($row)
+                    [PSCustomObject]@{ 'Uuid' = $obj.Uuid; 'Result' = $result }
                 }
             } # ShouldProcess
 
         }
     }
     END {
-        # Return results
-        if ($PassThru) {
-            return $results
-        }   
     }
 }
-
-<#
-Function Remove-OPNsenseItem {
-    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
-    [CmdletBinding(
-        SupportsShouldProcess = $true,
-        ConfirmImpact = "Medium"
-    )]
-    Param(
-        [parameter(Mandatory = $true, position = 0)][String]$Module,
-        [parameter(Mandatory = $true, position = 1)][String]$Object,
-
-        [Parameter(Mandatory = $true, position = 2)]
-        [AllowEmptyCollection()][String[]]$Uuid
-    )
-    BEGIN {
-        $results = @()
-        $ObjectName = Get-OPNsenseItemType $Module $Object -Name
-        $ObjectType = Get-OPNsenseItemType $Module $Object
-
-        # Get object list to match uuid to object name
-        $metadata = Invoke-OPNsenseFunction $Module search $Object
-    }
-    PROCESS {
-        foreach ($id in $Uuid) {
-            #$item = $metadata | Where-Object { $_.Uuid -eq $id }
-            $item = Select-OPNsenseItem -InputObject $metadata -Uuid $id
-            
-            if ($PSCmdlet.ShouldProcess(("{0} {{{1}}}" -f $item.name, $id), "Remove $ObjectName")) {
-                $result = Invoke-OPNsenseCommand $Module $Controller $("del{0}/{1}" -f $Command.ToLower(), $id) -Json '{}' -AddProperty @{ 'Uuid' = "$id"; 'Name' = "{0}" -f $item.Name }
-                #Test-Result $result | Out-Null
-                $results += $result
-            }
-        }
-    }
-    END {
-        return $results #| Add-ObjectDetail -TypeName $ObjectType
-    }
-} #>
