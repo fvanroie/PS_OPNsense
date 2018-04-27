@@ -35,7 +35,7 @@ namespace OPNsense.Cron {
 			PSObject Command,
 			string Days,
 			string Description,
-			bool Enabled,
+			byte Enabled,
 			string Hours,
 			string Minutes,
 			string Months,
@@ -47,7 +47,7 @@ namespace OPNsense.Cron {
 			command = Command;
 			days = Days;
 			description = Description;
-			enabled = Enabled;
+			enabled = (Enabled == 0) ? false : true;
 			hours = Hours;
 			minutes = Minutes;
 			months = Months;

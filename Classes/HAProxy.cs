@@ -142,7 +142,7 @@ namespace OPNsense.HAProxy {
 			string Name,
 			uint Nbsrv,
 			PSObject Nbsrv_Backend,
-			bool Negate,
+			byte Negate,
 			string Path,
 			string Path_Beg,
 			string Path_Dir,
@@ -203,7 +203,7 @@ namespace OPNsense.HAProxy {
 			name = Name;
 			nbsrv = Nbsrv;
 			nbsrv_backend = Nbsrv_Backend;
-			negate = Negate;
+			negate = (Negate == 0) ? false : true;
 			path = Path;
 			path_beg = Path_Beg;
 			path_dir = Path_Dir;
@@ -513,10 +513,10 @@ namespace OPNsense.HAProxy {
 			PSObject Algorithm,
 			string CustomOptions,
 			string Description,
-			bool Enabled,
+			byte Enabled,
 			PSObject HealthCheck,
-			bool HealthCheckEnabled,
-			bool HealthCheckLogStatus,
+			byte HealthCheckEnabled,
+			byte HealthCheckLogStatus,
 			string Id,
 			PSObject LinkedActions,
 			PSObject LinkedErrorfiles,
@@ -538,7 +538,7 @@ namespace OPNsense.HAProxy {
 			string Stickiness_SessRatePeriod,
 			string Stickiness_Size,
 			string Tuning_Defaultserver,
-			bool Tuning_Noport,
+			byte Tuning_Noport,
 			uint Tuning_Retries,
 			string Tuning_TimeoutCheck,
 			string Tuning_TimeoutConnect,
@@ -547,10 +547,10 @@ namespace OPNsense.HAProxy {
 			algorithm = Algorithm;
 			customOptions = CustomOptions;
 			description = Description;
-			enabled = Enabled;
+			enabled = (Enabled == 0) ? false : true;
 			healthCheck = HealthCheck;
-			healthCheckEnabled = HealthCheckEnabled;
-			healthCheckLogStatus = HealthCheckLogStatus;
+			healthCheckEnabled = (HealthCheckEnabled == 0) ? false : true;
+			healthCheckLogStatus = (HealthCheckLogStatus == 0) ? false : true;
 			id = Id;
 			linkedActions = LinkedActions;
 			linkedErrorfiles = LinkedErrorfiles;
@@ -572,7 +572,7 @@ namespace OPNsense.HAProxy {
 			stickiness_sessRatePeriod = Stickiness_SessRatePeriod;
 			stickiness_size = Stickiness_Size;
 			tuning_defaultserver = Tuning_Defaultserver;
-			tuning_noport = Tuning_Noport;
+			tuning_noport = (Tuning_Noport == 0) ? false : true;
 			tuning_retries = Tuning_Retries;
 			tuning_timeoutCheck = Tuning_TimeoutCheck;
 			tuning_timeoutConnect = Tuning_TimeoutConnect;
@@ -720,33 +720,33 @@ namespace OPNsense.HAProxy {
 			string CustomOptions,
 			PSObject DefaultBackend,
 			string Description,
-			bool Enabled,
-			bool ForwardFor,
+			byte Enabled,
+			byte ForwardFor,
 			string Id,
 			PSObject LinkedActions,
 			PSObject LinkedErrorfiles,
-			bool Logging_DetailedLog,
-			bool Logging_DontLogNormal,
-			bool Logging_DontLogNull,
-			bool Logging_LogSeparateErrors,
-			bool Logging_SocketStats,
+			byte Logging_DetailedLog,
+			byte Logging_DontLogNormal,
+			byte Logging_DontLogNull,
+			byte Logging_LogSeparateErrors,
+			byte Logging_SocketStats,
 			PSObject Mode,
 			string Name,
-			bool Ssl_AdvancedEnabled,
+			byte Ssl_AdvancedEnabled,
 			PSObject Ssl_BindOptions,
 			PSObject Ssl_Certificates,
 			string Ssl_CipherList,
 			string Ssl_CustomOptions,
 			PSObject Ssl_Default_Certificate,
-			bool Ssl_Enabled,
-			bool Ssl_HstsEnabled,
-			bool Ssl_HstsIncludeSubDomains,
+			byte Ssl_Enabled,
+			byte Ssl_HstsEnabled,
+			byte Ssl_HstsIncludeSubDomains,
 			uint Ssl_HstsMaxAge,
-			bool Ssl_HstsPreload,
+			byte Ssl_HstsPreload,
 			string Stickiness_BytesInRatePeriod,
 			string Stickiness_BytesOutRatePeriod,
 			string Stickiness_ConnRatePeriod,
-			bool Stickiness_Counter,
+			byte Stickiness_Counter,
 			string Stickiness_Counter_Key,
 			PSObject Stickiness_DataTypes,
 			string Stickiness_Expire,
@@ -767,33 +767,33 @@ namespace OPNsense.HAProxy {
 			customOptions = CustomOptions;
 			defaultBackend = DefaultBackend;
 			description = Description;
-			enabled = Enabled;
-			forwardFor = ForwardFor;
+			enabled = (Enabled == 0) ? false : true;
+			forwardFor = (ForwardFor == 0) ? false : true;
 			id = Id;
 			linkedActions = LinkedActions;
 			linkedErrorfiles = LinkedErrorfiles;
-			logging_detailedLog = Logging_DetailedLog;
-			logging_dontLogNormal = Logging_DontLogNormal;
-			logging_dontLogNull = Logging_DontLogNull;
-			logging_logSeparateErrors = Logging_LogSeparateErrors;
-			logging_socketStats = Logging_SocketStats;
+			logging_detailedLog = (Logging_DetailedLog == 0) ? false : true;
+			logging_dontLogNormal = (Logging_DontLogNormal == 0) ? false : true;
+			logging_dontLogNull = (Logging_DontLogNull == 0) ? false : true;
+			logging_logSeparateErrors = (Logging_LogSeparateErrors == 0) ? false : true;
+			logging_socketStats = (Logging_SocketStats == 0) ? false : true;
 			mode = Mode;
 			name = Name;
-			ssl_advancedEnabled = Ssl_AdvancedEnabled;
+			ssl_advancedEnabled = (Ssl_AdvancedEnabled == 0) ? false : true;
 			ssl_bindOptions = Ssl_BindOptions;
 			ssl_certificates = Ssl_Certificates;
 			ssl_cipherList = Ssl_CipherList;
 			ssl_customOptions = Ssl_CustomOptions;
 			ssl_default_certificate = Ssl_Default_Certificate;
-			ssl_enabled = Ssl_Enabled;
-			ssl_hstsEnabled = Ssl_HstsEnabled;
-			ssl_hstsIncludeSubDomains = Ssl_HstsIncludeSubDomains;
+			ssl_enabled = (Ssl_Enabled == 0) ? false : true;
+			ssl_hstsEnabled = (Ssl_HstsEnabled == 0) ? false : true;
+			ssl_hstsIncludeSubDomains = (Ssl_HstsIncludeSubDomains == 0) ? false : true;
 			ssl_hstsMaxAge = Ssl_HstsMaxAge;
-			ssl_hstsPreload = Ssl_HstsPreload;
+			ssl_hstsPreload = (Ssl_HstsPreload == 0) ? false : true;
 			stickiness_bytesInRatePeriod = Stickiness_BytesInRatePeriod;
 			stickiness_bytesOutRatePeriod = Stickiness_BytesOutRatePeriod;
 			stickiness_connRatePeriod = Stickiness_ConnRatePeriod;
-			stickiness_counter = Stickiness_Counter;
+			stickiness_counter = (Stickiness_Counter == 0) ? false : true;
 			stickiness_counter_key = Stickiness_Counter_Key;
 			stickiness_dataTypes = Stickiness_DataTypes;
 			stickiness_expire = Stickiness_Expire;
@@ -880,24 +880,24 @@ namespace OPNsense.HAProxy {
 			string Description,
 			string Esmtp_Domain,
 			PSObject Http_Expression,
-			bool Http_ExpressionEnabled,
+			byte Http_ExpressionEnabled,
 			string Http_Host,
 			PSObject Http_Method,
-			bool Http_Negate,
+			byte Http_Negate,
 			string Http_Uri,
 			string Http_Value,
 			PSObject Http_Version,
 			string Interval,
-			bool Mysql_Post41,
+			byte Mysql_Post41,
 			string Mysql_User,
 			string Name,
 			string Pgsql_User,
 			string SmtpDomain,
 			string Smtp_Domain,
-			bool Tcp_Enabled,
+			byte Tcp_Enabled,
 			PSObject Tcp_MatchType,
 			string Tcp_MatchValue,
-			bool Tcp_Negate,
+			byte Tcp_Negate,
 			string Tcp_SendValue,
 			PSObject Type
 		) {
@@ -908,24 +908,24 @@ namespace OPNsense.HAProxy {
 			description = Description;
 			esmtp_domain = Esmtp_Domain;
 			http_expression = Http_Expression;
-			http_expressionEnabled = Http_ExpressionEnabled;
+			http_expressionEnabled = (Http_ExpressionEnabled == 0) ? false : true;
 			http_host = Http_Host;
 			http_method = Http_Method;
-			http_negate = Http_Negate;
+			http_negate = (Http_Negate == 0) ? false : true;
 			http_uri = Http_Uri;
 			http_value = Http_Value;
 			http_version = Http_Version;
 			interval = Interval;
-			mysql_post41 = Mysql_Post41;
+			mysql_post41 = (Mysql_Post41 == 0) ? false : true;
 			mysql_user = Mysql_User;
 			name = Name;
 			pgsql_user = Pgsql_User;
 			smtpDomain = SmtpDomain;
 			smtp_domain = Smtp_Domain;
-			tcp_enabled = Tcp_Enabled;
+			tcp_enabled = (Tcp_Enabled == 0) ? false : true;
 			tcp_matchType = Tcp_MatchType;
 			tcp_matchValue = Tcp_MatchValue;
-			tcp_negate = Tcp_Negate;
+			tcp_negate = (Tcp_Negate == 0) ? false : true;
 			tcp_sendValue = Tcp_SendValue;
 			type = Type;
 		}
@@ -952,13 +952,13 @@ namespace OPNsense.HAProxy {
 		public Lua (
 			string Content,
 			string Description,
-			bool Enabled,
+			byte Enabled,
 			string Id,
 			string Name
 		) {
 			content = Content;
 			description = Description;
-			enabled = Enabled;
+			enabled = (Enabled == 0) ? false : true;
 			id = Id;
 			name = Name;
 		}
@@ -1015,11 +1015,11 @@ namespace OPNsense.HAProxy {
 			string Name,
 			uint Port,
 			string Source,
-			bool Ssl,
+			byte Ssl,
 			PSObject SslCA,
 			PSObject SslClientCertificate,
 			PSObject SslCRL,
-			bool SslVerify,
+			byte SslVerify,
 			uint Weight
 		) {
 			address = Address;
@@ -1032,11 +1032,11 @@ namespace OPNsense.HAProxy {
 			name = Name;
 			port = Port;
 			source = Source;
-			ssl = Ssl;
+			ssl = (Ssl == 0) ? false : true;
 			sslCA = SslCA;
 			sslClientCertificate = SslClientCertificate;
 			sslCRL = SslCRL;
-			sslVerify = SslVerify;
+			sslVerify = (SslVerify == 0) ? false : true;
 			weight = Weight;
 		}
 	}

@@ -20,12 +20,12 @@ namespace OPNsense.Quagga.BGP {
 		public AsPath (
 			PSObject Action,
 			string AS_,
-			bool Enabled,
+			byte Enabled,
 			uint Number
 		) {
 			action = Action;
 			AS = AS_;
-			enabled = Enabled;
+			enabled = (Enabled == 0) ? false : true;
 			number = Number;
 		}
 	}
@@ -60,24 +60,24 @@ namespace OPNsense.Quagga.BGP {
 
 		public Neighbor (
 			string Address,
-			bool Defaultoriginate,
-			bool Enabled,
+			byte Defaultoriginate,
+			byte Enabled,
 			PSObject LinkedPrefixlistIn,
 			PSObject LinkedPrefixlistOut,
 			PSObject LinkedRoutemapIn,
 			PSObject LinkedRoutemapOut,
-			bool Nexthopself,
+			byte Nexthopself,
 			uint Remoteas,
 			PSObject Updatesource
 		) {
 			address = Address;
-			defaultoriginate = Defaultoriginate;
-			enabled = Enabled;
+			defaultoriginate = (Defaultoriginate == 0) ? false : true;
+			enabled = (Enabled == 0) ? false : true;
 			linkedPrefixlistIn = LinkedPrefixlistIn;
 			linkedPrefixlistOut = LinkedPrefixlistOut;
 			linkedRoutemapIn = LinkedRoutemapIn;
 			linkedRoutemapOut = LinkedRoutemapOut;
-			nexthopself = Nexthopself;
+			nexthopself = (Nexthopself == 0) ? false : true;
 			remoteas = Remoteas;
 			updatesource = Updatesource;
 		}
@@ -103,13 +103,13 @@ namespace OPNsense.Quagga.BGP {
 
 		public Prefixlist (
 			PSObject Action,
-			bool Enabled,
+			byte Enabled,
 			string Name,
 			string Network,
 			uint Seqnumber
 		) {
 			action = Action;
-			enabled = Enabled;
+			enabled = (Enabled == 0) ? false : true;
 			name = Name;
 			network = Network;
 			seqnumber = Seqnumber;
@@ -138,14 +138,14 @@ namespace OPNsense.Quagga.BGP {
 
 		public Routemap (
 			PSObject Action,
-			bool Enabled,
+			byte Enabled,
 			uint Id,
 			PSObject Match,
 			string Name,
 			string Set
 		) {
 			action = Action;
-			enabled = Enabled;
+			enabled = (Enabled == 0) ? false : true;
 			id = Id;
 			match = Match;
 			name = Name;
@@ -185,7 +185,7 @@ namespace OPNsense.Quagga.Ospf6 {
 			string Area,
 			uint Cost,
 			uint Deadinterval,
-			bool Enabled,
+			byte Enabled,
 			uint Hellointerval,
 			PSObject Interfacename,
 			PSObject Networktype,
@@ -196,7 +196,7 @@ namespace OPNsense.Quagga.Ospf6 {
 			area = Area;
 			cost = Cost;
 			deadinterval = Deadinterval;
-			enabled = Enabled;
+			enabled = (Enabled == 0) ? false : true;
 			hellointerval = Hellointerval;
 			interfacename = Interfacename;
 			networktype = Networktype;
@@ -241,7 +241,7 @@ namespace OPNsense.Quagga.Ospf {
 			PSObject Authtype,
 			uint Cost,
 			uint Deadinterval,
-			bool Enabled,
+			byte Enabled,
 			uint Hellointerval,
 			PSObject Interfacename,
 			PSObject Networktype,
@@ -253,7 +253,7 @@ namespace OPNsense.Quagga.Ospf {
 			authtype = Authtype;
 			cost = Cost;
 			deadinterval = Deadinterval;
-			enabled = Enabled;
+			enabled = (Enabled == 0) ? false : true;
 			hellointerval = Hellointerval;
 			interfacename = Interfacename;
 			networktype = Networktype;
@@ -285,14 +285,14 @@ namespace OPNsense.Quagga.Ospf {
 
 		public Network (
 			string Area,
-			bool Enabled,
+			byte Enabled,
 			string Ipaddr,
 			PSObject LinkedPrefixlistIn,
 			PSObject LinkedPrefixlistOut,
 			uint Netmask
 		) {
 			area = Area;
-			enabled = Enabled;
+			enabled = (Enabled == 0) ? false : true;
 			ipaddr = Ipaddr;
 			linkedPrefixlistIn = LinkedPrefixlistIn;
 			linkedPrefixlistOut = LinkedPrefixlistOut;
@@ -320,13 +320,13 @@ namespace OPNsense.Quagga.Ospf {
 
 		public Prefixlist (
 			PSObject Action,
-			bool Enabled,
+			byte Enabled,
 			string Name,
 			string Network,
 			uint Seqnumber
 		) {
 			action = Action;
-			enabled = Enabled;
+			enabled = (Enabled == 0) ? false : true;
 			name = Name;
 			network = Network;
 			seqnumber = Seqnumber;

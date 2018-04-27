@@ -27,20 +27,20 @@ namespace OPNsense.Proxy {
 
 		public RemoteBlacklist (
 			string Description,
-			bool Enabled,
+			byte Enabled,
 			string Filename,
 			PSObject Filter,
 			string Password,
-			bool SslNoVerify,
+			byte SslNoVerify,
 			string Url,
 			string Username
 		) {
 			description = Description;
-			enabled = Enabled;
+			enabled = (Enabled == 0) ? false : true;
 			filename = Filename;
 			filter = Filter;
 			password = Password;
-			sslNoVerify = SslNoVerify;
+			sslNoVerify = (SslNoVerify == 0) ? false : true;
 			url = Url;
 			username = Username;
 		}

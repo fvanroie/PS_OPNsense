@@ -18,12 +18,12 @@ namespace OPNsense.FreeRadius {
 		}
 
 		public Client (
-			bool Enabled,
+			byte Enabled,
 			string Ip,
 			string Name,
 			string Secret
 		) {
-			enabled = Enabled;
+			enabled = (Enabled == 0) ? false : true;
 			ip = Ip;
 			name = Name;
 			secret = Secret;
@@ -70,7 +70,7 @@ namespace OPNsense.FreeRadius {
 			int Chillispot_Bw_Max_Down,
 			int Chillispot_Bw_Max_Up,
 			string Description,
-			bool Enabled,
+			byte Enabled,
 			string Ip,
 			string Password,
 			int Sessionlimit_Max_Session_Limit,
@@ -85,7 +85,7 @@ namespace OPNsense.FreeRadius {
 			chillispot_bw_max_down = Chillispot_Bw_Max_Down;
 			chillispot_bw_max_up = Chillispot_Bw_Max_Up;
 			description = Description;
-			enabled = Enabled;
+			enabled = (Enabled == 0) ? false : true;
 			ip = Ip;
 			password = Password;
 			sessionlimit_max_session_limit = Sessionlimit_Max_Session_Limit;

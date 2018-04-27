@@ -19,12 +19,12 @@ namespace OPNsense.Routes {
 
 		public Route (
 			string Descr,
-			bool Disabled,
+			byte Disabled,
 			PSObject Gateway,
 			PSObject Network
 		) {
 			descr = Descr;
-			disabled = Disabled;
+			disabled = (Disabled == 0) ? false : true;
 			gateway = Gateway;
 			network = Network;
 		}

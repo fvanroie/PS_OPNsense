@@ -25,18 +25,18 @@ namespace OPNsense.Monit {
 
 		public Alert (
 			string Description,
-			bool Enabled,
+			byte Enabled,
 			Object Events,
 			string Format,
-			bool Noton,
+			byte Noton,
 			string Recipient,
 			uint Reminder
 		) {
 			description = Description;
-			enabled = Enabled;
+			enabled = (Enabled == 0) ? false : true;
 			events = Events;
 			format = Format;
-			noton = Noton;
+			noton = (Noton == 0) ? false : true;
 			recipient = Recipient;
 			reminder = Reminder;
 		}
@@ -74,7 +74,7 @@ namespace OPNsense.Monit {
 
 		public Service (
 			string Address,
-			bool Enabled,
+			byte Enabled,
 			PSObject Interface_,
 			string Match,
 			string Name,
@@ -86,7 +86,7 @@ namespace OPNsense.Monit {
 			PSObject Type
 		) {
 			address = Address;
-			enabled = Enabled;
+			enabled = (Enabled == 0) ? false : true;
 			Interface = Interface_;
 			match = Match;
 			name = Name;

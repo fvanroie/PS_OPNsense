@@ -23,14 +23,14 @@ namespace OPNsense.Tor {
 
 		public Exitacl (
 			PSObject Action,
-			bool Enabled,
+			byte Enabled,
 			uint Endport,
 			PSObject Network,
 			uint Startport,
 			PSObject Type
 		) {
 			action = Action;
-			enabled = Enabled;
+			enabled = (Enabled == 0) ? false : true;
 			endport = Endport;
 			network = Network;
 			startport = Startport;
@@ -56,12 +56,12 @@ namespace OPNsense.Tor {
 
 		public HiddenService (
 			Object Clients,
-			bool Enabled,
+			byte Enabled,
 			string Name,
 			PSObject Type
 		) {
 			clients = Clients;
-			enabled = Enabled;
+			enabled = (Enabled == 0) ? false : true;
 			name = Name;
 			type = Type;
 		}
@@ -86,13 +86,13 @@ namespace OPNsense.Tor {
 		}
 
 		public HiddenServiceACL (
-			bool Enabled,
+			byte Enabled,
 			PSObject Hiddenservice,
 			uint Port,
 			PSObject Target_Host,
 			uint Target_Port
 		) {
-			enabled = Enabled;
+			enabled = (Enabled == 0) ? false : true;
 			hiddenservice = Hiddenservice;
 			port = Port;
 			target_host = Target_Host;
@@ -116,11 +116,11 @@ namespace OPNsense.Tor {
 
 		public HiddenServiceAuth (
 			string Auth_Cookie,
-			bool Enabled,
+			byte Enabled,
 			string Onion_Service
 		) {
 			auth_cookie = Auth_Cookie;
-			enabled = Enabled;
+			enabled = (Enabled == 0) ? false : true;
 			onion_service = Onion_Service;
 		}
 	}
@@ -143,12 +143,12 @@ namespace OPNsense.Tor {
 
 		public SocksACL (
 			PSObject Action,
-			bool Enabled,
+			byte Enabled,
 			PSObject Network,
 			PSObject Type
 		) {
 			action = Action;
-			enabled = Enabled;
+			enabled = (Enabled == 0) ? false : true;
 			network = Network;
 			type = Type;
 		}

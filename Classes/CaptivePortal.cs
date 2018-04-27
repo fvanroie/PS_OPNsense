@@ -72,16 +72,16 @@ namespace OPNsense.CaptivePortal {
 			PSObject AuthEnforceGroup,
 			PSObject Authservers,
 			PSObject Certificate,
-			bool Concurrentlogins,
+			byte Concurrentlogins,
 			string Description,
-			bool Enabled,
+			byte Enabled,
 			uint Hardtimeout,
 			uint Idletimeout,
 			PSObject Interfaces,
 			string Servername,
 			PSObject Template,
-			bool TransparentHTTPProxy,
-			bool TransparentHTTPSProxy,
+			byte TransparentHTTPProxy,
+			byte TransparentHTTPSProxy,
 			int Zoneid
 		) {
 			allowedAddresses = AllowedAddresses;
@@ -89,16 +89,16 @@ namespace OPNsense.CaptivePortal {
 			authEnforceGroup = AuthEnforceGroup;
 			authservers = Authservers;
 			certificate = Certificate;
-			concurrentlogins = Concurrentlogins;
+			concurrentlogins = (Concurrentlogins == 0) ? false : true;
 			description = Description;
-			enabled = Enabled;
+			enabled = (Enabled == 0) ? false : true;
 			hardtimeout = Hardtimeout;
 			idletimeout = Idletimeout;
 			interfaces = Interfaces;
 			servername = Servername;
 			template = Template;
-			transparentHTTPProxy = TransparentHTTPProxy;
-			transparentHTTPSProxy = TransparentHTTPSProxy;
+			transparentHTTPProxy = (TransparentHTTPProxy == 0) ? false : true;
+			transparentHTTPSProxy = (TransparentHTTPSProxy == 0) ? false : true;
 			zoneid = Zoneid;
 		}
 	}

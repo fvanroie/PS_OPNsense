@@ -18,12 +18,12 @@ namespace OPNsense.Siproxd {
 		}
 
 		public Domain (
-			bool Enabled,
+			byte Enabled,
 			string Host,
 			string Name,
 			int Port
 		) {
-			enabled = Enabled;
+			enabled = (Enabled == 0) ? false : true;
 			host = Host;
 			name = Name;
 			port = Port;
@@ -45,11 +45,11 @@ namespace OPNsense.Siproxd {
 		}
 
 		public User (
-			bool Enabled,
+			byte Enabled,
 			string Password,
 			string Username
 		) {
-			enabled = Enabled;
+			enabled = (Enabled == 0) ? false : true;
 			password = Password;
 			username = Username;
 		}

@@ -49,13 +49,13 @@ namespace OPNsense.TrafficShaper {
 			uint Bandwidth,
 			PSObject BandwidthMetric,
 			uint Buckets,
-			bool Codel_Ecn_Enable,
-			bool Codel_Enable,
+			byte Codel_Ecn_Enable,
+			byte Codel_Enable,
 			uint Codel_Interval,
 			uint Codel_Target,
 			uint Delay,
 			string Description,
-			bool Enabled,
+			byte Enabled,
 			uint Fqcodel_Flows,
 			uint Fqcodel_Limit,
 			uint Fqcodel_Quantum,
@@ -68,13 +68,13 @@ namespace OPNsense.TrafficShaper {
 			bandwidth = Bandwidth;
 			bandwidthMetric = BandwidthMetric;
 			buckets = Buckets;
-			codel_ecn_enable = Codel_Ecn_Enable;
-			codel_enable = Codel_Enable;
+			codel_ecn_enable = (Codel_Ecn_Enable == 0) ? false : true;
+			codel_enable = (Codel_Enable == 0) ? false : true;
 			codel_interval = Codel_Interval;
 			codel_target = Codel_Target;
 			delay = Delay;
 			description = Description;
-			enabled = Enabled;
+			enabled = (Enabled == 0) ? false : true;
 			fqcodel_flows = Fqcodel_Flows;
 			fqcodel_limit = Fqcodel_Limit;
 			fqcodel_quantum = Fqcodel_Quantum;
@@ -120,12 +120,12 @@ namespace OPNsense.TrafficShaper {
 
 		public Queue (
 			uint Buckets,
-			bool Codel_Ecn_Enable,
-			bool Codel_Enable,
+			byte Codel_Ecn_Enable,
+			byte Codel_Enable,
 			uint Codel_Interval,
 			uint Codel_Target,
 			string Description,
-			bool Enabled,
+			byte Enabled,
 			PSObject Mask,
 			uint Number,
 			string Origin,
@@ -133,12 +133,12 @@ namespace OPNsense.TrafficShaper {
 			uint Weight
 		) {
 			buckets = Buckets;
-			codel_ecn_enable = Codel_Ecn_Enable;
-			codel_enable = Codel_Enable;
+			codel_ecn_enable = (Codel_Ecn_Enable == 0) ? false : true;
+			codel_enable = (Codel_Enable == 0) ? false : true;
 			codel_interval = Codel_Interval;
 			codel_target = Codel_Target;
 			description = Description;
-			enabled = Enabled;
+			enabled = (Enabled == 0) ? false : true;
 			mask = Mask;
 			number = Number;
 			origin = Origin;
@@ -186,7 +186,7 @@ namespace OPNsense.TrafficShaper {
 		public Rule (
 			string Description,
 			PSObject Destination,
-			bool Destination_Not,
+			byte Destination_Not,
 			PSObject Direction,
 			PSObject Dst_Port,
 			PSObject Interface_,
@@ -195,13 +195,13 @@ namespace OPNsense.TrafficShaper {
 			PSObject Proto,
 			uint Sequence,
 			PSObject Source,
-			bool Source_Not,
+			byte Source_Not,
 			PSObject Src_Port,
 			PSObject Target
 		) {
 			description = Description;
 			destination = Destination;
-			destination_not = Destination_Not;
+			destination_not = (Destination_Not == 0) ? false : true;
 			direction = Direction;
 			dst_port = Dst_Port;
 			Interface = Interface_;
@@ -210,7 +210,7 @@ namespace OPNsense.TrafficShaper {
 			proto = Proto;
 			sequence = Sequence;
 			source = Source;
-			source_not = Source_Not;
+			source_not = (Source_Not == 0) ? false : true;
 			src_port = Src_Port;
 			target = Target;
 		}

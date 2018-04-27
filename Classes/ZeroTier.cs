@@ -17,11 +17,11 @@ namespace OPNsense.Zerotier {
 
 		public Network (
 			string Description,
-			bool Enabled,
+			byte Enabled,
 			string NetworkId
 		) {
 			description = Description;
-			enabled = Enabled;
+			enabled = (Enabled == 0) ? false : true;
 			networkId = NetworkId;
 		}
 	}

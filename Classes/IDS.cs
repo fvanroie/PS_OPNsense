@@ -17,11 +17,11 @@ namespace OPNsense.IDS {
 
 		public Rule (
 			PSObject Action,
-			bool Enabled,
+			byte Enabled,
 			int Sid
 		) {
 			action = Action;
-			enabled = Enabled;
+			enabled = (Enabled == 0) ? false : true;
 			sid = Sid;
 		}
 	}
@@ -49,14 +49,14 @@ namespace OPNsense.IDS {
 		public UserRule (
 			PSObject Action,
 			string Description,
-			bool Enabled,
+			byte Enabled,
 			string Fingerprint,
 			PSObject Geoip,
 			PSObject Geoip_Direction
 		) {
 			action = Action;
 			description = Description;
-			enabled = Enabled;
+			enabled = (Enabled == 0) ? false : true;
 			fingerprint = Fingerprint;
 			geoip = Geoip;
 			geoip_direction = Geoip_Direction;

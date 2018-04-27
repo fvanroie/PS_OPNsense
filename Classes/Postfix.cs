@@ -18,11 +18,11 @@ namespace OPNsense.Postfix {
 		public Domain (
 			string Destination,
 			string Domainname,
-			bool Enabled
+			byte Enabled
 		) {
 			destination = Destination;
 			domainname = Domainname;
-			enabled = Enabled;
+			enabled = (Enabled == 0) ? false : true;
 		}
 	}
 }
@@ -43,11 +43,11 @@ namespace OPNsense.Postfix {
 		public Recipient (
 			PSObject Action,
 			string Address,
-			bool Enabled
+			byte Enabled
 		) {
 			action = Action;
 			address = Address;
-			enabled = Enabled;
+			enabled = (Enabled == 0) ? false : true;
 		}
 	}
 }
@@ -68,11 +68,11 @@ namespace OPNsense.Postfix {
 		public Sender (
 			PSObject Action,
 			string Address,
-			bool Enabled
+			byte Enabled
 		) {
 			action = Action;
 			address = Address;
-			enabled = Enabled;
+			enabled = (Enabled == 0) ? false : true;
 		}
 	}
 }

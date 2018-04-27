@@ -29,7 +29,7 @@ namespace OPNsense.AcmeClient {
 			PSObject CertificateAuthority,
 			string Description,
 			string Email,
-			bool Enabled,
+			byte Enabled,
 			string Id,
 			string Key,
 			int LastUpdate,
@@ -38,7 +38,7 @@ namespace OPNsense.AcmeClient {
 			certificateAuthority = CertificateAuthority;
 			description = Description;
 			email = Email;
-			enabled = Enabled;
+			enabled = (Enabled == 0) ? false : true;
 			id = Id;
 			key = Key;
 			lastUpdate = LastUpdate;
@@ -69,14 +69,14 @@ namespace OPNsense.AcmeClient {
 		public Action (
 			PSObject Configd,
 			string Description,
-			bool Enabled,
+			byte Enabled,
 			string Id,
 			string Name,
 			PSObject Type
 		) {
 			configd = Configd;
 			description = Description;
-			enabled = Enabled;
+			enabled = (Enabled == 0) ? false : true;
 			id = Id;
 			name = Name;
 			type = Type;
@@ -122,10 +122,10 @@ namespace OPNsense.AcmeClient {
 		public Certificate (
 			PSObject Account,
 			Object AltNames,
-			bool AutoRenewal,
+			byte AutoRenewal,
 			string CertRefId,
 			string Description,
-			bool Enabled,
+			byte Enabled,
 			string Id,
 			int LastUpdate,
 			string Name,
@@ -137,10 +137,10 @@ namespace OPNsense.AcmeClient {
 		) {
 			account = Account;
 			altNames = AltNames;
-			autoRenewal = AutoRenewal;
+			autoRenewal = (AutoRenewal == 0) ? false : true;
 			certRefId = CertRefId;
 			description = Description;
-			enabled = Enabled;
+			enabled = (Enabled == 0) ? false : true;
 			id = Id;
 			lastUpdate = LastUpdate;
 			name = Name;
@@ -337,7 +337,7 @@ namespace OPNsense.AcmeClient {
 			string Dns_Infoblox_Credentials,
 			string Dns_Infoblox_Server,
 			string Dns_Ispconfig_Api,
-			bool Dns_Ispconfig_Insecure,
+			byte Dns_Ispconfig_Insecure,
 			string Dns_Ispconfig_Password,
 			string Dns_Ispconfig_User,
 			PSObject Dns_Lexicon_Provider,
@@ -364,10 +364,10 @@ namespace OPNsense.AcmeClient {
 			uint Dns_Sleep,
 			string Dns_Vscale_Key,
 			string Dns_Yandex_Token,
-			bool Enabled,
+			byte Enabled,
 			PSObject Http_HaproxyFrontends,
-			bool Http_HaproxyInject,
-			bool Http_Opn_Autodiscovery,
+			byte Http_HaproxyInject,
+			byte Http_Opn_Autodiscovery,
 			PSObject Http_Opn_Interface,
 			Object Http_Opn_Ipaddresses,
 			PSObject Http_Service,
@@ -409,7 +409,7 @@ namespace OPNsense.AcmeClient {
 			dns_infoblox_credentials = Dns_Infoblox_Credentials;
 			dns_infoblox_server = Dns_Infoblox_Server;
 			dns_ispconfig_api = Dns_Ispconfig_Api;
-			dns_ispconfig_insecure = Dns_Ispconfig_Insecure;
+			dns_ispconfig_insecure = (Dns_Ispconfig_Insecure == 0) ? false : true;
 			dns_ispconfig_password = Dns_Ispconfig_Password;
 			dns_ispconfig_user = Dns_Ispconfig_User;
 			dns_lexicon_provider = Dns_Lexicon_Provider;
@@ -436,10 +436,10 @@ namespace OPNsense.AcmeClient {
 			dns_sleep = Dns_Sleep;
 			dns_vscale_key = Dns_Vscale_Key;
 			dns_yandex_token = Dns_Yandex_Token;
-			enabled = Enabled;
+			enabled = (Enabled == 0) ? false : true;
 			http_haproxyFrontends = Http_HaproxyFrontends;
-			http_haproxyInject = Http_HaproxyInject;
-			http_opn_autodiscovery = Http_Opn_Autodiscovery;
+			http_haproxyInject = (Http_HaproxyInject == 0) ? false : true;
+			http_opn_autodiscovery = (Http_Opn_Autodiscovery == 0) ? false : true;
 			http_opn_interface = Http_Opn_Interface;
 			http_opn_ipaddresses = Http_Opn_Ipaddresses;
 			http_service = Http_Service;

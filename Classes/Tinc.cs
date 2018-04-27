@@ -29,8 +29,8 @@ namespace OPNsense.Tinc {
 
 		public Host (
 			PSObject Cipher,
-			bool ConnectTo,
-			bool Enabled,
+			byte ConnectTo,
+			byte Enabled,
 			string Extaddress,
 			uint Extport,
 			string Hostname,
@@ -39,8 +39,8 @@ namespace OPNsense.Tinc {
 			PSObject Subnet
 		) {
 			cipher = Cipher;
-			connectTo = ConnectTo;
-			enabled = Enabled;
+			connectTo = (ConnectTo == 0) ? false : true;
+			enabled = (Enabled == 0) ? false : true;
 			extaddress = Extaddress;
 			extport = Extport;
 			hostname = Hostname;
@@ -91,7 +91,7 @@ namespace OPNsense.Tinc {
 		public Network (
 			PSObject Cipher,
 			PSObject Debuglevel,
-			bool Enabled,
+			byte Enabled,
 			string Extaddress,
 			uint Extport,
 			string Hostname,
@@ -100,14 +100,14 @@ namespace OPNsense.Tinc {
 			PSObject Mode,
 			string Name,
 			uint Pingtimeout,
-			bool pmtudiscovery,
+			byte pmtudiscovery,
 			string Privkey,
 			string Pubkey,
 			PSObject Subnet
 		) {
 			cipher = Cipher;
 			debuglevel = Debuglevel;
-			enabled = Enabled;
+			enabled = (Enabled == 0) ? false : true;
 			extaddress = Extaddress;
 			extport = Extport;
 			hostname = Hostname;
@@ -116,7 +116,7 @@ namespace OPNsense.Tinc {
 			mode = Mode;
 			name = Name;
 			pingtimeout = Pingtimeout;
-			PMTUDiscovery = pmtudiscovery;
+			PMTUDiscovery = (pmtudiscovery == 0) ? false : true;
 			privkey = Privkey;
 			pubkey = Pubkey;
 			subnet = Subnet;
