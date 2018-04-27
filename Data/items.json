@@ -443,7 +443,6 @@
                 }
             },
             "toggle": {
-                "returntype": "OPNsense.HAProxy.Backend",
                 "command": {
                     "module": "haproxy",
                     "controller": "settings",
@@ -512,7 +511,6 @@
                 }
             },
             "toggle": {
-                "returntype": "OPNsense.HAProxy.Frontend",
                 "command": {
                     "module": "haproxy",
                     "controller": "settings",
@@ -551,8 +549,8 @@
                 }
             }
         },
-        "Lua": {
-            "objectname": "HAProxy Lua",
+        "LuaScript": {
+            "objectname": "HAProxy LuaScript",
             "mountpoint": "\\\\OPNsense\\HAProxy\\luas\\lua",
             "remove": {
                 "returntype": "OPNsense.HAProxy.Lua",
@@ -581,7 +579,6 @@
                 }
             },
             "toggle": {
-                "returntype": "OPNsense.HAProxy.Lua",
                 "command": {
                     "module": "haproxy",
                     "controller": "settings",
