@@ -1,10 +1,11 @@
 # OPNsense Items
 
-The cmdlets below are used to interact with OPNsense Items using PowerShell.
+The cmdlets below interact with OPNsense Items using PowerShell.
 OPNsense Items are represented in the webGUI as a table of rows that can be clicked to edit their properties.
 In PowerShell these are represented as OPNsense.Item.* *objects* which share common cmdlets to create, get, set and remove all OPNsense items.
 
-![Object Flow](itemflow.png "Object Flow")
+## Item Flow
+![Item Flow](itemflow.png "Item Flow")
 
 Examples of OPNsense Items are: CronJobs, CaptivePortal Templates and Zones, ...
 
@@ -12,7 +13,7 @@ Examples of OPNsense Items are: CronJobs, CaptivePortal Templates and Zones, ...
 ## Working with OPNsense Items
 
 Two cmdlets are used to get an OPNsense item:
-- Get-OPNsenseItem : Retieves existing items
+- Get-OPNsenseItem : Retrieves existing items
 - New-OPNsenseItem : Creates a new item
 
 Once you have an OPNsenseItem you can either:
