@@ -22,8 +22,8 @@
 #>
 
 Function Skip-OPNsenseItem {
-    [OutputType([boolean])]
     [CmdletBinding()]
+    [OutputType([boolean])]
     param (
         [parameter(Mandatory = $true, Position = 0)]
         [AllowEmptyString()][AllowNull()][AllowEmptyCollection()]
