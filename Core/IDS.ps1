@@ -73,13 +73,3 @@ Function New-OPNsenseIdsUserRule {
 
     return Invoke-OPNsenseCommand ids settings adduserrule -Json $argHash
 }
-
-Function Get-OPNsenseIdsAlert {
-    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
-    return $(Invoke-OPNsenseCommand ids service queryalerts -Form fileid=none).rows
-}
-
-Function Update-OPNsenseIdsRule {
-    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
-
-}

@@ -26,20 +26,7 @@
 $IsPSCoreEdition = ($PSVersionTable.PSEdition -eq 'Core')
 $minversion = [System.Version]'18.1.7'
 
-# Load external data files
-# TODO : convert this to a ps1 file so it can be code-signed
-# TODO : add default values to the default constructors
-Try {
-    # Load objectmap of api calls
-    $FullPath = ("{0}/{1}" -f $PSScriptRoot, 'Data/items.json')
-    $OPNsenseItemMap = Get-Content $FullPath | ConvertFrom-Json
 
-    # Load servicemap of api calls
-    $FullPath = ("{0}/{1}" -f $PSScriptRoot, 'Data/services.json')
-    $OPNsenseServiceMap = Get-Content $FullPath | ConvertFrom-Json
-} Catch {
-    Throw ("Unable to load the API maps :`nError : {0}" -f $_)
-}
 
 # Load individual functions from scriptfiles
 # TODO : itterate over the objectmap and test if all Objects can be instantiated
@@ -80,6 +67,29 @@ ForEach ($Folder in 'Classes') {
     }
 }
 
+
+# Load external data files
+# TODO : convert this to a ps1 file so it can be code-signed
+Try {
+    # Load objectmap of api calls
+    $FullPath = ("{0}/{1}" -f $PSScriptRoot, 'Data/items.json')
+    $OPNsenseItemMap = Get-Content $FullPath | ConvertFrom-Json
+
+    # Load servicemap of api calls
+    $FullPath = ("{0}/{1}" -f $PSScriptRoot, 'Data/services.json')
+    $OPNsenseServiceMap = Get-Content $FullPath | ConvertFrom-Json
+
+    # Load settingsmap of api calls
+    $FullPath = ("{0}/{1}" -f $PSScriptRoot, 'Data/settings.json')
+    $OPNsenseSettingMap = Get-Content $FullPath | ConvertFrom-Json
+
+    $OPNsenseSettingsModule = Get-NoteProperty $OPNsenseSettingMap
+    $OPNsenseItemModule = Get-NoteProperty $OPNsenseItemMap
+
+} Catch {
+    Throw ("Unable to load the API maps :`nError : {0}" -f $_)
+}
+
 ##### Static Export of Module Fucntions (Temporary situation untill all function get a proper script file)
 Export-ModuleMember -Function Connect-OPNsense, Disconnect-OPNsense, Invoke-OPNsenseCommand
 $f = @(########## PLUGINS ##########
@@ -97,15 +107,12 @@ $f = @(########## PLUGINS ##########
     'Invoke-OPNsenseCommand',
     # Firmware
     'Get-OPNsense', 'Set-OPNsense', 'Update-OPNsense', 'Get-OPNsenseUpdate'
-    # Packages
-    'Get-OPNsensePackage', 'Lock-OPNsensePackage', 'Unlock-OPNsensePackage', 'Install-OPNsensePackage', 'Uninstall-OPNsensePackage',
-    'Get-OPNsensePlugin',
+
     # Cron
     'Get-OPNsenseCronJob', 'Enable-OPNsenseCronJob', 'Disable-OPNsenseCronJob', 'Remove-OPNsenseCronJob',
     'New-OPNsenseCronJob', 'Set-OPNsenseCronJob',
     #IDS
-    'Get-OPNsenseIdsUserRule', 'New-OPNsenseIdsUserRule', 'Remove-OPNsenseIdsUserRule',
-    'Get-OPNsenseIdsAlert',
+    'Get-OPNsenseIdsUserRule', 'New-OPNsenseIdsUserRule'
     # Proxy
     'New-OPNsenseProxyRemoteBlacklist', 'Get-OPNsenseProxyRemoteBlacklist', 'Remove-OPNsenseProxyRemoteBlacklist',
     'Sync-OPNsenseProxyRemoteBlacklist',
