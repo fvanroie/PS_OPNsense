@@ -38,6 +38,22 @@
                     "command": "toggle/<uuid>/<enabled>",
                     "Form": "toggle"
                 }
+            },
+            "add": {
+                "returntype": "OPNsense.AcmeClient.Account",
+                "command": {
+                    "module": "acmeclient",
+                    "controller": "accounts",
+                    "command": "add"
+                }
+            },
+            "set": {
+                "returntype": "OPNsense.AcmeClient.Account",
+                "command": {
+                    "module": "acmeclient",
+                    "controller": "accounts",
+                    "command": "set/<uuid>"
+                }
             }
         },
         "Action": {
@@ -75,6 +91,22 @@
                     "controller": "actions",
                     "command": "toggle/<uuid>/<enabled>",
                     "Form": "toggle"
+                }
+            },
+            "add": {
+                "returntype": "OPNsense.AcmeClient.Action",
+                "command": {
+                    "module": "acmeclient",
+                    "controller": "actions",
+                    "command": "add"
+                }
+            },
+            "set": {
+                "returntype": "OPNsense.AcmeClient.Action",
+                "command": {
+                    "module": "acmeclient",
+                    "controller": "actions",
+                    "command": "set/<uuid>"
                 }
             }
         },
@@ -114,6 +146,22 @@
                     "command": "toggle/<uuid>/<enabled>",
                     "Form": "toggle"
                 }
+            },
+            "add": {
+                "returntype": "OPNsense.AcmeClient.Certificate",
+                "command": {
+                    "module": "acmeclient",
+                    "controller": "certificates",
+                    "command": "add"
+                }
+            },
+            "set": {
+                "returntype": "OPNsense.AcmeClient.Certificate",
+                "command": {
+                    "module": "acmeclient",
+                    "controller": "certificates",
+                    "command": "set/<uuid>"
+                }
             }
         },
         "Validation": {
@@ -151,6 +199,22 @@
                     "controller": "validations",
                     "command": "toggle/<uuid>/<enabled>",
                     "Form": "toggle"
+                }
+            },
+            "add": {
+                "returntype": "OPNsense.AcmeClient.Validation",
+                "command": {
+                    "module": "acmeclient",
+                    "controller": "validations",
+                    "command": "add"
+                }
+            },
+            "set": {
+                "returntype": "OPNsense.AcmeClient.Validation",
+                "command": {
+                    "module": "acmeclient",
+                    "controller": "validations",
+                    "command": "set/<uuid>"
                 }
             }
         }
@@ -191,6 +255,22 @@
                     "command": "searchtemplates",
                     "property": "rows"
                 }
+            },
+            "add": {
+                "returntype": "OPNsense.CaptivePortal.Template",
+                "command": {
+                    "module": "captiveportal",
+                    "controller": "service",
+                    "command": "addtemplate"
+                }
+            },
+            "set": {
+                "returntype": "OPNsense.CaptivePortal.Template",
+                "command": {
+                    "module": "captiveportal",
+                    "controller": "service",
+                    "command": "settemplate/<uuid>"
+                }
             }
         },
         "Zone": {
@@ -229,6 +309,22 @@
                     "controller": "settings",
                     "command": "togglezone/<uuid>/<enabled>",
                     "Form": "toggle"
+                }
+            },
+            "add": {
+                "returntype": "OPNsense.CaptivePortal.Zone",
+                "command": {
+                    "module": "captiveportal",
+                    "controller": "settings",
+                    "command": "addzone"
+                }
+            },
+            "set": {
+                "returntype": "OPNsense.CaptivePortal.Zone",
+                "command": {
+                    "module": "captiveportal",
+                    "controller": "settings",
+                    "command": "setzone/<uuid>"
                 }
             }
         }
@@ -271,6 +367,22 @@
                     "command": "togglejob/<uuid>/<enabled>",
                     "Form": "toggle"
                 }
+            },
+            "add": {
+                "returntype": "OPNsense.Cron.Job",
+                "command": {
+                    "module": "cron",
+                    "controller": "settings",
+                    "command": "addjob"
+                }
+            },
+            "set": {
+                "returntype": "OPNsense.Cron.Job",
+                "command": {
+                    "module": "cron",
+                    "controller": "settings",
+                    "command": "setjob/<uuid>"
+                }
             }
         }
     },
@@ -311,6 +423,22 @@
                     "command": "toggleclient/<uuid>",
                     "Form": "toggle"
                 }
+            },
+            "add": {
+                "returntype": "OPNsense.FreeRadius.Client",
+                "command": {
+                    "module": "freeradius",
+                    "controller": "client",
+                    "command": "addclient"
+                }
+            },
+            "set": {
+                "returntype": "OPNsense.FreeRadius.Client",
+                "command": {
+                    "module": "freeradius",
+                    "controller": "client",
+                    "command": "setclient/<uuid>"
+                }
             }
         },
         "User": {
@@ -349,6 +477,79 @@
                     "command": "toggleuser/<uuid>",
                     "Form": "toggle"
                 }
+            },
+            "add": {
+                "returntype": "OPNsense.FreeRadius.User",
+                "command": {
+                    "module": "freeradius",
+                    "controller": "user",
+                    "command": "adduser"
+                }
+            },
+            "set": {
+                "returntype": "OPNsense.FreeRadius.User",
+                "command": {
+                    "module": "freeradius",
+                    "controller": "user",
+                    "command": "setuser/<uuid>"
+                }
+            }
+        }
+    },
+    "FtpProxy": {
+        "Proxy": {
+            "objectname": "FTP Proxy",
+            "mountpoint": "\\\\OPNsense\\ftpproxies\\ftpproxy",
+            "remove": {
+                "returntype": "OPNsense.Ftpproxy.Proxy",
+                "command": {
+                    "module": "ftpproxy",
+                    "controller": "settings",
+                    "command": "delproxy/<uuid>",
+                    "Form": "remove"
+                }
+            },
+            "get": {
+                "returntype": "OPNsense.Ftpproxy.Proxy",
+                "command": {
+                    "module": "ftpproxy",
+                    "controller": "settings",
+                    "command": "getproxy/<uuid>",
+                    "property": "ftpproxy"
+                }
+            },
+            "search": {
+                "command": {
+                    "module": "ftpproxy",
+                    "controller": "settings",
+                    "command": "searchproxy",
+                    "property": "rows"
+                }
+            },
+            "toggle": {
+                "returntype": "OPNsense.Ftpproxy.Proxy",
+                "command": {
+                    "module": "ftpproxy",
+                    "controller": "settings",
+                    "command": "toggleproxy/<uuid>",
+                    "Form": "toggle"
+                }
+            },
+            "add": {
+                "returntype": "OPNsense.Ftpproxy.Proxy",
+                "command": {
+                    "module": "ftpproxy",
+                    "controller": "settings",
+                    "command": "addproxy"
+                }
+            },
+            "set": {
+                "returntype": "OPNsense.Ftpproxy.Proxy",
+                "command": {
+                    "module": "ftpproxy",
+                    "controller": "settings",
+                    "command": "setproxy/<uuid>"
+                }
             }
         }
     },
@@ -381,6 +582,22 @@
                     "command": "searchacls",
                     "property": "rows"
                 }
+            },
+            "add": {
+                "returntype": "OPNsense.HAProxy.Acl",
+                "command": {
+                    "module": "haproxy",
+                    "controller": "settings",
+                    "command": "addacl"
+                }
+            },
+            "set": {
+                "returntype": "OPNsense.HAProxy.Acl",
+                "command": {
+                    "module": "haproxy",
+                    "controller": "settings",
+                    "command": "setacl/<uuid>"
+                }
             }
         },
         "Action": {
@@ -410,6 +627,22 @@
                     "controller": "settings",
                     "command": "searchactions",
                     "property": "rows"
+                }
+            },
+            "add": {
+                "returntype": "OPNsense.HAProxy.Action",
+                "command": {
+                    "module": "haproxy",
+                    "controller": "settings",
+                    "command": "addaction"
+                }
+            },
+            "set": {
+                "returntype": "OPNsense.HAProxy.Action",
+                "command": {
+                    "module": "haproxy",
+                    "controller": "settings",
+                    "command": "setaction/<uuid>"
                 }
             }
         },
@@ -449,6 +682,22 @@
                     "command": "togglebackend/<uuid>/<enabled>",
                     "Form": "toggle"
                 }
+            },
+            "add": {
+                "returntype": "OPNsense.HAProxy.Backend",
+                "command": {
+                    "module": "haproxy",
+                    "controller": "settings",
+                    "command": "addbackend"
+                }
+            },
+            "set": {
+                "returntype": "OPNsense.HAProxy.Backend",
+                "command": {
+                    "module": "haproxy",
+                    "controller": "settings",
+                    "command": "setbackend/<uuid>"
+                }
             }
         },
         "ErrorFile": {
@@ -478,6 +727,22 @@
                     "controller": "settings",
                     "command": "searcherrorfiles",
                     "property": "rows"
+                }
+            },
+            "add": {
+                "returntype": "OPNsense.HAProxy.ErrorFile",
+                "command": {
+                    "module": "haproxy",
+                    "controller": "settings",
+                    "command": "adderrorfile"
+                }
+            },
+            "set": {
+                "returntype": "OPNsense.HAProxy.ErrorFile",
+                "command": {
+                    "module": "haproxy",
+                    "controller": "settings",
+                    "command": "seterrorfile/<uuid>"
                 }
             }
         },
@@ -517,6 +782,22 @@
                     "command": "togglefrontend/<uuid>/<enabled>",
                     "Form": "toggle"
                 }
+            },
+            "add": {
+                "returntype": "OPNsense.HAProxy.Frontend",
+                "command": {
+                    "module": "haproxy",
+                    "controller": "settings",
+                    "command": "addfrontend"
+                }
+            },
+            "set": {
+                "returntype": "OPNsense.HAProxy.Frontend",
+                "command": {
+                    "module": "haproxy",
+                    "controller": "settings",
+                    "command": "setfrontend/<uuid>"
+                }
             }
         },
         "Healthcheck": {
@@ -546,6 +827,22 @@
                     "controller": "settings",
                     "command": "searchhealthchecks",
                     "property": "rows"
+                }
+            },
+            "add": {
+                "returntype": "OPNsense.HAProxy.Healthcheck",
+                "command": {
+                    "module": "haproxy",
+                    "controller": "settings",
+                    "command": "addhealthcheck"
+                }
+            },
+            "set": {
+                "returntype": "OPNsense.HAProxy.Healthcheck",
+                "command": {
+                    "module": "haproxy",
+                    "controller": "settings",
+                    "command": "sethealthcheck/<uuid>"
                 }
             }
         },
@@ -585,6 +882,22 @@
                     "command": "togglelua/<uuid>/<enabled>",
                     "Form": "toggle"
                 }
+            },
+            "add": {
+                "returntype": "OPNsense.HAProxy.Lua",
+                "command": {
+                    "module": "haproxy",
+                    "controller": "settings",
+                    "command": "addlua"
+                }
+            },
+            "set": {
+                "returntype": "OPNsense.HAProxy.Lua",
+                "command": {
+                    "module": "haproxy",
+                    "controller": "settings",
+                    "command": "setlua/<uuid>"
+                }
             }
         },
         "Server": {
@@ -615,6 +928,22 @@
                     "command": "searchservers",
                     "property": "rows"
                 }
+            },
+            "add": {
+                "returntype": "OPNsense.HAProxy.Server",
+                "command": {
+                    "module": "haproxy",
+                    "controller": "settings",
+                    "command": "addserver"
+                }
+            },
+            "set": {
+                "returntype": "OPNsense.HAProxy.Server",
+                "command": {
+                    "module": "haproxy",
+                    "controller": "settings",
+                    "command": "setserver/<uuid>"
+                }
             }
         }
     },
@@ -641,6 +970,14 @@
                     "command": "togglerule/<uuid>/<enabled>",
                     "Form": "toggle"
                 }
+            },
+            "set": {
+                "returntype": "OPNsense.IDS.Rule",
+                "command": {
+                    "module": "ids",
+                    "controller": "settings",
+                    "command": "setrule/<uuid>"
+                }
             }
         },
         "RuleSet": {
@@ -660,6 +997,14 @@
                     "controller": "settings",
                     "command": "toggleruleset/<uuid>/<enabled>",
                     "Form": "toggle"
+                }
+            },
+            "set": {
+                "returntype": "OPNsense.IDS.RuleSet",
+                "command": {
+                    "module": "ids",
+                    "controller": "settings",
+                    "command": "setruleset/<uuid>"
                 }
             }
         },
@@ -699,6 +1044,22 @@
                     "controller": "settings",
                     "command": "toggleuserrule/<uuid>/<enabled>",
                     "Form": "toggle"
+                }
+            },
+            "add": {
+                "returntype": "OPNsense.IDS.UserRule",
+                "command": {
+                    "module": "ids",
+                    "controller": "settings",
+                    "command": "adduserrule"
+                }
+            },
+            "set": {
+                "returntype": "OPNsense.IDS.UserRule",
+                "command": {
+                    "module": "ids",
+                    "controller": "settings",
+                    "command": "setuserrule/<uuid>"
                 }
             }
         }
@@ -744,6 +1105,22 @@
                     "command": "toggle/alert/<uuid>",
                     "Form": "toggle"
                 }
+            },
+            "add": {
+                "returntype": "OPNsense.Monit.Alert",
+                "command": {
+                    "module": "monit",
+                    "controller": "settings",
+                    "command": "add/alert"
+                }
+            },
+            "set": {
+                "returntype": "OPNsense.Monit.Alert",
+                "command": {
+                    "module": "monit",
+                    "controller": "settings",
+                    "command": "set/alert/<uuid>"
+                }
             }
         },
         "Service": {
@@ -786,6 +1163,22 @@
                     "command": "toggle/service/<uuid>",
                     "Form": "toggle"
                 }
+            },
+            "add": {
+                "returntype": "OPNsense.Monit.Service",
+                "command": {
+                    "module": "monit",
+                    "controller": "settings",
+                    "command": "add/service"
+                }
+            },
+            "set": {
+                "returntype": "OPNsense.Monit.Service",
+                "command": {
+                    "module": "monit",
+                    "controller": "settings",
+                    "command": "set/service/<uuid>"
+                }
             }
         },
         "Test": {
@@ -818,6 +1211,22 @@
                     "controller": "settings",
                     "command": "search/test",
                     "property": "rows"
+                }
+            },
+            "add": {
+                "returntype": "OPNsense.Monit.Test",
+                "command": {
+                    "module": "monit",
+                    "controller": "settings",
+                    "command": "add/test"
+                }
+            },
+            "set": {
+                "returntype": "OPNsense.Monit.Test",
+                "command": {
+                    "module": "monit",
+                    "controller": "settings",
+                    "command": "set/test/<uuid>"
                 }
             }
         }
@@ -860,6 +1269,22 @@
                     "command": "toggledomain/<uuid>",
                     "Form": "toggle"
                 }
+            },
+            "add": {
+                "returntype": "OPNsense.Postfix.Domain",
+                "command": {
+                    "module": "postfix",
+                    "controller": "domain",
+                    "command": "adddomain"
+                }
+            },
+            "set": {
+                "returntype": "OPNsense.Postfix.Domain",
+                "command": {
+                    "module": "postfix",
+                    "controller": "domain",
+                    "command": "setdomain/<uuid>"
+                }
             }
         },
         "Recipient": {
@@ -899,6 +1324,22 @@
                     "command": "togglerecipient/<uuid>",
                     "Form": "toggle"
                 }
+            },
+            "add": {
+                "returntype": "OPNsense.Postfix.Recipient",
+                "command": {
+                    "module": "postfix",
+                    "controller": "recipient",
+                    "command": "addrecipient"
+                }
+            },
+            "set": {
+                "returntype": "OPNsense.Postfix.Recipient",
+                "command": {
+                    "module": "postfix",
+                    "controller": "recipient",
+                    "command": "setrecipient/<uuid>"
+                }
             }
         },
         "Sender": {
@@ -937,6 +1378,22 @@
                     "controller": "sender",
                     "command": "togglesender/<uuid>",
                     "Form": "toggle"
+                }
+            },
+            "add": {
+                "returntype": "OPNsense.Postfix.Sender",
+                "command": {
+                    "module": "postfix",
+                    "controller": "sender",
+                    "command": "addsender"
+                }
+            },
+            "set": {
+                "returntype": "OPNsense.Postfix.Sender",
+                "command": {
+                    "module": "postfix",
+                    "controller": "sender",
+                    "command": "setsender/<uuid>"
                 }
             }
         }
@@ -979,6 +1436,22 @@
                     "command": "toggleremoteblacklist/<uuid>",
                     "Form": "toggle"
                 }
+            },
+            "add": {
+                "returntype": "OPNsense.Proxy.RemoteBlacklist",
+                "command": {
+                    "module": "proxy",
+                    "controller": "settings",
+                    "command": "addremoteblacklist"
+                }
+            },
+            "set": {
+                "returntype": "OPNsense.Proxy.RemoteBlacklist",
+                "command": {
+                    "module": "proxy",
+                    "controller": "settings",
+                    "command": "setremoteblacklist/<uuid>"
+                }
             }
         }
     },
@@ -1010,6 +1483,30 @@
                     "controller": "settings",
                     "command": "searchacl",
                     "property": "rows"
+                }
+            },
+            "toggle": {
+                "returntype": "OPNsense.ProxyUserACL.UserACL",
+                "command": {
+                    "module": "proxyuseracl",
+                    "controller": "settings",
+                    "command": "toggleacl/<uuid>"
+                }
+            },
+            "add": {
+                "returntype": "OPNsense.ProxyUserACL.UserACL",
+                "command": {
+                    "module": "proxyuseracl",
+                    "controller": "settings",
+                    "command": "addacl"
+                }
+            },
+            "set": {
+                "returntype": "OPNsense.ProxyUserACL.UserACL",
+                "command": {
+                    "module": "proxyuseracl",
+                    "controller": "settings",
+                    "command": "setacl/<uuid>"
                 }
             }
         }
@@ -1052,6 +1549,22 @@
                     "command": "toggleaspath/<uuid>",
                     "Form": "toggle"
                 }
+            },
+            "add": {
+                "returntype": "OPNsense.Quagga.BGP.AsPath",
+                "command": {
+                    "module": "quagga",
+                    "controller": "bgp",
+                    "command": "addaspath"
+                }
+            },
+            "set": {
+                "returntype": "OPNsense.Quagga.BGP.AsPath",
+                "command": {
+                    "module": "quagga",
+                    "controller": "bgp",
+                    "command": "setaspath/<uuid>"
+                }
             }
         },
         "BGPNeighbor": {
@@ -1090,6 +1603,22 @@
                     "controller": "bgp",
                     "command": "toggleneighbor/<uuid>",
                     "Form": "toggle"
+                }
+            },
+            "add": {
+                "returntype": "OPNsense.Quagga.BGP.Neighbor",
+                "command": {
+                    "module": "quagga",
+                    "controller": "bgp",
+                    "command": "addneighbor"
+                }
+            },
+            "set": {
+                "returntype": "OPNsense.Quagga.BGP.Neighbor",
+                "command": {
+                    "module": "quagga",
+                    "controller": "bgp",
+                    "command": "setneighbor/<uuid>"
                 }
             }
         },
@@ -1130,6 +1659,22 @@
                     "command": "toggleprefixlist/<uuid>",
                     "Form": "toggle"
                 }
+            },
+            "add": {
+                "returntype": "OPNsense.Quagga.BGP.Prefixlist",
+                "command": {
+                    "module": "quagga",
+                    "controller": "bgp",
+                    "command": "addprefixlist"
+                }
+            },
+            "set": {
+                "returntype": "OPNsense.Quagga.BGP.Prefixlist",
+                "command": {
+                    "module": "quagga",
+                    "controller": "bgp",
+                    "command": "setprefixlist/<uuid>"
+                }
             }
         },
         "BGPRoutemap": {
@@ -1168,6 +1713,22 @@
                     "controller": "bgp",
                     "command": "toggleroutemap/<uuid>",
                     "Form": "toggle"
+                }
+            },
+            "add": {
+                "returntype": "OPNsense.Quagga.BGP.Routemap",
+                "command": {
+                    "module": "quagga",
+                    "controller": "bgp",
+                    "command": "addroutemap"
+                }
+            },
+            "set": {
+                "returntype": "OPNsense.Quagga.BGP.Routemap",
+                "command": {
+                    "module": "quagga",
+                    "controller": "bgp",
+                    "command": "setroutemap/<uuid>"
                 }
             }
         },
@@ -1208,6 +1769,22 @@
                     "command": "toggleinterface/<uuid>",
                     "Form": "toggle"
                 }
+            },
+            "add": {
+                "returntype": "OPNsense.Quagga.Ospf6.Interface",
+                "command": {
+                    "module": "quagga",
+                    "controller": "ospf6settings",
+                    "command": "addinterface"
+                }
+            },
+            "set": {
+                "returntype": "OPNsense.Quagga.Ospf6.Interface",
+                "command": {
+                    "module": "quagga",
+                    "controller": "ospf6settings",
+                    "command": "setinterface/<uuid>"
+                }
             }
         },
         "OspfInterface": {
@@ -1246,6 +1823,22 @@
                     "controller": "ospfsettings",
                     "command": "toggleinterface/<uuid>",
                     "Form": "toggle"
+                }
+            },
+            "add": {
+                "returntype": "OPNsense.Quagga.Ospf.Interface",
+                "command": {
+                    "module": "quagga",
+                    "controller": "ospfsettings",
+                    "command": "addinterface"
+                }
+            },
+            "set": {
+                "returntype": "OPNsense.Quagga.Ospf.Interface",
+                "command": {
+                    "module": "quagga",
+                    "controller": "ospfsettings",
+                    "command": "setinterface/<uuid>"
                 }
             }
         },
@@ -1286,6 +1879,22 @@
                     "command": "togglenetwork/<uuid>",
                     "Form": "toggle"
                 }
+            },
+            "add": {
+                "returntype": "OPNsense.Quagga.Ospf.Network",
+                "command": {
+                    "module": "quagga",
+                    "controller": "ospfsettings",
+                    "command": "addnetwork"
+                }
+            },
+            "set": {
+                "returntype": "OPNsense.Quagga.Ospf.Network",
+                "command": {
+                    "module": "quagga",
+                    "controller": "ospfsettings",
+                    "command": "setnetwork/<uuid>"
+                }
             }
         },
         "OspfPrefixlist": {
@@ -1324,6 +1933,22 @@
                     "controller": "ospfsettings",
                     "command": "toggleprefixlist/<uuid>",
                     "Form": "toggle"
+                }
+            },
+            "add": {
+                "returntype": "OPNsense.Quagga.Ospf.Prefixlist",
+                "command": {
+                    "module": "quagga",
+                    "controller": "ospfsettings",
+                    "command": "addprefixlist"
+                }
+            },
+            "set": {
+                "returntype": "OPNsense.Quagga.Ospf.Prefixlist",
+                "command": {
+                    "module": "quagga",
+                    "controller": "ospfsettings",
+                    "command": "setprefixlist/<uuid>"
                 }
             }
         }
@@ -1367,6 +1992,22 @@
                     "command": "toggleroute/<uuid>/<disabled>",
                     "Form": "toggle"
                 }
+            },
+            "add": {
+                "returntype": "OPNsense.Routes.Route",
+                "command": {
+                    "module": "routes",
+                    "controller": "routes",
+                    "command": "addroute"
+                }
+            },
+            "set": {
+                "returntype": "OPNsense.Routes.Route",
+                "command": {
+                    "module": "routes",
+                    "controller": "routes",
+                    "command": "setroute/<uuid>"
+                }
             }
         }
     },
@@ -1408,6 +2049,22 @@
                     "command": "toggledomain/<uuid>",
                     "Form": "toggle"
                 }
+            },
+            "add": {
+                "returntype": "OPNsense.Siproxd.Domain",
+                "command": {
+                    "module": "siproxd",
+                    "controller": "domain",
+                    "command": "adddomain"
+                }
+            },
+            "set": {
+                "returntype": "OPNsense.Siproxd.Domain",
+                "command": {
+                    "module": "siproxd",
+                    "controller": "domain",
+                    "command": "setdomain/<uuid>"
+                }
             }
         },
         "User": {
@@ -1446,6 +2103,22 @@
                     "controller": "user",
                     "command": "toggleuser/<uuid>",
                     "Form": "toggle"
+                }
+            },
+            "add": {
+                "returntype": "OPNsense.Siproxd.User",
+                "command": {
+                    "module": "siproxd",
+                    "controller": "user",
+                    "command": "adduser"
+                }
+            },
+            "set": {
+                "returntype": "OPNsense.Siproxd.User",
+                "command": {
+                    "module": "siproxd",
+                    "controller": "user",
+                    "command": "setuser/<uuid>"
                 }
             }
         }
@@ -1488,6 +2161,22 @@
                     "command": "togglehost/<uuid>/<enabled>",
                     "Form": "toggle"
                 }
+            },
+            "add": {
+                "returntype": "OPNsense.Tinc.Host",
+                "command": {
+                    "module": "tinc",
+                    "controller": "settings",
+                    "command": "sethost"
+                }
+            },
+            "set": {
+                "returntype": "OPNsense.Tinc.Host",
+                "command": {
+                    "module": "tinc",
+                    "controller": "settings",
+                    "command": "sethost/<uuid>"
+                }
             }
         },
         "Network": {
@@ -1526,6 +2215,22 @@
                     "controller": "settings",
                     "command": "togglenetwork/<uuid>/<enabled>",
                     "Form": "toggle"
+                }
+            },
+            "add": {
+                "returntype": "OPNsense.Tinc.Network",
+                "command": {
+                    "module": "tinc",
+                    "controller": "settings",
+                    "command": "setnetwork"
+                }
+            },
+            "set": {
+                "returntype": "OPNsense.Tinc.Network",
+                "command": {
+                    "module": "tinc",
+                    "controller": "settings",
+                    "command": "setnetwork/<uuid>"
                 }
             }
         }
@@ -1568,6 +2273,22 @@
                     "command": "toggleacl/<uuid>",
                     "Form": "toggle"
                 }
+            },
+            "add": {
+                "returntype": "OPNsense.Tor.Exitacl",
+                "command": {
+                    "module": "tor",
+                    "controller": "exitacl",
+                    "command": "addacl"
+                }
+            },
+            "set": {
+                "returntype": "OPNsense.Tor.Exitacl",
+                "command": {
+                    "module": "tor",
+                    "controller": "exitacl",
+                    "command": "setacl/<uuid>"
+                }
             }
         },
         "HiddenServiceAuth": {
@@ -1606,6 +2327,22 @@
                     "controller": "general",
                     "command": "togglehidservauth/<uuid>",
                     "Form": "toggle"
+                }
+            },
+            "add": {
+                "returntype": "OPNsense.Tor.HiddenServiceAuth",
+                "command": {
+                    "module": "tor",
+                    "controller": "general",
+                    "command": "addhidservauth"
+                }
+            },
+            "set": {
+                "returntype": "OPNsense.Tor.HiddenServiceAuth",
+                "command": {
+                    "module": "tor",
+                    "controller": "general",
+                    "command": "sethidservauth/<uuid>"
                 }
             }
         },
@@ -1646,6 +2383,22 @@
                     "command": "toggleservice/<uuid>",
                     "Form": "toggle"
                 }
+            },
+            "add": {
+                "returntype": "OPNsense.Tor.HiddenService",
+                "command": {
+                    "module": "tor",
+                    "controller": "hiddenservice",
+                    "command": "addservice"
+                }
+            },
+            "set": {
+                "returntype": "OPNsense.Tor.HiddenService",
+                "command": {
+                    "module": "tor",
+                    "controller": "hiddenservice",
+                    "command": "setservice/<uuid>"
+                }
             }
         },
         "HiddenServiceACL": {
@@ -1685,6 +2438,22 @@
                     "command": "toggleacl/<uuid>",
                     "Form": "toggle"
                 }
+            },
+            "add": {
+                "returntype": "OPNsense.Tor.HiddenServiceACL",
+                "command": {
+                    "module": "tor",
+                    "controller": "hiddenserviceacl",
+                    "command": "addacl"
+                }
+            },
+            "set": {
+                "returntype": "OPNsense.Tor.HiddenServiceACL",
+                "command": {
+                    "module": "tor",
+                    "controller": "hiddenserviceacl",
+                    "command": "setacl/<uuid>"
+                }
             }
         },
         "SocksACL": {
@@ -1723,6 +2492,22 @@
                     "controller": "socksacl",
                     "command": "toggleacl/<uuid>",
                     "Form": "toggle"
+                }
+            },
+            "add": {
+                "returntype": "OPNsense.Tor.SocksACL",
+                "command": {
+                    "module": "tor",
+                    "controller": "socksacl",
+                    "command": "addacl"
+                }
+            },
+            "set": {
+                "returntype": "OPNsense.Tor.SocksACL",
+                "command": {
+                    "module": "tor",
+                    "controller": "socksacl",
+                    "command": "setacl/<uuid>"
                 }
             }
         }
@@ -1765,6 +2550,22 @@
                     "command": "togglepipe/<uuid>/<enabled>",
                     "Form": "toggle"
                 }
+            },
+            "add": {
+                "returntype": "OPNsense.TrafficShaper.Pipe",
+                "command": {
+                    "module": "trafficshaper",
+                    "controller": "settings",
+                    "command": "addpipe"
+                }
+            },
+            "set": {
+                "returntype": "OPNsense.TrafficShaper.Pipe",
+                "command": {
+                    "module": "trafficshaper",
+                    "controller": "settings",
+                    "command": "setpipe/<uuid>"
+                }
             }
         },
         "Queue": {
@@ -1804,6 +2605,22 @@
                     "command": "togglequeue/<uuid>/<enabled>",
                     "Form": "toggle"
                 }
+            },
+            "add": {
+                "returntype": "OPNsense.TrafficShaper.Queue",
+                "command": {
+                    "module": "trafficshaper",
+                    "controller": "settings",
+                    "command": "addqueue"
+                }
+            },
+            "set": {
+                "returntype": "OPNsense.TrafficShaper.Queue",
+                "command": {
+                    "module": "trafficshaper",
+                    "controller": "settings",
+                    "command": "setqueue/<uuid>"
+                }
             }
         },
         "Rule": {
@@ -1834,10 +2651,25 @@
                     "command": "searchrules",
                     "property": "rows"
                 }
+            },
+            "add": {
+                "returntype": "OPNsense.TrafficShaper.Rule",
+                "command": {
+                    "module": "trafficshaper",
+                    "controller": "settings",
+                    "command": "addrule"
+                }
+            },
+            "set": {
+                "returntype": "OPNsense.TrafficShaper.Rule",
+                "command": {
+                    "module": "trafficshaper",
+                    "controller": "settings",
+                    "command": "setrule/<uuid>"
+                }
             }
         }
     },
-    "Wol": {},
     "ZeroTier": {
         "Network": {
             "objectname": "ZeroTier Network",
@@ -1875,6 +2707,22 @@
                     "controller": "network",
                     "command": "toggle/<uuid>",
                     "Form": "toggle"
+                }
+            },
+            "add": {
+                "returntype": "OPNsense.Zerotier.Network",
+                "command": {
+                    "module": "zerotier",
+                    "controller": "network",
+                    "command": "add"
+                }
+            },
+            "set": {
+                "returntype": "OPNsense.Zerotier.Network",
+                "command": {
+                    "module": "zerotier",
+                    "controller": "network",
+                    "command": "set/<uuid>"
                 }
             }
         }
