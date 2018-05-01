@@ -1,6 +1,6 @@
 <#  MIT License
 
-	Copyright (c) 2018 fvanroie, NetwiZe.be
+    Copyright (c) 2018 fvanroie, NetwiZe.be
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -21,96 +21,58 @@
     SOFTWARE.
 #>
 
-<#
-    Toggles the enabled/disabled status of an OPNsense Object
-    or switches it to the desired state if explicitly specified.
-#>
-Function Switch-OPNsenseItem {
+Function Disable-OPNsenseItem {
     # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
-    [OutputType([Object[]])]
     [CmdletBinding(
         SupportsShouldProcess = $true,
-        ConfirmImpact = "Medium"
+        ConfirmImpact = "Low"
     )]
     Param(
-        [parameter(Mandatory = $true, position = 0)][String]$Module,
-        [parameter(Mandatory = $true, position = 1)][String]$Object,
+        [parameter(Mandatory = $true, position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)]
+        [Object[]]$InputObject,
 
-        [Parameter(Mandatory = $true, position = 2)]
-        [AllowEmptyCollection()]
-        [String[]]$Uuid,
-
-        [Parameter(Mandatory = $false, position = 3)]
-        [Boolean]$Enable,
-        
-        [Parameter(Mandatory = $false, position = 4)]
-        [Switch]$Passthru
+        [parameter(Mandatory = $false)]
+        [Switch]$PassThru
     )
     BEGIN {
-        $results = @()
-        $ObjectName = Get-OPNsenseItemType $Module $Object -Name
-
-        # Get object list to match uuid to object name
-        #$metadata = Search-OPNsenseItem $Module $Controller $Command
-        $metadata = Invoke-OPNsenseFunction $Module search $Object
-
-        if ($Enable -eq $true) {
-            $Toggle = 'Enable'
-            $newStatus = '1'
-        } else {
-            $Toggle = 'Disable'
-            $newStatus = '0'
-        }
-
+        # Get the Verb of the cmdlet
+        $verb, $null = $MyInvocation.MyCommand -split "-", 2
+        $command = "toggle"
+        $enabled = ($verb -eq "Enable")
+        $commands = Get-OPNsenseItemMap | Where-Object { $_.command -eq $command }
     }
     PROCESS {
-        foreach ($id in $Uuid) {
-            #$item = $metadata | Where-Object { $_.Uuid -eq $id }
-            $item = Select-OPNsenseItem -InputObject $metadata -Uuid $id
+        foreach ($obj in $InputObject) {
+            $cmd = $commands | Where-Object { $_.returntype -eq $obj.gettype().FullName }
 
-            # Check if the object was found
-            if (-not $item) {
-                Write-Warning ('{2} "{{{0}}}" can not be {1}d because it cannot be found.' -f $id, $Toggle.ToLower(), $ObjectName)
-                Continue # with next item
+            # Check if an api command was found for this TypeName
+            if (!$cmd) {
+                Write-Warning ("Unable to process object of type {0}" -f $obj.gettype().FullName)
+                Continue # With next object
             }
 
-            # Get the current state of the object
-            if ($item.enabled) {
-                $currentStatus = $item.enabled
-            } elseif ($item.disabled) {
-                $currentStatus = 1 - $item.disabled
-            } else {
-                $currentStatus = $null  # Unknown
-                Write-Warning "Unable to determine the status of $ObjectName"
-            }
+            # Ask confirmation before removal, if needed
+            if ($pscmdlet.ShouldProcess( ("{{{0}}}" -f $obj.Uuid) , ("{0} {1}" -f $verb, $cmd.ObjectName) ) ) {
 
-            # Only Change if needed
-            if ($newStatus -ne $CurrentStatus) {
-                # Request confirmation if needed
-                if ($PSCmdlet.ShouldProcess(("{0} {{{1}}}" -f $item.name, $id), "$Toggle $ObjectName")) {
-                    #$result = Invoke-OPNsenseCommand $Module $Controller $("toggle{0}/{1}/{2}" -f $Command.ToLower(), $id, $newStatus) -Form $Command.ToLower() -AddProperty @{ 'Uuid' = "$id"; 'Name' = "{0}" -f $item.Name }
-                    $result = Invoke-OPNsenseFunction $Module "toggle" $Object -Uuid $id -Enable $Enable #-AddProperty @{ 'Uuid' = "$id"; 'Name' = "{0}" -f $item.Name }
-                    if (Test-OPNsenseApiResult $result) {
-                    } else {
-                        Write-Warning ('Failed to {2} {3} "{0} {{{1}}}"!' -f $item.name, $id, $Toggle.ToLower(), $ObjectName)
-                        Continue # with next item
+                # Be Verbose
+                Write-Verbose ("{0} {1} {{{2}}}" -f $verb, $cmd.ObjectName, $obj.Uuid)
+
+                $result = Invoke-OPNsenseFunction -Module $cmd.Module -Command $command -Object $cmd.Object -Uuid $obj.Uuid -Enable $enabled
+
+                if (Test-OPnsenseApiResult $result) {
+                    # Output results
+                    if ($PassThru) {
+                        Invoke-OPNsenseFunction -Module $cmd.Module -Command get -Object $cmd.Object -Uuid $obj.Uuid
                     }
-                }    
-            } else {
-                # Already in the requested state
-                Write-Verbose ('{3} "{0} {{{1}}}" is already {2}d.' -f $item.name, $id, $Toggle.ToLower(), $ObjectName)
-            }
 
-            # Successfully changed item or no change was needed, push item to the results stack
-            # Note: this item still has the initial status set!
-            $results += $item
+                } else {
+                    Write-Warning ("Failed to {0} {1} {{{2}}}" -f $verb.toLower(), $cmd.ObjectName, $obj.Uuid)
+                }
+
+            } # ShouldProcess
 
         }
-    }    
+    }
     END {
-        if ($Passthru) {
-            # Get the details of the UUIDs in the list
-            return $results
-        }
     }
 }

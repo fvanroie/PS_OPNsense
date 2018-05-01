@@ -39,7 +39,7 @@ Function Disable-OPNsenseItem {
         $verb, $null = $MyInvocation.MyCommand -split "-", 2
         $command = "toggle"
         $enabled = ($verb -eq "Enable")
-        $commands = Get-OPNsenseItemMap | Where-Object { $_.command -eq 'remove' }
+        $commands = Get-OPNsenseItemMap | Where-Object { $_.command -eq $command }
     }
     PROCESS {
         foreach ($obj in $InputObject) {
