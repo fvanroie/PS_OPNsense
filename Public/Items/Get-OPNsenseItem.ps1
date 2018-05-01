@@ -34,7 +34,7 @@ Function Get-OPNsenseItem {
     [CmdletBinding()]
     Param (
         [parameter(Mandatory = $true, position = 0)][String]$Module,
-        [parameter(Mandatory = $true, position = 1)][String]$Object,
+        [parameter(Mandatory = $true, position = 1)][String]$Item,
         [parameter(Mandatory = $false)][String[]]$Uuid,
         [parameter(Mandatory = $false)][Boolean]$Enable
     )
@@ -44,7 +44,7 @@ Function Get-OPNsenseItem {
     PROCESS {
         if (-Not $UUID) {
             Write-Verbose "Gathering all the UUIDs..."
-            $uuids += $(Invoke-OPNsenseFunction $Module search $Object).UUID
+            $uuids += $(Invoke-OPNsenseFunction $Module search $Item).UUID
         } else {
             $uuids += $UUID
         }
@@ -52,8 +52,8 @@ Function Get-OPNsenseItem {
     END {
         foreach ($id in $uuids) {
             Write-Verbose ""
-            Write-Verbose ("Retrieving Object {0}" -f $id)
-            Invoke-OPNsenseFunction $Module get $Object -Uuid $id
+            Write-Verbose ("Retrieving Item {0}" -f $id)
+            Invoke-OPNsenseFunction $Module get $Item -Uuid $id
         }
     }
 }
