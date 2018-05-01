@@ -33,36 +33,41 @@ Function Get-OPNsenseSetting {
     [OutputType([Object[]])]
     [CmdletBinding()]
     Param (
-        [parameter(Mandatory = $true, position = 0)][String]$Module,
-        [parameter(Mandatory = $true, position = 1)][String]$Object
+        [parameter(Mandatory = $true, position = 0)]
+        [ValidateSet("AcmeClient", "ArpScanner", "C-ICAP", "ClamAV", "Collectd", "FreeRadius", "HAProxy", "HelloWorld", "IDS", "LLDPd", "MDNSrepeater", "Monit", "Netflow", "NodeExporter", "Nut", "OpenConnect", 
+            "Postfix", "Proxy", "ProxySSO", "Quagga", "Redis", "ShadowSocks", "Siproxd", "Telegraf", "Tor", "ZabbixAgent", "ZabbixProxy", "ZeroTier")]
+        [String]$Module,
+        [parameter(Mandatory = $true, position = 1)]
+        [String]$Setting
     )
     BEGIN {
         $Command = "get"
     }
     PROCESS {
-        Write-Verbose "Getting settings for $Module $Object"
+        Write-Verbose "Getting settings for $Module $Setting"
 
         # TODO : Check if the appropriate plugin is installed
 
         # Get the Invoke Arguments List
-        $arglist = $OPNsenseSettingMap.$Module.$Object.$Command.command
-        $returntype = $OPNsenseSettingMap.$Module.$Object.$Command.returntype
+        $arglist = $OPNsenseSettingMap.settings.$Module.$Setting.$Command.command
+        $returntype = $OPNsenseSettingMap.settings.$Module.$Setting.$Command.returntype
 
         # Build Invoke Arguments Splat
         $splat = @{};
         if ($arglist) {
             $arglist | Get-Member -MemberType NoteProperty | ForEach-Object { $splat.add($_.name, $arglist.($_.name))}
         } else {
-            Throw "Undefined api call for $command $Module $Object"
+            Throw "Undefined api call for $command $Module $Setting"
         }
 
         # Invoke splat
         $result = Invoke-OPNsenseCommand @splat
 
-        if ($returntype) {
-            Write-Verbose "Converting object to $returntype"
-            return ConvertTo-OPNsenseObject -TypeName $returntype -InputObject $result
-        }
+        # TODO : Cast returntype
+        #if ($returntype) {
+        #    Write-Verbose "Converting object to $returntype"
+        #    return ConvertTo-OPNsenseObject -TypeName $returntype -InputObject $result
+        #}
         return $result
 
     }
