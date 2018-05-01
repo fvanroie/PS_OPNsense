@@ -22,7 +22,7 @@
 #>
 
 
-Function Stop-OPNsense {
+Function Stop-OPNsenseServer {
     # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
     [CmdletBinding(
         SupportsShouldProcess = $true,
