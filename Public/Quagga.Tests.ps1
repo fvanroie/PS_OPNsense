@@ -21,7 +21,7 @@ InModuleScope PS_OPNsense {
             }
  
         }
-
+        <#
         Context "Enable-OPNsenseQuagga*" {
 
             It "Enable-OPNsenseQuagga<object>" -TestCases $objects {
@@ -45,7 +45,7 @@ InModuleScope PS_OPNsense {
             }
 
         }
-
+#>
     }
 
 }
