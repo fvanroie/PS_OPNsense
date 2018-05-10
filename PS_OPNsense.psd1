@@ -101,9 +101,7 @@
     NestedModules          = @(
         <# These are now automatically dot sourced from the .psm1 loader sript
         # Private Helper Function
-        'Private/Add-ObjectDetail.ps1',
         'Private/CertificateValidation.ps1',
-        'Private/New-ValidationDynamicParam.ps1'
         #>
     )
 
