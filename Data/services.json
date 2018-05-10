@@ -13,27 +13,32 @@
                     "start": {
                         "module": "acmeclient",
                         "controller": "service",
-                        "command": "start"
+                        "command": "start",
+                        "json": {}
                     },
                     "stop": {
                         "module": "acmeclient",
                         "controller": "service",
-                        "command": "stop"
+                        "command": "stop",
+                        "json": {}
                     },
                     "restart": {
                         "module": "acmeclient",
                         "controller": "service",
-                        "command": "restart"
+                        "command": "restart",
+                        "json": {}
                     },
                     "reconfigure": {
                         "module": "acmeclient",
                         "controller": "service",
-                        "command": "reconfigure"
+                        "command": "reconfigure",
+                        "json": {}
                     },
                     "configtest": {
                         "module": "acmeclient",
                         "controller": "service",
-                        "command": "configtest"
+                        "command": "configtest",
+                        "json": {}
                     }
                 }
             },
@@ -48,22 +53,26 @@
                     "start": {
                         "module": "arpscanner",
                         "controller": "service",
-                        "command": "start"
+                        "command": "start",
+                        "json": {}
                     },
                     "stop": {
                         "module": "arpscanner",
                         "controller": "service",
-                        "command": "stop"
+                        "command": "stop",
+                        "json": {}
                     },
                     "reload": {
                         "module": "arpscanner",
                         "controller": "service",
-                        "command": "reload"
+                        "command": "reload",
+                        "json": {}
                     },
                     "check": {
                         "module": "arpscanner",
                         "controller": "service",
-                        "command": "check"
+                        "command": "check",
+                        "json": {}
                     }
                 }
             },
@@ -72,7 +81,8 @@
                     "reconfigure": {
                         "module": "captiveportal",
                         "controller": "service",
-                        "command": "reconfigure"
+                        "command": "reconfigure",
+                        "json": {}
                     }
                 }
             },
@@ -87,22 +97,26 @@
                     "start": {
                         "module": "cicap",
                         "controller": "service",
-                        "command": "start"
+                        "command": "start",
+                        "json": {}
                     },
                     "stop": {
                         "module": "cicap",
                         "controller": "service",
-                        "command": "stop"
+                        "command": "stop",
+                        "json": {}
                     },
                     "restart": {
                         "module": "cicap",
                         "controller": "service",
-                        "command": "restart"
+                        "command": "restart",
+                        "json": {}
                     },
                     "reconfigure": {
                         "module": "cicap",
                         "controller": "service",
-                        "command": "reconfigure"
+                        "command": "reconfigure",
+                        "json": {}
                     }
                 }
             },
@@ -117,22 +131,26 @@
                     "start": {
                         "module": "clamav",
                         "controller": "service",
-                        "command": "start"
+                        "command": "start",
+                        "json": {}
                     },
                     "stop": {
                         "module": "clamav",
                         "controller": "service",
-                        "command": "stop"
+                        "command": "stop",
+                        "json": {}
                     },
                     "restart": {
                         "module": "clamav",
                         "controller": "service",
-                        "command": "restart"
+                        "command": "restart",
+                        "json": {}
                     },
                     "reconfigure": {
                         "module": "clamav",
                         "controller": "service",
-                        "command": "reconfigure"
+                        "command": "reconfigure",
+                        "json": {}
                     }
                 }
             },
@@ -147,22 +165,26 @@
                     "start": {
                         "module": "collectd",
                         "controller": "service",
-                        "command": "start"
+                        "command": "start",
+                        "json": {}
                     },
                     "stop": {
                         "module": "collectd",
                         "controller": "service",
-                        "command": "stop"
+                        "command": "stop",
+                        "json": {}
                     },
                     "restart": {
                         "module": "collectd",
                         "controller": "service",
-                        "command": "restart"
+                        "command": "restart",
+                        "json": {}
                     },
                     "reconfigure": {
                         "module": "collectd",
                         "controller": "service",
-                        "command": "reconfigure"
+                        "command": "reconfigure",
+                        "json": {}
                     }
                 }
             },
@@ -171,7 +193,8 @@
                     "reconfigure": {
                         "module": "cron",
                         "controller": "service",
-                        "command": "reconfigure"
+                        "command": "reconfigure",
+                        "json": {}
                     }
                 }
             },
@@ -186,22 +209,26 @@
                     "start": {
                         "module": "freeradius",
                         "controller": "service",
-                        "command": "start"
+                        "command": "start",
+                        "json": {}
                     },
                     "stop": {
                         "module": "freeradius",
                         "controller": "service",
-                        "command": "stop"
+                        "command": "stop",
+                        "json": {}
                     },
                     "restart": {
                         "module": "freeradius",
                         "controller": "service",
-                        "command": "restart"
+                        "command": "restart",
+                        "json": {}
                     },
                     "reconfigure": {
                         "module": "freeradius",
                         "controller": "service",
-                        "command": "reconfigure"
+                        "command": "reconfigure",
+                        "json": {}
                     }
                 }
             },
@@ -216,22 +243,26 @@
                     "start": {
                         "module": "ftpproxy",
                         "controller": "service",
-                        "command": "start"
+                        "command": "start",
+                        "json": {}
                     },
                     "stop": {
                         "module": "ftpproxy",
                         "controller": "service",
-                        "command": "stop"
+                        "command": "stop",
+                        "json": {}
                     },
                     "restart": {
                         "module": "ftpproxy",
                         "controller": "service",
-                        "command": "restart"
+                        "command": "restart",
+                        "json": {}
                     },
                     "reconfigure": {
                         "module": "ftpproxy",
                         "controller": "service",
-                        "command": "reload"
+                        "command": "reload",
+                        "json": {}
                     }
                 }
             },
@@ -246,27 +277,32 @@
                     "start": {
                         "module": "haproxy",
                         "controller": "service",
-                        "command": "start"
+                        "command": "start",
+                        "json": {}
                     },
                     "stop": {
                         "module": "haproxy",
                         "controller": "service",
-                        "command": "stop"
+                        "command": "stop",
+                        "json": {}
                     },
                     "restart": {
                         "module": "haproxy",
                         "controller": "service",
-                        "command": "restart"
+                        "command": "restart",
+                        "json": {}
                     },
                     "reconfigure": {
                         "module": "haproxy",
                         "controller": "service",
-                        "command": "reconfigure"
+                        "command": "reconfigure",
+                        "json": {}
                     },
                     "configtest": {
                         "module": "haproxy",
                         "controller": "service",
-                        "command": "configtest"
+                        "command": "configtest",
+                        "json": {}
                     }
                 }
             },
@@ -276,12 +312,14 @@
                     "reconfigure": {
                         "module": "helloworld",
                         "controller": "service",
-                        "command": "reload"
+                        "command": "reload",
+                        "json": {}
                     },
                     "configtest": {
                         "module": "helloworld",
                         "controller": "service",
-                        "command": "test"
+                        "command": "test",
+                        "json": {}
                     }
                 }
             },
@@ -295,22 +333,26 @@
                     "start": {
                         "module": "ids",
                         "controller": "service",
-                        "command": "start"
+                        "command": "start",
+                        "json": {}
                     },
                     "stop": {
                         "module": "ids",
                         "controller": "service",
-                        "command": "stop"
+                        "command": "stop",
+                        "json": {}
                     },
                     "restart": {
                         "module": "ids",
                         "controller": "service",
-                        "command": "restart"
+                        "command": "restart",
+                        "json": {}
                     },
                     "reconfigure": {
                         "module": "ids",
                         "controller": "service",
-                        "command": "reconfigure"
+                        "command": "reconfigure",
+                        "json": {}
                     }
                 }
             },
@@ -325,22 +367,26 @@
                     "start": {
                         "module": "iperf",
                         "controller": "service",
-                        "command": "start"
+                        "command": "start",
+                        "json": {}
                     },
                     "stop": {
                         "module": "iperf",
                         "controller": "service",
-                        "command": "stop"
+                        "command": "stop",
+                        "json": {}
                     },
                     "restart": {
                         "module": "iperf",
                         "controller": "service",
-                        "command": "restart"
+                        "command": "restart",
+                        "json": {}
                     },
                     "reconfigure": {
                         "module": "iperf",
                         "controller": "service",
-                        "command": "reconfigure"
+                        "command": "reconfigure",
+                        "json": {}
                     }
                 }
             },
@@ -355,22 +401,26 @@
                     "start": {
                         "module": "lldpd",
                         "controller": "service",
-                        "command": "start"
+                        "command": "start",
+                        "json": {}
                     },
                     "stop": {
                         "module": "lldpd",
                         "controller": "service",
-                        "command": "stop"
+                        "command": "stop",
+                        "json": {}
                     },
                     "restart": {
                         "module": "lldpd",
                         "controller": "service",
-                        "command": "restart"
+                        "command": "restart",
+                        "json": {}
                     },
                     "reconfigure": {
                         "module": "lldpd",
                         "controller": "service",
-                        "command": "reconfigure"
+                        "command": "reconfigure",
+                        "json": {}
                     }
                 }
             },
@@ -385,17 +435,20 @@
                     "start": {
                         "module": "mdnsrepeater",
                         "controller": "service",
-                        "command": "start"
+                        "command": "start",
+                        "json": {}
                     },
                     "stop": {
                         "module": "mdnsrepeater",
                         "controller": "service",
-                        "command": "stop"
+                        "command": "stop",
+                        "json": {}
                     },
                     "restart": {
                         "module": "mdnsrepeater",
                         "controller": "service",
-                        "command": "restart"
+                        "command": "restart",
+                        "json": {}
                     }
                 }
             },
@@ -410,27 +463,32 @@
                     "start": {
                         "module": "monit",
                         "controller": "service",
-                        "command": "start"
+                        "command": "start",
+                        "json": {}
                     },
                     "stop": {
                         "module": "monit",
                         "controller": "service",
-                        "command": "stop"
+                        "command": "stop",
+                        "json": {}
                     },
                     "restart": {
                         "module": "monit",
                         "controller": "service",
-                        "command": "restart"
+                        "command": "restart",
+                        "json": {}
                     },
                     "reconfigure": {
                         "module": "monit",
                         "controller": "service",
-                        "command": "reconfigure"
+                        "command": "reconfigure",
+                        "json": {}
                     },
                     "configtest": {
                         "module": "monit",
                         "controller": "service",
-                        "command": "configtest"
+                        "command": "configtest",
+                        "json": {}
                     }
                 }
             },
@@ -445,22 +503,26 @@
                     "start": {
                         "module": "nodeexporter",
                         "controller": "service",
-                        "command": "start"
+                        "command": "start",
+                        "json": {}
                     },
                     "stop": {
                         "module": "nodeexporter",
                         "controller": "service",
-                        "command": "stop"
+                        "command": "stop",
+                        "json": {}
                     },
                     "restart": {
                         "module": "nodeexporter",
                         "controller": "service",
-                        "command": "restart"
+                        "command": "restart",
+                        "json": {}
                     },
                     "reconfigure": {
                         "module": "nodeexporter",
                         "controller": "service",
-                        "command": "reconfigure"
+                        "command": "reconfigure",
+                        "json": {}
                     }
                 }
             },
@@ -470,7 +532,8 @@
                     "reconfigure": {
                         "module": "nut",
                         "controller": "service",
-                        "command": "reconfigure"
+                        "command": "reconfigure",
+                        "json": {}
                     }
                 }
             },
@@ -485,22 +548,26 @@
                     "start": {
                         "module": "openconnect",
                         "controller": "service",
-                        "command": "start"
+                        "command": "start",
+                        "json": {}
                     },
                     "stop": {
                         "module": "openconnect",
                         "controller": "service",
-                        "command": "stop"
+                        "command": "stop",
+                        "json": {}
                     },
                     "restart": {
                         "module": "openconnect",
                         "controller": "service",
-                        "command": "restart"
+                        "command": "restart",
+                        "json": {}
                     },
                     "reconfigure": {
                         "module": "openconnect",
                         "controller": "service",
-                        "command": "reconfigure"
+                        "command": "reconfigure",
+                        "json": {}
                     }
                 }
             },
@@ -515,22 +582,26 @@
                     "start": {
                         "module": "postfix",
                         "controller": "service",
-                        "command": "start"
+                        "command": "start",
+                        "json": {}
                     },
                     "stop": {
                         "module": "postfix",
                         "controller": "service",
-                        "command": "stop"
+                        "command": "stop",
+                        "json": {}
                     },
                     "restart": {
                         "module": "postfix",
                         "controller": "service",
-                        "command": "restart"
+                        "command": "restart",
+                        "json": {}
                     },
                     "reconfigure": {
                         "module": "postfix",
                         "controller": "service",
-                        "command": "reconfigure"
+                        "command": "reconfigure",
+                        "json": {}
                     }
                 }
             },
@@ -544,22 +615,26 @@
                     "start": {
                         "module": "proxy",
                         "controller": "service",
-                        "command": "start"
+                        "command": "start",
+                        "json": {}
                     },
                     "stop": {
                         "module": "proxy",
                         "controller": "service",
-                        "command": "stop"
+                        "command": "stop",
+                        "json": {}
                     },
                     "restart": {
                         "module": "proxy",
                         "controller": "service",
-                        "command": "restart"
+                        "command": "restart",
+                        "json": {}
                     },
                     "reconfigure": {
                         "module": "proxy",
                         "controller": "service",
-                        "command": "reconfigure"
+                        "command": "reconfigure",
+                        "json": {}
                     }
                 }
             },
@@ -574,22 +649,26 @@
                     "start": {
                         "module": "quagga",
                         "controller": "service",
-                        "command": "start"
+                        "command": "start",
+                        "json": {}
                     },
                     "stop": {
                         "module": "quagga",
                         "controller": "service",
-                        "command": "stop"
+                        "command": "stop",
+                        "json": {}
                     },
                     "restart": {
                         "module": "quagga",
                         "controller": "service",
-                        "command": "restart"
+                        "command": "restart",
+                        "json": {}
                     },
                     "reconfigure": {
                         "module": "quagga",
                         "controller": "service",
-                        "command": "reconfigure"
+                        "command": "reconfigure",
+                        "json": {}
                     }
                 }
             },
@@ -604,22 +683,26 @@
                     "start": {
                         "module": "redis",
                         "controller": "service",
-                        "command": "start"
+                        "command": "start",
+                        "json": {}
                     },
                     "stop": {
                         "module": "redis",
                         "controller": "service",
-                        "command": "stop"
+                        "command": "stop",
+                        "json": {}
                     },
                     "restart": {
                         "module": "redis",
                         "controller": "service",
-                        "command": "restart"
+                        "command": "restart",
+                        "json": {}
                     },
                     "reconfigure": {
                         "module": "redis",
                         "controller": "service",
-                        "command": "reconfigure"
+                        "command": "reconfigure",
+                        "json": {}
                     }
                 }
             },
@@ -634,27 +717,32 @@
                     "start": {
                         "module": "relayd",
                         "controller": "service",
-                        "command": "start"
+                        "command": "start",
+                        "json": {}
                     },
                     "stop": {
                         "module": "relayd",
                         "controller": "service",
-                        "command": "stop"
+                        "command": "stop",
+                        "json": {}
                     },
                     "restart": {
                         "module": "relayd",
                         "controller": "service",
-                        "command": "restart"
+                        "command": "restart",
+                        "json": {}
                     },
                     "reconfigure": {
                         "module": "relayd",
                         "controller": "service",
-                        "command": "reconfigure"
+                        "command": "reconfigure",
+                        "json": {}
                     },
                     "configtest": {
                         "module": "relayd",
                         "controller": "service",
-                        "command": "configtest"
+                        "command": "configtest",
+                        "json": {}
                     }
                 }
             },
@@ -663,7 +751,8 @@
                     "reconfigure": {
                         "module": "routes",
                         "controller": "routes",
-                        "command": "reconfigure"
+                        "command": "reconfigure",
+                        "json": {}
                     }
                 }
             },
@@ -678,22 +767,26 @@
                     "start": {
                         "module": "rspamd",
                         "controller": "service",
-                        "command": "start"
+                        "command": "start",
+                        "json": {}
                     },
                     "stop": {
                         "module": "rspamd",
                         "controller": "service",
-                        "command": "stop"
+                        "command": "stop",
+                        "json": {}
                     },
                     "restart": {
                         "module": "rspamd",
                         "controller": "service",
-                        "command": "restart"
+                        "command": "restart",
+                        "json": {}
                     },
                     "reconfigure": {
                         "module": "rspamd",
                         "controller": "service",
-                        "command": "reconfigure"
+                        "command": "reconfigure",
+                        "json": {}
                     }
                 }
             },
@@ -708,22 +801,26 @@
                     "start": {
                         "module": "shadowsocks",
                         "controller": "service",
-                        "command": "start"
+                        "command": "start",
+                        "json": {}
                     },
                     "stop": {
                         "module": "shadowsocks",
                         "controller": "service",
-                        "command": "stop"
+                        "command": "stop",
+                        "json": {}
                     },
                     "restart": {
                         "module": "shadowsocks",
                         "controller": "service",
-                        "command": "restart"
+                        "command": "restart",
+                        "json": {}
                     },
                     "reconfigure": {
                         "module": "shadowsocks",
                         "controller": "service",
-                        "command": "reconfigure"
+                        "command": "reconfigure",
+                        "json": {}
                     }
                 }
             },
@@ -738,22 +835,26 @@
                     "start": {
                         "module": "siproxd",
                         "controller": "service",
-                        "command": "start"
+                        "command": "start",
+                        "json": {}
                     },
                     "stop": {
                         "module": "siproxd",
                         "controller": "service",
-                        "command": "stop"
+                        "command": "stop",
+                        "json": {}
                     },
                     "restart": {
                         "module": "siproxd",
                         "controller": "service",
-                        "command": "restart"
+                        "command": "restart",
+                        "json": {}
                     },
                     "reconfigure": {
                         "module": "siproxd",
                         "controller": "service",
-                        "command": "reconfigure"
+                        "command": "reconfigure",
+                        "json": {}
                     }
                 }
             },
@@ -768,22 +869,26 @@
                     "start": {
                         "module": "telegraf",
                         "controller": "service",
-                        "command": "start"
+                        "command": "start",
+                        "json": {}
                     },
                     "stop": {
                         "module": "telegraf",
                         "controller": "service",
-                        "command": "stop"
+                        "command": "stop",
+                        "json": {}
                     },
                     "restart": {
                         "module": "telegraf",
                         "controller": "service",
-                        "command": "restart"
+                        "command": "restart",
+                        "json": {}
                     },
                     "reconfigure": {
                         "module": "telegraf",
                         "controller": "service",
-                        "command": "reconfigure"
+                        "command": "reconfigure",
+                        "json": {}
                     }
                 }
             },
@@ -798,17 +903,20 @@
                     "stop": {
                         "module": "tinc",
                         "controller": "service",
-                        "command": "stop"
+                        "command": "stop",
+                        "json": {}
                     },
                     "restart": {
                         "module": "tinc",
                         "controller": "service",
-                        "command": "restart"
+                        "command": "restart",
+                        "json": {}
                     },
                     "reconfigure": {
                         "module": "tinc",
                         "controller": "service",
-                        "command": "reconfigure"
+                        "command": "reconfigure",
+                        "json": {}
                     }
                 }
             },
@@ -823,38 +931,44 @@
                     "start": {
                         "module": "tor",
                         "controller": "service",
-                        "command": "start"
+                        "command": "start",
+                        "json": {}
                     },
                     "stop": {
                         "module": "tor",
                         "controller": "service",
-                        "command": "stop"
+                        "command": "stop",
+                        "json": {}
                     },
                     "restart": {
                         "module": "tor",
                         "controller": "service",
-                        "command": "restart"
+                        "command": "restart",
+                        "json": {}
                     },
                     "reconfigure": {
                         "module": "tor",
                         "controller": "service",
-                        "command": "reconfigure"
+                        "command": "reconfigure",
+                        "json": {}
                     }
                 }
             },
             "TrafficShaper": {
                 "commands": {
                     "reconfigure": {
-                        "module": "trafficShaper",
+                        "module": "trafficshaper",
                         "controller": "service",
-                        "command": "reconfigure"
+                        "command": "reconfigure",
+                        "json": {}
                     }
                 },
                 "flushreload": {
                     "reconfigure": {
-                        "module": "trafficShaper",
+                        "module": "trafficshaper",
                         "controller": "service",
-                        "command": "flushreload"
+                        "command": "flushreload",
+                        "json": {}
                     }
                 }
             },
@@ -869,22 +983,26 @@
                     "start": {
                         "module": "zabbixagent",
                         "controller": "service",
-                        "command": "start"
+                        "command": "start",
+                        "json": {}
                     },
                     "stop": {
                         "module": "zabbixagent",
                         "controller": "service",
-                        "command": "stop"
+                        "command": "stop",
+                        "json": {}
                     },
                     "restart": {
                         "module": "zabbixagent",
                         "controller": "service",
-                        "command": "restart"
+                        "command": "restart",
+                        "json": {}
                     },
                     "reconfigure": {
                         "module": "zabbixagent",
                         "controller": "service",
-                        "command": "reconfigure"
+                        "command": "reconfigure",
+                        "json": {}
                     }
                 }
             },
@@ -899,22 +1017,26 @@
                     "start": {
                         "module": "zabbixproxy",
                         "controller": "service",
-                        "command": "start"
+                        "command": "start",
+                        "json": {}
                     },
                     "stop": {
                         "module": "zabbixproxy",
                         "controller": "service",
-                        "command": "stop"
+                        "command": "stop",
+                        "json": {}
                     },
                     "restart": {
                         "module": "zabbixproxy",
                         "controller": "service",
-                        "command": "restart"
+                        "command": "restart",
+                        "json": {}
                     },
                     "reconfigure": {
                         "module": "zabbixproxy",
                         "controller": "service",
-                        "command": "reconfigure"
+                        "command": "reconfigure",
+                        "json": {}
                     }
                 }
             },

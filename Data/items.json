@@ -1490,7 +1490,8 @@
                 "command": {
                     "module": "proxyuseracl",
                     "controller": "settings",
-                    "command": "toggleacl/<uuid>"
+                    "command": "toggleacl/<uuid>",
+                    "Form": "toggle"
                 }
             },
             "add": {
@@ -1953,7 +1954,203 @@
             }
         }
     },
-    "Relayd": {},
+    "Relayd": {
+        "Host": {
+            "objectname": "Relayd Host",
+            "mountpoint": "\\\\relayd\\host",
+            "remove": {
+                "returntype": "OPNsense.Rlayd.Host",
+                "command": {
+                    "module": "relayd",
+                    "controller": "settings",
+                    "command": "del/host/<uuid>",
+                    "Form": "remove"
+                }
+            },
+            "get": {
+                "returntype": "OPNsense.Rlayd.Host",
+                "command": {
+                    "module": "relayd",
+                    "controller": "settings",
+                    "command": "get/host/<uuid>",
+                    "property": "host"
+                }
+            },
+            "search": {
+                "command": {
+                    "module": "relayd",
+                    "controller": "settings",
+                    "command": "search/host/",
+                    "property": "rows"
+                }
+            },
+            "set": {
+                "returntype": "OPNsense.Rlayd.Host",
+                "command": {
+                    "module": "relayd",
+                    "controller": "settings",
+                    "command": "set/host/<uuid>",
+                    "json": {}
+                }
+            }
+        },
+        "TableCheck": {
+            "objectname": "Relayd TableCheck",
+            "mountpoint": "\\\\relayd\\tablecheck",
+            "remove": {
+                "returntype": "OPNsense.Rlayd.TableCheck",
+                "command": {
+                    "module": "relayd",
+                    "controller": "settings",
+                    "command": "del/tablecheck/<uuid>",
+                    "Form": "remove"
+                }
+            },
+            "get": {
+                "returntype": "OPNsense.Rlayd.TableCheck",
+                "command": {
+                    "module": "relayd",
+                    "controller": "settings",
+                    "command": "get/tablecheck/<uuid>",
+                    "property": "tablecheck"
+                }
+            },
+            "search": {
+                "command": {
+                    "module": "relayd",
+                    "controller": "settings",
+                    "command": "search/tablecheck/",
+                    "property": "rows"
+                }
+            },
+            "set": {
+                "returntype": "OPNsense.Rlayd.TableCheck",
+                "command": {
+                    "module": "relayd",
+                    "controller": "settings",
+                    "command": "set/tablecheck/<uuid>",
+                    "json": {}
+                }
+            }
+        },
+        "Table": {
+            "objectname": "Relayd Table",
+            "mountpoint": "\\\\relayd\\table",
+            "remove": {
+                "returntype": "OPNsense.Rlayd.Table",
+                "command": {
+                    "module": "relayd",
+                    "controller": "settings",
+                    "command": "del/table/<uuid>",
+                    "Form": "remove"
+                }
+            },
+            "get": {
+                "returntype": "OPNsense.Rlayd.Table",
+                "command": {
+                    "module": "relayd",
+                    "controller": "settings",
+                    "command": "get/table/<uuid>",
+                    "property": "table"
+                }
+            },
+            "search": {
+                "command": {
+                    "module": "relayd",
+                    "controller": "settings",
+                    "command": "search/table/",
+                    "property": "rows"
+                }
+            },
+            "set": {
+                "returntype": "OPNsense.Rlayd.Table",
+                "command": {
+                    "module": "relayd",
+                    "controller": "settings",
+                    "command": "set/table/<uuid>",
+                    "json": {}
+                }
+            }
+        },
+        "Protocol": {
+            "objectname": "Relayd Protocol",
+            "mountpoint": "\\\\relayd\\protocol",
+            "remove": {
+                "returntype": "OPNsense.Rlayd.Protocol",
+                "command": {
+                    "module": "relayd",
+                    "controller": "settings",
+                    "command": "del/protocol/<uuid>",
+                    "Form": "remove"
+                }
+            },
+            "get": {
+                "returntype": "OPNsense.Rlayd.Protocol",
+                "command": {
+                    "module": "relayd",
+                    "controller": "settings",
+                    "command": "get/protocol/<uuid>",
+                    "property": "protocol"
+                }
+            },
+            "search": {
+                "command": {
+                    "module": "relayd",
+                    "controller": "settings",
+                    "command": "search/protocol/",
+                    "property": "rows"
+                }
+            },
+            "set": {
+                "returntype": "OPNsense.Rlayd.Protocol",
+                "command": {
+                    "module": "relayd",
+                    "controller": "settings",
+                    "command": "set/protocol/<uuid>",
+                    "json": {}
+                }
+            }
+        },
+        "VirtualServer": {
+            "objectname": "Relayd VirtualServer",
+            "mountpoint": "\\\\relayd\\virtualserver",
+            "remove": {
+                "returntype": "OPNsense.Rlayd.VirtualServer",
+                "command": {
+                    "module": "relayd",
+                    "controller": "settings",
+                    "command": "del/virtualserver/<uuid>",
+                    "Form": "remove"
+                }
+            },
+            "get": {
+                "returntype": "OPNsense.Rlayd.VirtualServer",
+                "command": {
+                    "module": "relayd",
+                    "controller": "settings",
+                    "command": "get/virtualserver/<uuid>",
+                    "property": "virtualserver"
+                }
+            },
+            "search": {
+                "command": {
+                    "module": "relayd",
+                    "controller": "settings",
+                    "command": "search/virtualserver/",
+                    "property": "rows"
+                }
+            },
+            "set": {
+                "returntype": "OPNsense.Rlayd.VirtualServer",
+                "command": {
+                    "module": "relayd",
+                    "controller": "settings",
+                    "command": "set/virtualserver/<uuid>",
+                    "json": {}
+                }
+            }
+        }
+    },
     "Routes": {
         "Route": {
             "objectname": "Routes Route",

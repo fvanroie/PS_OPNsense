@@ -26,7 +26,8 @@
                     "command": {
                         "module": "acmeclient",
                         "controller": "settings",
-                        "command": "set"
+                        "command": "set",
+                        "json": {}
                     }
                 }
             }
@@ -53,7 +54,8 @@
                     "command": {
                         "module": "arpscanner",
                         "controller": "settings",
-                        "command": "set"
+                        "command": "set",
+                        "json": {}
                     }
                 }
             }
@@ -77,7 +79,8 @@
                     "command": {
                         "module": "cicap",
                         "controller": "general",
-                        "command": "set"
+                        "command": "set",
+                        "json": {}
                     }
                 }
             },
@@ -98,7 +101,8 @@
                     "command": {
                         "module": "cicap",
                         "controller": "antivirus",
-                        "command": "set"
+                        "command": "set",
+                        "json": {}
                     }
                 }
             }
@@ -122,7 +126,8 @@
                     "command": {
                         "module": "clamav",
                         "controller": "general",
-                        "command": "set"
+                        "command": "set",
+                        "json": {}
                     }
                 }
             }
@@ -146,7 +151,8 @@
                     "command": {
                         "module": "collectd",
                         "controller": "general",
-                        "command": "set"
+                        "command": "set",
+                        "json": {}
                     }
                 }
             }
@@ -170,7 +176,8 @@
                     "command": {
                         "module": "freeradius",
                         "controller": "general",
-                        "command": "set"
+                        "command": "set",
+                        "json": {}
                     }
                 }
             },
@@ -191,7 +198,8 @@
                     "command": {
                         "module": "freeradius",
                         "controller": "eap",
-                        "command": "set"
+                        "command": "set",
+                        "json": {}
                     }
                 }
             },
@@ -212,7 +220,8 @@
                     "command": {
                         "module": "freeradius",
                         "controller": "ldap",
-                        "command": "set"
+                        "command": "set",
+                        "json": {}
                     }
                 }
             }
@@ -239,7 +248,8 @@
                     "command": {
                         "module": "haproxy",
                         "controller": "settings",
-                        "command": "set"
+                        "command": "set",
+                        "json": {}
                     }
                 }
             },
@@ -264,7 +274,8 @@
                     "command": {
                         "module": "haproxy",
                         "controller": "settings",
-                        "command": "set"
+                        "command": "set",
+                        "json": {}
                     }
                 }
             },
@@ -289,7 +300,8 @@
                     "command": {
                         "module": "haproxy",
                         "controller": "settings",
-                        "command": "set"
+                        "command": "set",
+                        "json": {}
                     }
                 }
             },
@@ -314,7 +326,8 @@
                     "command": {
                         "module": "haproxy",
                         "controller": "settings",
-                        "command": "set"
+                        "command": "set",
+                        "json": {}
                     }
                 }
             },
@@ -339,7 +352,8 @@
                     "command": {
                         "module": "haproxy",
                         "controller": "settings",
-                        "command": "set"
+                        "command": "set",
+                        "json": {}
                     }
                 }
             },
@@ -364,7 +378,8 @@
                     "command": {
                         "module": "haproxy",
                         "controller": "settings",
-                        "command": "set"
+                        "command": "set",
+                        "json": {}
                     }
                 }
             }
@@ -391,7 +406,8 @@
                     "command": {
                         "module": "helloworld",
                         "controller": "settings",
-                        "command": "set"
+                        "command": "set",
+                        "json": {}
                     }
                 }
             }
@@ -417,7 +433,33 @@
                     "command": {
                         "module": "ids",
                         "controller": "settings",
-                        "command": "set"
+                        "command": "set",
+                        "json": {}
+                    }
+                }
+            }
+        },
+        "Iperf": {
+            "plugin": "os-iperf",
+            "Instance": {
+                "objectname": "Iperf General Settings",
+                "mountpoint": "\\\\OPNsense\\iperf\\instances",
+                "get": {
+                    "returntype": "OPNsense.Settings.Iperf.Instance",
+                    "command": {
+                        "module": "iperf",
+                        "controller": "instance",
+                        "command": "get",
+                        "property": "instance"
+                    }
+                },
+                "set": {
+                    "returntype": "OPNsense.Settings.Iperf.Instance",
+                    "command": {
+                        "module": "iperf",
+                        "controller": "instance",
+                        "command": "set",
+                        "json": {}
                     }
                 }
             }
@@ -441,7 +483,8 @@
                     "command": {
                         "module": "lldpd",
                         "controller": "general",
-                        "command": "set"
+                        "command": "set",
+                        "json": {}
                     }
                 }
             }
@@ -465,7 +508,8 @@
                     "command": {
                         "module": "mdnsrepeater",
                         "controller": "settings",
-                        "command": "set"
+                        "command": "set",
+                        "json": {}
                     }
                 }
             }
@@ -492,7 +536,8 @@
                     "command": {
                         "module": "monit",
                         "controller": "settings",
-                        "command": "set/general"
+                        "command": "set/general",
+                        "json": {}
                     }
                 }
             }
@@ -518,7 +563,8 @@
                     "command": {
                         "module": "diagnostics",
                         "controller": "netflow",
-                        "command": "setconfig"
+                        "command": "setconfig",
+                        "json": {}
                     }
                 }
             },
@@ -566,7 +612,8 @@
                     "command": {
                         "module": "nodeexporter",
                         "controller": "general",
-                        "command": "set"
+                        "command": "set",
+                        "json": {}
                     }
                 }
             }
@@ -593,7 +640,8 @@
                     "command": {
                         "module": "nut",
                         "controller": "settings",
-                        "command": "set"
+                        "command": "set",
+                        "json": {}
                     }
                 }
             }
@@ -617,7 +665,8 @@
                     "command": {
                         "module": "openconnect",
                         "controller": "general",
-                        "command": "set"
+                        "command": "set",
+                        "json": {}
                     }
                 }
             }
@@ -641,7 +690,8 @@
                     "command": {
                         "module": "postfix",
                         "controller": "general",
-                        "command": "set"
+                        "command": "set",
+                        "json": {}
                     }
                 }
             },
@@ -662,7 +712,8 @@
                     "command": {
                         "module": "postfix",
                         "controller": "antispam",
-                        "command": "set"
+                        "command": "set",
+                        "json": {}
                     }
                 }
             }
@@ -688,7 +739,8 @@
                     "command": {
                         "module": "proxy",
                         "controller": "settings",
-                        "command": "set"
+                        "command": "set",
+                        "json": {}
                     }
                 }
             },
@@ -735,7 +787,8 @@
                     "command": {
                         "module": "proxysso",
                         "controller": "settings",
-                        "command": "set"
+                        "command": "set",
+                        "json": {}
                     }
                 }
             }
@@ -759,7 +812,8 @@
                     "command": {
                         "module": "quagga",
                         "controller": "general",
-                        "command": "set"
+                        "command": "set",
+                        "json": {}
                     }
                 }
             },
@@ -780,7 +834,8 @@
                     "command": {
                         "module": "quagga",
                         "controller": "rip",
-                        "command": "set"
+                        "command": "set",
+                        "json": {}
                     }
                 }
             },
@@ -801,7 +856,8 @@
                     "command": {
                         "module": "quagga",
                         "controller": "ospfsettings",
-                        "command": "set"
+                        "command": "set",
+                        "json": {}
                     }
                 }
             },
@@ -822,7 +878,8 @@
                     "command": {
                         "module": "quagga",
                         "controller": "ospf6settings",
-                        "command": "set"
+                        "command": "set",
+                        "json": {}
                     }
                 }
             },
@@ -843,7 +900,8 @@
                     "command": {
                         "module": "quagga",
                         "controller": "bgp",
-                        "command": "set"
+                        "command": "set",
+                        "json": {}
                     }
                 }
             }
@@ -870,7 +928,8 @@
                     "command": {
                         "module": "redis",
                         "controller": "settings",
-                        "command": "set"
+                        "command": "set",
+                        "json": {}
                     }
                 }
             },
@@ -947,6 +1006,52 @@
                 }
             }
         },
+        "Relayd": {
+            "plugin": "os-relayd",
+            "General": {
+                "objectname": "Relayd General Settings",
+                "mountpoint": "\\\\OPNsense\\relayd\\general",
+                "get": {
+                    "returntype": "OPNsense.Settings.Relayd.General",
+                    "command": {
+                        "module": "relayd",
+                        "controller": "settings",
+                        "command": "get/general",
+                        "property": [
+                            "general"
+                        ]
+                    }
+                }
+            }
+        },
+        "Rspamd": {
+            "plugin": "os-rspamd",
+            "General": {
+                "objectname": "Rspamd General Settings",
+                "mountpoint": "\\\\OPNsense\\rspamd\\general",
+                "get": {
+                    "returntype": "OPNsense.Settings.Rspamd.General",
+                    "command": {
+                        "module": "rspamd",
+                        "controller": "settings",
+                        "command": "get",
+                        "property": [
+                            "rspamd",
+                            "general"
+                        ]
+                    }
+                },
+                "set": {
+                    "returntype": "OPNsense.Settings.Rspamd.General",
+                    "command": {
+                        "module": "rspamd",
+                        "controller": "settings",
+                        "command": "set",
+                        "json": {}
+                    }
+                }
+            }
+        },
         "ShadowSocks": {
             "plugin": "os-postfix",
             "General": {
@@ -966,7 +1071,8 @@
                     "command": {
                         "module": "shadowsocks",
                         "controller": "general",
-                        "command": "set"
+                        "command": "set",
+                        "json": {}
                     }
                 }
             },
@@ -987,7 +1093,8 @@
                     "command": {
                         "module": "shadowsocks",
                         "controller": "local",
-                        "command": "set"
+                        "command": "set",
+                        "json": {}
                     }
                 }
             }
@@ -1011,7 +1118,8 @@
                     "command": {
                         "module": "siproxd",
                         "controller": "general",
-                        "command": "set"
+                        "command": "set",
+                        "json": {}
                     }
                 }
             }
@@ -1035,7 +1143,8 @@
                     "command": {
                         "module": "telegraf",
                         "controller": "general",
-                        "command": "set"
+                        "command": "set",
+                        "json": {}
                     }
                 }
             },
@@ -1056,7 +1165,8 @@
                     "command": {
                         "module": "telegraf",
                         "controller": "input",
-                        "command": "set"
+                        "command": "set",
+                        "json": {}
                     }
                 }
             },
@@ -1077,7 +1187,8 @@
                     "command": {
                         "module": "telegraf",
                         "controller": "output",
-                        "command": "set"
+                        "command": "set",
+                        "json": {}
                     }
                 }
             }
@@ -1101,7 +1212,8 @@
                     "command": {
                         "module": "tor",
                         "controller": "general",
-                        "command": "set"
+                        "command": "set",
+                        "json": {}
                     }
                 }
             },
@@ -1122,7 +1234,8 @@
                     "command": {
                         "module": "tor",
                         "controller": "relay",
-                        "command": "set"
+                        "command": "set",
+                        "json": {}
                     }
                 }
             }
@@ -1150,7 +1263,8 @@
                     "command": {
                         "module": "zabbixagent",
                         "controller": "settings",
-                        "command": "set"
+                        "command": "set",
+                        "json": {}
                     }
                 }
             },
@@ -1224,7 +1338,8 @@
                     "command": {
                         "module": "zabbixproxy",
                         "controller": "general",
-                        "command": "set"
+                        "command": "set",
+                        "json": {}
                     }
                 }
             }
@@ -1248,7 +1363,8 @@
                     "command": {
                         "module": "zerotier",
                         "controller": "settings",
-                        "command": "set"
+                        "command": "set",
+                        "json": {}
                     }
                 }
             }
