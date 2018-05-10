@@ -69,6 +69,10 @@ Function Connect-OPNsense {
         $WebCredential = $null
     }
 
+    # Increase Maximum connections
+    $servicePoint = [System.Net.ServicePointManager]::FindServicePoint($Url)
+    $servicePoint.ConnectionLimit = 4
+
     $Uri = ($Url + '/api/core/firmware/info')
     $Result = Invoke-OPNsenseApiRestCommand -Uri $Uri -Credential $Credential `
         -SkipCertificateCheck:$SkipCertificateCheck -Verbose:$VerbosePreference
