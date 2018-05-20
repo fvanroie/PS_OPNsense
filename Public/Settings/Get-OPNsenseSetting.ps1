@@ -34,8 +34,8 @@ Function Get-OPNsenseSetting {
     [CmdletBinding()]
     Param (
         [parameter(Mandatory = $true, position = 0)]
-        [ValidateSet("AcmeClient", "ArpScanner", "C-ICAP", "ClamAV", "Collectd", "FreeRadius", "HAProxy", "HelloWorld", "IDS", "LLDPd", "MDNSrepeater", "Monit", "Netflow", "NodeExporter", "Nut", "OpenConnect", 
-            "Postfix", "Proxy", "ProxySSO", "Quagga", "Redis", "ShadowSocks", "Siproxd", "Telegraf", "Tor", "ZabbixAgent", "ZabbixProxy", "ZeroTier")]
+        [ValidateSet("AcmeClient", "ArpScanner", "C-ICAP", "ClamAV", "Collectd", "FreeRadius", "HAProxy", "HelloWorld", "IDS", "Iperf", "LLDPd", "MDNSrepeater", "Monit", "Netflow", "NodeExporter", "Nut", "OpenConnect", 
+            "Postfix", "Proxy", "ProxySSO", "Quagga", "Redis", "Relayd", "Rspamd", "ShadowSocks", "Siproxd", "Telegraf", "Tor", "ZabbixAgent", "ZabbixProxy", "ZeroTier")]
         [String]$Module,
         [parameter(Mandatory = $true, position = 1)]
         [String]$Setting
