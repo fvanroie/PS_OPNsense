@@ -40,9 +40,9 @@ Function Get-OPNsenseHAProxyFrontend {
         $result = @()
     }
     PROCESS {
-        $result += Select-OPNsenseObject -InputObject $allobj @PSBoundParameters   # Filter on properties
+        $result += Select-OPNsenseItem -InputObject $allobj @PSBoundParameters   # Filter on properties
     }  
     END {
-        return $result | Add-ObjectDetail -TypeName (Get-OPNsenseObjectType HAProxy Frontend)
+        return $result | Add-ObjectDetail -TypeName (Get-OPNsenseItemType HAProxy Frontend)
     }
 }

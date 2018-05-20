@@ -40,10 +40,10 @@ Function Get-OPNsenseHAProxyAcl {
         $result = @()
     }
     PROCESS {
-        $result += Select-OPNsenseObject -InputObject $allobj @PSBoundParameters   # Filter on properties
+        $result += Select-OPNsenseItem -InputObject $allobj @PSBoundParameters   # Filter on properties
     }  
     END {
-        return $result | Add-ObjectDetail -TypeName (Get-OPNsenseObjectType HAProxy ACL)
+        return $result | Add-ObjectDetail -TypeName (Get-OPNsenseItemType HAProxy ACL)
     }
 }
 
@@ -63,11 +63,11 @@ Function Get-OPNsenseHAProxyAcl {
         [ValidateSet(0, 1, '0', '1', $False, $True)]$Enabled
     )
     BEGIN {
-        $allobj = Get-OPNsenseObject HAProxy Settings get -Property haproxy, acls, acl   # Get all Objects
+        $allobj = Get-OPNsenseItem HAProxy Settings get -Property haproxy, acls, acl   # Get all Objects
         $result = @()
     }
     PROCESS {
-        $result += Select-OPNsenseObject -InputObject $allobj @PSBoundParameters   # Filter on properties
+        $result += Select-OPNsenseItem -InputObject $allobj @PSBoundParameters   # Filter on properties
     }  
     END {
         return $result | Add-ObjectDetail -TypeName 'OPNsense.HAProxy.Acl.List'

@@ -32,14 +32,14 @@ function Get-OPNsenseHAProxyDetail {
         [parameter(Mandatory = $true)][string]$Uuid
     )
     Switch ($ObjectType) {
-        'Server' { Get-OPNsenseHAProxyServer -Uuid $Uuid }    
-        'Backend' { Get-OPNsenseHAProxyBackend -Uuid $Uuid }    
-        'Frontend' { Get-OPNsenseHAProxyFrontend -Uuid $Uuid }    
-        'Healthcheck' { Get-OPNsenseHAProxyHealthCheck -Uuid $Uuid }    
-        'Errorfile' { Get-OPNsenseHAProxyErrorfile -Uuid $Uuid }    
-        'Lua' { Get-OPNsenseHAProxyLuaScript -Uuid $Uuid }    
-        'Acl' { Get-OPNsenseHAProxyAcl -Uuid $Uuid }    
-        'Action' { Get-OPNsenseHAProxyAction -Uuid $Uuid }    
+        'Server' { Get-OPNsenseItem HAProxy Server -Uuid $Uuid }    
+        'Backend' { Get-OPNsenseItem HAProxy Backend -Uuid $Uuid }    
+        'Frontend' { Get-OPNsenseItem HAProxy Frontend -Uuid $Uuid }    
+        'Healthcheck' { Get-OPNsenseItem HAProxy HealthCheck -Uuid $Uuid }    
+        'Errorfile' { Get-OPNsenseItem HAProxy Errorfile -Uuid $Uuid }    
+        'Lua' { Get-OPNsenseItem HAProxy LuaScript -Uuid $Uuid }    
+        'Acl' { Get-OPNsenseItem HAProxy Acl -Uuid $Uuid }    
+        'Action' { Get-OPNsenseItem HAProxy Action -Uuid $Uuid }    
         default { }
     }
 }
