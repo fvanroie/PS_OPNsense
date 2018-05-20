@@ -21,7 +21,7 @@
     SOFTWARE.
 #>
 
-Function Disable-OPNsenseItem {
+Function Switch-OPNsenseItem {
     # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
     [CmdletBinding(
         SupportsShouldProcess = $true,

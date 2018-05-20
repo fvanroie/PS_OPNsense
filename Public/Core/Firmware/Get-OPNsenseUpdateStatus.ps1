@@ -25,7 +25,8 @@
 Function Get-OPNsenseUpdateStatus {
     [CmdletBinding()]
     Param(
-        [String]$Message = 'Busy',
+        [String]$Title = 'Busy',
+        [String]$Status = 'This can take a while',
         [double]$Seconds = 0.8
     )
 
@@ -38,8 +39,8 @@ Function Get-OPNsenseUpdateStatus {
     $msg = 'One moment please'
 
     $ProgressSplat = @{
-        'Activity'         = $message
-        'Status'           = 'This can take a while'
+        'Activity'         = $Title
+        'Status'           = $Status
         'CurrentOperation' = 'One moment please'
     }
 
@@ -49,13 +50,16 @@ Function Get-OPNsenseUpdateStatus {
 
     Do {
         try {
+            # TO DO : Check why sometimes Invoke-RestMethod takes 110 seconds to complete
+            Write-Verbose 'Getting Firmware Upgrade Status ...'
             $result = Invoke-OPNsenseCommand core firmware upgradestatus -Verbose:$false
-            $retries += 0
-        }
-        catch {
+            Write-Verbose ('Firmware Upgrade Status : {0}' -f $result.status)
+            $retries = 0
+        } catch {
             $retries += 1
             if ($retries -gt 4) {
-            break
+                Write-Warning "Retries : $reties"
+                break
             }
         }
 
@@ -64,7 +68,7 @@ Function Get-OPNsenseUpdateStatus {
             $log = $result.log.substring($start)
             $lines = $log.Split("`n")
             
-            if ($elipsis -in '',' '){
+            if ($elipsis -in '', ' ') {
                 $elipsis += ' '
             } else {
                 $elipsis = $elipsis.trim() + '.'
@@ -83,12 +87,12 @@ Function Get-OPNsenseUpdateStatus {
                 }
 
                 # Check for progress marker [xx/yy] Completed...
-                if ($line -match '\[([0-9]+)/([0-9]+)\] (.*)\.+\. ( done)?') {
+                if ($line -match '\[([0-9]+)/([0-9]+)\] (.*)\.+\.\. ?( done)?') {
                     # Save matches because the next check overwrites it
                     $m = $matches
 
                     # Check for progress marker is: [xx/yy] Extracting or Deleting: ... (skip these lines as they are duplicates)
-                    if ($line -match '\[([0-9]+)/([0-9]+)\] (Extracting|Deleting) .*: \.\.') {
+                    if ($line -match '\[([0-9]+)/([0-9]+)\] (Extracting|Deleting) .*: \.\.\.') {
                         continue # without updating Progress
                     }
 

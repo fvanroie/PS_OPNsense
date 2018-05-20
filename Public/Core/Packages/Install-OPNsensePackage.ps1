@@ -32,26 +32,28 @@ Function Install-OPNsensePackage {
         $results = @()
     }
     PROCESS {
-        $thispkg = $pkg | Where-Object { $_.Name -eq $Name }
+          foreach ($pkgname in $Name) {
+      $thispkg = $pkg | Where-Object { $_.Name -eq $pkgname }
         If ($thispkg.installed -eq 1) {
             If (-Not [bool]::Parse($Force)) {
                 Write-Warning ($thispkg.Name + " is already installed. Use -Force to reinstall the package.")
                 $status = $null
             } else {
-                $status = Invoke-OPNsenseCommand core firmware "reinstall/$Name" -Form reinstall -addProperty @{ name = $Name.tolower()}              
+                $status = Invoke-OPNsenseCommand core firmware "reinstall/$pkgname" -Form reinstall -addProperty @{ name = $pkgname.tolower()}              
             }
         } else {
-            $status = Invoke-OPNsenseCommand core firmware "install/$Name" -Form install -addProperty @{ name = $Name.tolower()}
+            $status = Invoke-OPNsenseCommand core firmware "install/$pkgname" -Form install -addProperty @{ name = $pkgname.tolower()}
         }
 
         # Check installation progress
         if ($status) {
             if ($status.status -eq 'ok') {
-                $result = Get-OPNsenseUpdateStatus
-                $result | Add-Member -MemberType NoteProperty -Name 'Name' -Value $Name.tolower()
+                $result = Get-OPNsenseUpdateStatus -Title "Install OPNsense Package" -Status $pkgname
+                $result | Add-Member -MemberType NoteProperty -Name 'Name' -Value $pkgname.tolower()
                 $results += $result
             }
         }
+    }
     }
     END {
         return $results

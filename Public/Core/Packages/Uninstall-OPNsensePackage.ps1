@@ -31,18 +31,20 @@ Function Uninstall-OPNsensePackage {
         $results = @()
     }
     PROCESS {
-        $thispkg = $pkg | Where-Object { $_.Name -eq $Name }
+          foreach ($pkgname in $Name) {
+        $thispkg = $pkg | Where-Object { $_.Name -eq $pkgname }
         If ($thispkg.installed -eq 0) {
             Write-Warning ($thispkg.Name + " is not installed and cannot be removed.")
             $status = $null
         } else {
-            $status = Invoke-OPNsenseCommand core firmware "remove/$Name" -Form remove -addProperty @{ name = $Name.tolower()}
+            $status = Invoke-OPNsenseCommand core firmware "remove/$pkgname" -Form remove -addProperty @{ name = $pkgname.tolower()}
             if ($status.status -eq 'ok') {
-                $result = Get-OPNsenseUpdateStatus
-                $result | Add-Member -MemberType NoteProperty -Name 'Name' -Value $Name.tolower()
+                $result = Get-OPNsenseUpdateStatus -Title "Uninstall OPNsense Package" -Status $pkgname
+                $result | Add-Member -MemberType NoteProperty -Name 'Name' -Value $pkgname.tolower()
                 $results += $result
             }
         }
+    }
     }
     END {
         return $results
