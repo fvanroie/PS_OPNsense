@@ -39,7 +39,7 @@ function Get-OPNsenseService {
                 switch ($service) {
                     'mdnsrepeater'
                     {   $result = Invoke-OPNsenseCommand mdnsrepeater service status -AddProperty @{ name = $service.tolower()}
-                        $result = New-Object -TypeName psobject -Property @{'status' = $result.result; 'name' = $service.tolower() }
+                        $result = New-Object -TypeName psobject -AddProperty @{'status' = $result.result; 'name' = $service.tolower() }
                         $results += $result
                     }
                     'netflow'

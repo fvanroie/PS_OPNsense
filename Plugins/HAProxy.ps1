@@ -37,7 +37,8 @@ function ConvertTo-InputObject {
         foreach ($key in $PSBounds.keys) {
             if ($key -notin [System.Management.Automation.PSCmdlet]::CommonParameters -and
                 $key -notin [System.Management.Automation.PSCmdlet]::OptionalCommonParameters) {
-                if ($key -in 'enabled') {
+                if ($PSBounds[$key].gettype().name -eq 'Boolean') {
+                    # $obj | Add-Member -MemberType NoteProperty -Name $key -Value $([byte]$($PSBounds[$key])) -Force
                     $obj | Add-Member -MemberType NoteProperty -Name $key -Value $PSBounds[$key] -Force
                 } elseif ($key -in 'bind', 'linkedErrorFiles', 'linkedServers') {
                     $obj | Add-Member -MemberType NoteProperty -Name $key -Value ($PSBounds[$key] -Join ',') -Force
@@ -89,22 +90,6 @@ function Get-MultiOption {
     return $result
 }
 
-<#
-function Get-OPNsenseHAProxyObject {
-    [CmdletBinding()]
-    param (
-        [Parameter(Mandatory = $true, position = 0)]
-        [ValidateSet('Server', 'Backend', 'Frontend', 'Healthcheck', 'Errorfile', 'Lua', 'Acl', 'Action')]
-        [String]$ObjectType
-    )
-    
-    Invoke-OPNsenseCommand haproxy settings get |
-        Select-Object -ExpandProperty haproxy |
-        Select-Object -ExpandProperty ('{0}s' -f $ObjectType.ToLower()) |
-        Select-Object -ExpandProperty $ObjectType.ToLower()
-}
-#>
-
 ##### NEW Functions #####
 <#
 function New-OPNsenseHAProxyObject {
@@ -148,17 +133,17 @@ function New-OPNsenseHAProxyObject {
             $Properties = Get-NoteProperty $Item
             if ($Item.Mode) { $Item.Mode = $Item.Mode.tolower() }
             if ($Item.Code) { $Item.Code = ( 'x{0}' -f $Item.Code) }
-            foreach ($prop in 'Enabled', 'Negate') {
-                if ($prop -in $Properties) {
-                    $Item.$prop = ConvertTo-Boolean $Item.$prop
-                }
-            }
+            foreach ($key in $properties) {
+                if ($Item.$key.gettype().name -eq 'Boolean') {
+                    $Item.$Key = [byte]$Item.$key
+                }                
+            }      
             
-            $snapBefore = $(Invoke-OPNsenseCommand haproxy settings $("search{0}s" -f $ObjectType.ToLower()) -Form @{ searchPhrase = $Item.Name} ).rows
+            $snapBefore = Invoke-OPNsenseCommand haproxy settings $("search{0}s" -f $ObjectType.ToLower()) -Form @{ searchPhrase = $Item.Name} -Property rows
             $result = Invoke-OPNsenseCommand haproxy settings $("add{0}" -f $ObjectType.ToLower()) -Json @{ $ObjectType.ToLower() = $Item }
             
             if (Test-OPNsenseApiResult $result) {
-                $snapAfter = $(Invoke-OPNsenseCommand haproxy settings $("search{0}s" -f $ObjectType.ToLower()) -Form @{ searchPhrase = $Item.Name} ).rows
+                $snapAfter = Invoke-OPNsenseCommand haproxy settings $("search{0}s" -f $ObjectType.ToLower()) -Form @{ searchPhrase = $Item.Name} -Property rows
                 $uuid = Compare-Object -ReferenceObject $snapBefore -DifferenceObject $snapAfter -Property Uuid | Select-Object -ExpandProperty Uuid
 
                 $result = Get-OPNsenseHAProxyDetail -ObjectType $ObjectType -Uuid $Uuid
@@ -195,11 +180,11 @@ Function New-OPNsenseHAProxyServer {
         [parameter(ValueFromPipelineByPropertyname = $true)]
         [ValidateRange(0, 65535)][int]$port,
         [parameter(ValueFromPipelineByPropertyname = $true)][String]$source,
-        [parameter(ValueFromPipelineByPropertyname = $true)][String]$ssl,
+        [parameter(ValueFromPipelineByPropertyname = $true)][bool]$ssl,
         [parameter(ValueFromPipelineByPropertyname = $true)][String]$sslCA,
         [parameter(ValueFromPipelineByPropertyname = $true)][String]$sslClientCertificate,
         [parameter(ValueFromPipelineByPropertyname = $true)][String]$sslCRL,
-        [parameter(ValueFromPipelineByPropertyname = $true)][String]$sslVerify,
+        [parameter(ValueFromPipelineByPropertyname = $true)][bool]$sslVerify,
         [parameter(ValueFromPipelineByPropertyname = $true)]
         [ValidateRange(0, 256)][int]$weight
     )
