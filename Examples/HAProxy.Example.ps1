@@ -11,7 +11,7 @@
 # Note: Connect to OPNsense first
 #       See Connect.Example.ps1 file for an example of how to connect
 
-$beVerbose = $false
+$beVerbose = $true
 
 # Make sure HAproxy is installed
 $haproxy = Get-OPNsensePackage 'os-haproxy'
@@ -23,11 +23,12 @@ If (-Not $haproxy.installed) {
 
 # Create some Backend server objects
 $webservers = 1..3 | foreach-Object {
-    [PSCustomObject]@{
+    [OPNsense.HAProxy.Server]@{
         'name'        = ("web" + $_.tostring("000"))
         'address'     = "192.168.0.$_"
         'port'        = '80'
         'description' = "Created {0}" -f [DateTime]::now
+        'mode'        = 'active'
     }
 }
 Write-Host -ForegroundColor Green ("Creating {0} webservers..." -f $webservers.count)
@@ -40,7 +41,7 @@ $webservers | Format-Table *
 
 # Create Custom Error objects
 $errorfiles = 200, 400, 403, 405, 408, 429, 500, 502, 503, 504 | foreach-Object {
-    [PSCustomObject]@{
+    [OPNsense.HAProxy.ErrorFile]@{
         'name'        = ("err" + $_.tostring("000"))
         'description' = "Errorfile $_"
         'code'        = $_
@@ -57,7 +58,7 @@ $errorfiles | Format-Table *
 
 # Add Lua Scripts
 $luascripts = 1..2 | foreach-Object {
-    [PSCustomObject]@{
+    [OPNsense.HAProxy.Lua]@{
         'name'        = ("lua" + $_.tostring("000"))
         'enabled'     = $_ % 2 # Enable every other script
         'content'     = '-- placeholder script'
@@ -75,7 +76,7 @@ $luascripts | Format-Table *
 
 # Add Backend pool
 $backends = 1..2 | foreach-Object {
-    [PSCustomObject]@{
+    [OPNsense.HAProxy.Backend]@{
         'name'             = ("pool" + $_.tostring("00"))
         'enabled'          = $_ % 2 # Enable every other script
         'description'      = "Created {0}" -f [DateTime]::now
@@ -95,7 +96,7 @@ $backends | Format-Table *
 
 # Create Frontend service
 $frontends = 1..2 | foreach-Object {
-    [PSCustomObject]@{
+    [OPNsense.HAProxy.Frontend]@{
         'name'                = ("public" + $_.tostring("00"))
         'enabled'             = $_ % 2 # Enable every other script
         'description'         = "Created {0}" -f [DateTime]::now
@@ -125,11 +126,11 @@ Get-OPNsenseService haproxy
 
 # Optionally remove the created objects, request confirmation
 Write-Host -ForegroundColor Green ("Removing test objects...")
-$frontends | Remove-OPNsenseHAProxyFrontend -Confirm -Verbose:$beVerbose
-$backends | Remove-OPNsenseHAProxyBackend -Confirm -Verbose:$beVerbose
-$webservers | Remove-OPNsenseHAProxyServer -Confirm -Verbose:$beVerbose
-$errorfiles | Remove-OPNsenseHAProxyErrorfile -Confirm -Verbose:$beVerbose
-$luascripts | Remove-OPNsenseHAProxyLuaScript -Confirm -Verbose:$beVerbose
+$frontends | Remove-OPNsenseItem -Confirm -Verbose:$beVerbose
+$backends | Remove-OPNsenseItem -Confirm -Verbose:$beVerbose
+$webservers | Remove-OPNsenseItem -Confirm -Verbose:$beVerbose
+$errorfiles | Remove-OPNsenseItem -Confirm -Verbose:$beVerbose
+$luascripts | Remove-OPNsenseItem -Confirm -Verbose:$beVerbose
 
 
 ## Disconnect from OPNsense server
