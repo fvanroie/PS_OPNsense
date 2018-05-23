@@ -43,7 +43,9 @@ Function Invoke-OPNsenseCommand {
 
         [parameter(Mandatory = $false)][String[]]$Property,
 
-        [parameter(Mandatory = $false)][HashTable]$AddProperty
+        [parameter(Mandatory = $false)][HashTable]$AddProperty,
+
+        [parameter(Mandatory = $false)][String]$Method
     )
 
     if ($DebugPreference -eq "Inquire") { $DebugPreference = "Continue" }
@@ -62,17 +64,17 @@ Function Invoke-OPNsenseCommand {
     try {
         if ($Json) {
             $Result = Invoke-OPNsenseApiRestCommand -Uri $Uri -credential $Credentials -Json $Json `
-                -SkipCertificateCheck:$SkipCertificateCheck -Verbose:$VerbosePreference `
-                -ErrorAction Stop
+                -SkipCertificateCheck:$SkipCertificateCheck -Method $Method `
+                -Verbose:$VerbosePreference -ErrorAction Stop
         } else {
             if ($Form) {
                 $Result = Invoke-OPNsenseApiRestCommand -Uri $Uri -credential $Credentials -Form $Form `
-                    -SkipCertificateCheck:$SkipCertificateCheck -Verbose:$VerbosePreference `
-                    -ErrorAction Stop -OutFile $OutFile
+                    -SkipCertificateCheck:$SkipCertificateCheck -OutFile $OutFile -Method $Method `
+                    -Verbose:$VerbosePreference -ErrorAction Stop 
             } else {
                 $Result = Invoke-OPNsenseApiRestCommand -Uri $Uri -credential $Credentials `
-                    -SkipCertificateCheck:$SkipCertificateCheck -Verbose:$VerbosePreference `
-                    -ErrorAction Stop
+                    -SkipCertificateCheck:$SkipCertificateCheck -Method $Method `
+                    -Verbose:$VerbosePreference -ErrorAction Stop
             }
         }
     } catch [Microsoft.PowerShell.Commands.WriteErrorException] {

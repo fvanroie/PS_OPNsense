@@ -44,7 +44,8 @@ Function Get-OPNsenseItem {
     PROCESS {
         if (-Not $UUID) {
             Write-Verbose "Gathering all the UUIDs..."
-            $uuids += $(Invoke-OPNsenseFunction $Module search $Item).UUID
+            #$uuids += $(Invoke-OPNsenseFunction $Module search $Item).UUID
+            $uuids += $(Invoke-OPNsenseOpenApiPath $Module search $Item).UUID
         } else {
             $uuids += $UUID
         }
@@ -53,7 +54,7 @@ Function Get-OPNsenseItem {
         foreach ($id in $uuids) {
             Write-Verbose ""
             Write-Verbose ("Retrieving Item {0}" -f $id)
-            Invoke-OPNsenseFunction $Module get $Item -Uuid $id
+            Invoke-OPNsenseOpenApiPath $Module get $Item -Uuid $id
         }
     }
 }

@@ -3,26 +3,36 @@ Import-Module PS_OPNsense
 
 
 InModuleScope PS_OPNsense {
-    $itemsmap = get-content .\data\items.json | ConvertFrom-Json
+    $ModulePath = Split-Path -Parent (Get-Module PS_OPNsense).Path
+    $FullPath = ("{0}/{1}" -f $ModulePath, 'Data/opnsense.json')
+    $OPNsenseOpenApi = Import-OpenApiData -FilePath $FullPath
 
-    $testcases = @()
-    $modules = $itemsmap | Get-Member -MemberType NoteProperty
-    foreach ($module in $modules.name) {
-        $items = $itemsmap.$module | Get-Member -MemberType NoteProperty | Where-Object { $_.name -ne 'plugin'}
-        foreach ($item in $items.name) {
-            $testcases += @{ 'Module' = $module; 'Item' = $item}
-        }
-    }
+    #$modules = $itemsmap | Get-Member -MemberType NoteProperty
+    $Modules = $OPNsenseOpenApi.Keys | Sort-Object
 
-    Describe "Getting All Items" {
-        Context "Get-OPNsenseItem" {
+    Describe "OPNsense Items" {
+        foreach ($Module in $modules) {
+    
+            $testcases = foreach ($action in $OPNsenseOpenApi.$Module.keys) {
+                foreach ($object in $OPNsenseOpenApi.$Module.$Action.keys) {
+                    # CRUD items implement search action
+                    if ($action -eq 'search') {
+                        $testcase = @{ 'Module' = $module; 'Item' = $object}
+                        Write-Output $testcase
+                    }
+                }        
+            }
+
+            Context "Module $Module" {
             
-            It "<module> <item> Item should not throw" -TestCases $testcases {
-                param($module, $item)
-                {
-                    $r = Get-OPNsenseItem -Module $module -Item $item 
-                }  | should Not Throw
+                It "Get <item> should not throw" -TestCases $testcases {
+                    param($module, $item)
+                    {
+                        $result = Get-OPNsenseItem -Module $module -Item $item 
+                    }  | should Not Throw
+                }
             }
         }
+
     }
 }

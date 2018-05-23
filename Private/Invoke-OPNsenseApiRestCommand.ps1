@@ -31,6 +31,7 @@ Function Invoke-OPNsenseApiRestCommand {
         [PSCredential]$Credential,
         $Json,
         $Form,
+        $Method,
         [System.IO.FileInfo]$OutFile,
         [Switch]$SkipCertificateCheck = $false
     )
@@ -71,14 +72,14 @@ Function Invoke-OPNsenseApiRestCommand {
         } elseif ($Json.GetType().Name -eq "String") {
             # ALready a String
         } else {
-            Throw 'JSON object should be a HashTable'
+            Throw 'JSON object should be a HashTable, PSCustomObject or String'
         }
 
-        # OK, we have a $JSON string now
+        # OK, we have a Json string now
         Write-Verbose "JSON Arguments: $Json"
         $ParamSplat.Add('Body', $json)
         $ParamSplat.Add('ContentType', 'application/json')
-        $ParamSplat.Add('Method', 'POST')
+        $ParamSplat.Method = 'POST'
     } else {
         # Post a web Form
         if ($Form) {
@@ -86,24 +87,27 @@ Function Invoke-OPNsenseApiRestCommand {
             $Json = $Form | ConvertTo-Json -Depth 15
             Write-Verbose "Form Arguments: $Json"
  
-            $ParamSplat.Add('Method', 'POST')
+            $ParamSplat.Method = 'POST'
             $ParamSplat.Add('Body', $form)
         } else {
             # Neither Json nor Post, so its a plain request
-            $ParamSplat.Add('Method', 'GET') 
+            $ParamSplat.Method = 'GET'
         }
+    }
+
+    # Override Default Method if passed
+    if ($Method) {
+        $ParamSplat.Method = $Method
     }
 
     # Write Parameters to Debug channel
     Write-Debug "Invoke-RestMethod"
     # Write Custom Headers to Debug channel
     if ($Headers.Count -gt 0) {
-        $temp = $Headers | ConvertTo-Json -Compress
-        Write-Debug "   -Headers : $temp"
+        Write-Debug ("   -Headers : {0}" -f ($Headers | ConvertTo-Json -Compress))
     }
     foreach ($key in $ParamSplat.keys) {
-        $val = $ParamSplat.Item($key)
-        Write-Debug "   -$key : $val"
+        Write-Debug ("   -{0} : {1}" -f $key, $ParamSplat.Item($key))
     }
 
     # Add Custom Headers to the custom Splat
@@ -113,8 +117,7 @@ Function Invoke-OPNsenseApiRestCommand {
     Try {
         $result = Invoke-RestMethod @ParamSplat
     } Catch {
-        $ErrorMessage = $_.Exception.Message
-        Write-Error "An error Occured while contacting the OPNsense server: $ErrorMessage"
+        Write-Error ("An error Occured while contacting the OPNsense server: {0}" -f $_.Exception.Message)
     } Finally {
         # Always restore the built-in .NET certificate policy on Windows PS Desktop only
         if (-Not $IsPSCoreEdition -And [bool]::Parse($SkipCertificateCheck)) {

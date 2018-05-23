@@ -26,7 +26,7 @@
 $IsPSCoreEdition = ($PSVersionTable.PSEdition -eq 'Core')
 $minversion = [System.Version]'18.1.7'
 
-
+$debug = $true  
 
 # Load individual functions from scriptfiles
 # TODO : itterate over the objectmap and test if all Objects can be instantiated
@@ -71,6 +71,13 @@ ForEach ($Folder in 'Classes') {
 # Load external data files
 # TODO : convert this to a ps1 file so it can be code-signed
 Try {
+    if ($debug) {
+        Write-Host -ForegroundColor Gray "ScriptRoot: $PSScriptRoot"
+    }
+    # Load objectmap of api calls
+    $FullPath = ("{0}/{1}" -f $PSScriptRoot, 'Data/opnsense.json')
+    $OPNsenseOpenApi = Import-OpenApiData $FullPath
+
     # Load objectmap of api calls
     $FullPath = ("{0}/{1}" -f $PSScriptRoot, 'Data/items.json')
     $OPNsenseItemMap = Get-Content $FullPath | ConvertFrom-Json
@@ -104,7 +111,7 @@ $f = @(########## PLUGINS ##########
 
     ########## CORE ##########
     # RestApi
-    'Invoke-OPNsenseCommand',
+    'Invoke-OPNsenseCommand', 'Invoke-OPNsenseApiCommand',
     # Firmware
     'Get-OPNsense', 'Set-OPNsense',
 
