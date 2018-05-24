@@ -73,7 +73,11 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/OPNsense.AcmeClient.accounts.account"
+                                    "properties": {
+                                        "Account": {
+                                            "$ref": "#/components/schemas/OPNsense.AcmeClient.accounts.account"
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -207,7 +211,11 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/OPNsense.AcmeClient.actions.action"
+                                    "properties": {
+                                        "Action": {
+                                            "$ref": "#/components/schemas/OPNsense.AcmeClient.actions.action"
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -341,7 +349,11 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/OPNsense.AcmeClient.certificates.certificate"
+                                    "properties": {
+                                        "Certificate": {
+                                            "$ref": "#/components/schemas/OPNsense.AcmeClient.certificates.certificate"
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -475,7 +487,11 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/OPNsense.AcmeClient.validations.validation"
+                                    "properties": {
+                                        "Validation": {
+                                            "$ref": "#/components/schemas/OPNsense.AcmeClient.validations.validation"
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -609,7 +625,9 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/OPNsense.captiveportal.templates.template"
+                                    "properties": {
+                                        "$ref": "#/components/schemas/OPNsense.captiveportal.templates.template"
+                                    }
                                 }
                             }
                         }
@@ -721,7 +739,11 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/OPNsense.captiveportal.zones.zone"
+                                    "properties": {
+                                        "Zone": {
+                                            "$ref": "#/components/schemas/OPNsense.captiveportal.zones.zone"
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -1031,7 +1053,11 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/OPNsense.cron.jobs.job"
+                                    "properties": {
+                                        "Job": {
+                                            "$ref": "#/components/schemas/OPNsense.cron.jobs.job"
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -1165,7 +1191,11 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/OPNsense.freeradius.client.clients.client"
+                                    "properties": {
+                                        "Client": {
+                                            "$ref": "#/components/schemas/OPNsense.freeradius.client.clients.client"
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -1299,7 +1329,11 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/OPNsense.freeradius.user.users.user"
+                                    "properties": {
+                                        "User": {
+                                            "$ref": "#/components/schemas/OPNsense.freeradius.user.users.user"
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -1417,7 +1451,7 @@
         },
         "/ftpproxy/settings/getproxy/{uuid}": {
             "get": {
-                "operationId": "getFtpProxyFtpProxy",
+                "operationId": "getFtpProxyProxy",
                 "summary": "Returns a Proxy",
                 "tags": [
                     "FtpProxy"
@@ -1433,7 +1467,11 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/OPNsense.ftpproxies.ftpproxy"
+                                    "properties": {
+                                        "FtpProxy": {
+                                            "$ref": "#/components/schemas/OPNsense.ftpproxies.ftpproxy"
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -1443,7 +1481,7 @@
         },
         "/ftpproxy/settings/setproxy/{uuid}": {
             "post": {
-                "operationId": "setFtpProxyFtpProxy",
+                "operationId": "setFtpProxyProxy",
                 "summary": "Updates a Proxy",
                 "tags": [
                     "FtpProxy"
@@ -1471,7 +1509,7 @@
         },
         "/ftpproxy/settings/delproxy/{uuid}": {
             "post": {
-                "operationId": "deleteFtpProxyFtpProxy",
+                "operationId": "deleteFtpProxyProxy",
                 "summary": "Removes a Proxy",
                 "tags": [
                     "FtpProxy"
@@ -1490,7 +1528,7 @@
         },
         "/ftpproxy/settings/toggleproxy/{uuid}": {
             "post": {
-                "operationId": "toggleFtpProxyFtpProxy",
+                "operationId": "toggleFtpProxyProxy",
                 "summary": "Toggle a Proxy",
                 "tags": [
                     "FtpProxy"
@@ -1514,7 +1552,7 @@
             "description": "Proxy",
             "summary": "Create FtpProxy Proxy items",
             "post": {
-                "operationId": "addFtpProxyFtpProxy",
+                "operationId": "addFtpProxyProxy",
                 "summary": "Add a new Proxy",
                 "tags": [
                     "FtpProxy"
@@ -1537,7 +1575,7 @@
         },
         "/ftpproxy/settings/searchproxy": {
             "post": {
-                "operationId": "searchFtpProxyFtpProxy",
+                "operationId": "searchFtpProxyProxy",
                 "summary": "Search a Proxy",
                 "tags": [
                     "FtpProxy"
@@ -1567,7 +1605,11 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/OPNsense.HAProxy.acls.acl"
+                                    "properties": {
+                                        "Acl": {
+                                            "$ref": "#/components/schemas/OPNsense.HAProxy.acls.acl"
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -1679,7 +1721,11 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/OPNsense.HAProxy.actions.action"
+                                    "properties": {
+                                        "Action": {
+                                            "$ref": "#/components/schemas/OPNsense.HAProxy.actions.action"
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -1791,7 +1837,11 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/OPNsense.HAProxy.backends.backend"
+                                    "properties": {
+                                        "Backend": {
+                                            "$ref": "#/components/schemas/OPNsense.HAProxy.backends.backend"
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -1925,7 +1975,11 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/OPNsense.HAProxy.errorfiles.errorfile"
+                                    "properties": {
+                                        "ErrorFile": {
+                                            "$ref": "#/components/schemas/OPNsense.HAProxy.errorfiles.errorfile"
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -2037,7 +2091,11 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/OPNsense.HAProxy.frontends.frontend"
+                                    "properties": {
+                                        "Frontend": {
+                                            "$ref": "#/components/schemas/OPNsense.HAProxy.frontends.frontend"
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -2171,7 +2229,11 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/OPNsense.HAProxy.healthchecks.healthcheck"
+                                    "properties": {
+                                        "Healthcheck": {
+                                            "$ref": "#/components/schemas/OPNsense.HAProxy.healthchecks.healthcheck"
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -2267,7 +2329,7 @@
         },
         "/haproxy/settings/getlua/{uuid}": {
             "get": {
-                "operationId": "getHAProxyLua",
+                "operationId": "getHAProxyLuaScript",
                 "summary": "Returns a LuaScript",
                 "tags": [
                     "HAProxy"
@@ -2283,7 +2345,11 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/OPNsense.HAProxy.luas.lua"
+                                    "properties": {
+                                        "Lua": {
+                                            "$ref": "#/components/schemas/OPNsense.HAProxy.luas.lua"
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -2293,7 +2359,7 @@
         },
         "/haproxy/settings/setlua/{uuid}": {
             "post": {
-                "operationId": "setHAProxyLua",
+                "operationId": "setHAProxyLuaScript",
                 "summary": "Updates a LuaScript",
                 "tags": [
                     "HAProxy"
@@ -2321,7 +2387,7 @@
         },
         "/haproxy/settings/dellua/{uuid}": {
             "post": {
-                "operationId": "deleteHAProxyLua",
+                "operationId": "deleteHAProxyLuaScript",
                 "summary": "Removes a LuaScript",
                 "tags": [
                     "HAProxy"
@@ -2340,7 +2406,7 @@
         },
         "/haproxy/settings/togglelua/{uuid}/{enabled}": {
             "post": {
-                "operationId": "toggleHAProxyLua",
+                "operationId": "toggleHAProxyLuaScript",
                 "summary": "Toggle a LuaScript",
                 "tags": [
                     "HAProxy"
@@ -2364,7 +2430,7 @@
             "description": "LuaScript",
             "summary": "Create HAProxy LuaScript items",
             "post": {
-                "operationId": "addHAProxyLua",
+                "operationId": "addHAProxyLuaScript",
                 "summary": "Add a new LuaScript",
                 "tags": [
                     "HAProxy"
@@ -2387,7 +2453,7 @@
         },
         "/haproxy/settings/searchluas": {
             "post": {
-                "operationId": "searchHAProxyLua",
+                "operationId": "searchHAProxyLuaScript",
                 "summary": "Search a LuaScript",
                 "tags": [
                     "HAProxy"
@@ -2417,7 +2483,11 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/OPNsense.HAProxy.servers.server"
+                                    "properties": {
+                                        "Server": {
+                                            "$ref": "#/components/schemas/OPNsense.HAProxy.servers.server"
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -2579,7 +2649,11 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/OPNsense.IDS.userDefinedRules.rule"
+                                    "properties": {
+                                        "rule": {
+                                            "$ref": "#/components/schemas/OPNsense.IDS.userDefinedRules.rule"
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -2713,7 +2787,13 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/OPNsense.monit.alert"
+                                    "properties": {
+                                        "Monit": {
+                                            "Alert": {
+                                                "$ref": "#/components/schemas/OPNsense.monit.alert"
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -2847,7 +2927,13 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/OPNsense.monit.service"
+                                    "properties": {
+                                        "Monit": {
+                                            "Service": {
+                                                "$ref": "#/components/schemas/OPNsense.monit.service"
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -2981,7 +3067,13 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/OPNsense.monit.test"
+                                    "properties": {
+                                        "Monit": {
+                                            "Test": {
+                                                "$ref": "#/components/schemas/OPNsense.monit.test"
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -3093,7 +3185,11 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/OPNsense.postfix.domain.domains.domain"
+                                    "properties": {
+                                        "Domain": {
+                                            "$ref": "#/components/schemas/OPNsense.postfix.domain.domains.domain"
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -3227,7 +3323,11 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/OPNsense.postfix.recipient.recipients.recipient"
+                                    "properties": {
+                                        "Recipient": {
+                                            "$ref": "#/components/schemas/OPNsense.postfix.recipient.recipients.recipient"
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -3361,7 +3461,11 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/OPNsense.postfix.sender.senders.sender"
+                                    "properties": {
+                                        "Sender": {
+                                            "$ref": "#/components/schemas/OPNsense.postfix.sender.senders.sender"
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -3495,7 +3599,11 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/OPNsense.proxy.forward.acl.remoteACLs.blacklists.blacklist"
+                                    "properties": {
+                                        "blacklist": {
+                                            "$ref": "#/components/schemas/OPNsense.proxy.forward.acl.remoteACLs.blacklists.blacklist"
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -3629,7 +3737,11 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/OPNsense.ProxyUserACL.general.ACLs.ACL"
+                                    "properties": {
+                                        "ACL": {
+                                            "$ref": "#/components/schemas/OPNsense.ProxyUserACL.general.ACLs.ACL"
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -3763,7 +3875,11 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/OPNsense.quagga.bgp.aspaths.aspath"
+                                    "properties": {
+                                        "aspath": {
+                                            "$ref": "#/components/schemas/OPNsense.quagga.bgp.aspaths.aspath"
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -3897,7 +4013,11 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/OPNsense.quagga.bgp.neighbors.neighbor"
+                                    "properties": {
+                                        "neighbor": {
+                                            "$ref": "#/components/schemas/OPNsense.quagga.bgp.neighbors.neighbor"
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -4031,7 +4151,11 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/OPNsense.quagga.bgp.prefixlists.prefixlist"
+                                    "properties": {
+                                        "prefixlist": {
+                                            "$ref": "#/components/schemas/OPNsense.quagga.bgp.prefixlists.prefixlist"
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -4165,7 +4289,11 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/OPNsense.quagga.bgp.routemaps.routemap"
+                                    "properties": {
+                                        "routemap": {
+                                            "$ref": "#/components/schemas/OPNsense.quagga.bgp.routemaps.routemap"
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -4299,7 +4427,11 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/OPNsense.quagga.ospf6.interfaces.interface"
+                                    "properties": {
+                                        "interface": {
+                                            "$ref": "#/components/schemas/OPNsense.quagga.ospf6.interfaces.interface"
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -4433,7 +4565,11 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/OPNsense.quagga.ospf.interfaces.interface"
+                                    "properties": {
+                                        "interface": {
+                                            "$ref": "#/components/schemas/OPNsense.quagga.ospf.interfaces.interface"
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -4567,7 +4703,11 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/OPNsense.quagga.ospf.networks.network"
+                                    "properties": {
+                                        "network": {
+                                            "$ref": "#/components/schemas/OPNsense.quagga.ospf.networks.network"
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -4701,7 +4841,11 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/OPNsense.quagga.ospf.prefixlists.prefixlist"
+                                    "properties": {
+                                        "prefixlist": {
+                                            "$ref": "#/components/schemas/OPNsense.quagga.ospf.prefixlists.prefixlist"
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -4817,6 +4961,461 @@
                 }
             }
         },
+        "/relayd/settings/get/host/{uuid}": {
+            "get": {
+                "operationId": "getRelaydHost",
+                "summary": "Returns a Host",
+                "tags": [
+                    "Relayd"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "Host": {
+                                            "$ref": "#/components/schemas/relayd.host"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/relayd/settings/set/host/{uuid}": {
+            "post": {
+                "operationId": "setRelaydHost",
+                "summary": "Updates a Host",
+                "tags": [
+                    "Relayd"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/relayd.host"
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
+        "/relayd/settings/del/host/{uuid}": {
+            "post": {
+                "operationId": "deleteRelaydHost",
+                "summary": "Removes a Host",
+                "tags": [
+                    "Relayd"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
+        "/relayd/settings/search/host/": {
+            "post": {
+                "operationId": "searchRelaydHost",
+                "summary": "Search a Host",
+                "tags": [
+                    "Relayd"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
+        "/relayd/settings/get/protocol/{uuid}": {
+            "get": {
+                "operationId": "getRelaydProtocol",
+                "summary": "Returns a Protocol",
+                "tags": [
+                    "Relayd"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "Protocol": {
+                                            "$ref": "#/components/schemas/relayd.protocol"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/relayd/settings/set/protocol/{uuid}": {
+            "post": {
+                "operationId": "setRelaydProtocol",
+                "summary": "Updates a Protocol",
+                "tags": [
+                    "Relayd"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/relayd.protocol"
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
+        "/relayd/settings/del/protocol/{uuid}": {
+            "post": {
+                "operationId": "deleteRelaydProtocol",
+                "summary": "Removes a Protocol",
+                "tags": [
+                    "Relayd"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
+        "/relayd/settings/search/protocol/": {
+            "post": {
+                "operationId": "searchRelaydProtocol",
+                "summary": "Search a Protocol",
+                "tags": [
+                    "Relayd"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
+        "/relayd/settings/get/table/{uuid}": {
+            "get": {
+                "operationId": "getRelaydTable",
+                "summary": "Returns a Table",
+                "tags": [
+                    "Relayd"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "Table": {
+                                            "$ref": "#/components/schemas/relayd.table"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/relayd/settings/set/table/{uuid}": {
+            "post": {
+                "operationId": "setRelaydTable",
+                "summary": "Updates a Table",
+                "tags": [
+                    "Relayd"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/relayd.table"
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
+        "/relayd/settings/del/table/{uuid}": {
+            "post": {
+                "operationId": "deleteRelaydTable",
+                "summary": "Removes a Table",
+                "tags": [
+                    "Relayd"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
+        "/relayd/settings/search/table/": {
+            "post": {
+                "operationId": "searchRelaydTable",
+                "summary": "Search a Table",
+                "tags": [
+                    "Relayd"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
+        "/relayd/settings/get/tablecheck/{uuid}": {
+            "get": {
+                "operationId": "getRelaydTableCheck",
+                "summary": "Returns a TableCheck",
+                "tags": [
+                    "Relayd"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "TableCheck": {
+                                            "$ref": "#/components/schemas/relayd.tablecheck"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/relayd/settings/set/tablecheck/{uuid}": {
+            "post": {
+                "operationId": "setRelaydTableCheck",
+                "summary": "Updates a TableCheck",
+                "tags": [
+                    "Relayd"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/relayd.tablecheck"
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
+        "/relayd/settings/del/tablecheck/{uuid}": {
+            "post": {
+                "operationId": "deleteRelaydTableCheck",
+                "summary": "Removes a TableCheck",
+                "tags": [
+                    "Relayd"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
+        "/relayd/settings/search/tablecheck/": {
+            "post": {
+                "operationId": "searchRelaydTableCheck",
+                "summary": "Search a TableCheck",
+                "tags": [
+                    "Relayd"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
+        "/relayd/settings/get/virtualserver/{uuid}": {
+            "get": {
+                "operationId": "getRelaydVirtualServer",
+                "summary": "Returns a VirtualServer",
+                "tags": [
+                    "Relayd"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "VirtualServer": {
+                                            "$ref": "#/components/schemas/relayd.virtualserver"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/relayd/settings/set/virtualserver/{uuid}": {
+            "post": {
+                "operationId": "setRelaydVirtualServer",
+                "summary": "Updates a VirtualServer",
+                "tags": [
+                    "Relayd"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/relayd.virtualserver"
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
+        "/relayd/settings/del/virtualserver/{uuid}": {
+            "post": {
+                "operationId": "deleteRelaydVirtualServer",
+                "summary": "Removes a VirtualServer",
+                "tags": [
+                    "Relayd"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
+        "/relayd/settings/search/virtualserver/": {
+            "post": {
+                "operationId": "searchRelaydVirtualServer",
+                "summary": "Search a VirtualServer",
+                "tags": [
+                    "Relayd"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
         "/routes/routes/getroute/{uuid}": {
             "get": {
                 "operationId": "getRoutesRoute",
@@ -4835,7 +5434,11 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/staticroutes.route"
+                                    "properties": {
+                                        "Route": {
+                                            "$ref": "#/components/schemas/staticroutes.route"
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -4969,7 +5572,11 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/OPNsense.siproxd.domain.domains.domain"
+                                    "properties": {
+                                        "Domain": {
+                                            "$ref": "#/components/schemas/OPNsense.siproxd.domain.domains.domain"
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -5103,7 +5710,11 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/OPNsense.siproxd.user.users.user"
+                                    "properties": {
+                                        "User": {
+                                            "$ref": "#/components/schemas/OPNsense.siproxd.user.users.user"
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -5237,7 +5848,11 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/OPNsense.Tinc.hosts.host"
+                                    "properties": {
+                                        "Host": {
+                                            "$ref": "#/components/schemas/OPNsense.Tinc.hosts.host"
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -5371,7 +5986,11 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/OPNsense.Tinc.networks.network"
+                                    "properties": {
+                                        "Network": {
+                                            "$ref": "#/components/schemas/OPNsense.Tinc.networks.network"
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -5505,7 +6124,11 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/OPNsense.tor.exitpolicy.policy"
+                                    "properties": {
+                                        "exitpolicy": {
+                                            "$ref": "#/components/schemas/OPNsense.tor.exitpolicy.policy"
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -5639,7 +6262,11 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/OPNsense.tor.hiddenservice.service"
+                                    "properties": {
+                                        "hiddenservice": {
+                                            "$ref": "#/components/schemas/OPNsense.tor.hiddenservice.service"
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -5773,7 +6400,11 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/OPNsense.tor.hiddenserviceacl.hiddenserviceacl"
+                                    "properties": {
+                                        "hiddenserviceacl": {
+                                            "$ref": "#/components/schemas/OPNsense.tor.hiddenserviceacl.hiddenserviceacl"
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -5907,7 +6538,11 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/OPNsense.tor.general.client_authentications.client_auth"
+                                    "properties": {
+                                        "client_auth": {
+                                            "$ref": "#/components/schemas/OPNsense.tor.general.client_authentications.client_auth"
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -6041,7 +6676,11 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/OPNsense.tor.aclsockspolicy.policy"
+                                    "properties": {
+                                        "policy": {
+                                            "$ref": "#/components/schemas/OPNsense.tor.aclsockspolicy.policy"
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -6175,7 +6814,11 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/OPNsense.TrafficShaper.pipes.pipe"
+                                    "properties": {
+                                        "Pipe": {
+                                            "$ref": "#/components/schemas/OPNsense.TrafficShaper.pipes.pipe"
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -6309,7 +6952,11 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/OPNsense.TrafficShaper.queues.queue"
+                                    "properties": {
+                                        "Queue": {
+                                            "$ref": "#/components/schemas/OPNsense.TrafficShaper.queues.queue"
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -6443,7 +7090,11 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/OPNsense.TrafficShaper.rules.rule"
+                                    "properties": {
+                                        "Rule": {
+                                            "$ref": "#/components/schemas/OPNsense.TrafficShaper.rules.rule"
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -6555,7 +7206,11 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/OPNsense.zerotier.networks.network"
+                                    "properties": {
+                                        "Network": {
+                                            "$ref": "#/components/schemas/OPNsense.zerotier.networks.network"
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -6755,6 +7410,20 @@
             }
         },
         "schemas": {
+            "OptionList": {
+                "type": "object",
+                "additionalProperties": {
+                    "type": "object",
+                    "properties": {
+                        "value": {
+                            "type": "string"
+                        },
+                        "selected": {
+                            "type": "integer"
+                        }
+                    }
+                }
+            },
             "OPNsense.AcmeClient.accounts.account": {
                 "type": "object",
                 "properties": {

@@ -80,12 +80,13 @@ Function Invoke-OPNsenseOpenApiPath {
         'Method'     = $Call.Method
         'Verbose'    = $VerbosePreference
         'Debug'      = $DebugPreference
+          'Property'   = $call.LevelsOut
     }
-    Switch ($Action) {
-        'get' { $Splat.Add('Property', $Object) }
-        'search' { $Splat.Add('Property', 'rows') }
-        default {}
-    }
+    #    Switch ($Action) {
+    #        'get' { $Splat.Add('Property', $Object) }
+    #        'search' { $Splat.Add('Property', 'rows') }
+    #        default {}
+    #    }
     if ($Body) {
         $Splat.Add('Json', $Body)
     }

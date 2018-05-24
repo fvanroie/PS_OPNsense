@@ -1,3 +1,27 @@
+Function Find-OpenApiRef ($schema, $levels = @()) {
+    $ref = ''
+    #$levels = @()
+
+    if ($schema.'$ref') {
+        Write-Verbose ('Found $ref at level {0}' -f $levels.count) 
+        return $levels, $schema.'$ref'.replace('#/components/schemas/', '')
+    } else {
+        if ($levels.count -eq 0 -And $schema.properties) {
+            Write-Verbose 'Found properties at level 0'
+            return Find-OpenApiRef $schema.properties ($levels)
+        } else {
+            foreach ($item in $schema.psobject.properties) {
+                Write-Verbose ('checking {0}' -f $item.name)
+                $levels, $result = Find-OpenApiRef $item.value ($levels + $item.name)
+                if ($result) {
+                    return $levels, $result
+                }
+            }
+        }
+    }
+    return $null, $null # $ref not found
+}
+
 Function Import-OpenApiData {
     param (
         [String]$FilePath
@@ -24,23 +48,31 @@ Function Import-OpenApiData {
                         $OpenApiHash.$Module.$Action.Add($Object, @{})
                     }
 
+                    # NameSpace of the data object
                     $NamespaceIn = $prop.value.requestBody.content.'application/json'.schema.'$ref'
                     $NamespaceOut = $prop.value.responses.'200'.content.'application/json'.schema.'$ref'
 
-                    # Find parameter objects from the schema based on the schema name in the path
-                    $parameters = $OPNsenseOpenApi.components.parameters.psobject.Properties |
-                        Where-Object { ( '#/components/parameters/{0}' -f $_.Name) -in $prop.value.parameters.'$ref' }
+                    # Names of the Sublevel keys in the JSON to get to the data object
+                    $levelsOut, $NamespaceOut = Find-OpenApiRef $prop.value.responses.'200'.content.'application/json'.schema
+                    $levelsIn, $NamespaceIn = Find-OpenApiRef $prop.value.requestBody.content.'application/json'.schema
 
-                    $OpenApiHash.$Module.$Action.$Object =
-                    [PSCustomObject]@{
-                        #    Module        = $Module
-                        #    Action        = $Action
-                        #    Object        = $Object
-                        Method        = $Prop.name
-                        Path          = $Path.Name
-                        Parameters    = $Parameters
-                        NameSpaceIn   = $NamespaceIn
-                        NamespoaceOut = $NamespaceOut
+                    # Find parameter objects from the schema based on the parameter reference in the path
+                    $param = $OpenApiData.components.parameters.psobject.Properties |
+                        Where-Object { 
+                        ( '#/components/parameters/{0}' -f $_.Name) -in $prop.value.parameters.'$ref'
+                    }
+
+                    $OpenApiHash.$Module.$Action.$Object = [PSCustomObject]@{
+                        Module       = $Module
+                        Action       = $Action
+                        Object       = $Object
+                        Method       = $Prop.name
+                        Path         = $Path.Name
+                        Parameters   = $Param
+                        NameSpaceIn  = $NamespaceIn
+                        NamespaceOut = $NamespaceOut
+                        LevelsIn     = $LevelsIn
+                        LevelsOut    = $LevelsOut
                     }
     
                 } else {

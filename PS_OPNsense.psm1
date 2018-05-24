@@ -111,7 +111,7 @@ $f = @(########## PLUGINS ##########
 
     ########## CORE ##########
     # RestApi
-    'Invoke-OPNsenseCommand', 'Invoke-OPNsenseApiCommand',
+    'Invoke-OPNsenseCommand', 'Invoke-OPNsenseOpenApiPath',
     # Firmware
     'Get-OPNsense', 'Set-OPNsense',
 
