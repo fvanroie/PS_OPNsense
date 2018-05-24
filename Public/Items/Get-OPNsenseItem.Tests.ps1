@@ -27,6 +27,9 @@ InModuleScope PS_OPNsense {
             
                 It "Get <item> should not throw" -TestCases $testcases {
                     param($module, $item)
+                    if ($module -eq 'relayd') {
+                    Set-TestInconclusive "$Module is under development"
+                    } 
                     {
                         $result = Get-OPNsenseItem -Module $module -Item $item 
                     }  | should Not Throw

@@ -17,10 +17,13 @@ InModuleScope PS_OPNsense {
     Describe "Getting All Settings" {
         Context "Get-OPNsenseSetting" {
             
-            It "<module> <setting> Settings do not throw" -TestCases $testcases {
+            It "<module> <setting> Settings should not throw" -TestCases $testcases {
                 param($module, $setting)
+                if ($module -eq 'Relayd') {
+                    Set-TestInconclusive "$Module is under development"
+                } 
                 {
-                    $r = Get-OPNsenseSetting -Module $module -Setting $setting 
+                    $result = Get-OPNsenseSetting -Module $module -Setting $setting 
                 }  | should Not Throw
             }
         }
