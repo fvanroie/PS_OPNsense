@@ -69,7 +69,7 @@ Function Reset-OPNsenseConfig {
         Return
     }
 
-    if (-Not $IsPSCoreEdition -And [bool]::Parse($SkipCertificateCheck)) {
+    if ($PSVersionTable.PSEdition -ne 'Core' -And [bool]::Parse($SkipCertificateCheck)) {
         $CertPolicy = Get-CertificatePolicy -Verbose:$VerbosePreference
         Disable-CertificateValidation -Verbose:$VerbosePreference
     }
@@ -116,7 +116,7 @@ Function Reset-OPNsenseConfig {
     }
     # Always restore the built-in .NET certificate policy
     Finally {
-        if (-Not $IsPSCoreEdition -And [bool]::Parse($SkipCertificateCheck)) {
+        if ($PSVersionTable.PSEdition -ne 'Core' -And [bool]::Parse($SkipCertificateCheck)) {
             Set-CertificatePolicy $CertPolicy -Verbose:$VerbosePreference
         }
     }

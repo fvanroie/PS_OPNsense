@@ -23,7 +23,7 @@
 
 
 ##### Module Variables
-$IsPSCoreEdition = ($PSVersionTable.PSEdition -eq 'Core')
+#$IsPSCoreEdition = ($PSVersionTable.PSEdition -eq 'Core')
 $minversion = [System.Version]'18.1.7'
 
 $debug = $true  
@@ -79,8 +79,8 @@ Try {
     $OPNsenseOpenApi = Import-OpenApiData $FullPath
 
     # Load objectmap of api calls
-    $FullPath = ("{0}/{1}" -f $PSScriptRoot, 'Data/items.json')
-    $OPNsenseItemMap = Get-Content $FullPath | ConvertFrom-Json
+    #$FullPath = ("{0}/{1}" -f $PSScriptRoot, 'Data/items.json')
+    #$OPNsenseItemMap = Get-Content $FullPath | ConvertFrom-Json
 
     # Load servicemap of api calls
     $FullPath = ("{0}/{1}" -f $PSScriptRoot, 'Data/services.json')
@@ -89,9 +89,6 @@ Try {
     # Load settingsmap of api calls
     $FullPath = ("{0}/{1}" -f $PSScriptRoot, 'Data/settings.json')
     $OPNsenseSettingMap = Get-Content $FullPath | ConvertFrom-Json
-
-    $OPNsenseSettingsModule = Get-NoteProperty $OPNsenseSettingMap
-    $OPNsenseItemModule = Get-NoteProperty $OPNsenseItemMap
 
 } Catch {
     Throw ("Unable to load the API maps :`nError : {0}" -f $_)

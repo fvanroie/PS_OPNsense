@@ -95,7 +95,7 @@ Content-Disposition: form-data; name="{1}"
         Return
     }
 
-    if (-Not $IsPSCoreEdition -And [bool]::Parse($SkipCertificateCheck)) {
+    if ($PSVersionTable.PSEdition -ne 'Core' -And [bool]::Parse($SkipCertificateCheck)) {
         $CertPolicy = Get-CertificatePolicy -Verbose:$VerbosePreference
         Disable-CertificateValidation -Verbose:$VerbosePreference
     }
@@ -142,7 +142,7 @@ Content-Disposition: form-data; name="{1}"
     }
     # Always restore the built-in .NET certificate policy
     Finally {
-        if (-Not $IsPSCoreEdition -And [bool]::Parse($SkipCertificateCheck)) {
+        if ($PSVersionTable.PSEdition -ne 'Core' -And [bool]::Parse($SkipCertificateCheck)) {
             Set-CertificatePolicy $CertPolicy -Verbose:$VerbosePreference
         }
     }

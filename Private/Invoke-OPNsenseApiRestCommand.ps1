@@ -45,7 +45,7 @@ Function Invoke-OPNsenseApiRestCommand {
     $Headers = @{}
 
     # Check PowerShell Edition
-    if ($IsPSCoreEdition) {
+    if ($PSVersionTable.PSEdition -eq 'Core') {
         # PS Core knows the Basic Authentication and handles SkipCertificateCheck
         $ParamSplat.Add("Authentication", "Basic") | Out-Null
     } else {
@@ -120,7 +120,7 @@ Function Invoke-OPNsenseApiRestCommand {
         Write-Error ("An error Occured while contacting the OPNsense server: {0}" -f $_.Exception.Message)
     } Finally {
         # Always restore the built-in .NET certificate policy on Windows PS Desktop only
-        if (-Not $IsPSCoreEdition -And [bool]::Parse($SkipCertificateCheck)) {
+        if ($PSVersionTable.PSEdition -ne 'Core' -And [bool]::Parse($SkipCertificateCheck)) {
             Set-CertificatePolicy $CertPolicy -Verbose:$VerbosePreference
         }
     }
