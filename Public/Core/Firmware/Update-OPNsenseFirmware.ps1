@@ -32,7 +32,10 @@ Function Update-OPNsenseFirmware {
     if ($pscmdlet.ShouldProcess($MyInvocation.MyCommand.Module.PrivateData['OPNsenseApi'])) {
         $result = Invoke-OPNsenseCommand core firmware upgrade -Form 'upgrade' -Verbose:$VerbosePreference
         if ($result.status -eq 'ok') {
-            return Get-OPNsenseUpdateStatus -Title "Update OPNsense" -Verbose:$VerbosePreference
+            $result = Get-OPNsenseUpdateStatus -Title "Update OPNsense" -Verbose:$VerbosePreference
+            if ($result.status -eq "Reboot") {
+                Write-Warning "The OPNsense server will now reboot."
+            }
         }
         return $result
     }
