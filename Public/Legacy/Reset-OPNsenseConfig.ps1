@@ -58,13 +58,13 @@ Function Reset-OPNsenseConfig {
     }
 
     Write-Warning '!!! YOU ARE ABOUT TO COMPLETELY ERASE THE OPNSENSE CONFIGURATION !!!'
-    if ($PSCmdlet.ShouldProcess($Uri, "Reset OPNsense to factory defaults")) {
+    if (-Not $PSCmdlet.ShouldProcess($Uri, "Reset OPNsense to factory defaults")) {
         Write-Warning 'Aborting Reset-OPNsenseConfig'
         Return
     }
 
     Write-Warning '!!! YOU ARE ABOUT TO COMPLETELY ERASE THE OPNSENSE CONFIGURATION !!!'
-    if ($PSCmdlet.ShouldProcess($Uri, "LAST WARNING: Reset OPNsense to factory defaults")) {
+    if (-Not $PSCmdlet.ShouldProcess($Uri, "LAST WARNING: Reset OPNsense to factory defaults")) {
         Write-Warning 'Aborting Reset-OPNsenseConfig'
         Return
     }

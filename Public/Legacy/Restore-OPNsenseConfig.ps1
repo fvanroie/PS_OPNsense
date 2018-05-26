@@ -90,7 +90,7 @@ Content-Disposition: form-data; name="{1}"
         Throw "No web password has been set."
     }
 
-    if ($PSCmdlet.ShouldProcess($Uri, "Restore OPNsense configuration")) {
+    if (-Not $PSCmdlet.ShouldProcess($Uri, "Restore OPNsense configuration")) {
         Write-Warning 'Aborting Restore-OPNsenseConfig'
         Return
     }
