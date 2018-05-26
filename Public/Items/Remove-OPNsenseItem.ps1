@@ -23,6 +23,7 @@
 
 Function Remove-OPNsenseItem {
     # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
+    [OutputType([Object[]])]
     [CmdletBinding(
         SupportsShouldProcess = $true,
         ConfirmImpact = "High"
@@ -32,36 +33,34 @@ Function Remove-OPNsenseItem {
         [Object[]]$InputObject,
 
         [parameter(Mandatory = $false)]
+        [Switch]$Force,
+
+        [parameter(Mandatory = $false)]
         [Switch]$PassThru
     )
     BEGIN {
-        # Get the Verb of the cmdlet
-        $verb, $null = $MyInvocation.MyCommand -split "-", 2
-        $command = "remove"
-        $commands = Get-OPNsenseItemMap | Where-Object { $_.command -eq $command}
+        # Get the Verb of this cmdlet
+        $Verb, $null = $MyInvocation.MyCommand -split "-", 2
+        $Action = 'delete'
+        #$Enabled = ($verb -eq "Enable")
+        
+        # Pre-filter all matching api calls for this action
+        $Commands = $OPNsenseOpenApi.values.values.values | Where-Object { $_.action -eq $action }
     }
     PROCESS {
-        foreach ($obj in $InputObject) {
-            $cmd = $commands | Where-Object { $_.returntype -eq $obj.gettype().FullName }
+        foreach ($Obj in $InputObject) {
 
-            # Check if an api command was found for this TypeName
-            if (!$cmd) {
-                Write-Warning ("Unable to process object of type {0}" -f $obj.gettype().FullName)
-                Continue # With next object
-            }
+            # Check if an api command was found for this action and returntype
+            $Call = $Commands | Where-Object { $_.RequestType -eq $Obj.gettype().FullName }
 
-            # Ask confirmation before removal, if needed
-            if ($pscmdlet.ShouldProcess( ("{{{0}}}" -f $obj.Uuid) , ("{0} {1}" -f $verb, $cmd.ObjectName) ) ) {
+            # Ask confirmation before performing action, if needed
+            if ($Force -Or $PSCmdlet.ShouldProcess(
+                    ("{{{0}}}" -f $Obj.Uuid) ,
+                    ("{0} {1}" -f $Verb, $Call.Object)
+                ) ) {
 
-                # Be Verbose
-                Write-Verbose ("{0} {1} {{{2}}}" -f $verb, $cmd.ObjectName, $obj.Uuid)
-
-                $result = Invoke-OPNsenseFunction -Module $cmd.Module -Command $command -Object $cmd.Object -Uuid $obj.Uuid -Enable $false
-
-                # Output results
-                if ($PassThru) {
-                    [PSCustomObject]@{ 'Uuid' = $obj.Uuid; 'Result' = $result }
-                }
+                Invoke-OPNsenseItem -Call $Call -InputObject $Obj -Verb $Verb -PassThru:$PassThru
+                
             } # ShouldProcess
 
         }

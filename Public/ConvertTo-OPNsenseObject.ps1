@@ -47,7 +47,7 @@ Function ConvertTo-OPNsenseObject {
         # Property List of the InputObject
         $objprop = Get-Member -InputObject $obj -MemberType NoteProperty
 
-        # Check if the needed reference parameters exist in the input object, add missing properties with default values
+        # Make sure ALL reference properties exist in the input object, add missing properties with default values
         $diff = Compare-Object $objprop.name $refprop.name | Where-Object { $_.SideIndicator -eq '=>' }
         foreach ($item in $diff) {
             Write-Warning ("Property '{0}' was expected but not found. Using the default value instead." -f $item.inputObject)
@@ -57,8 +57,13 @@ Function ConvertTo-OPNsenseObject {
         # Build argument list collection
         $arglist = New-Object System.Collections.Generic.List[System.Object]
         $refprop.name | Foreach-Object {
-            Write-Verbose ("* {0} : {1}" -f $_, $obj.$_)
-            $arglist.Add($obj.$_)
+            Write-Verbose ("   * {0} : {1}" -f $_, $obj.$_)
+            if ($obj.$_.gettype().name -eq 'PSCustomObject') {
+                # ConvertTo an Array of Dictionary Entries
+                $arglist.Add( $(ConvertFrom-OPNsenseOptionList $obj.$_) )
+            } else {
+                $arglist.Add($obj.$_)
+            }
             # WARNING: Cannot use += here because you can't do ( $arglist += $null ) to add values that are NULL !!
             # Using '+=' when the value is $null would result in the property being skipped and the Contructor will fail due to missing arguments
         }

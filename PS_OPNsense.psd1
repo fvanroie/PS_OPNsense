@@ -94,7 +94,8 @@
         'Formats/HAProxy.format.ps1xml',
         'Formats/Packages.format.ps1xml',
         'Formats/Services.format.ps1xml',
-        'Formats/ClamAV.format.ps1xml'
+        'Formats/ClamAV.format.ps1xml',
+        'Formats/Items.format.ps1xml'
     )
 
     # Modules to import as nested modules of the module specified in RootModule/ModuleToProcess

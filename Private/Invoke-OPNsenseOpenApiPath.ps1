@@ -45,11 +45,10 @@ Function Invoke-OPNsenseOpenApiPath {
 
         #        [parameter(Mandatory = $false)][HashTable]$AddProperty,
         [parameter(Mandatory = $false)][String]$Uuid,
-        [parameter(Mandatory = $false)][Boolean]$Enabled
+        [parameter(Mandatory = $false)][Switch]$Enabled
     )
 
     # Search the Appropriate API Call for this Action
-    #$call = Search-OPNsenseOpenApiPath -Module $Module -Action $Action -Object $Object
     $call = $OPNsenseOpenApi.$Module.$Action.$Object
     if (!$Call) {
         Write-Error ("{0} {2} does not implement the {1} action. (#17)" -f $Module, $Action, $Object)
@@ -64,8 +63,8 @@ Function Invoke-OPNsenseOpenApiPath {
             $key = '{{{0}}}' -f $parameter.Value.Name
             switch ($key) {
                 '{uuid}' { $value = $uuid }
-                '{enabled}' { $value = $enabled }
-                '{disabled}' { $value = -Not $enabled }
+                '{enabled}' { $value = If ($PSBoundParameters.ContainsKey('Enabled')) { ConvertTo-Boolean $Enabled } else { '' } }
+                '{disabled}' { $value = If ($PSBoundParameters.ContainsKey('Enabled')) { ConvertTo-Boolean (-Not $Enabled) } else { '' } }
                 default { $value = '' }
             }
             $CmdParams = $CmdParams.replace($key, $value)
@@ -80,13 +79,13 @@ Function Invoke-OPNsenseOpenApiPath {
         'Method'     = $Call.Method
         'Verbose'    = $VerbosePreference
         'Debug'      = $DebugPreference
-          'Property'   = $call.LevelsOut
+        'Property'   = $call.LevelsOut
     }
-    #    Switch ($Action) {
-    #        'get' { $Splat.Add('Property', $Object) }
-    #        'search' { $Splat.Add('Property', 'rows') }
-    #        default {}
-    #    }
+
+    if ($Action -eq 'search') {
+        $splat.Property = 'rows'
+    }
+
     if ($Body) {
         $Splat.Add('Json', $Body)
     }
@@ -104,9 +103,9 @@ Function Invoke-OPNsenseOpenApiPath {
     }
 
     # Can we cast this into our own object?
-    if ($returntype) {
-        Write-Verbose "Converting object to $returntype"
-        return ConvertTo-OPNsenseObject -TypeName $returntype -InputObject $result
+    if ($call.ResponseType) {
+        Write-Verbose ("Converting object to {0}" -f $call.ResponseType)
+        return ConvertTo-OPNsenseObject -TypeName $call.ResponseType -InputObject $result
     }
 
     # Return PSCustomObject instead

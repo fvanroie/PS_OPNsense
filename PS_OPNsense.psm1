@@ -97,6 +97,24 @@ Try {
     Throw ("Unable to load the API maps :`nError : {0}" -f $_)
 }
 
+# Compare Classes in OpenApi with Classes in PowerShell Module
+
+# Load objectmap of api calls
+$FullPath = ("{0}/{1}" -f $PSScriptRoot, 'Data/opnsense.json')
+$OpenApiSpec = Get-Content $FullPath | ConvertFrom-Json
+
+$cppClasses = [AppDomain]::CurrentDomain.GetAssemblies().ExportedTypes.Fullname |
+    Where-Object {$_ -like 'OPnsense.*'} | Select-Object -Unique
+$apiClasses = $OpenApiSpec.components.schemas.psobject.Properties.name
+$diff = Compare-Object $cppClasses $apiClasses
+foreach ($Class in $diff) {
+    if ($Class.SideIndicator -eq '<=') {
+        Write-Warning ("{0} is not defined in the API specification." -f $Class.InputObject)
+    } else {
+        Write-Warning ("{0} is not defined in the Class Definitions." -f $Class.InputObject)
+    }
+}
+
 ##### Static Export of Module Fucntions (Temporary situation untill all function get a proper script file)
 Export-ModuleMember -Function Connect-OPNsense, Disconnect-OPNsense, Invoke-OPNsenseCommand
 $f = @(########## PLUGINS ##########

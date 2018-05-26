@@ -104,7 +104,8 @@ Function Invoke-OPNsenseCommand {
 
         # Drill down to the requested property level
         foreach ($prop in $Property) {
-            if ($prop -in (Get-NoteProperty $result)) {
+            #if ($prop -in (Get-NoteProperty $result)) {
+            if ($prop -in $result.psobject.Properties.name) {
                 $result = Select-Object -InputObject $result -ExpandProperty $prop       
             } else {
                 Throw "$prop is an invalid property for object $Module/$Controller/$Command"

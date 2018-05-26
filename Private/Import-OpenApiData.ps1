@@ -49,12 +49,12 @@ Function Import-OpenApiData {
                     }
 
                     # NameSpace of the data object
-                    $NamespaceIn = $prop.value.requestBody.content.'application/json'.schema.'$ref'
-                    $NamespaceOut = $prop.value.responses.'200'.content.'application/json'.schema.'$ref'
+                    #$RequestType = $prop.value.requestBody.content.'application/json'.schema.'$ref'
+                    #$ResponseType = $prop.value.responses.'200'.content.'application/json'.schema.'$ref'
 
                     # Names of the Sublevel keys in the JSON to get to the data object
-                    $levelsOut, $NamespaceOut = Find-OpenApiRef $prop.value.responses.'200'.content.'application/json'.schema
-                    $levelsIn, $NamespaceIn = Find-OpenApiRef $prop.value.requestBody.content.'application/json'.schema
+                    $levelsOut, $ResponseType = Find-OpenApiRef $prop.value.responses.'200'.content.'application/json'.schema
+                    $levelsIn, $RequestType = Find-OpenApiRef $prop.value.requestBody.content.'application/json'.schema
 
                     # Find parameter objects from the schema based on the parameter reference in the path
                     $param = $OpenApiData.components.parameters.psobject.Properties |
@@ -69,14 +69,30 @@ Function Import-OpenApiData {
                         Method       = $Prop.name
                         Path         = $Path.Name
                         Parameters   = $Param
-                        NameSpaceIn  = $NamespaceIn
-                        NamespaceOut = $NamespaceOut
+                        RequestType  = $RequestType
+                        ResponseType = $ResponseType
                         LevelsIn     = $LevelsIn
                         LevelsOut    = $LevelsOut
                     }
     
                 } else {
                     #Write-Warning $prop.name
+                }
+            }
+        }
+    }
+
+    # Set RequestType for toggle, delete and set to ReturnType of get to enable easy pipeline type discovery
+    $commands = $OpenApiHash.values.values.values | Where-Object { $_.action -eq 'get'}
+    foreach ($item in $commands) {
+        if ($item.ResponseType) {
+            $Module = $Item.Module
+            $Object = $Item.Object
+            foreach ($Action in 'toggle', 'delete', 'set') {              
+                if ($OpenApiHash.$Module.$Action.$Object) {
+                    if (-Not $OpenApiHash.$Module.$Action.$Object.RequestType) {
+                        $OpenApiHash.$Module.$Action.$Object.RequestType = $Item.ResponseType
+                    }
                 }
             }
         }

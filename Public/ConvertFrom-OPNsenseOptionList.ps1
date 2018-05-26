@@ -1,4 +1,4 @@
-﻿<#	MIT License
+<#	MIT License
 	
 	Copyright (c) 2018 fvanroie, NetwiZe.be
 	
@@ -21,28 +21,24 @@
 	SOFTWARE.
 #>
 
-Function Get-OPNsenseHAProxyLuaScript {
+Function ConvertFrom-OPNsenseOptionList {
     # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
+    [OutputType([Object[]])]
     [CmdletBinding()]
-    param (
-        [parameter(Mandatory = $false, ValueFromPipelineByPropertyname = $true)]
-        [AllowEmptyCollection()][string[]]$Uuid,
-        [parameter(Mandatory = $false, ValueFromPipelineByPropertyname = $true)]
-        [AllowEmptyCollection()][string[]]$Name,
-        [parameter(Mandatory = $false, ValueFromPipelineByPropertyname = $true)]
-        [AllowEmptyCollection()][string[]]$Description,
-
-        [parameter(Mandatory = $false)]
-        [ValidateSet(0, 1, '0', '1', $False, $True)]$Enabled
+    Param(
+        [parameter(Mandatory = $true, position = 0)][PSObject]$InputObject # Object
     )
-    BEGIN {
-        $allobj = Invoke-OPNsenseFunction HAProxy search Lua
-        $result = @()
+
+    $OptionList = New-Object -TypeName System.Collections.Hashtable
+    foreach ($prop in $InputObject.PSObject.properties) {
+        # Property names with a signle space were a workaround to get the JSON parsed properly
+        # Restore the original key by replacing the space with an empty string
+        if ($prop.name -eq ' ') {
+            $key = ''
+        } else {
+            $key = $prop.name
+        }
+        $OptionList.Add($key, $prop.value)
     }
-    PROCESS {
-        $result += Select-OPNsenseItem -InputObject $allobj @PSBoundParameters   # Filter on properties
-    }  
-    END {
-        return $result | Add-ObjectDetail -TypeName (Get-OPNsenseItemType HAProxy Lua)
-    }
+    return $OptionList
 }

@@ -22,20 +22,26 @@
 #>
 
 
-function Get-OPNsenseItemType {
+<#
+    Retrieve the data for an object from the OPNsense api.
+    The Module/Action/Object define which api to call based on the opnsense.json file.
+#>
+
+
+Function New-OPNsenseItem {
+    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
     [OutputType([Object[]])]
     [CmdletBinding()]
     Param (
         [parameter(Mandatory = $true, position = 0)][String]$Module,
-        [parameter(Mandatory = $true, position = 1)][String]$Object,
-        [parameter(Mandatory = $false)][Switch]$Name,
-        [parameter(Mandatory = $false)][Switch]$Property
+        [parameter(Mandatory = $true, position = 1)][String]$Item
     )
-    if ($Name) {
-        return $OPNsenseItemMap.$Module.$Object.objectname
-    } elseif ($Property) {
-        return $OPNsenseItemMap.$Module.$Object.properties
-    } else {
-        return $OPNsenseItemMap.$Module.$Object.objecttype
+
+    # Search the Appropriate API Call for this Action
+    $call = $OPNsenseOpenApi.$Module.'get'.$Item
+    if (!$Call) {
+        Write-Error ("{0} {2} does not implement the {1} action. (#17)" -f $Module, 'new', $Item)
+        return $null
     }
+    return New-Object -TypeName $call.ResponseType
 }

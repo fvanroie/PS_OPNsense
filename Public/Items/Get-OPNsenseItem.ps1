@@ -24,7 +24,7 @@
 
 <#
     Retrieve the data for an object from the OPNsense api.
-    The Module/Command/Object define which api to call based on the functionmap.json file.
+    The Module/Action/Object define which api to call based on the opnsense.json file.
 #>
 
 
@@ -44,13 +44,21 @@ Function Get-OPNsenseItem {
     PROCESS {
         if (-Not $UUID) {
             Write-Verbose "Gathering all the UUIDs..."
-            #$uuids += $(Invoke-OPNsenseFunction $Module search $Item).UUID
-            $uuids += $(Invoke-OPNsenseOpenApiPath $Module search $Item).UUID
+            $result = $(Invoke-OPNsenseOpenApiPath $Module search $Item).UUID        
+            if ($result) {
+                $uuids += $result   # Don't add $null results
+            }
+
         } else {
+            # Add the UUIDs from the input
             $uuids += $UUID
         }
     }
     END {
+        # Filter duplicate UUIDs
+        $uuids = $uuids | Select-Object -Unique
+
+        # Return the item for each UUID
         foreach ($id in $uuids) {
             Write-Verbose ""
             Write-Verbose ("Retrieving Item {0}" -f $id)

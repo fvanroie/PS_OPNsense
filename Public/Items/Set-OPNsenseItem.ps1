@@ -21,7 +21,7 @@
     SOFTWARE.
 #>
 
-Function Disable-OPNsenseItem {
+Function Set-OPNsenseItem {
     # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
     [OutputType([Object[]])]
     [CmdletBinding(
@@ -41,7 +41,7 @@ Function Disable-OPNsenseItem {
     BEGIN {
         # Get the Verb of this cmdlet
         $Verb, $null = $MyInvocation.MyCommand -split "-", 2
-        $Action = 'toggle'
+        $Action = 'set'
         $Enabled = ($verb -eq "Enable")
         
         # Pre-filter all matching api calls for this action
