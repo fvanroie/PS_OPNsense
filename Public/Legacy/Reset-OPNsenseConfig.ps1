@@ -91,7 +91,7 @@ Function Reset-OPNsenseConfig {
         $webpage = Invoke-WebRequest -Uri "$Uri/index.php" -WebSession $cookieJar -Method POST -Body $form
         # check logged in
         if ($webpage.ParsedHtml.title -eq 'Login') {
-            Throw 'Unable to login to the OPNsense server'
+            Throw 'Unable to login to the OPNsense Web GUI. Make sure the WebCredential parameter is set and correct.'
         }
         $fqdn = $webpage.ParsedHtml.title.Split(' | ') | Select-Object -Last 1
 

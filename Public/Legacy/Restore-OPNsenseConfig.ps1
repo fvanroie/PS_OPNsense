@@ -113,7 +113,7 @@ Content-Disposition: form-data; name="{1}"
         $webpage = Invoke-WebRequest -Uri "$Uri/index.php" -WebSession $cookieJar -Method POST -Body $form
         # check logged in
         if ($webpage.ParsedHtml.title -eq 'Login') {
-            Throw 'Unable to login to the OPNsense server'
+            Throw 'Unable to login to the OPNsense Web GUI. Make sure the WebCredential parameter is set and correct.'
         }
 
         $webpage = Invoke-WebRequest -Uri "$Uri/diag_backup.php" -WebSession $cookieJar
