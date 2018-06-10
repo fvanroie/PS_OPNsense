@@ -23,7 +23,7 @@
 
 
 <#
-    Retrieve the data for an object from the OPNsense api.
+    Retrieve the data for CRUD objects from the OPNsense api.
     The Module/Action/Object define which api to call based on the opnsense.json file.
 #>
 
@@ -33,26 +33,90 @@ Function Get-OPNsenseItem {
     [OutputType([Object[]])]
     [CmdletBinding()]
     Param (
-        [parameter(Mandatory = $true, position = 0)][String]$Module,
-        [parameter(Mandatory = $true, position = 1)][String]$Item,
+
+        <# Start ParametersetName #>
+        [parameter(Mandatory = $true, position = 0, ParametersetName = 'AcmeClient')]
+        [ValidateSet("Account", "Action", "Certificate", "Validation")]
+        [String]$AcmeClient,
+        [parameter(Mandatory = $true, position = 0, ParametersetName = 'CaptivePortal')]
+        [ValidateSet("Template", "Voucher", "Zone")]
+        [String]$CaptivePortal,
+        [parameter(Mandatory = $true, position = 0, ParametersetName = 'Cron')]
+        [ValidateSet("Job")]
+        [String]$Cron,
+        [parameter(Mandatory = $true, position = 0, ParametersetName = 'FreeRadius')]
+        [ValidateSet("Client", "User")]
+        [String]$FreeRadius,
+        [parameter(Mandatory = $true, position = 0, ParametersetName = 'FtpProxy')]
+        [ValidateSet("Proxy")]
+        [String]$FtpProxy,
+        [parameter(Mandatory = $true, position = 0, ParametersetName = 'HAProxy')]
+        [ValidateSet("Acl", "Action", "Backend", "ErrorFile", "Frontend", "Healthcheck", "LuaScript", "Server")]
+        [String]$HAProxy,
+        [parameter(Mandatory = $true, position = 0, ParametersetName = 'IDS')]
+        [ValidateSet("UserRule")]
+        [String]$IDS,
+        [parameter(Mandatory = $true, position = 0, ParametersetName = 'Monit')]
+        [ValidateSet("Alert", "Service", "Test")]
+        [String]$Monit,
+        [parameter(Mandatory = $true, position = 0, ParametersetName = 'Postfix')]
+        [ValidateSet("Domain", "Recipient", "Sender")]
+        [String]$Postfix,
+        [parameter(Mandatory = $true, position = 0, ParametersetName = 'Proxy')]
+        [ValidateSet("RemoteBlacklist")]
+        [String]$Proxy,
+        [parameter(Mandatory = $true, position = 0, ParametersetName = 'ProxyUserACl')]
+        [ValidateSet("UserACL")]
+        [String]$ProxyUserACl,
+        [parameter(Mandatory = $true, position = 0, ParametersetName = 'Quagga')]
+        [ValidateSet("BGPAspath", "BGPNeighbor", "BGPPrefixlist", "BGPRoutemap", "Ospf6Interface", "OspfInterface", "OspfNetwork", "OspfPrefixlist")]
+        [String]$Quagga,
+        [parameter(Mandatory = $true, position = 0, ParametersetName = 'Relayd')]
+        [ValidateSet("Host", "Protocol", "Table", "TableCheck", "VirtualServer")]
+        [String]$Relayd,
+        [parameter(Mandatory = $true, position = 0, ParametersetName = 'Routes')]
+        [ValidateSet("Route")]
+        [String]$Routes,
+        [parameter(Mandatory = $true, position = 0, ParametersetName = 'Siproxd')]
+        [ValidateSet("Domain", "User")]
+        [String]$Siproxd,
+        [parameter(Mandatory = $true, position = 0, ParametersetName = 'Tinc')]
+        [ValidateSet("Host", "Network")]
+        [String]$Tinc,
+        [parameter(Mandatory = $true, position = 0, ParametersetName = 'Tor')]
+        [ValidateSet("Exitacl", "HiddenService", "HiddenServiceACL", "HiddenServiceAuth", "SocksACL")]
+        [String]$Tor,
+        [parameter(Mandatory = $true, position = 0, ParametersetName = 'TrafficShaper')]
+        [ValidateSet("Pipe", "Queue", "Rule")]
+        [String]$TrafficShaper,
+        [parameter(Mandatory = $true, position = 0, ParametersetName = 'ZeroTier')]
+        [ValidateSet("Network")]
+        [String]$ZeroTier,
+        <# End ParametersetName #>
+
         [parameter(Mandatory = $false)][String[]]$Uuid,
-        [parameter(Mandatory = $false)][Boolean]$Enable
+        [parameter(Mandatory = $false)][String]$Filter
     )
     BEGIN {
         $uuids = @()
     }
     PROCESS {
-        if (-Not $UUID) {
-            Write-Verbose "Gathering all the UUIDs..."
-            $result = $(Invoke-OPNsenseOpenApiPath $Module search $Item).UUID        
-            if ($result) {
-                $uuids += $result   # Don't add $null results
-            }
+        $Module = $PsCmdlet.ParameterSetName
+        $Item = $PsBoundParameters[$Module]
 
-        } else {
-            # Add the UUIDs from the input
-            $uuids += $UUID
+        Write-Verbose "Searching the UUIDs..."
+        $result = $(Invoke-OPNsenseOpenApiPath $Module search $Item -Filter $Filter).UUID        
+        if ($result -And $UUID) {
+            # Union of Filtered objects and UUIDs passed via commandline
+            $result = Compare-Object $result $UUID -IncludeEqual -ExcludeDifferent -PassThru
         }
+        
+        if ($result) {
+            $uuids += $result   # Don't add $null results
+        } else {
+            Write-Verbose "No matching items found."
+        }
+
     }
     END {
         # Filter duplicate UUIDs

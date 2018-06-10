@@ -7,7 +7,7 @@ InModuleScope PS_OPNsense {
 
     $Modules = $OPNsenseOpenApi.Keys | Sort-Object
 
-    Describe "Get-OPNsenseItem" {
+    Describe "New-OPNsenseItem" {
         foreach ($Module in $modules) {
     
             $testcases = foreach ($action in $OPNsenseOpenApi.$Module.keys) {
@@ -22,18 +22,18 @@ InModuleScope PS_OPNsense {
 
             Context "Module $Module" {
             
-                It "Get <module> <item>" -TestCases $testcases {
+                It "New <module> <item>" -TestCases $testcases {
                     param($module, $item)
                     if ($module -eq 'relayd') {
                         Set-TestInconclusive "$Module is under development"
                     }
                     $Splat = @{ "$Module" = "$Item"}
-                    {
-                        $result = Get-OPNsenseItem @Splat
-                    }  | should Not Throw
                     #{
-                    #    $result = New-OPNsenseItem @Splat
+                    #    $result = Get-OPNsenseItem @Splat
                     #}  | should Not Throw
+                    {
+                        $result = New-OPNsenseItem @Splat
+                    }  | should Not Throw
                 }
             }
         }
