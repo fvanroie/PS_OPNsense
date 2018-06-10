@@ -131,17 +131,18 @@ $f = @(########## PLUGINS ##########
     'Get-OPNsense', 'Set-OPNsense',
 
     # Cron
-    'Get-OPNsenseCronJob', 'Enable-OPNsenseCronJob', 'Disable-OPNsenseCronJob', 'Remove-OPNsenseCronJob',
-    'New-OPNsenseCronJob', 'Set-OPNsenseCronJob',
+    #'Get-OPNsenseCronJob', 'Enable-OPNsenseCronJob', 'Disable-OPNsenseCronJob', 'Remove-OPNsenseCronJob',
+    #'New-OPNsenseCronJob', 'Set-OPNsenseCronJob',
     #IDS
-    'Get-OPNsenseIdsUserRule', 'New-OPNsenseIdsUserRule'
+    #'Get-OPNsenseIdsUserRule',
+    'New-OPNsenseIdsUserRule',
     # Proxy
     'New-OPNsenseProxyRemoteBlacklist', 'Get-OPNsenseProxyRemoteBlacklist', 'Remove-OPNsenseProxyRemoteBlacklist',
     'Sync-OPNsenseProxyRemoteBlacklist',
     # CaptivePortal
     'New-OPNsenseCaptivePortalZone', 'Remove-OPNsenseCaptivePortalZone',
-    'New-OPNsenseCaptivePortalTemplate', 'Get-OPNsenseCaptivePortalTemplate', 'Set-OPNsenseCaptivePortalTemplate', 'Remove-OPNsenseCaptivePortalTemplate', 'Save-OPNsenseCaptivePortalTemplate',
-    'Get-OPNsenseCaptivePortal',
+    'New-OPNsenseCaptivePortalTemplate', 'Set-OPNsenseCaptivePortalTemplate', 'Remove-OPNsenseCaptivePortalTemplate', 'Save-OPNsenseCaptivePortalTemplate',
+    #'Get-OPNsenseCaptivePortal', 'Get-OPNsenseCaptivePortalTemplate',
     # Diagnostics
     'Get-OPNsenseSystemHealth', 'Get-OPNsenseResource', 'Get-OPNsenseInterface', 'Get-OPNsenseRoute', 'Get-OPNsenseARP', 'Clear-OPNsenseARP',
     # Services
