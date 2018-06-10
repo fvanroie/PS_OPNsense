@@ -46,10 +46,10 @@ Function Invoke-OPNsenseApiRestCommand {
 
     # Check PowerShell Edition
     if ($PSVersionTable.PSEdition -eq 'Core') {
-        # PS Core knows the Basic Authentication and handles SkipCertificateCheck
+        # PS Core knows the Basic Authentication and handles SkipCertificateCheck by default
         $ParamSplat.Add("Authentication", "Basic") | Out-Null
     } else {
-        # On Windows PowerShell only, Add Basic Authentication Header
+        # On Windows PowerShell only: Add Basic Authentication Header
         $bytes = [System.Text.Encoding]::UTF8.GetBytes($Credential.Username + ":" + $credential.GetNetworkCredential().Password)
         $Headers = @{ 'Authorization' = ("Basic {0}" -f [System.Convert]::ToBase64String($bytes))}
 
@@ -59,8 +59,13 @@ Function Invoke-OPNsenseApiRestCommand {
             $CertPolicy = Get-CertificatePolicy -Verbose:$VerbosePreference
             Disable-CertificateValidation -Verbose:$VerbosePreference
         }
-        [System.Net.ServicePointManager]::Expect100Continue = $false
         $ParamSplat.Remove("SkipCertificateCheck") | Out-Null
+
+        # Force TLS1.2 needed for 18.7 and up
+        [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12
+
+        # Temporarily disable 100 Continue Headers
+        [System.Net.ServicePointManager]::Expect100Continue = $false
     }
 
     if ($Json) {
@@ -90,12 +95,12 @@ Function Invoke-OPNsenseApiRestCommand {
             $ParamSplat.Method = 'POST'
             $ParamSplat.Add('Body', $form)
         } else {
-            # Neither Json nor Post, so its a plain request
+            # Neither Json nor Form, so its a plain request
             $ParamSplat.Method = 'GET'
         }
     }
 
-    # Override Default Method if passed
+    # Override Default Method if custom method is passed
     if ($Method) {
         $ParamSplat.Method = $Method
     }
@@ -117,6 +122,7 @@ Function Invoke-OPNsenseApiRestCommand {
     Try {
         $result = Invoke-RestMethod @ParamSplat
     } Catch {
+        $result = $null
         Write-Error ("An error Occured while contacting the OPNsense server: {0}" -f $_.Exception.Message)
     } Finally {
         # Always restore the built-in .NET certificate policy on Windows PS Desktop only
@@ -124,5 +130,5 @@ Function Invoke-OPNsenseApiRestCommand {
             Set-CertificatePolicy $CertPolicy -Verbose:$VerbosePreference
         }
     }
-    Return $Result
+    Return $result
 }
