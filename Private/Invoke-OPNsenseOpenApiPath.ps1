@@ -45,6 +45,7 @@ Function Invoke-OPNsenseOpenApiPath {
 
         #        [parameter(Mandatory = $false)][HashTable]$AddProperty,
         [parameter(Mandatory = $false)][String]$Uuid,
+        [parameter(Mandatory = $false)][String]$Filter,
         [parameter(Mandatory = $false)][Switch]$Enabled
     )
 
@@ -84,6 +85,9 @@ Function Invoke-OPNsenseOpenApiPath {
 
     if ($Action -eq 'search') {
         $splat.Property = 'rows'
+        if ($Filter) {
+            $splat.Form = @{ 'searchPhrase' = $Filter}
+        }
     }
 
     if ($Body) {
