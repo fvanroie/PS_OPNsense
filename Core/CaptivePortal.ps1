@@ -170,7 +170,7 @@ Function New-OPNsenseCaptivePortalZone {
 }
 
 
-Function Get-OPNsenseCaptivePortalTemplate {
+<#Function Get-OPNsenseCaptivePortalTemplate {
     # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
     [CmdletBinding(DefaultParameterSetName = 'GetTemplate')]
     Param (
@@ -190,7 +190,7 @@ Function Get-OPNsenseCaptivePortalTemplate {
         $result = $result | where-object { $_.FileId -like $FileId }
     }
     Return $result
-}
+}#>
 
 Function New-OPNsenseCaptivePortalTemplate {
     # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
@@ -233,7 +233,7 @@ Function Save-OPNsenseCaptivePortalTemplate {
 }
 
 
-Function Get-OPNsenseCaptivePortal {
+<#Function Get-OPNsenseCaptivePortal {
     # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
     [CmdletBinding(DefaultParameterSetName = 'GetTemplate')]
     Param (
@@ -271,4 +271,4 @@ Function Get-OPNsenseCaptivePortal {
         $result = Invoke-OPNsenseCommand captiveportal settings searchzones
         return $($result).rows
     }
-}
+}#>

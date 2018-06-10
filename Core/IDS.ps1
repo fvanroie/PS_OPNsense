@@ -21,7 +21,7 @@
     SOFTWARE.
 #>
 
-function Get-OPNsenseIdsUserRule {
+<#function Get-OPNsenseIdsUserRule {
     # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
     param (
         [Parameter(ParameterSetName = 'UUID', Mandatory = $false, position = 1)][String]$uuid,
@@ -39,7 +39,7 @@ function Get-OPNsenseIdsUserRule {
         $result = $(Invoke-OPNsenseCommand ids settings searchUserRule -Form @{searchPhrase = $Filter}).rows
     }
     return $result
-}
+}#>
 
 Function New-OPNsenseIdsUserRule {
     # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
