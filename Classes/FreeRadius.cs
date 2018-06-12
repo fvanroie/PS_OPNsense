@@ -38,7 +38,11 @@ namespace OPNsense.FreeRadius {
 		public string description { get; set; }
 		public bool enabled { get; set; }
 		public string ip { get; set; }
+		public PSObject ip6 { get; set; }
+		public int mikrotik_vlan_id_number { get; set; }
+		public int mikrotik_vlan_id_type { get; set; }
 		public string password { get; set; }
+		public Object route { get; set; }
 		public int sessionlimit_max_session_limit { get; set; }
 		public string subnet { get; set; }
 		public string username { get; set; }
@@ -55,7 +59,11 @@ namespace OPNsense.FreeRadius {
 			description = null;
 			enabled = true;
 			ip = null;
+			ip6 = null;
+			mikrotik_vlan_id_number = 0;
+			mikrotik_vlan_id_type = 0;
 			password = null;
+			route = null;
 			sessionlimit_max_session_limit = 0;
 			subnet = null;
 			username = null;
@@ -72,7 +80,11 @@ namespace OPNsense.FreeRadius {
 			string Description,
 			byte Enabled,
 			string Ip,
+			PSObject Ip6,
+			int Mikrotik_Vlan_Id_Number,
+			int Mikrotik_Vlan_Id_Type,
 			string Password,
+			Object Route,
 			int Sessionlimit_Max_Session_Limit,
 			string Subnet,
 			string Username,
@@ -87,7 +99,11 @@ namespace OPNsense.FreeRadius {
 			description = Description;
 			enabled = (Enabled == 0) ? false : true;
 			ip = Ip;
+			ip6 = Ip6;
+			mikrotik_vlan_id_number = Mikrotik_Vlan_Id_Number;
+			mikrotik_vlan_id_type = Mikrotik_Vlan_Id_Type;
 			password = Password;
+			route = Route;
 			sessionlimit_max_session_limit = Sessionlimit_Max_Session_Limit;
 			subnet = Subnet;
 			username = Username;

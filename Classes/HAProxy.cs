@@ -274,6 +274,7 @@ namespace OPNsense.HAProxy {
 		public string http_request_replace_value_regex { get; set; }
 		public string http_request_set_header_content { get; set; }
 		public string http_request_set_header_name { get; set; }
+		public string http_request_set_path { get; set; }
 		public string http_request_use_service { get; set; }
 		public string http_response_add_header_content { get; set; }
 		public string http_response_add_header_name { get; set; }
@@ -319,6 +320,7 @@ namespace OPNsense.HAProxy {
 			http_request_replace_value_regex = null;
 			http_request_set_header_content = null;
 			http_request_set_header_name = null;
+			http_request_set_path = null;
 			http_request_use_service = null;
 			http_response_add_header_content = null;
 			http_response_add_header_name = null;
@@ -364,6 +366,7 @@ namespace OPNsense.HAProxy {
 			string Http_Request_Replace_Value_Regex,
 			string Http_Request_Set_Header_Content,
 			string Http_Request_Set_Header_Name,
+			string Http_Request_Set_Path,
 			string Http_Request_Use_Service,
 			string Http_Response_Add_Header_Content,
 			string Http_Response_Add_Header_Name,
@@ -407,6 +410,7 @@ namespace OPNsense.HAProxy {
 			http_request_replace_value_regex = Http_Request_Replace_Value_Regex;
 			http_request_set_header_content = Http_Request_Set_Header_Content;
 			http_request_set_header_name = Http_Request_Set_Header_Name;
+			http_request_set_path = Http_Request_Set_Path;
 			http_request_use_service = Http_Request_Use_Service;
 			http_response_add_header_content = Http_Response_Add_Header_Content;
 			http_response_add_header_name = Http_Response_Add_Header_Name;
@@ -439,12 +443,16 @@ namespace OPNsense.HAProxy {
 	public class Backend {
 		#region Parameters
 		public PSObject algorithm { get; set; }
+		public string checkDownInterval { get; set; }
+		public string checkInterval { get; set; }
 		public string customOptions { get; set; }
 		public string description { get; set; }
 		public bool enabled { get; set; }
 		public PSObject healthCheck { get; set; }
 		public bool healthCheckEnabled { get; set; }
+		public uint healthCheckFall { get; set; }
 		public bool healthCheckLogStatus { get; set; }
+		public uint healthCheckRise { get; set; }
 		public string id { get; set; }
 		public PSObject linkedActions { get; set; }
 		public PSObject linkedErrorfiles { get; set; }
@@ -475,12 +483,16 @@ namespace OPNsense.HAProxy {
 
 		public Backend () {
 			algorithm = null;
+			checkDownInterval = null;
+			checkInterval = null;
 			customOptions = null;
 			description = null;
 			enabled = true;
 			healthCheck = null;
 			healthCheckEnabled = true;
+			healthCheckFall = 0;
 			healthCheckLogStatus = true;
+			healthCheckRise = 0;
 			id = null;
 			linkedActions = null;
 			linkedErrorfiles = null;
@@ -511,12 +523,16 @@ namespace OPNsense.HAProxy {
 
 		public Backend (
 			PSObject Algorithm,
+			string CheckDownInterval,
+			string CheckInterval,
 			string CustomOptions,
 			string Description,
 			byte Enabled,
 			PSObject HealthCheck,
 			byte HealthCheckEnabled,
+			uint HealthCheckFall,
 			byte HealthCheckLogStatus,
+			uint HealthCheckRise,
 			string Id,
 			PSObject LinkedActions,
 			PSObject LinkedErrorfiles,
@@ -545,12 +561,16 @@ namespace OPNsense.HAProxy {
 			string Tuning_TimeoutServer
 		) {
 			algorithm = Algorithm;
+			checkDownInterval = CheckDownInterval;
+			checkInterval = CheckInterval;
 			customOptions = CustomOptions;
 			description = Description;
 			enabled = (Enabled == 0) ? false : true;
 			healthCheck = HealthCheck;
 			healthCheckEnabled = (HealthCheckEnabled == 0) ? false : true;
+			healthCheckFall = HealthCheckFall;
 			healthCheckLogStatus = (HealthCheckLogStatus == 0) ? false : true;
+			healthCheckRise = HealthCheckRise;
 			id = Id;
 			linkedActions = LinkedActions;
 			linkedErrorfiles = LinkedErrorfiles;
