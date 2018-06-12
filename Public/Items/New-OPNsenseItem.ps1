@@ -29,66 +29,66 @@
 
 
 Function New-OPNsenseItem {
-    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
+    # .EXTERNALHELP ../../PS_OPNsense.psd1-Help.xml
     [OutputType([Object[]])]
     [CmdletBinding()]
     Param (
         <# Start ParametersetName #>
-        [parameter(Mandatory = $true, position = 0, ParametersetName = 'AcmeClient')]
+        [parameter(Mandatory = $true, ParametersetName = 'AcmeClient')]
         [ValidateSet("Account", "Action", "Certificate", "Validation")]
         [String]$AcmeClient,
-        [parameter(Mandatory = $true, position = 0, ParametersetName = 'CaptivePortal')]
+        [parameter(Mandatory = $true, ParametersetName = 'CaptivePortal')]
         [ValidateSet("Template", "Voucher", "Zone")]
         [String]$CaptivePortal,
-        [parameter(Mandatory = $true, position = 0, ParametersetName = 'Cron')]
+        [parameter(Mandatory = $true, ParametersetName = 'Cron')]
         [ValidateSet("Job")]
         [String]$Cron,
-        [parameter(Mandatory = $true, position = 0, ParametersetName = 'FreeRadius')]
+        [parameter(Mandatory = $true, ParametersetName = 'FreeRadius')]
         [ValidateSet("Client", "User")]
         [String]$FreeRadius,
-        [parameter(Mandatory = $true, position = 0, ParametersetName = 'FtpProxy')]
+        [parameter(Mandatory = $true, ParametersetName = 'FtpProxy')]
         [ValidateSet("Proxy")]
         [String]$FtpProxy,
-        [parameter(Mandatory = $true, position = 0, ParametersetName = 'HAProxy')]
+        [parameter(Mandatory = $true, ParametersetName = 'HAProxy')]
         [ValidateSet("Acl", "Action", "Backend", "ErrorFile", "Frontend", "Healthcheck", "LuaScript", "Server")]
         [String]$HAProxy,
-        [parameter(Mandatory = $true, position = 0, ParametersetName = 'IDS')]
+        [parameter(Mandatory = $true, ParametersetName = 'IDS')]
         [ValidateSet("UserRule")]
         [String]$IDS,
-        [parameter(Mandatory = $true, position = 0, ParametersetName = 'Monit')]
+        [parameter(Mandatory = $true, ParametersetName = 'Monit')]
         [ValidateSet("Alert", "Service", "Test")]
         [String]$Monit,
-        [parameter(Mandatory = $true, position = 0, ParametersetName = 'Postfix')]
+        [parameter(Mandatory = $true, ParametersetName = 'Postfix')]
         [ValidateSet("Domain", "Recipient", "Sender")]
         [String]$Postfix,
-        [parameter(Mandatory = $true, position = 0, ParametersetName = 'Proxy')]
+        [parameter(Mandatory = $true, ParametersetName = 'Proxy')]
         [ValidateSet("RemoteBlacklist")]
         [String]$Proxy,
-        [parameter(Mandatory = $true, position = 0, ParametersetName = 'ProxyUserACl')]
+        [parameter(Mandatory = $true, ParametersetName = 'ProxyUserACl')]
         [ValidateSet("UserACL")]
         [String]$ProxyUserACl,
-        [parameter(Mandatory = $true, position = 0, ParametersetName = 'Quagga')]
+        [parameter(Mandatory = $true, ParametersetName = 'Quagga')]
         [ValidateSet("BGPAspath", "BGPNeighbor", "BGPPrefixlist", "BGPRoutemap", "Ospf6Interface", "OspfInterface", "OspfNetwork", "OspfPrefixlist")]
         [String]$Quagga,
-        [parameter(Mandatory = $true, position = 0, ParametersetName = 'Relayd')]
+        [parameter(Mandatory = $true, ParametersetName = 'Relayd')]
         [ValidateSet("Host", "Protocol", "Table", "TableCheck", "VirtualServer")]
         [String]$Relayd,
-        [parameter(Mandatory = $true, position = 0, ParametersetName = 'Routes')]
+        [parameter(Mandatory = $true, ParametersetName = 'Routes')]
         [ValidateSet("Route")]
         [String]$Routes,
-        [parameter(Mandatory = $true, position = 0, ParametersetName = 'Siproxd')]
+        [parameter(Mandatory = $true, ParametersetName = 'Siproxd')]
         [ValidateSet("Domain", "User")]
         [String]$Siproxd,
-        [parameter(Mandatory = $true, position = 0, ParametersetName = 'Tinc')]
+        [parameter(Mandatory = $true, ParametersetName = 'Tinc')]
         [ValidateSet("Host", "Network")]
         [String]$Tinc,
-        [parameter(Mandatory = $true, position = 0, ParametersetName = 'Tor')]
+        [parameter(Mandatory = $true, ParametersetName = 'Tor')]
         [ValidateSet("Exitacl", "HiddenService", "HiddenServiceACL", "HiddenServiceAuth", "SocksACL")]
         [String]$Tor,
-        [parameter(Mandatory = $true, position = 0, ParametersetName = 'TrafficShaper')]
+        [parameter(Mandatory = $true, ParametersetName = 'TrafficShaper')]
         [ValidateSet("Pipe", "Queue", "Rule")]
         [String]$TrafficShaper,
-        [parameter(Mandatory = $true, position = 0, ParametersetName = 'ZeroTier')]
+        [parameter(Mandatory = $true, ParametersetName = 'ZeroTier')]
         [ValidateSet("Network")]
         [String]$ZeroTier
         <# End ParametersetName #>
