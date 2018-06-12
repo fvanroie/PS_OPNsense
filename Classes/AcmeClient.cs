@@ -93,6 +93,7 @@ namespace OPNsense.AcmeClient {
 		public string description { get; set; }
 		public bool enabled { get; set; }
 		public string id { get; set; }
+		public PSObject keyLength { get; set; }
 		public int lastUpdate { get; set; }
 		public string name { get; set; }
 		public uint renewInterval { get; set; }
@@ -110,6 +111,7 @@ namespace OPNsense.AcmeClient {
 			description = null;
 			enabled = true;
 			id = null;
+			keyLength = null;
 			lastUpdate = 0;
 			name = null;
 			renewInterval = 60;
@@ -127,6 +129,7 @@ namespace OPNsense.AcmeClient {
 			string Description,
 			byte Enabled,
 			string Id,
+			PSObject KeyLength,
 			int LastUpdate,
 			string Name,
 			uint RenewInterval,
@@ -142,6 +145,7 @@ namespace OPNsense.AcmeClient {
 			description = Description;
 			enabled = (Enabled == 0) ? false : true;
 			id = Id;
+			keyLength = KeyLength;
 			lastUpdate = LastUpdate;
 			name = Name;
 			renewInterval = RenewInterval;
@@ -163,6 +167,9 @@ namespace OPNsense.AcmeClient {
 		public string dns_aws_secret { get; set; }
 		public string dns_cf_email { get; set; }
 		public string dns_cf_key { get; set; }
+		public string dns_cloudns_auth_id { get; set; }
+		public string dns_cloudns_auth_password { get; set; }
+		public string dns_cloudns_sub_auth_id { get; set; }
 		public string dns_cx_key { get; set; }
 		public string dns_cx_secret { get; set; }
 		public string dns_cyon_password { get; set; }
@@ -237,6 +244,9 @@ namespace OPNsense.AcmeClient {
 			dns_aws_secret = null;
 			dns_cf_email = null;
 			dns_cf_key = null;
+			dns_cloudns_auth_id = null;
+			dns_cloudns_auth_password = null;
+			dns_cloudns_sub_auth_id = null;
 			dns_cx_key = null;
 			dns_cx_secret = null;
 			dns_cyon_password = null;
@@ -311,6 +321,9 @@ namespace OPNsense.AcmeClient {
 			string Dns_Aws_Secret,
 			string Dns_Cf_Email,
 			string Dns_Cf_Key,
+			string Dns_Cloudns_Auth_Id,
+			string Dns_Cloudns_Auth_Password,
+			string Dns_Cloudns_Sub_Auth_Id,
 			string Dns_Cx_Key,
 			string Dns_Cx_Secret,
 			string Dns_Cyon_Password,
@@ -383,6 +396,9 @@ namespace OPNsense.AcmeClient {
 			dns_aws_secret = Dns_Aws_Secret;
 			dns_cf_email = Dns_Cf_Email;
 			dns_cf_key = Dns_Cf_Key;
+			dns_cloudns_auth_id = Dns_Cloudns_Auth_Id;
+			dns_cloudns_auth_password = Dns_Cloudns_Auth_Password;
+			dns_cloudns_sub_auth_id = Dns_Cloudns_Sub_Auth_Id;
 			dns_cx_key = Dns_Cx_Key;
 			dns_cx_secret = Dns_Cx_Secret;
 			dns_cyon_password = Dns_Cyon_Password;
