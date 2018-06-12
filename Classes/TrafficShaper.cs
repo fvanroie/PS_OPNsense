@@ -155,6 +155,7 @@ namespace OPNsense.TrafficShaper {
 		public bool destination_not { get; set; }
 		public PSObject direction { get; set; }
 		public PSObject dst_port { get; set; }
+		public bool enabled { get; set; }
 		public PSObject Interface { get; set; }
 		public PSObject interface2 { get; set; }
 		public string origin { get; set; }
@@ -172,6 +173,7 @@ namespace OPNsense.TrafficShaper {
 			destination_not = true;
 			direction = null;
 			dst_port = null;
+			enabled = true;
 			Interface = null;
 			interface2 = null;
 			origin = null;
@@ -189,6 +191,7 @@ namespace OPNsense.TrafficShaper {
 			byte Destination_Not,
 			PSObject Direction,
 			PSObject Dst_Port,
+			byte Enabled,
 			PSObject Interface_,
 			PSObject Interface2,
 			string Origin,
@@ -204,6 +207,7 @@ namespace OPNsense.TrafficShaper {
 			destination_not = (Destination_Not == 0) ? false : true;
 			direction = Direction;
 			dst_port = Dst_Port;
+			enabled = (Enabled == 0) ? false : true;
 			Interface = Interface_;
 			interface2 = Interface2;
 			origin = Origin;
