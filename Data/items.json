@@ -496,7 +496,7 @@
             }
         }
     },
-    "FtpProxy": {
+    "FTPProxy": {
         "Proxy": {
             "objectname": "FTP Proxy",
             "mountpoint": "\\\\OPNsense\\ftpproxies\\ftpproxy",
@@ -2867,9 +2867,9 @@
             }
         }
     },
-    "ZeroTier": {
+    "Zerotier": {
         "Network": {
-            "objectname": "ZeroTier Network",
+            "objectname": "Zerotier Network",
             "mountpoint": "\\\\OPNsense\\zerotier\\networks\\network",
             "remove": {
                 "returntype": "OPNsense.Zerotier.Network",

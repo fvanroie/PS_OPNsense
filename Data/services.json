@@ -48,31 +48,34 @@
                     "status": {
                         "module": "arpscanner",
                         "controller": "service",
-                        "command": "status"
+                        "command": "status",
+                        "json": {
+                            "interface": "string"
+                        }
                     },
                     "start": {
                         "module": "arpscanner",
                         "controller": "service",
                         "command": "start",
-                        "json": {}
+                        "json": {
+                            "interface": "string"
+                        }
                     },
                     "stop": {
                         "module": "arpscanner",
                         "controller": "service",
                         "command": "stop",
-                        "json": {}
-                    },
-                    "reload": {
-                        "module": "arpscanner",
-                        "controller": "service",
-                        "command": "reload",
-                        "json": {}
+                        "json": {
+                            "interface": "string"
+                        }
                     },
                     "check": {
                         "module": "arpscanner",
                         "controller": "service",
                         "command": "check",
-                        "json": {}
+                        "json": {
+                            "interface": "string"
+                        }
                     }
                 }
             },
@@ -86,7 +89,7 @@
                     }
                 }
             },
-            "CICap": {
+            "C-ICap": {
                 "plugin": "os-c-icap",
                 "commands": {
                     "status": {
@@ -424,7 +427,7 @@
                     }
                 }
             },
-            "MDNSRepeater": {
+            "MdnsRepeater": {
                 "plugin": "os-mdns-repeater",
                 "commands": {
                     "status": {
@@ -961,14 +964,14 @@
                         "controller": "service",
                         "command": "reconfigure",
                         "json": {}
-                    }
-                },
-                "flushreload": {
-                    "reconfigure": {
-                        "module": "trafficshaper",
-                        "controller": "service",
-                        "command": "flushreload",
-                        "json": {}
+                    },
+                    "flushreload": {
+                        "reconfigure": {
+                            "module": "trafficshaper",
+                            "controller": "service",
+                            "command": "flushreload",
+                            "json": {}
+                        }
                     }
                 }
             },
