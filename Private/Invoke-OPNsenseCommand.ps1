@@ -118,7 +118,7 @@ Function Invoke-OPNsenseCommand {
             if ($addProperty.GetType().Name -eq "HashTable") {
                 $addProperty.keys | ForEach-Object {
                     Write-Verbose ("* $_ : " + $addProperty.Item($_))
-                    $result |  Add-Member $_ $addProperty.Item($_)
+                    $result |  Add-Member $_ $addProperty.Item($_) -Force
                 }
             }
         }
