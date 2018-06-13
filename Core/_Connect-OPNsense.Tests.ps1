@@ -19,7 +19,7 @@ Function Test-ObjectType ($obj) {
     return ($obj | Get-Member | Select-Object -ExpandProperty TypeName -First 1)
 }
 
-<# Describe "Check Help" {
+Describe "Check Help" {
     Context "Public Cmdlets should have a Get-Help:" {
         $cmdlets = @()
         Get-Command -Module PS_OPNsense | ForEach-Object {
@@ -30,7 +30,7 @@ Function Test-ObjectType ($obj) {
             (Get-Help -Name $name).synopsis -ne '' -And (Get-Help -Name $name).description -ne $null | Should Be $true
         }
     }
-} #>
+}
 
 
 InModuleScope PS_OPNsense {
