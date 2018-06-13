@@ -24,7 +24,7 @@
 
 ##### Module Variables
 #$IsPSCoreEdition = ($PSVersionTable.PSEdition -eq 'Core')
-$minversion = [System.Version]'18.1.7'
+$minversion = [System.Version]'18.1.9'
 
 $debug = $true  
 
