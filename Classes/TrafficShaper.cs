@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Management.Automation;
 
-namespace OPNsense.TrafficShaper {
+namespace OPNsense.TrafficShaper.pipes {
 	public class Pipe {
 		#region Parameters
 		public uint bandwidth { get; set; }
@@ -86,7 +86,7 @@ namespace OPNsense.TrafficShaper {
 		}
 	}
 }
-namespace OPNsense.TrafficShaper {
+namespace OPNsense.TrafficShaper.queues {
 	public class Queue {
 		#region Parameters
 		public uint buckets { get; set; }
@@ -147,7 +147,7 @@ namespace OPNsense.TrafficShaper {
 		}
 	}
 }
-namespace OPNsense.TrafficShaper {
+namespace OPNsense.TrafficShaper.rules {
 	public class Rule {
 		#region Parameters
 		public string description { get; set; }

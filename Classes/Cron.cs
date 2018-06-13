@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Management.Automation;
 
-namespace OPNsense.Cron {
+namespace OPNsense.cron.jobs {
 	public class Job {
 		#region Parameters
 		public PSObject command { get; set; }

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Management.Automation;
 
-namespace OPNsense.Siproxd {
+namespace OPNsense.siproxd.domain.domains {
 	public class Domain {
 		#region Parameters
 		public bool enabled { get; set; }
@@ -30,7 +30,7 @@ namespace OPNsense.Siproxd {
 		}
 	}
 }
-namespace OPNsense.Siproxd {
+namespace OPNsense.siproxd.user.users {
 	public class User {
 		#region Parameters
 		public bool enabled { get; set; }

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Management.Automation;
 
-namespace OPNsense.AcmeClient {
+namespace OPNsense.AcmeClient.accounts {
 	public class Account {
 		#region Parameters
 		public PSObject certificateAuthority { get; set; }
@@ -46,7 +46,7 @@ namespace OPNsense.AcmeClient {
 		}
 	}
 }
-namespace OPNsense.AcmeClient {
+namespace OPNsense.AcmeClient.actions {
 	public class Action {
 		#region Parameters
 		public PSObject configd { get; set; }
@@ -83,7 +83,7 @@ namespace OPNsense.AcmeClient {
 		}
 	}
 }
-namespace OPNsense.AcmeClient {
+namespace OPNsense.AcmeClient.certificates {
 	public class Certificate {
 		#region Parameters
 		public PSObject account { get; set; }
@@ -156,7 +156,7 @@ namespace OPNsense.AcmeClient {
 		}
 	}
 }
-namespace OPNsense.AcmeClient {
+namespace OPNsense.AcmeClient.validations {
 	public class Validation {
 		#region Parameters
 		public string description { get; set; }

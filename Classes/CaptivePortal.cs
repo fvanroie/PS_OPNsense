@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Management.Automation;
 
-namespace OPNsense.CaptivePortal {
+namespace OPNsense.captiveportal.templates {
 	public class Template {
 		#region Parameters
 		public string content { get; set; }
@@ -26,7 +26,7 @@ namespace OPNsense.CaptivePortal {
 		}
 	}
 }
-namespace OPNsense.CaptivePortal {
+namespace OPNsense.captiveportal.zones {
 	public class Zone {
 		#region Parameters
 		public Object allowedAddresses { get; set; }

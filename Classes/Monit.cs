@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Management.Automation;
 
-namespace OPNsense.Monit {
+namespace OPNsense.monit {
 	public class Alert {
 		#region Parameters
 		public string description { get; set; }
@@ -42,7 +42,7 @@ namespace OPNsense.Monit {
 		}
 	}
 }
-namespace OPNsense.Monit {
+namespace OPNsense.monit {
 	public class Service {
 		#region Parameters
 		public string address { get; set; }
@@ -99,7 +99,7 @@ namespace OPNsense.Monit {
 		}
 	}
 }
-namespace OPNsense.Monit {
+namespace OPNsense.monit {
 	public class Test {
 		#region Parameters
 		public PSObject action { get; set; }

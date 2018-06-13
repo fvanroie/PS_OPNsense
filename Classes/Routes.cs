@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Management.Automation;
 
-namespace OPNsense.Routes {
+namespace staticroutes {
 	public class Route {
 		#region Parameters
 		public string descr { get; set; }

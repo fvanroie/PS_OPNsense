@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Management.Automation;
 
-namespace OPNsense.Ftpproxy {
-	public class Proxy {
+namespace OPNsense.ftpproxies {
+	public class Ftpproxy {
 		#region Parameters
 		public uint debuglevel { get; set; }
 		public string description { get; set; }
@@ -18,7 +18,7 @@ namespace OPNsense.Ftpproxy {
 		public string sourceaddress { get; set; }
 		#endregion Parameters
 
-		public Proxy () {
+		public Ftpproxy () {
 			debuglevel = 5;
 			description = null;
 			enabled = true;
@@ -33,7 +33,7 @@ namespace OPNsense.Ftpproxy {
 			sourceaddress = null;
 		}
 
-		public Proxy (
+		public Ftpproxy (
 			uint Debuglevel,
 			string Description,
 			byte Enabled,

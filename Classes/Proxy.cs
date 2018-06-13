@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Management.Automation;
 
-namespace OPNsense.Proxy {
-	public class RemoteBlacklist {
+namespace OPNsense.proxy.forward.acl.remoteACLs.blacklists {
+	public class Blacklist {
 		#region Parameters
 		public string description { get; set; }
 		public bool enabled { get; set; }
@@ -14,7 +14,7 @@ namespace OPNsense.Proxy {
 		public string username { get; set; }
 		#endregion Parameters
 
-		public RemoteBlacklist () {
+		public Blacklist () {
 			description = null;
 			enabled = true;
 			filename = null;
@@ -25,7 +25,7 @@ namespace OPNsense.Proxy {
 			username = null;
 		}
 
-		public RemoteBlacklist (
+		public Blacklist (
 			string Description,
 			byte Enabled,
 			string Filename,

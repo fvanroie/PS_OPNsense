@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Management.Automation;
 
-namespace OPNsense.FreeRadius {
+namespace OPNsense.freeradius.client.clients {
 	public class Client {
 		#region Parameters
 		public bool enabled { get; set; }
@@ -30,7 +30,7 @@ namespace OPNsense.FreeRadius {
 		}
 	}
 }
-namespace OPNsense.FreeRadius {
+namespace OPNsense.freeradius.user.users {
 	public class User {
 		#region Parameters
 		public int chillispot_bw_max_down { get; set; }

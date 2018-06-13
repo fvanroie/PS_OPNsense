@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Management.Automation;
 
-namespace OPNsense.ProxyUserACL {
-	public class UserACL {
+namespace OPNsense.ProxyUserACL.general.ACLs {
+	public class ACL {
 		#region Parameters
 		public PSObject Black { get; set; }
 		public Object Domains { get; set; }
@@ -12,7 +12,7 @@ namespace OPNsense.ProxyUserACL {
 		public int Priority { get; set; }
 		#endregion Parameters
 
-		public UserACL () {
+		public ACL () {
 			Black = null;
 			Domains = null;
 			Group = null;
@@ -21,7 +21,7 @@ namespace OPNsense.ProxyUserACL {
 			Priority = 0;
 		}
 
-		public UserACL (
+		public ACL (
 			PSObject black,
 			Object domains,
 			PSObject group,

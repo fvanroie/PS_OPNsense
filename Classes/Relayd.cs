@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Management.Automation;
 
-namespace OPNsense.Rlayd {
+namespace relayd {
 	public class Host {
 		#region Parameters
 		#endregion Parameters
@@ -9,13 +9,9 @@ namespace OPNsense.Rlayd {
 		public Host () {
 		}
 
-		public Host (
-
-		) {
-		}
 	}
 }
-namespace OPNsense.Rlayd {
+namespace relayd {
 	public class Protocol {
 		#region Parameters
 		#endregion Parameters
@@ -23,13 +19,9 @@ namespace OPNsense.Rlayd {
 		public Protocol () {
 		}
 
-		public Protocol (
-
-		) {
-		}
 	}
 }
-namespace OPNsense.Rlayd {
+namespace relayd {
 	public class Table {
 		#region Parameters
 		#endregion Parameters
@@ -37,37 +29,25 @@ namespace OPNsense.Rlayd {
 		public Table () {
 		}
 
-		public Table (
-
-		) {
-		}
 	}
 }
-namespace OPNsense.Rlayd {
-	public class TableCheck {
+namespace relayd {
+	public class Tablecheck {
 		#region Parameters
 		#endregion Parameters
 
-		public TableCheck () {
+		public Tablecheck () {
 		}
 
-		public TableCheck (
-
-		) {
-		}
 	}
 }
-namespace OPNsense.Rlayd {
-	public class VirtualServer {
+namespace relayd {
+	public class Virtualserver {
 		#region Parameters
 		#endregion Parameters
 
-		public VirtualServer () {
+		public Virtualserver () {
 		}
 
-		public VirtualServer (
-
-		) {
-		}
 	}
 }

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Management.Automation;
 
-namespace OPNsense.HAProxy {
+namespace OPNsense.HAProxy.acls {
 	public class Acl {
 		#region Parameters
 		public string custom_acl { get; set; }
@@ -254,7 +254,7 @@ namespace OPNsense.HAProxy {
 		}
 	}
 }
-namespace OPNsense.HAProxy {
+namespace OPNsense.HAProxy.actions {
 	public class Action {
 		#region Parameters
 		public string actionFind { get; set; }
@@ -439,7 +439,7 @@ namespace OPNsense.HAProxy {
 		}
 	}
 }
-namespace OPNsense.HAProxy {
+namespace OPNsense.HAProxy.backends {
 	public class Backend {
 		#region Parameters
 		public PSObject algorithm { get; set; }
@@ -600,8 +600,8 @@ namespace OPNsense.HAProxy {
 		}
 	}
 }
-namespace OPNsense.HAProxy {
-	public class ErrorFile {
+namespace OPNsense.HAProxy.errorfiles {
+	public class Errorfile {
 		#region Parameters
 		public PSObject code { get; set; }
 		public string content { get; set; }
@@ -610,7 +610,7 @@ namespace OPNsense.HAProxy {
 		public string name { get; set; }
 		#endregion Parameters
 
-		public ErrorFile () {
+		public Errorfile () {
 			code = null;
 			content = null;
 			description = null;
@@ -618,7 +618,7 @@ namespace OPNsense.HAProxy {
 			name = null;
 		}
 
-		public ErrorFile (
+		public Errorfile (
 			PSObject Code,
 			string Content,
 			string Description,
@@ -633,7 +633,7 @@ namespace OPNsense.HAProxy {
 		}
 	}
 }
-namespace OPNsense.HAProxy {
+namespace OPNsense.HAProxy.frontends {
 	public class Frontend {
 		#region Parameters
 		public Object bind { get; set; }
@@ -830,7 +830,7 @@ namespace OPNsense.HAProxy {
 		}
 	}
 }
-namespace OPNsense.HAProxy {
+namespace OPNsense.HAProxy.healthchecks {
 	public class Healthcheck {
 		#region Parameters
 		public int agentPort { get; set; }
@@ -951,7 +951,7 @@ namespace OPNsense.HAProxy {
 		}
 	}
 }
-namespace OPNsense.HAProxy {
+namespace OPNsense.HAProxy.luas {
 	public class Lua {
 		#region Parameters
 		public string content { get; set; }
@@ -984,7 +984,7 @@ namespace OPNsense.HAProxy {
 		}
 	}
 }
-namespace OPNsense.HAProxy {
+namespace OPNsense.HAProxy.servers {
 	public class Server {
 		#region Parameters
 		public string address { get; set; }

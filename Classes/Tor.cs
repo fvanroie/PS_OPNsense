@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Management.Automation;
 
-namespace OPNsense.Tor {
-	public class Exitacl {
+namespace OPNsense.tor.exitpolicy {
+	public class Policy {
 		#region Parameters
 		public PSObject action { get; set; }
 		public bool enabled { get; set; }
@@ -12,7 +12,7 @@ namespace OPNsense.Tor {
 		public PSObject type { get; set; }
 		#endregion Parameters
 
-		public Exitacl () {
+		public Policy () {
 			action = null;
 			enabled = true;
 			endport = 0;
@@ -21,7 +21,7 @@ namespace OPNsense.Tor {
 			type = null;
 		}
 
-		public Exitacl (
+		public Policy (
 			PSObject Action,
 			byte Enabled,
 			uint Endport,
@@ -38,8 +38,8 @@ namespace OPNsense.Tor {
 		}
 	}
 }
-namespace OPNsense.Tor {
-	public class HiddenService {
+namespace OPNsense.tor.hiddenservice {
+	public class Service {
 		#region Parameters
 		public Object clients { get; set; }
 		public bool enabled { get; set; }
@@ -47,14 +47,14 @@ namespace OPNsense.Tor {
 		public PSObject type { get; set; }
 		#endregion Parameters
 
-		public HiddenService () {
+		public Service () {
 			clients = null;
 			enabled = true;
 			name = null;
 			type = null;
 		}
 
-		public HiddenService (
+		public Service (
 			Object Clients,
 			byte Enabled,
 			string Name,
@@ -67,8 +67,8 @@ namespace OPNsense.Tor {
 		}
 	}
 }
-namespace OPNsense.Tor {
-	public class HiddenServiceACL {
+namespace OPNsense.tor.hiddenserviceacl {
+	public class Hiddenserviceacl {
 		#region Parameters
 		public bool enabled { get; set; }
 		public PSObject hiddenservice { get; set; }
@@ -77,7 +77,7 @@ namespace OPNsense.Tor {
 		public uint target_port { get; set; }
 		#endregion Parameters
 
-		public HiddenServiceACL () {
+		public Hiddenserviceacl () {
 			enabled = true;
 			hiddenservice = null;
 			port = 80;
@@ -85,7 +85,7 @@ namespace OPNsense.Tor {
 			target_port = 80;
 		}
 
-		public HiddenServiceACL (
+		public Hiddenserviceacl (
 			byte Enabled,
 			PSObject Hiddenservice,
 			uint Port,
@@ -100,21 +100,21 @@ namespace OPNsense.Tor {
 		}
 	}
 }
-namespace OPNsense.Tor {
-	public class HiddenServiceAuth {
+namespace OPNsense.tor.general.client_authentications {
+	public class Client_Auth {
 		#region Parameters
 		public string auth_cookie { get; set; }
 		public bool enabled { get; set; }
 		public string onion_service { get; set; }
 		#endregion Parameters
 
-		public HiddenServiceAuth () {
+		public Client_Auth () {
 			auth_cookie = "0000000000000000000000";
 			enabled = true;
 			onion_service = "exampleexample23.onion";
 		}
 
-		public HiddenServiceAuth (
+		public Client_Auth (
 			string Auth_Cookie,
 			byte Enabled,
 			string Onion_Service
@@ -125,8 +125,8 @@ namespace OPNsense.Tor {
 		}
 	}
 }
-namespace OPNsense.Tor {
-	public class SocksACL {
+namespace OPNsense.tor.aclsockspolicy {
+	public class Policy {
 		#region Parameters
 		public PSObject action { get; set; }
 		public bool enabled { get; set; }
@@ -134,14 +134,14 @@ namespace OPNsense.Tor {
 		public PSObject type { get; set; }
 		#endregion Parameters
 
-		public SocksACL () {
+		public Policy () {
 			action = null;
 			enabled = true;
 			network = null;
 			type = null;
 		}
 
-		public SocksACL (
+		public Policy (
 			PSObject Action,
 			byte Enabled,
 			PSObject Network,

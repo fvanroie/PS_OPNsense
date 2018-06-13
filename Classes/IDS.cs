@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Management.Automation;
 
-namespace OPNsense.IDS {
+namespace OPNsense.IDS.rules {
 	public class Rule {
 		#region Parameters
 		public PSObject action { get; set; }
@@ -26,8 +26,8 @@ namespace OPNsense.IDS {
 		}
 	}
 }
-namespace OPNsense.IDS {
-	public class UserRule {
+namespace OPNsense.IDS.userDefinedRules {
+	public class Rule {
 		#region Parameters
 		public PSObject action { get; set; }
 		public string description { get; set; }
@@ -37,7 +37,7 @@ namespace OPNsense.IDS {
 		public PSObject geoip_direction { get; set; }
 		#endregion Parameters
 
-		public UserRule () {
+		public Rule () {
 			action = null;
 			description = null;
 			enabled = true;
@@ -46,7 +46,7 @@ namespace OPNsense.IDS {
 			geoip_direction = null;
 		}
 
-		public UserRule (
+		public Rule (
 			PSObject Action,
 			string Description,
 			byte Enabled,

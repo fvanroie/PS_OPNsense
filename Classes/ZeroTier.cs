@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Management.Automation;
 
-namespace OPNsense.Zerotier {
+namespace OPNsense.zerotier.networks {
 	public class Network {
 		#region Parameters
 		public string description { get; set; }

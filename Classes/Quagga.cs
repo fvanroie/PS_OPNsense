@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Management.Automation;
 
-namespace OPNsense.Quagga.BGP {
-	public class AsPath {
+namespace OPNsense.quagga.bgp.aspaths {
+	public class Aspath {
 		#region Parameters
 		public PSObject action { get; set; }
 		public string AS { get; set; }
@@ -10,14 +10,14 @@ namespace OPNsense.Quagga.BGP {
 		public uint number { get; set; }
 		#endregion Parameters
 
-		public AsPath () {
+		public Aspath () {
 			action = null;
 			AS = null;
 			enabled = true;
 			number = 0;
 		}
 
-		public AsPath (
+		public Aspath (
 			PSObject Action,
 			string AS_,
 			byte Enabled,
@@ -30,7 +30,7 @@ namespace OPNsense.Quagga.BGP {
 		}
 	}
 }
-namespace OPNsense.Quagga.BGP {
+namespace OPNsense.quagga.bgp.neighbors {
 	public class Neighbor {
 		#region Parameters
 		public string address { get; set; }
@@ -83,7 +83,7 @@ namespace OPNsense.Quagga.BGP {
 		}
 	}
 }
-namespace OPNsense.Quagga.BGP {
+namespace OPNsense.quagga.bgp.prefixlists {
 	public class Prefixlist {
 		#region Parameters
 		public PSObject action { get; set; }
@@ -116,7 +116,7 @@ namespace OPNsense.Quagga.BGP {
 		}
 	}
 }
-namespace OPNsense.Quagga.BGP {
+namespace OPNsense.quagga.bgp.routemaps {
 	public class Routemap {
 		#region Parameters
 		public PSObject action { get; set; }
@@ -153,7 +153,7 @@ namespace OPNsense.Quagga.BGP {
 		}
 	}
 }
-namespace OPNsense.Quagga.Ospf6 {
+namespace OPNsense.quagga.ospf6.interfaces {
 	public class Interface {
 		#region Parameters
 		public string area { get; set; }
@@ -206,7 +206,7 @@ namespace OPNsense.Quagga.Ospf6 {
 		}
 	}
 }
-namespace OPNsense.Quagga.Ospf {
+namespace OPNsense.quagga.ospf.interfaces {
 	public class Interface {
 		#region Parameters
 		public string authkey { get; set; }
@@ -263,7 +263,7 @@ namespace OPNsense.Quagga.Ospf {
 		}
 	}
 }
-namespace OPNsense.Quagga.Ospf {
+namespace OPNsense.quagga.ospf.networks {
 	public class Network {
 		#region Parameters
 		public string area { get; set; }
@@ -300,7 +300,7 @@ namespace OPNsense.Quagga.Ospf {
 		}
 	}
 }
-namespace OPNsense.Quagga.Ospf {
+namespace OPNsense.quagga.ospf.prefixlists {
 	public class Prefixlist {
 		#region Parameters
 		public PSObject action { get; set; }

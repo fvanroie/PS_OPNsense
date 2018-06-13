@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Management.Automation;
 
-namespace OPNsense.Postfix {
+namespace OPNsense.postfix.domain.domains {
 	public class Domain {
 		#region Parameters
 		public string destination { get; set; }
@@ -26,7 +26,7 @@ namespace OPNsense.Postfix {
 		}
 	}
 }
-namespace OPNsense.Postfix {
+namespace OPNsense.postfix.recipient.recipients {
 	public class Recipient {
 		#region Parameters
 		public PSObject action { get; set; }
@@ -51,7 +51,7 @@ namespace OPNsense.Postfix {
 		}
 	}
 }
-namespace OPNsense.Postfix {
+namespace OPNsense.postfix.sender.senders {
 	public class Sender {
 		#region Parameters
 		public PSObject action { get; set; }

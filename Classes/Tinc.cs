@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Management.Automation;
 
-namespace OPNsense.Tinc {
+namespace OPNsense.Tinc.hosts {
 	public class Host {
 		#region Parameters
 		public PSObject cipher { get; set; }
@@ -50,7 +50,7 @@ namespace OPNsense.Tinc {
 		}
 	}
 }
-namespace OPNsense.Tinc {
+namespace OPNsense.Tinc.networks {
 	public class Network {
 		#region Parameters
 		public PSObject cipher { get; set; }
