@@ -89,7 +89,7 @@
                     }
                 }
             },
-            "C-ICap": {
+            "C-ICAP": {
                 "plugin": "os-c-icap",
                 "commands": {
                     "status": {

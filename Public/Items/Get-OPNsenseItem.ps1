@@ -59,6 +59,9 @@ Function Get-OPNsenseItem {
         [parameter(Mandatory = $true, ParametersetName = 'Monit')]
         [ValidateSet("Alert", "Service", "Test")]
         [String]$Monit,
+        [parameter(Mandatory = $true, ParametersetName = 'Nginx')]
+        [ValidateSet( "Credential", "CustomPolicy", "HttpServer", "Location", "NaxsiRule", "Upstream", "UpstreamServer", "UserList")]
+        [String]$Nginx,
         [parameter(Mandatory = $true, ParametersetName = 'Postfix')]
         [ValidateSet("Domain", "Recipient", "Sender")]
         [String]$Postfix,

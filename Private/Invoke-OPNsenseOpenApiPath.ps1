@@ -28,7 +28,7 @@ Function Invoke-OPNsenseOpenApiPath {
     Param(
         [parameter(Mandatory = $true, position = 0)]
         [ValidateSet("AcmeClient", "ArpScanner", "C-ICAP", "CaptivePortal", "ClamAV", "Collectd", "Cron", "FreeRadius", "FtpProxy", "HAProxy", "HelloWorld",
-            "IDS", "Iperf", "LLDPd", "MDNSrepeater", "Monit", "Netflow", "NodeExporter", "Nut", "OpenConnect", "Postfix", "Proxy", "ProxySSO", "ProxyUserACl",
+            "IDS", "Iperf", "LLDPd", "MDNSrepeater", "Monit", "Netflow", "Nginx", "NodeExporter", "Nut", "OpenConnect", "Postfix", "Proxy", "ProxySSO", "ProxyUserAcl",
             "Quagga", "Redis", "Relayd", "Routes", "Rspamd", "ShadowSocks", "Siproxd", "Telegraf", "Tinc", "Tor", "TrafficShaper",
             "ZabbixAgent", "ZabbixProxy", "ZeroTier")]
         [String]$Module,

@@ -1231,6 +1231,320 @@
             }
         }
     },
+    "Nginx": {
+        "Credential": {
+            "objectname": "Nginx Credential",
+            "mountpoint": "\\\\OPNsense\\Nginx\\credential",
+            "remove": {
+                "returntype": "OPNsense.Nginx.Credential",
+                "command": {
+                    "module": "nginx",
+                    "controller": "settings",
+                    "command": "delcredential/<uuid>",
+                    "Form": "remove"
+                }
+            },
+            "get": {
+                "returntype": "OPNsense.Nginx.Credential",
+                "command": {
+                    "module": "nginx",
+                    "controller": "settings",
+                    "command": "getcredential/<uuid>",
+                    "property": "credential"
+                }
+            },
+            "search": {
+                "command": {
+                    "module": "nginx",
+                    "controller": "settings",
+                    "command": "searchcredential/",
+                    "property": "rows"
+                }
+            },
+            "set": {
+                "returntype": "OPNsense.Nginx.Credential",
+                "command": {
+                    "module": "nginx",
+                    "controller": "settings",
+                    "command": "setcredential/<uuid>",
+                    "json": {}
+                }
+            }
+        },
+        "CustomPolicy": {
+            "objectname": "Nginx CustomPolicy",
+            "mountpoint": "\\\\OPNsense\\Nginx\\custom_policy",
+            "remove": {
+                "returntype": "OPNsense.Nginx.CustomPolicy",
+                "command": {
+                    "module": "nginx",
+                    "controller": "settings",
+                    "command": "delcustompolicy/<uuid>",
+                    "Form": "remove"
+                }
+            },
+            "get": {
+                "returntype": "OPNsense.Nginx.CustomPolicy",
+                "command": {
+                    "module": "nginx",
+                    "controller": "settings",
+                    "command": "getcustompolicy/<uuid>",
+                    "property": "custompolicy"
+                }
+            },
+            "search": {
+                "command": {
+                    "module": "nginx",
+                    "controller": "settings",
+                    "command": "searchcustompolicy/",
+                    "property": "rows"
+                }
+            },
+            "set": {
+                "returntype": "OPNsense.Nginx.CustomPolicy",
+                "command": {
+                    "module": "nginx",
+                    "controller": "settings",
+                    "command": "setcustompolicy/<uuid>",
+                    "json": {}
+                }
+            }
+        },
+        "HttpServer": {
+            "objectname": "Nginx HttpServer",
+            "mountpoint": "\\\\OPNsense\\Nginx\\http_server",
+            "remove": {
+                "returntype": "OPNsense.Nginx.HttpServer",
+                "command": {
+                    "module": "nginx",
+                    "controller": "settings",
+                    "command": "delhttpserver/<uuid>",
+                    "Form": "remove"
+                }
+            },
+            "get": {
+                "returntype": "OPNsense.Nginx.HttpServer",
+                "command": {
+                    "module": "nginx",
+                    "controller": "settings",
+                    "command": "gethttpserver/<uuid>",
+                    "property": "httpserver"
+                }
+            },
+            "search": {
+                "command": {
+                    "module": "nginx",
+                    "controller": "settings",
+                    "command": "searchhttpserver/",
+                    "property": "rows"
+                }
+            },
+            "set": {
+                "returntype": "OPNsense.Nginx.HttpServer",
+                "command": {
+                    "module": "nginx",
+                    "controller": "settings",
+                    "command": "sethttpserver/<uuid>",
+                    "json": {}
+                }
+            }
+        },
+        "Location": {
+            "objectname": "Nginx Location",
+            "mountpoint": "\\\\OPNsense\\Nginx\\location",
+            "remove": {
+                "returntype": "OPNsense.Nginx.Location",
+                "command": {
+                    "module": "nginx",
+                    "controller": "settings",
+                    "command": "dellocation/<uuid>",
+                    "Form": "remove"
+                }
+            },
+            "get": {
+                "returntype": "OPNsense.Nginx.Location",
+                "command": {
+                    "module": "nginx",
+                    "controller": "settings",
+                    "command": "getlocation/<uuid>",
+                    "property": "location"
+                }
+            },
+            "search": {
+                "command": {
+                    "module": "nginx",
+                    "controller": "settings",
+                    "command": "searchlocation/",
+                    "property": "rows"
+                }
+            },
+            "set": {
+                "returntype": "OPNsense.Nginx.Location",
+                "command": {
+                    "module": "nginx",
+                    "controller": "settings",
+                    "command": "setlocation/<uuid>",
+                    "json": {}
+                }
+            }
+        },
+        "NaxsiRule": {
+            "objectname": "Nginx NaxsiRule",
+            "mountpoint": "\\\\OPNsense\\Nginx\\naxsi_rule",
+            "remove": {
+                "returntype": "OPNsense.Nginx.NaxsiRule",
+                "command": {
+                    "module": "nginx",
+                    "controller": "settings",
+                    "command": "delnaxsirule/<uuid>",
+                    "Form": "remove"
+                }
+            },
+            "get": {
+                "returntype": "OPNsense.Nginx.NaxsiRule",
+                "command": {
+                    "module": "nginx",
+                    "controller": "settings",
+                    "command": "getnaxsirule/<uuid>",
+                    "property": "naxsirule"
+                }
+            },
+            "search": {
+                "command": {
+                    "module": "nginx",
+                    "controller": "settings",
+                    "command": "searchnaxsirule/",
+                    "property": "rows"
+                }
+            },
+            "set": {
+                "returntype": "OPNsense.Nginx.NaxsiRule",
+                "command": {
+                    "module": "nginx",
+                    "controller": "settings",
+                    "command": "setnaxsirule/<uuid>",
+                    "json": {}
+                }
+            }
+        },
+        "Upstream": {
+            "objectname": "Nginx Upstream",
+            "mountpoint": "\\\\OPNsense\\Nginx\\upstream",
+            "remove": {
+                "returntype": "OPNsense.Nginx.Upstream",
+                "command": {
+                    "module": "nginx",
+                    "controller": "settings",
+                    "command": "delupstream/<uuid>",
+                    "Form": "remove"
+                }
+            },
+            "get": {
+                "returntype": "OPNsense.Nginx.Upstream",
+                "command": {
+                    "module": "nginx",
+                    "controller": "settings",
+                    "command": "getupstream/<uuid>",
+                    "property": "upstream"
+                }
+            },
+            "search": {
+                "command": {
+                    "module": "nginx",
+                    "controller": "settings",
+                    "command": "searchupstream/",
+                    "property": "rows"
+                }
+            },
+            "set": {
+                "returntype": "OPNsense.Nginx.Upstream",
+                "command": {
+                    "module": "nginx",
+                    "controller": "settings",
+                    "command": "setupstream/<uuid>",
+                    "json": {}
+                }
+            }
+        },
+        "UpstreamServer": {
+            "objectname": "Nginx UpstreamServer",
+            "mountpoint": "\\\\OPNsense\\Nginx\\upstreamserver",
+            "remove": {
+                "returntype": "OPNsense.Nginx.UpstreamServer",
+                "command": {
+                    "module": "nginx",
+                    "controller": "settings",
+                    "command": "delupstreamserver/<uuid>",
+                    "Form": "remove"
+                }
+            },
+            "get": {
+                "returntype": "OPNsense.Nginx.UpstreamServer",
+                "command": {
+                    "module": "nginx",
+                    "controller": "settings",
+                    "command": "getupstreamserver/<uuid>",
+                    "property": "upstream_server"
+                }
+            },
+            "search": {
+                "command": {
+                    "module": "nginx",
+                    "controller": "settings",
+                    "command": "searchupstreamserver/",
+                    "property": "rows"
+                }
+            },
+            "set": {
+                "returntype": "OPNsense.Nginx.UpstreamServer",
+                "command": {
+                    "module": "nginx",
+                    "controller": "settings",
+                    "command": "setupstreamserver/<uuid>",
+                    "json": {}
+                }
+            }
+        },
+        "UserList": {
+            "objectname": "Nginx UserList",
+            "mountpoint": "\\\\OPNsense\\Nginx\\userlist",
+            "remove": {
+                "returntype": "OPNsense.Nginx.UserList",
+                "command": {
+                    "module": "nginx",
+                    "controller": "settings",
+                    "command": "deluserlist/<uuid>",
+                    "Form": "remove"
+                }
+            },
+            "get": {
+                "returntype": "OPNsense.Nginx.UserList",
+                "command": {
+                    "module": "nginx",
+                    "controller": "settings",
+                    "command": "getuserlist/<uuid>",
+                    "property": "userlist"
+                }
+            },
+            "search": {
+                "command": {
+                    "module": "nginx",
+                    "controller": "settings",
+                    "command": "searchuserlist/",
+                    "property": "rows"
+                }
+            },
+            "set": {
+                "returntype": "OPNsense.Nginx.UserList",
+                "command": {
+                    "module": "nginx",
+                    "controller": "settings",
+                    "command": "setupuserlist/<uuid>",
+                    "json": {}
+                }
+            }
+        }
+    },
     "Postfix": {
         "Domain": {
             "objectname": "Postfix Domain",
