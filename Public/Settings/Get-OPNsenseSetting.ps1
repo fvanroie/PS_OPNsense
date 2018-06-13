@@ -29,7 +29,7 @@
 
 
 Function Get-OPNsenseSetting {
-    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
+    # .EXTERNALHELP ../../PS_OPNsense.psd1-Help.xml
     [OutputType([Object[]])]
     [CmdletBinding()]
     Param (

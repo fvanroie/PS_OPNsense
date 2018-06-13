@@ -22,7 +22,7 @@
 #>
 
 Function Remove-OPNsenseItem {
-    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
+    # .EXTERNALHELP ../../PS_OPNsense.psd1-Help.xml
     [OutputType([Object[]])]
     [CmdletBinding(
         SupportsShouldProcess = $true,
