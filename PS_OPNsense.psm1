@@ -26,7 +26,7 @@
 #$IsPSCoreEdition = ($PSVersionTable.PSEdition -eq 'Core')
 $minversion = [System.Version]'18.1.9'
 
-$debug = $true  
+$debug = $false  
 
 # Load individual functions from scriptfiles
 # TODO : itterate over the objectmap and test if all Objects can be instantiated
