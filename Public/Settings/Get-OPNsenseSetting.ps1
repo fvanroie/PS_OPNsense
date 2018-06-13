@@ -50,7 +50,7 @@ Function Get-OPNsenseSetting {
 
         # Get the Invoke Arguments List
         $arglist = $OPNsenseSettingMap.settings.$Module.$Setting.$Command.command
-        $returntype = $OPNsenseSettingMap.settings.$Module.$Setting.$Command.returntype
+        #$returntype = $OPNsenseSettingMap.settings.$Module.$Setting.$Command.returntype
 
         # Build Invoke Arguments Splat
         $splat = @{};

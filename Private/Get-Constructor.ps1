@@ -84,7 +84,7 @@ Function Get-Constructor {
     )
     Process {
         If ($PSBoundParameters['AsObject']) {
-            $type.GetConstructors() | ForEach {
+            $type.GetConstructors() | ForEach-Object {
                 $object = New-Object PSobject -Property @{
                     Type       = $_.DeclaringType
                     Parameters = $_.GetParameters()
@@ -95,9 +95,9 @@ Function Get-Constructor {
 
 
         } Else {
-            $Type.GetConstructors() | Select @{
+            $Type.GetConstructors() | Select-Object @{
                 Label      = "$($type.Name) Constructors"
-                Expression = {($_.GetParameters() | ForEach {$_.ToString()}) -Join ", "}
+                Expression = {($_.GetParameters() | ForEach-Object {$_.ToString()}) -Join ", "}
             }
         }
     }
