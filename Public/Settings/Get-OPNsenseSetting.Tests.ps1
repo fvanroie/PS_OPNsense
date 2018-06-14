@@ -3,7 +3,7 @@ Import-Module PS_OPNsense
 
 
 InModuleScope PS_OPNsense {
-    $settingsmap = get-content .\data\settings.json | ConvertFrom-Json
+    $settingsmap = get-content .\Data\settings.json | ConvertFrom-Json
 
     $testcases = @()
     $modules = $settingsmap.settings | Get-Member -MemberType NoteProperty

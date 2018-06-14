@@ -27,6 +27,9 @@ Describe "Check Help" {
         }
         it "<name> has a Get-Help entry" -TestCases $cmdlets {
             param ($name)
+            if ((Get-Help -Name $name).synopsis -eq '' -Or (Get-Help -Name $name).description -eq $null) {
+                Set-TestInconclusive "$name has no help"
+            }
             (Get-Help -Name $name).synopsis -ne '' -And (Get-Help -Name $name).description -ne $null | Should Be $true
         }
     }
