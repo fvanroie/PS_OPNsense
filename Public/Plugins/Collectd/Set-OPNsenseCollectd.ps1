@@ -23,7 +23,7 @@
 
 
 Function Set-OPNsenseCollectd {
-    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
+    # .EXTERNALHELP ../../../PS_OPNsense.psd1-Help.xml
     [CmdletBinding()]
     param (
         [ValidateSet('network', 'graphite', 'cpu', 'df', 'interface', 'load', 'memory', 'processes', 'uptime', 'users')]
