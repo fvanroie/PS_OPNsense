@@ -17,17 +17,25 @@ Currently there are basic api hooks for these OPNsense modules:
 
 Not all functionality is implemented yet and this is an *early development alpha release*. All testing and [feedback](https://github.com/fvanroie/PS_OPNsense/issues) is appreciated.
 
-## Supported Plugins
-There are basic api hooks for these optional OPNsense pluginss:
-- ArpScanner
-- ClamAV
-- Collectd
-- HAProxy
-- Lldpd
+## Supported Objects
 
+### Items
+All CRUD items are supported using Get-OPNsenseItem, Remove-OPNsenseItem and Switch-OPNsenseItem.
+Creating and updating CRUD items is being worked on and not yet fully supported.
+
+### Packages
+Full support to install, re-install, remove, lock and unlock OPNsense Packages and Plugins.
+
+### Settings
+You can get the Settings for all API modules. Changing the Settings is not supported yet.
+
+### Services
 Currently only Start, Stop, Update and Restart services are implemented for the other plugins. More work is needed to support all available REST api commands.
 
-## Legacy Commands
+### Firmware
+Updating firmware via PowerShell is implemented.
+
+### Legacy Commands
 There is legacy WebUI support for these commands:
 - Backup Config
 - Restore Config
@@ -46,12 +54,12 @@ Change into the PowerShell Module directory located in your profile folder.
 
 You can download and unzip the module into the PowerShell Modules folder or clone the repository directly:
 ```git
-git clone https://github.com/fvanroie/PS_OPNsense.git .\PS_OPNsense
+git clone https://github.com/fvanroie/PS_OPNsense.git
 ```
 
 Depending on your ExecutionPolicy, you might need to unblock the downloaded module files:
 ```powershell
-Get-ChildItem .\PS_OPNsense -Recurse | Unblock-File -Verbose
+Get-ChildItem PS_OPNsense -Recurse | Unblock-File -Verbose
 ```
 
 To load this module in PowerShell type:
@@ -98,7 +106,7 @@ Platform          | Edition            | Version
 ------------------|--------------------|--------
 Windows 10        | PowerShell Desktop | 5.1
 Windows 10        | PowerShell Core    | 6.0
-[Ubuntu 18.04 beta](https://github.com/fvanroie/PS_OPNsense/wiki/Install-PowerShell-on-Ubuntu-18.04-beta) | PowerShell Core    | 6.0
+[Ubuntu 18.04](https://github.com/fvanroie/PS_OPNsense/wiki/Install-PowerShell-on-Ubuntu-18.04-beta) | PowerShell Core    | 6.0
 
-PS_OPNsense aims to be cross-platform on PowerShell Core 6.0 and up, however it has not been extensively tested on Linux and MacOS yet. Let me know what works and what doesn't.
+PS_OPNsense aims to be cross-platform on PowerShell Core 6.0 and up, however it has not been extensively tested on MacOS yet. Let me know what works and what doesn't.
 Feel free to use it on these platforms and report back any [issues](https://github.com/fvanroie/PS_OPNsense/issues) you encouter. The goal is to make PS_OPNsense crossplatform with PowerShell Core.
