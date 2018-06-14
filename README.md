@@ -45,6 +45,8 @@ A minimal set of legacy commands are also available in this PowerShell module. O
 These cmdlets will be ported over to use the REST api functions when they are ported to the REST api when they are made available in future OPNsense firmware versions.
 
 ## Getting Started
+
+### Install PS_OPNsense Module
 To find out the location of the Modules directory, check the PSModulePath environment variable:
 ```powershell
 $Env:PSModulePath -split ";"    # On Windows
@@ -71,6 +73,7 @@ Get all the commands in the PS_OPNsense module type:
 Get-Command -Module PS_OPNsense
 ```
 
+### Create an API key in OPNsense
 From the OPNsense GUI, create an API key for a user that will run PowerShell scripts:
 - Open System > Access > Users.
 - Click on a user that will be used for accessing the REST api.
@@ -87,8 +90,8 @@ Connect-OPNsense 'https://opnsense.local' <api_key> <api_secret> -SkipCertificat
 ```
 Run some commands:
 ```powershell
-Invoke-OPNsenseCommand core firmware status -Verbose
-$(Invoke-OPNsenseCommand core firmware info).changelog
+Get-OPNsenseItem -Cron Job
+Get-OPNsensePackage -Plugin
 ```
 Disconnect from the server:
 ```powershell
