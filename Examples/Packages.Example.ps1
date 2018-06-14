@@ -5,8 +5,7 @@
 #  This script makes changes on your OPNsense appliance,
 #  do NOT run this script against a production machine !
 #
-# New objects to be created are defined in the script below
-# They can also be imported from a file, database, other script, ...
+# Example Packages to be installed are defined in the script below
 #
 # Note: Connect to OPNsense first
 #       See Connect.Example.ps1 file for an example of how to connect
@@ -21,10 +20,10 @@ If (-Not $haproxy.installed) {
     Write-Host -ForegroundColor Cyan "HAProxy plugin-in is already installed!"
 }
 
-# Get ALL Plugins, except frr
-$myplugins = Get-OPNsensePlugin  -Verbose:$beVerbose | Where-Object { $_.Name -notin 'os-quagga' }
+# Get ALL Plugins, except quagga, which is obsolete
+$myplugins = Get-OPNsensePackage -Plugin -Verbose:$beVerbose | Where-Object { $_.Name -notin 'os-quagga' }
 
-# Install the plugin packages
+# Install ALL plugin packages
 $myplugins | Install-OPNsensePackage -Verbose:$beVerbose
 
 
