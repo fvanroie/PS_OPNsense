@@ -38,8 +38,8 @@ Function Get-OPNsenseCertificate {
 
     foreach ($ca in $cas) {
         $ca.crt = ConvertFrom-Base64 $ca.crt
+        $ca.prv = ConvertFrom-Base64 $ca.prv
     }
 
-    $certs
-    $cas
+    $certs, $cas
 }
