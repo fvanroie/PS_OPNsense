@@ -100,15 +100,17 @@ Try {
 $FullPath = ("{0}/{1}" -f $PSScriptRoot, 'Data/opnsense.json')
 $OpenApiSpec = Get-Content $FullPath | ConvertFrom-Json
 
-$cppClasses = [AppDomain]::CurrentDomain.GetAssemblies().ExportedTypes.Fullname |
-    Where-Object {$_ -like 'OPnsense.*'} | Select-Object -Unique
-$apiClasses = $OpenApiSpec.components.schemas.psobject.Properties.name
-$diff = Compare-Object $cppClasses $apiClasses
-foreach ($Class in $diff) {
-    if ($Class.SideIndicator -eq '<=') {
-        Write-Warning ("{0} is not defined in the API specification." -f $Class.InputObject)
-    } else {
-        Write-Warning ("{0} is not defined in the Class Definitions." -f $Class.InputObject)
+if ($debug) {
+    $cppClasses = [AppDomain]::CurrentDomain.GetAssemblies().ExportedTypes.Fullname |
+        Where-Object {$_ -like 'OPnsense.*'} | Select-Object -Unique
+    $apiClasses = $OpenApiSpec.components.schemas.psobject.Properties.name
+    $diff = Compare-Object $cppClasses $apiClasses
+    foreach ($Class in $diff) {
+        if ($Class.SideIndicator -eq '<=') {
+            Write-Warning ("{0} is not defined in the API specification." -f $Class.InputObject)
+        } else {
+            Write-Warning ("{0} is not defined in the Class Definitions." -f $Class.InputObject)
+        }
     }
 }
 
