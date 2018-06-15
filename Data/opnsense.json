@@ -3756,8 +3756,10 @@
                             "application/json": {
                                 "schema": {
                                     "properties": {
-                                        "System.Object[]": {
-                                            "$ref": "#/components/schemas/OPNsense.monit.alert"
+                                        "monit": {
+                                            "alert": {
+                                                "$ref": "#/components/schemas/OPNsense.monit.alert"
+                                            }
                                         }
                                     }
                                 }
@@ -3779,8 +3781,10 @@
                         "application/json": {
                             "schema": {
                                 "properties": {
-                                    "alert": {
-                                        "$ref": "#/components/schemas/OPNsense.monit.alert"
+                                    "monit": {
+                                        "alert": {
+                                            "$ref": "#/components/schemas/OPNsense.monit.alert"
+                                        }
                                     }
                                 }
                             }
@@ -3941,8 +3945,10 @@
                             "application/json": {
                                 "schema": {
                                     "properties": {
-                                        "System.Object[]": {
-                                            "$ref": "#/components/schemas/OPNsense.monit.service"
+                                        "monit": {
+                                            "service": {
+                                                "$ref": "#/components/schemas/OPNsense.monit.service"
+                                            }
                                         }
                                     }
                                 }
@@ -3964,8 +3970,10 @@
                         "application/json": {
                             "schema": {
                                 "properties": {
-                                    "service": {
-                                        "$ref": "#/components/schemas/OPNsense.monit.service"
+                                    "monit": {
+                                        "service": {
+                                            "$ref": "#/components/schemas/OPNsense.monit.service"
+                                        }
                                     }
                                 }
                             }
@@ -4126,8 +4134,10 @@
                             "application/json": {
                                 "schema": {
                                     "properties": {
-                                        "System.Object[]": {
-                                            "$ref": "#/components/schemas/OPNsense.monit.test"
+                                        "monit": {
+                                            "test": {
+                                                "$ref": "#/components/schemas/OPNsense.monit.test"
+                                            }
                                         }
                                     }
                                 }
@@ -4149,8 +4159,10 @@
                         "application/json": {
                             "schema": {
                                 "properties": {
-                                    "test": {
-                                        "$ref": "#/components/schemas/OPNsense.monit.test"
+                                    "monit": {
+                                        "test": {
+                                            "$ref": "#/components/schemas/OPNsense.monit.test"
+                                        }
                                     }
                                 }
                             }
