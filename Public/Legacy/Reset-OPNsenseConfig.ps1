@@ -22,7 +22,7 @@
 #>
 
 Function Reset-OPNsenseConfig {
-    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
+    # .EXTERNALHELP ../../PS_OPNsense.psd1-Help.xml
     [CmdletBinding(
         SupportsShouldProcess = $true,
         ConfirmImpact = "High"
@@ -58,18 +58,18 @@ Function Reset-OPNsenseConfig {
     }
 
     Write-Warning '!!! YOU ARE ABOUT TO COMPLETELY ERASE THE OPNSENSE CONFIGURATION !!!'
-    if ($PSCmdlet.ShouldProcess($Uri, "Reset OPNsense to factory defaults")) {
+    if (-Not $PSCmdlet.ShouldProcess($Uri, "Reset OPNsense to factory defaults")) {
         Write-Warning 'Aborting Reset-OPNsenseConfig'
         Return
     }
 
     Write-Warning '!!! YOU ARE ABOUT TO COMPLETELY ERASE THE OPNSENSE CONFIGURATION !!!'
-    if ($PSCmdlet.ShouldProcess($Uri, "LAST WARNING: Reset OPNsense to factory defaults")) {
+    if (-Not $PSCmdlet.ShouldProcess($Uri, "LAST WARNING: Reset OPNsense to factory defaults")) {
         Write-Warning 'Aborting Reset-OPNsenseConfig'
         Return
     }
 
-    if (-Not $IsPSCoreEdition -And [bool]::Parse($SkipCertificateCheck)) {
+    if ($PSVersionTable.PSEdition -ne 'Core' -And [bool]::Parse($SkipCertificateCheck)) {
         $CertPolicy = Get-CertificatePolicy -Verbose:$VerbosePreference
         Disable-CertificateValidation -Verbose:$VerbosePreference
     }
@@ -91,7 +91,7 @@ Function Reset-OPNsenseConfig {
         $webpage = Invoke-WebRequest -Uri "$Uri/index.php" -WebSession $cookieJar -Method POST -Body $form
         # check logged in
         if ($webpage.ParsedHtml.title -eq 'Login') {
-            Throw 'Unable to login to the OPNsense server'
+            Throw 'Unable to login to the OPNsense Web GUI. Make sure the WebCredential parameter is set and correct.'
         }
         $fqdn = $webpage.ParsedHtml.title.Split(' | ') | Select-Object -Last 1
 
@@ -116,7 +116,7 @@ Function Reset-OPNsenseConfig {
     }
     # Always restore the built-in .NET certificate policy
     Finally {
-        if (-Not $IsPSCoreEdition -And [bool]::Parse($SkipCertificateCheck)) {
+        if ($PSVersionTable.PSEdition -ne 'Core' -And [bool]::Parse($SkipCertificateCheck)) {
             Set-CertificatePolicy $CertPolicy -Verbose:$VerbosePreference
         }
     }

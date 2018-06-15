@@ -37,7 +37,8 @@ function ConvertTo-InputObject {
         foreach ($key in $PSBounds.keys) {
             if ($key -notin [System.Management.Automation.PSCmdlet]::CommonParameters -and
                 $key -notin [System.Management.Automation.PSCmdlet]::OptionalCommonParameters) {
-                if ($key -in 'enabled') {
+                if ($PSBounds[$key].gettype().name -eq 'Boolean') {
+                    # $obj | Add-Member -MemberType NoteProperty -Name $key -Value $([byte]$($PSBounds[$key])) -Force
                     $obj | Add-Member -MemberType NoteProperty -Name $key -Value $PSBounds[$key] -Force
                 } elseif ($key -in 'bind', 'linkedErrorFiles', 'linkedServers') {
                     $obj | Add-Member -MemberType NoteProperty -Name $key -Value ($PSBounds[$key] -Join ',') -Force
@@ -51,15 +52,6 @@ function ConvertTo-InputObject {
     }
     Write-Debug ("Parameters : {0}" -f (ConvertTo-Json -InputObject $obj))
     return $obj
-}
-
-
-function Get-NoteProperty {
-    [CmdletBinding()]
-    param (
-        [psobject]$obj
-    )
-    return Get-Member -InputObject $obj -MemberType NoteProperty | Select-Object -ExpandProperty Name
 }
 
 function Format-OPNsenseProperty {
@@ -96,86 +88,6 @@ function Get-MultiOption {
         }
     }
     return $result
-}
-
-
-##### GET Functions #####
-function Get-OPNsenseHAProxyDetail {
-    [CmdletBinding()]
-    param (
-        [Parameter(Mandatory = $true, position = 0)]
-        [ValidateSet('Server', 'Backend', 'Frontend', 'Healthcheck', 'Errorfile', 'Lua', 'Acl', 'Action', 'Healthcheck')]
-        [String]$ObjectType,
-        [parameter(Mandatory = $true)][string]$Uuid
-    )
-    Switch ($ObjectType) {
-        'Server' { Get-OPNsenseHAProxyServer -Uuid $Uuid }    
-        'Backend' { Get-OPNsenseHAProxyBackend -Uuid $Uuid }    
-        'Frontend' { Get-OPNsenseHAProxyFrontend -Uuid $Uuid }    
-        'Healthcheck' { Get-OPNsenseHAProxyHealthCheck -Uuid $Uuid }    
-        'Errorfile' { Get-OPNsenseHAProxyErrorfile -Uuid $Uuid }    
-        'Lua' { Get-OPNsenseHAProxyLuaScript -Uuid $Uuid }    
-        'Acl' { Get-OPNsenseHAProxyAcl -Uuid $Uuid }    
-        'Action' { Get-OPNsenseHAProxyAction -Uuid $Uuid }    
-        default { }
-    }
-}
-
-function Select-OPNsenseHAProxyObject {
-    [CmdletBinding()]
-    param (
-        [Parameter(Mandatory = $true, position = 0)]
-        [AllowNull()]$InputObject,
-
-        [parameter(Mandatory = $false)]
-        [AllowEmptyCollection()][string[]]$Uuid,
-
-        [parameter(Mandatory = $false)]
-        [AllowEmptyCollection()][string[]]$Name,
-
-        [parameter(Mandatory = $false)]
-        [AllowEmptyCollection()][string[]]$Description 
-    )
-    
-    Write-Verbose "- UUID : $Uuid`n`t - Name : $Name`n`t - Description : $Description"
-    $result = @()
-
-    # Test if the InputObject is defined
-    if (-Not $InputObject) {
-        return $resul
-    }
-
-    # UUID filter
-    If ($Uuid) {
-        $ids = $Uuid
-    } else {
-        $ids = Get-NoteProperty $InputObject
-    }
-
-    ForEach ($id in $ids) {
-        # Skip objects that do not satisfy the filters passed
-        If (Skip-OPNsenseObject -Value $InputObject.$id.Name -Like $Name) { continue }
-        If (Skip-OPNsenseObject -Value $InputObject.$id.Description -Like $Description) { continue }
-
-        # PassThru is needed to capture the object
-        $result += $InputObject.$id | Add-Member -MemberType NoteProperty -Name 'Uuid' -Value $id -PassThru
-    }
-
-    return $result
-}
-
-function Get-OPNsenseHAProxyObject {
-    [CmdletBinding()]
-    param (
-        [Parameter(Mandatory = $true, position = 0)]
-        [ValidateSet('Server', 'Backend', 'Frontend', 'Healthcheck', 'Errorfile', 'Lua', 'Acl', 'Action')]
-        [String]$ObjectType
-    )
-    
-    Invoke-OPNsenseCommand haproxy settings get |
-        Select-Object -ExpandProperty haproxy |
-        Select-Object -ExpandProperty ('{0}s' -f $ObjectType.ToLower()) |
-        Select-Object -ExpandProperty $ObjectType.ToLower()
 }
 
 ##### NEW Functions #####
@@ -221,20 +133,20 @@ function New-OPNsenseHAProxyObject {
             $Properties = Get-NoteProperty $Item
             if ($Item.Mode) { $Item.Mode = $Item.Mode.tolower() }
             if ($Item.Code) { $Item.Code = ( 'x{0}' -f $Item.Code) }
-            foreach ($prop in 'Enabled', 'Negate') {
-                if ($prop -in $Properties) {
-                    $Item.$prop = ConvertTo-Boolean $Item.$prop
-                }
-            }
+            foreach ($key in $properties) {
+                if ($Item.$key.gettype().name -eq 'Boolean') {
+                    $Item.$Key = [byte]$Item.$key
+                }                
+            }      
             
-            $snapBefore = $(Invoke-OPNsenseCommand haproxy settings $("search{0}s" -f $ObjectType.ToLower()) -Form @{ searchPhrase = $Item.Name} ).rows
+            $snapBefore = Invoke-OPNsenseCommand haproxy settings $("search{0}s" -f $ObjectType.ToLower()) -Form @{ searchPhrase = $Item.Name} -Property rows
             $result = Invoke-OPNsenseCommand haproxy settings $("add{0}" -f $ObjectType.ToLower()) -Json @{ $ObjectType.ToLower() = $Item }
             
             if (Test-OPNsenseApiResult $result) {
-                $snapAfter = $(Invoke-OPNsenseCommand haproxy settings $("search{0}s" -f $ObjectType.ToLower()) -Form @{ searchPhrase = $Item.Name} ).rows
+                $snapAfter = Invoke-OPNsenseCommand haproxy settings $("search{0}s" -f $ObjectType.ToLower()) -Form @{ searchPhrase = $Item.Name} -Property rows
                 $uuid = Compare-Object -ReferenceObject $snapBefore -DifferenceObject $snapAfter -Property Uuid | Select-Object -ExpandProperty Uuid
 
-                $result = Get-OPNsenseHAProxyDetail -ObjectType $ObjectType -Uuid $Uuid
+                $result = Get-OPNsenseItem -HAProxy $ObjectType -Uuid $Uuid
                 #if ($PassThru) {
                 $results += $result
                 #}
@@ -268,11 +180,11 @@ Function New-OPNsenseHAProxyServer {
         [parameter(ValueFromPipelineByPropertyname = $true)]
         [ValidateRange(0, 65535)][int]$port,
         [parameter(ValueFromPipelineByPropertyname = $true)][String]$source,
-        [parameter(ValueFromPipelineByPropertyname = $true)][String]$ssl,
+        [parameter(ValueFromPipelineByPropertyname = $true)][bool]$ssl,
         [parameter(ValueFromPipelineByPropertyname = $true)][String]$sslCA,
         [parameter(ValueFromPipelineByPropertyname = $true)][String]$sslClientCertificate,
         [parameter(ValueFromPipelineByPropertyname = $true)][String]$sslCRL,
-        [parameter(ValueFromPipelineByPropertyname = $true)][String]$sslVerify,
+        [parameter(ValueFromPipelineByPropertyname = $true)][bool]$sslVerify,
         [parameter(ValueFromPipelineByPropertyname = $true)]
         [ValidateRange(0, 256)][int]$weight
     )
@@ -539,7 +451,7 @@ function Set-OPNsenseHAProxyObject {
                 #    return Invoke-OPNsenseCommand haproxy settings get | Select-Object -ExpandProperty haproxy | Select-Object -ExpandProperty $("{0}s" -f $ObjectType) | Select-Object -ExpandProperty $("{0}s" -f $ObjectType)
                 $result = Invoke-OPNsenseCommand haproxy settings $("set{0}/{1}" -f $ObjectType.ToLower(), $Uuid) -Json @{ $ObjectType.ToLower() = $Item }
                 if (Test-OPNsenseApiResult $result) {
-                    $result = Get-OPNsenseHAProxyDetail -ObjectType $ObjectType -Uuid $Uuid
+                    $result = Get-OPNsenseItem -HAProxy $ObjectType -Uuid $Uuid
                     if ($PassThru) {
                         $results += $result
                     }

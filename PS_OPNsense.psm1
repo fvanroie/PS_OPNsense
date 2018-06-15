@@ -22,303 +22,132 @@
 #>
 
 
-# Module Variables
-$IsPSCoreEdition = ($PSVersionTable.PSEdition -eq 'Core')
-$minversion = [System.Version]'18.1.2'
+##### Module Variables
+#$IsPSCoreEdition = ($PSVersionTable.PSEdition -eq 'Core')
+$minversion = [System.Version]'18.1.9'
+
+$debug = $false  
 
 # Load individual functions from scriptfiles
-ForEach ($Folder in 'Core', 'Plugins', 'Private', 'Public') {
-    $Scripts = Get-ChildItem -Recurse -Filter '*.ps1' -Path ("{0}/{1}/" -f $PSScriptRoot, $Folder) | Where-Object { $_.Name -notlike '*.Tests.ps1' }
+# TODO : itterate over the objectmap and test if all Objects can be instantiated
+ForEach ($Folder in 'Classes', 'Core', 'Plugins', 'Private', 'Public') {
+    $FullPath = ("{0}/{1}/" -f $PSScriptRoot, $Folder)
+    $Scripts = Get-ChildItem -Recurse -Filter '*.ps1' -Path $FullPath | Where-Object { $_.Name -notlike '*.Tests.ps1' }
     ForEach ($Script in $Scripts) {
         Try {
-            # Dot Source the function
+            # Dot Source each function file
             . $Script.fullname
 
-            # Export Public Function only
+            # Export Public Functions only
             if ($Folder -eq 'Public') {
                 Export-ModuleMember $script.basename
             }
 
         } Catch {
+            # Display error
             Write-Error -Message ("Failed to import function {0}: {1}" -f $Script.name, $_)
         }
     }
 }
 
-Function Connect-OPNsense {
-    # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
-    [CmdletBinding(DefaultParameterSetName = "Modern")]
-    param (
-        [parameter(Mandatory = $true, position = 1, ParameterSetName = "Modern")]
-        [parameter(Mandatory = $true, position = 1, ParameterSetName = "Legacy")]
-        [ValidateNotNullOrEmpty()]
-        [String]$Url,
+ForEach ($Folder in 'Classes') {
+    $FullPath = ("{0}/{1}/" -f $PSScriptRoot, $Folder)
+    $Files = Get-ChildItem -Recurse -Filter '*.cs' -Path $FullPath | Where-Object { $_.Name -notlike '*.Tests.ps1' }
+    ForEach ($File in $Files) {
+        if ($debug) {
+            Write-Host -ForegroundColor Gray "Loading class file $file"
+        }
+        Try {
+            Import-Type -Path $file
 
-        [parameter(Mandatory = $true, position = 2, ParameterSetName = "Modern")]
-        [ValidateNotNull()]
-        [System.Management.Automation.PSCredential]
-        [System.Management.Automation.Credential()]
-        $Credential = [System.Management.Automation.PSCredential]::Empty,
-
-        [parameter(Mandatory = $true, position = 2, ParameterSetName = "Legacy")]
-        [ValidateNotNullOrEmpty()]
-        [String]$Key,
-
-        [parameter(Mandatory = $true, position = 3, ParameterSetName = "Legacy")]
-        [ValidateNotNullOrEmpty()]
-        [SecureString]$Secret,
-
-        [parameter(Mandatory = $false, position = 3, ParameterSetName = "Modern")]
-        [parameter(Mandatory = $false, position = 4, ParameterSetName = "Legacy")]
-        [System.Management.Automation.PSCredential]
-        $WebCredential = [System.Management.Automation.PSCredential]::Empty,
-
-        [parameter(Mandatory = $false, position = 4, ParameterSetName = "Modern")]
-        [parameter(Mandatory = $false, position = 5, ParameterSetName = "Legacy")]
-        [switch]$SkipCertificateCheck = $false
-    )
-
-    $OPNsenseApi = $MyInvocation.MyCommand.Module.PrivateData['OPNsenseApi']
-    if ($OPNsenseApi) {
-        Throw "ERROR : Already connected to $OPNsenseApi. Please use Disconnect-OPNsense first."
+        } Catch {
+            # Display error
+            Write-Error -Message ("Failed to load class definition file {0}`nError : {1}" -f $file.name, $_)
+        }
     }
-    
-    #$bytes = [System.Text.Encoding]::UTF8.GetBytes($Key + ":" + $Secret)
-    #$Credentials = [System.Convert]::ToBase64String($bytes)
-    if ($PSBoundParameters.ContainsKey('Secret')) {
-        $Credential = New-Object System.Management.Automation.PSCredential -ArgumentList $Key, $Secret
+}
+
+
+# Load external data files
+# TODO : convert this to a ps1 file so it can be code-signed
+Try {
+    if ($debug) {
+        Write-Host -ForegroundColor Gray "ScriptRoot: $PSScriptRoot"
     }
-    if (-Not $PSBoundParameters.ContainsKey('WebCredential')) {
-        $WebCredential = $null
-    }
+    # Load objectmap of api calls
+    $FullPath = ("{0}/{1}" -f $PSScriptRoot, 'Data/opnsense.json')
+    $OPNsenseOpenApi = Import-OpenApiData $FullPath
 
-    $Uri = ($Url + '/api/core/firmware/info')
-    $Result = Invoke-OPNsenseApiRestCommand -Uri $Uri -Credential $Credential `
-        -SkipCertificateCheck:$SkipCertificateCheck -Verbose:$VerbosePreference
+    # Load objectmap of api calls
+    #$FullPath = ("{0}/{1}" -f $PSScriptRoot, 'Data/items.json')
+    #$OPNsenseItemMap = Get-Content $FullPath | ConvertFrom-Json
 
-    if ($Result) {
-        # Validate the connection result
-        if ($Result.product_version) {
-            Write-Warning @"
+    # Load servicemap of api calls
+    $FullPath = ("{0}/{1}" -f $PSScriptRoot, 'Data/services.json')
+    $OPNsenseServiceMap = Get-Content $FullPath | ConvertFrom-Json
 
-            THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-            IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-            FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-            AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-            LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-            OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-            SOFTWARE.
+    # Load settingsmap of api calls
+    $FullPath = ("{0}/{1}" -f $PSScriptRoot, 'Data/settings.json')
+    $OPNsenseSettingMap = Get-Content $FullPath | ConvertFrom-Json
 
-"@
+} Catch {
+    Throw ("Unable to load the API maps :`nError : {0}" -f $_)
+}
 
-            try {
-                $temp = Select-String -InputObject $result.product_version -pattern '[0-9\.]*' -AllMatches
-                $shortversion = [System.Version]$temp.Matches[0].Value.TrimEnd('.')                
-                Write-Verbose ("OPNsense version : " + $Result.product_version )
+# Compare Classes in OpenApi with Classes in PowerShell Module
 
-                if ($shortversion -lt $minversion) {
-                    Write-Warning "$shortversion may not be supported by the PS_OPNsense PowerShell Module. Please use OPNsense $minversion or higher."
-                }
-            } catch {
-                $shortversion = $null
-                Write-Warning "Unsupported version of $($result.product_name) $($result.product_version) detected. Proceed with extreme care!"
-            }
-            Add-Member -InputObject $Result 'short_version' $shortversion
+# Load objectmap of api calls
+$FullPath = ("{0}/{1}" -f $PSScriptRoot, 'Data/opnsense.json')
+$OpenApiSpec = Get-Content $FullPath | ConvertFrom-Json
 
-            $MyInvocation.MyCommand.Module.PrivateData['Version'] = $shortversion
-            $MyInvocation.MyCommand.Module.PrivateData['ApiCredentials'] = $Credential
-            $MyInvocation.MyCommand.Module.PrivateData['WebCredentials'] = $WebCredential
-            $MyInvocation.MyCommand.Module.PrivateData['OPNsenseUri'] = $Url
-            $MyInvocation.MyCommand.Module.PrivateData['OPNsenseApi'] = "$Url/api"
-            $MyInvocation.MyCommand.Module.PrivateData['OPNsenseSkipCert'] = [bool]::Parse($SkipCertificateCheck)
+if ($debug) {
+    $cppClasses = [AppDomain]::CurrentDomain.GetAssemblies().ExportedTypes.Fullname |
+        Where-Object {$_ -like 'OPnsense.*'} | Select-Object -Unique
+    $apiClasses = $OpenApiSpec.components.schemas.psobject.Properties.name
+    $diff = Compare-Object $cppClasses $apiClasses
+    foreach ($Class in $diff) {
+        if ($Class.SideIndicator -eq '<=') {
+            Write-Warning ("{0} is not defined in the API specification." -f $Class.InputObject)
         } else {
-            Throw "ERROR : Failed to get the OPNsense version of server '$Url'."
+            Write-Warning ("{0} is not defined in the Class Definitions." -f $Class.InputObject)
         }
-    } else {
-        Throw "ERROR : Could not connect to the OPNsense server '$Url' using the api credentials supplied."
-    }
-    return $result  | Add-ObjectDetail -TypeName 'OPNsense.Core.Version'
-}
-
-Function Disconnect-OPNsense {
-    # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
-    [CmdletBinding()]
-    Param()
-    If ($MyInvocation.MyCommand.Module.PrivateData['OPNsenseApi'] ) {
-        Write-Verbose ('Disconnecting from ' + $MyInvocation.MyCommand.Module.PrivateData['OPNsenseApi'])
-        $MyInvocation.MyCommand.Module.PrivateData['ApiCredentials'] = $null
-        $MyInvocation.MyCommand.Module.PrivateData['WebCredentials'] = $null
-        $MyInvocation.MyCommand.Module.PrivateData['OPNsenseUri'] = $null
-        $MyInvocation.MyCommand.Module.PrivateData['OPNsenseApi'] = $null
-        $MyInvocation.MyCommand.Module.PrivateData['OPNsenseSkipCert'] = $null
-    } else {
-        Throw 'ERROR : You are not connected to an OPNsense server. Please use Connect-OPNsense first.'
     }
 }
 
-
-Function Enable-OPNsense {
-    # .EXTERNALHELP PS_OPNsense.psd1-Help.xml
-    [CmdletBinding(DefaultParameterSetName = "CaptivePortalZone")]
-    Param(
-        [parameter(ParameterSetName = "CaptivePortalZone")]
-        [Alias('Zone')]
-        [Switch]$CaptivePortalZone,
-        [parameter(ParameterSetName = "CronJob")]
-        [Alias('Job')]
-        [Switch]$CronJob,
-        [parameter(ParameterSetName = "FtpProxy")]
-        [Switch]$FtpProxy,
-        [parameter(ParameterSetName = "IdsRule")]
-        [Alias('Rule')]
-        [Switch]$IdsRule,
-        [parameter(ParameterSetName = "IdsRuleSet")]
-        [Alias('RuleSet')]
-        [Switch]$IdsRuleSet,
-        [parameter(ParameterSetName = "IdsUserRule")]
-        [Alias('UserRule')]
-        [Switch]$IdsUserRule,
-        [parameter(ParameterSetName = "ProxyRemoteBlackList")]
-        [Alias('Blacklist')]
-        [Alias('RemoteBlacklist')]
-        [Switch]$ProxyRemoteBlackList,
-        [parameter(ParameterSetName = "Route")]
-        [Switch]$Route,
-        [parameter(ParameterSetName = "TrafficShaperPipe")]
-        [Alias('Pipe')]
-        [Switch]$TrafficShaperPipe,
-        [parameter(ParameterSetName = "TrafficShaperQueue")]
-        [Alias('Queue')]
-        [Switch]$TrafficShaperQueue
-    )
-
-    DynamicParam {
-        # Create the dictionary 
-        $RuntimeParameterDictionary = New-Object System.Management.Automation.RuntimeDefinedParameterDictionary
-
-        if ($CaptivePortalZone) {
-            $options = $(Invoke-OPNsenseCommand captiveportal settings searchzones).rows
-        }
-        if ($CronJob) {
-            $options = $(Invoke-OPNsenseCommand cron settings searchjobs).rows
-        }
-        if ($FtpProxy) {
-            $options = $(Invoke-OPNsenseCommand ftpproxy settings searchproxy).rows
-        }
-        if ($ProxyRemoteBlacklist) {
-            $options = $(Invoke-OPNsenseCommand proxy settings searchremoteblacklists).rows
-        }
-        if ($Route) {
-            $options = $(Invoke-OPNsenseCommand routes routes searchroute).rows
-        }
-        if ($TrafficShaperPipe) {
-            $options = $(Invoke-OPNsenseCommand trafficshaper settings searchpipes).rows
-        }
-        if ($TrafficShaperQueue) {
-            $options = $(Invoke-OPNsenseCommand trafficshaper settings searchqueues).rows
-        }
-
-        if ($options) {
-            $options = $options | Select-Object -ExpandProperty Uuid
-            $dynParam = New-ValidationDynamicParam -Name Uuid -Type '[String[]]' -Mandatory -ValidateSetOptions $options -Position 0 -ValueFromPipelineByPropertyName -ValueFromPipeline
-            $RuntimeParameterDictionary.Add('Uuid', $dynParam)
-        }
-        return $RuntimeParameterDictionary
-    }
-
-    BEGIN {
-
-    }
-
-    PROCESS {
-        foreach ($myuuid in $PSBoundParameters.Uuid) {
-            if ($CaptivePortalZone) {
-                $result += Invoke-OPNsenseCommand captiveportal settings "togglezone/$myuuid/1" -Form 'toggle'
-            }
-            if ($CronJob) {
-                # Warning, CronJobs can only be toggled and not set directly.
-                # It is needed to check the status first and toggle only when needed !!
-                $result += Enable-OPNsenseCronJob -uuid $myuuid
-            }
-            if ($FtpProxy) {
-                # Warning, FtpProxy can only be toggled and not set directly.
-                # It is needed to check the status first and toggle only when needed !!
-                $result += Invoke-OPNsenseCommand ftpproxy settings "toggleproxy/$myuuid" -Form 'toggle'
-            }
-            if ($IdsRule) {
-                $result += Invoke-OPNsenseCommand ids settings "togglerule/$myuuid/1" -Form 'toggle'
-            }
-            if ($IdsRuleSet) {
-                $result += Invoke-OPNsenseCommand ids settings "toggleruleset/$myuuid/1" -Form 'toggle'
-            }
-            if ($IdsUserRule) {
-                $result += Invoke-OPNsenseCommand ids settings "toggleuserrule/$myuuid/1" -Form 'toggle'
-            }
-            if ($ProxyRemoteBlacklist) {
-                # Warning, RemoteBlackLists can only be toggled and not set directly.
-                # It is needed to check the status first and toggle only when needed !!
-                $result += Invoke-OPNsenseCommand proxy settings "toggleremoteblacklist/$myuuid" -Form 'toggle'
-            }
-            if ($Route) {
-                $result += Invoke-OPNsenseCommand routes routes "toggleRoute/$myuuid/0" -Form 'toggle' # 0 = enabled
-            }
-            if ($TrafficShaperPipe) {
-                $result += Invoke-OPNsenseCommand trafficshaper settings "togglepipe/$myuuid/1" -Form 'toggle'
-            }
-            if ($TrafficShaperQueue) {
-                $result += Invoke-OPNsenseCommand trafficshaper settings "togglequeue/$myuuid/1" -Form 'toggle'
-            }
-        }
-    }
-
-    END {
-        return $result
-    }
-}
-
+##### Static Export of Module Fucntions (Temporary situation untill all function get a proper script file)
 Export-ModuleMember -Function Connect-OPNsense, Disconnect-OPNsense, Invoke-OPNsenseCommand
 $f = @(########## PLUGINS ##########
     # ArpScanner
     'Update-OPNsenseArp', #'Get-OPNsenseArpScanner', 'Start-OPNsenseArpScanner', 'Wait-OPNsenseArpScanner', 'Stop-OPNsenseArpScanner',
-    # ClamAV
-    'Get-OPNsenseClamAV', 'Set-OPNsenseClamAV',
-    # Collectd
-    'Get-OPNsenseCollectd', 'Set-OPNsenseCollectd',
     # Lldpd
     'Get-OPNsenseLldp', 'Set-OPNsenseLldp',
     # HAProxy
     'New-OPNsenseHAProxyServer', 'New-OPNsenseHAProxyFrontend', 'New-OPNsenseHAProxyBackend', 'New-OPNsenseHAProxyErrorfile', 'New-OPNsenseHAProxyLuaScript', 'New-OPNsenseHAProxyAcl', 'New-OPNsenseHAProxyHealthCheck',
-    'Get-OPNsenseHAProxyServer', 'Get-OPNsenseHAProxyFrontend', 'Get-OPNsenseHAProxyBackend', 'Get-OPNsenseHAProxyErrorfile', 'Get-OPNsenseHAProxyLuaScript', 'Get-OPNsenseHAProxyAcl', 'Get-OPNsenseHAProxyHealthCheck', 'Get-OPNsenseHAProxyAction', 
     'Set-OPNsenseHAProxyServer', 'Set-OPNsenseHAProxyLuaScript',
    
 
     ########## CORE ##########
-    # PS_OPNsense
-    #'Connect-OPNsense', 'Disconnect-OPNsense',
     # RestApi
-    'Invoke-OPNsenseCommand',
+    'Invoke-OPNsenseCommand', #'Invoke-OPNsenseOpenApiPath',
     # Firmware
-    'Get-OPNsense', 'Set-OPNsense', 'Update-OPNsense', 'Get-OPNsenseUpdate'
-    # Packages
-    'Get-OPNsensePackage', 'Lock-OPNsensePackage', 'Unlock-OPNsensePackage', 'Install-OPNsensePackage', 'Uninstall-OPNsensePackage',
-    'Get-OPNsensePlugin',
+    'Get-OPNsense', 'Set-OPNsense',
+
     # Cron
-    'Get-OPNsenseCronJob', 'Enable-OPNsenseCronJob', 'Disable-OPNsenseCronJob', 'Remove-OPNsenseCronJob',
-    'New-OPNsenseCronJob', 'Set-OPNsenseCronJob',
+    #'Get-OPNsenseCronJob', 'Enable-OPNsenseCronJob', 'Disable-OPNsenseCronJob', 'Remove-OPNsenseCronJob',
+    #'New-OPNsenseCronJob', 'Set-OPNsenseCronJob',
     #IDS
-    'Get-OPNsenseIdsUserRule', 'New-OPNsenseIdsUserRule', 'Remove-OPNsenseIdsUserRule',
-    'Get-OPNsenseIdsAlert',
+    #'Get-OPNsenseIdsUserRule',
+    'New-OPNsenseIdsUserRule',
     # Proxy
-    'New-OPNsenseProxyRemoteBlacklist', 'Get-OPNsenseProxyRemoteBlacklist', 'Remove-OPNsenseProxyRemoteBlacklist',
+    'New-OPNsenseProxyRemoteBlacklist', #'Get-OPNsenseProxyRemoteBlacklist', 'Remove-OPNsenseProxyRemoteBlacklist',
     'Sync-OPNsenseProxyRemoteBlacklist',
     # CaptivePortal
     'New-OPNsenseCaptivePortalZone', 'Remove-OPNsenseCaptivePortalZone',
-    'New-OPNsenseCaptivePortalTemplate', 'Get-OPNsenseCaptivePortalTemplate', 'Set-OPNsenseCaptivePortalTemplate', 'Remove-OPNsenseCaptivePortalTemplate', 'Save-OPNsenseCaptivePortalTemplate',
-    'Get-OPNsenseCaptivePortal',
+    'New-OPNsenseCaptivePortalTemplate', 'Set-OPNsenseCaptivePortalTemplate', 'Remove-OPNsenseCaptivePortalTemplate', 'Save-OPNsenseCaptivePortalTemplate',
+    #'Get-OPNsenseCaptivePortal', 'Get-OPNsenseCaptivePortalTemplate',
     # Diagnostics
     'Get-OPNsenseSystemHealth', 'Get-OPNsenseResource', 'Get-OPNsenseInterface', 'Get-OPNsenseRoute', 'Get-OPNsenseARP', 'Clear-OPNsenseARP',
     # Services
-    'Get-OPNsenseService', 'Start-OPNsenseService', 'Update-OPNsenseService', 'Test-OPNsenseService', 'Restart-OPNsenseService', 'Stop-OPNsenseService', 'Invoke-OPNsenseService',
-    # TrafficShaper
-    'Remove-OPNsenseTrafficShaperPipe', 'Remove-OPNsenseTrafficShaperQueue', 'Remove-OPNsenseTrafficShaperRule')
+    'Get-OPNsenseService', 'Start-OPNsenseService', 'Update-OPNsenseService', 'Test-OPNsenseService', 'Restart-OPNsenseService', 'Stop-OPNsenseService', 'Invoke-OPNsenseService'
+)
 Export-ModuleMember -Function $f

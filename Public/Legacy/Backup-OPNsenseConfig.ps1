@@ -22,7 +22,7 @@
 #>
 
 Function Backup-OPNsenseConfig {
-    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
+    # .EXTERNALHELP ../../PS_OPNsense.psd1-Help.xml
     [CmdletBinding()]
     Param (
         [switch]$RRDdata = $false,
@@ -48,13 +48,13 @@ Function Backup-OPNsenseConfig {
         $encrypt = $false
     }
 
-    if (-Not $IsPSCoreEdition -And [bool]::Parse($SkipCertificateCheck)) {
+    if ($PSVersionTable.PSEdition -ne 'Core' -And [bool]::Parse($SkipCertificateCheck)) {
         $CertPolicy = Get-CertificatePolicy -Verbose:$VerbosePreference
         Disable-CertificateValidation -Verbose:$VerbosePreference
     }
 
     Try {
-        if ($IsPSCoreEdition) {
+        if ($PSVersionTable.PSEdition -eq 'Core') {
             $webpage = Invoke-WebRequest -Uri $Uri -SessionVariable cookieJar -SkipCertificateCheck:$SkipCertificateCheck
         } else {
             $webpage = Invoke-WebRequest -Uri $Uri -SessionVariable cookieJar
@@ -67,7 +67,7 @@ Function Backup-OPNsenseConfig {
             passwordfld = $Credential.GetNetworkCredential().Password;
             login = 1
         }
-        if ($IsPSCoreEdition) {
+        if ($PSVersionTable.PSEdition -eq 'Core') {
             $webpage = Invoke-WebRequest -Uri "$Uri/index.php" -WebSession $cookieJar -Method POST -Body $form -SkipCertificateCheck:$SkipCertificateCheck
         } else {
             $webpage = Invoke-WebRequest -Uri "$Uri/index.php" -WebSession $cookieJar -Method POST -Body $form
@@ -75,10 +75,10 @@ Function Backup-OPNsenseConfig {
 
         # check logged in
         if ($webpage.ParsedHtml.title -eq 'Login') {
-            Throw 'Unable to login to the OPNsense server'
+            Throw 'Unable to login to the OPNsense Web GUI. Make sure the WebCredential parameter is set and correct.'
         }
 
-        if ($IsPSCoreEdition) {
+        if ($PSVersionTable.PSEdition -eq 'Core') {
             $webpage = Invoke-WebRequest -Uri "$Uri/diag_backup.php" -WebSession $cookieJar -Method POST -Body $form -SkipCertificateCheck:$SkipCertificateCheck
         } else {
             $webpage = Invoke-WebRequest -Uri "$Uri/diag_backup.php" -WebSession $cookieJar -Method POST -Body $form
@@ -93,7 +93,7 @@ Function Backup-OPNsenseConfig {
             encrypt_passconf = if ($encrypt) { $Password.GetNetworkCredential().Password } else { '' };
             download = "Download configuration"
         }
-        if ($IsPSCoreEdition) {
+        if ($PSVersionTable.PSEdition -eq 'Core') {
             $backupxml = Invoke-WebRequest "$Uri/diag_backup.php" -WebSession $cookieJar -Method POST -Body $form -SkipCertificateCheck:$SkipCertificateCheck
         } else {
             $backupxml = Invoke-WebRequest "$Uri/diag_backup.php" -WebSession $cookieJar -Method POST -Body $form
@@ -105,7 +105,7 @@ Function Backup-OPNsenseConfig {
     }
     # Always restore the built-in .NET certificate policy
     Finally {
-        if (-Not $IsPSCoreEdition -And [bool]::Parse($SkipCertificateCheck)) {
+        if ($PSVersionTable.PSEdition -ne 'Core' -And [bool]::Parse($SkipCertificateCheck)) {
             Set-CertificatePolicy $CertPolicy -Verbose:$VerbosePreference
         }
     }

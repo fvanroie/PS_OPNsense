@@ -65,6 +65,7 @@ Function New-OPNsenseProxyRemoteBlacklist {
     }
 }
 
+<#
 Function Get-OPNsenseProxyRemoteBlacklist {
     # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
     param (
@@ -97,7 +98,7 @@ Function Get-OPNsenseProxyRemoteBlacklist {
         return $blacklists
     }
 }
-
+#>
 
 Function Sync-OPNsenseProxyRemoteBlacklist {
     # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml

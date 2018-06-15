@@ -170,7 +170,7 @@ Function New-OPNsenseCaptivePortalZone {
 }
 
 
-Function Get-OPNsenseCaptivePortalTemplate {
+<#Function Get-OPNsenseCaptivePortalTemplate {
     # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
     [CmdletBinding(DefaultParameterSetName = 'GetTemplate')]
     Param (
@@ -190,7 +190,7 @@ Function Get-OPNsenseCaptivePortalTemplate {
         $result = $result | where-object { $_.FileId -like $FileId }
     }
     Return $result
-}
+}#>
 
 Function New-OPNsenseCaptivePortalTemplate {
     # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
@@ -233,7 +233,7 @@ Function Save-OPNsenseCaptivePortalTemplate {
 }
 
 
-Function Get-OPNsenseCaptivePortal {
+<#Function Get-OPNsenseCaptivePortal {
     # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
     [CmdletBinding(DefaultParameterSetName = 'GetTemplate')]
     Param (
@@ -271,38 +271,4 @@ Function Get-OPNsenseCaptivePortal {
         $result = Invoke-OPNsenseCommand captiveportal settings searchzones
         return $($result).rows
     }
-}
-
-
-<# Old, to be removed
-Function Remove-OPNsenseCaptivePortalTemplate {
-    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
-    [CmdletBinding()]
-    Param (
-        [Parameter(Mandatory = $false)][String]$Name,
-        [Parameter(Mandatory = $false)][String]$Uuid,
-        [Parameter(Mandatory = $false)][String]$FileId
-    )
-    $results = {}
-    
-    $result = Invoke-OPNsenseCommand captiveportal service searchTemplates | Select-Object -ExpandProperty Rows
-
-    if ($Name) {
-        $result = $result | where-object { $_.Name -like $Name }
-    }
-    if ($Uuid) {
-        $result = $result | where-object { $_.Uuid -like $Uuid }
-    }
-    if ($FileId) {
-        $result = $result | where-object { $_.FileId -like $FileId }
-    }
-
-    foreach ($templ in $result) {
-        Write-Verbose "Deleting Template $($templ.uuid)"
-        $result = Invoke-OPNsenseCommand captiveportal service "delTemplate/$($templ.uuid)" -Form delTemplate -AddProperty @{ 'uuid' = $templ.uuid }
-        $results += $result
-    }
-
-    Return $results
-}
-#>
+}#>

@@ -31,6 +31,7 @@ Function Invoke-OPNsenseApiRestCommand {
         [PSCredential]$Credential,
         $Json,
         $Form,
+        $Method,
         [System.IO.FileInfo]$OutFile,
         [Switch]$SkipCertificateCheck = $false
     )
@@ -44,11 +45,11 @@ Function Invoke-OPNsenseApiRestCommand {
     $Headers = @{}
 
     # Check PowerShell Edition
-    if ($IsPSCoreEdition) {
-        # PS Core knows the Basic Authentication and handles SkipCertificateCheck
+    if ($PSVersionTable.PSEdition -eq 'Core') {
+        # PS Core knows the Basic Authentication and handles SkipCertificateCheck by default
         $ParamSplat.Add("Authentication", "Basic") | Out-Null
     } else {
-        # On Windows PowerShell only, Add Basic Authentication Header
+        # On Windows PowerShell only: Add Basic Authentication Header
         $bytes = [System.Text.Encoding]::UTF8.GetBytes($Credential.Username + ":" + $credential.GetNetworkCredential().Password)
         $Headers = @{ 'Authorization' = ("Basic {0}" -f [System.Convert]::ToBase64String($bytes))}
 
@@ -58,8 +59,13 @@ Function Invoke-OPNsenseApiRestCommand {
             $CertPolicy = Get-CertificatePolicy -Verbose:$VerbosePreference
             Disable-CertificateValidation -Verbose:$VerbosePreference
         }
-        [System.Net.ServicePointManager]::Expect100Continue = $false
         $ParamSplat.Remove("SkipCertificateCheck") | Out-Null
+
+        # Force TLS1.2 needed for 18.7 and up
+        [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12
+
+        # Temporarily disable 100 Continue Headers
+        [System.Net.ServicePointManager]::Expect100Continue = $false
     }
 
     if ($Json) {
@@ -71,14 +77,14 @@ Function Invoke-OPNsenseApiRestCommand {
         } elseif ($Json.GetType().Name -eq "String") {
             # ALready a String
         } else {
-            Throw 'JSON object should be a HashTable'
+            Throw 'JSON object should be a HashTable, PSCustomObject or String'
         }
 
-        # OK, we have a $JSON string now
+        # OK, we have a Json string now
         Write-Verbose "JSON Arguments: $Json"
         $ParamSplat.Add('Body', $json)
         $ParamSplat.Add('ContentType', 'application/json')
-        $ParamSplat.Add('Method', 'POST')
+        $ParamSplat.Method = 'POST'
     } else {
         # Post a web Form
         if ($Form) {
@@ -86,24 +92,27 @@ Function Invoke-OPNsenseApiRestCommand {
             $Json = $Form | ConvertTo-Json -Depth 15
             Write-Verbose "Form Arguments: $Json"
  
-            $ParamSplat.Add('Method', 'POST')
+            $ParamSplat.Method = 'POST'
             $ParamSplat.Add('Body', $form)
         } else {
-            # Neither Json nor Post, so its a plain request
-            $ParamSplat.Add('Method', 'GET') 
+            # Neither Json nor Form, so its a plain request
+            $ParamSplat.Method = 'GET'
         }
+    }
+
+    # Override Default Method if custom method is passed
+    if ($Method) {
+        $ParamSplat.Method = $Method
     }
 
     # Write Parameters to Debug channel
     Write-Debug "Invoke-RestMethod"
     # Write Custom Headers to Debug channel
     if ($Headers.Count -gt 0) {
-        $temp = $Headers | ConvertTo-Json -Compress
-        Write-Debug "   -Headers : $temp"
+        Write-Debug ("   -Headers : {0}" -f ($Headers | ConvertTo-Json -Compress))
     }
     foreach ($key in $ParamSplat.keys) {
-        $val = $ParamSplat.Item($key)
-        Write-Debug "   -$key : $val"
+        Write-Debug ("   -{0} : {1}" -f $key, $ParamSplat.Item($key))
     }
 
     # Add Custom Headers to the custom Splat
@@ -113,13 +122,13 @@ Function Invoke-OPNsenseApiRestCommand {
     Try {
         $result = Invoke-RestMethod @ParamSplat
     } Catch {
-        $ErrorMessage = $_.Exception.Message
-        Write-Error "An error Occured while contacting the OPNsense server: $ErrorMessage"
+        $result = $null
+        Write-Error ("An error Occured while contacting the OPNsense server: {0}" -f $_.Exception.Message)
     } Finally {
         # Always restore the built-in .NET certificate policy on Windows PS Desktop only
-        if (-Not $IsPSCoreEdition -And [bool]::Parse($SkipCertificateCheck)) {
+        if ($PSVersionTable.PSEdition -ne 'Core' -And [bool]::Parse($SkipCertificateCheck)) {
             Set-CertificatePolicy $CertPolicy -Verbose:$VerbosePreference
         }
     }
-    Return $Result
+    Return $result
 }

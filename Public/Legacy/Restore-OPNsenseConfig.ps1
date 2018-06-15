@@ -21,7 +21,7 @@
     SOFTWARE.
 #>
 Function Restore-OPNsenseConfig {
-    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
+    # .EXTERNALHELP ../../PS_OPNsense.psd1-Help.xml
     [CmdletBinding(
         SupportsShouldProcess = $true,
         ConfirmImpact = "High"
@@ -90,12 +90,12 @@ Content-Disposition: form-data; name="{1}"
         Throw "No web password has been set."
     }
 
-    if ($PSCmdlet.ShouldProcess($Uri, "Restore OPNsense configuration")) {
+    if (-Not $PSCmdlet.ShouldProcess($Uri, "Restore OPNsense configuration")) {
         Write-Warning 'Aborting Restore-OPNsenseConfig'
         Return
     }
 
-    if (-Not $IsPSCoreEdition -And [bool]::Parse($SkipCertificateCheck)) {
+    if ($PSVersionTable.PSEdition -ne 'Core' -And [bool]::Parse($SkipCertificateCheck)) {
         $CertPolicy = Get-CertificatePolicy -Verbose:$VerbosePreference
         Disable-CertificateValidation -Verbose:$VerbosePreference
     }
@@ -113,7 +113,7 @@ Content-Disposition: form-data; name="{1}"
         $webpage = Invoke-WebRequest -Uri "$Uri/index.php" -WebSession $cookieJar -Method POST -Body $form
         # check logged in
         if ($webpage.ParsedHtml.title -eq 'Login') {
-            Throw 'Unable to login to the OPNsense server'
+            Throw 'Unable to login to the OPNsense Web GUI. Make sure the WebCredential parameter is set and correct.'
         }
 
         $webpage = Invoke-WebRequest -Uri "$Uri/diag_backup.php" -WebSession $cookieJar
@@ -142,7 +142,7 @@ Content-Disposition: form-data; name="{1}"
     }
     # Always restore the built-in .NET certificate policy
     Finally {
-        if (-Not $IsPSCoreEdition -And [bool]::Parse($SkipCertificateCheck)) {
+        if ($PSVersionTable.PSEdition -ne 'Core' -And [bool]::Parse($SkipCertificateCheck)) {
             Set-CertificatePolicy $CertPolicy -Verbose:$VerbosePreference
         }
     }

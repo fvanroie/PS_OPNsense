@@ -1,0 +1,1057 @@
+    {
+        "MinimumVersion": "18.1",
+        "MaximumVersion": "18.1.6",
+        "Services": {
+            "AcmeClient": {
+                "plugin": "os-acme-client",
+                "commands": {
+                    "status": {
+                        "module": "acmeclient",
+                        "controller": "service",
+                        "command": "status"
+                    },
+                    "start": {
+                        "module": "acmeclient",
+                        "controller": "service",
+                        "command": "start",
+                        "json": {}
+                    },
+                    "stop": {
+                        "module": "acmeclient",
+                        "controller": "service",
+                        "command": "stop",
+                        "json": {}
+                    },
+                    "restart": {
+                        "module": "acmeclient",
+                        "controller": "service",
+                        "command": "restart",
+                        "json": {}
+                    },
+                    "reconfigure": {
+                        "module": "acmeclient",
+                        "controller": "service",
+                        "command": "reconfigure",
+                        "json": {}
+                    },
+                    "configtest": {
+                        "module": "acmeclient",
+                        "controller": "service",
+                        "command": "configtest",
+                        "json": {}
+                    }
+                }
+            },
+            "ARPScanner": {
+                "plugin": "os-arp-scan",
+                "commands": {
+                    "status": {
+                        "module": "arpscanner",
+                        "controller": "service",
+                        "command": "status",
+                        "json": {
+                            "interface": "string"
+                        }
+                    },
+                    "start": {
+                        "module": "arpscanner",
+                        "controller": "service",
+                        "command": "start",
+                        "json": {
+                            "interface": "string"
+                        }
+                    },
+                    "stop": {
+                        "module": "arpscanner",
+                        "controller": "service",
+                        "command": "stop",
+                        "json": {
+                            "interface": "string"
+                        }
+                    },
+                    "check": {
+                        "module": "arpscanner",
+                        "controller": "service",
+                        "command": "check",
+                        "json": {
+                            "interface": "string"
+                        }
+                    }
+                }
+            },
+            "CaptivePortal": {
+                "commands": {
+                    "reconfigure": {
+                        "module": "captiveportal",
+                        "controller": "service",
+                        "command": "reconfigure",
+                        "json": {}
+                    }
+                }
+            },
+            "C-ICAP": {
+                "plugin": "os-c-icap",
+                "commands": {
+                    "status": {
+                        "module": "cicap",
+                        "controller": "service",
+                        "command": "status"
+                    },
+                    "start": {
+                        "module": "cicap",
+                        "controller": "service",
+                        "command": "start",
+                        "json": {}
+                    },
+                    "stop": {
+                        "module": "cicap",
+                        "controller": "service",
+                        "command": "stop",
+                        "json": {}
+                    },
+                    "restart": {
+                        "module": "cicap",
+                        "controller": "service",
+                        "command": "restart",
+                        "json": {}
+                    },
+                    "reconfigure": {
+                        "module": "cicap",
+                        "controller": "service",
+                        "command": "reconfigure",
+                        "json": {}
+                    }
+                }
+            },
+            "ClamAV": {
+                "plugin": "os-clamav",
+                "commands": {
+                    "status": {
+                        "module": "clamav",
+                        "controller": "service",
+                        "command": "status"
+                    },
+                    "start": {
+                        "module": "clamav",
+                        "controller": "service",
+                        "command": "start",
+                        "json": {}
+                    },
+                    "stop": {
+                        "module": "clamav",
+                        "controller": "service",
+                        "command": "stop",
+                        "json": {}
+                    },
+                    "restart": {
+                        "module": "clamav",
+                        "controller": "service",
+                        "command": "restart",
+                        "json": {}
+                    },
+                    "reconfigure": {
+                        "module": "clamav",
+                        "controller": "service",
+                        "command": "reconfigure",
+                        "json": {}
+                    }
+                }
+            },
+            "Collectd": {
+                "plugin": "os-collectd",
+                "commands": {
+                    "status": {
+                        "module": "collectd",
+                        "controller": "service",
+                        "command": "status"
+                    },
+                    "start": {
+                        "module": "collectd",
+                        "controller": "service",
+                        "command": "start",
+                        "json": {}
+                    },
+                    "stop": {
+                        "module": "collectd",
+                        "controller": "service",
+                        "command": "stop",
+                        "json": {}
+                    },
+                    "restart": {
+                        "module": "collectd",
+                        "controller": "service",
+                        "command": "restart",
+                        "json": {}
+                    },
+                    "reconfigure": {
+                        "module": "collectd",
+                        "controller": "service",
+                        "command": "reconfigure",
+                        "json": {}
+                    }
+                }
+            },
+            "Cron": {
+                "commands": {
+                    "reconfigure": {
+                        "module": "cron",
+                        "controller": "service",
+                        "command": "reconfigure",
+                        "json": {}
+                    }
+                }
+            },
+            "FreeRadius": {
+                "plugin": "os-freeradius",
+                "commands": {
+                    "status": {
+                        "module": "freeradius",
+                        "controller": "service",
+                        "command": "status"
+                    },
+                    "start": {
+                        "module": "freeradius",
+                        "controller": "service",
+                        "command": "start",
+                        "json": {}
+                    },
+                    "stop": {
+                        "module": "freeradius",
+                        "controller": "service",
+                        "command": "stop",
+                        "json": {}
+                    },
+                    "restart": {
+                        "module": "freeradius",
+                        "controller": "service",
+                        "command": "restart",
+                        "json": {}
+                    },
+                    "reconfigure": {
+                        "module": "freeradius",
+                        "controller": "service",
+                        "command": "reconfigure",
+                        "json": {}
+                    }
+                }
+            },
+            "FTPProxy": {
+                "plugin": "os-ftp-proxy",
+                "commands": {
+                    "status": {
+                        "module": "ftpproxy",
+                        "controller": "service",
+                        "command": "status"
+                    },
+                    "start": {
+                        "module": "ftpproxy",
+                        "controller": "service",
+                        "command": "start",
+                        "json": {}
+                    },
+                    "stop": {
+                        "module": "ftpproxy",
+                        "controller": "service",
+                        "command": "stop",
+                        "json": {}
+                    },
+                    "restart": {
+                        "module": "ftpproxy",
+                        "controller": "service",
+                        "command": "restart",
+                        "json": {}
+                    },
+                    "reconfigure": {
+                        "module": "ftpproxy",
+                        "controller": "service",
+                        "command": "reload",
+                        "json": {}
+                    }
+                }
+            },
+            "HAProxy": {
+                "plugin": "os-haproxy",
+                "commands": {
+                    "status": {
+                        "module": "haproxy",
+                        "controller": "service",
+                        "command": "status"
+                    },
+                    "start": {
+                        "module": "haproxy",
+                        "controller": "service",
+                        "command": "start",
+                        "json": {}
+                    },
+                    "stop": {
+                        "module": "haproxy",
+                        "controller": "service",
+                        "command": "stop",
+                        "json": {}
+                    },
+                    "restart": {
+                        "module": "haproxy",
+                        "controller": "service",
+                        "command": "restart",
+                        "json": {}
+                    },
+                    "reconfigure": {
+                        "module": "haproxy",
+                        "controller": "service",
+                        "command": "reconfigure",
+                        "json": {}
+                    },
+                    "configtest": {
+                        "module": "haproxy",
+                        "controller": "service",
+                        "command": "configtest",
+                        "json": {}
+                    }
+                }
+            },
+            "HelloWorld": {
+                "plugin": "os-helloworld",
+                "commands": {
+                    "reconfigure": {
+                        "module": "helloworld",
+                        "controller": "service",
+                        "command": "reload",
+                        "json": {}
+                    },
+                    "configtest": {
+                        "module": "helloworld",
+                        "controller": "service",
+                        "command": "test",
+                        "json": {}
+                    }
+                }
+            },
+            "IDS": {
+                "commands": {
+                    "status": {
+                        "module": "ids",
+                        "controller": "service",
+                        "command": "status"
+                    },
+                    "start": {
+                        "module": "ids",
+                        "controller": "service",
+                        "command": "start",
+                        "json": {}
+                    },
+                    "stop": {
+                        "module": "ids",
+                        "controller": "service",
+                        "command": "stop",
+                        "json": {}
+                    },
+                    "restart": {
+                        "module": "ids",
+                        "controller": "service",
+                        "command": "restart",
+                        "json": {}
+                    },
+                    "reconfigure": {
+                        "module": "ids",
+                        "controller": "service",
+                        "command": "reconfigure",
+                        "json": {}
+                    }
+                }
+            },
+            "IPerf": {
+                "plugin": "os-iperf",
+                "commands": {
+                    "status": {
+                        "module": "iperf",
+                        "controller": "service",
+                        "command": "status"
+                    },
+                    "start": {
+                        "module": "iperf",
+                        "controller": "service",
+                        "command": "start",
+                        "json": {}
+                    },
+                    "stop": {
+                        "module": "iperf",
+                        "controller": "service",
+                        "command": "stop",
+                        "json": {}
+                    },
+                    "restart": {
+                        "module": "iperf",
+                        "controller": "service",
+                        "command": "restart",
+                        "json": {}
+                    },
+                    "reconfigure": {
+                        "module": "iperf",
+                        "controller": "service",
+                        "command": "reconfigure",
+                        "json": {}
+                    }
+                }
+            },
+            "LLDPd": {
+                "plugin": "os-lldpd",
+                "commands": {
+                    "status": {
+                        "module": "lldpd",
+                        "controller": "service",
+                        "command": "status"
+                    },
+                    "start": {
+                        "module": "lldpd",
+                        "controller": "service",
+                        "command": "start",
+                        "json": {}
+                    },
+                    "stop": {
+                        "module": "lldpd",
+                        "controller": "service",
+                        "command": "stop",
+                        "json": {}
+                    },
+                    "restart": {
+                        "module": "lldpd",
+                        "controller": "service",
+                        "command": "restart",
+                        "json": {}
+                    },
+                    "reconfigure": {
+                        "module": "lldpd",
+                        "controller": "service",
+                        "command": "reconfigure",
+                        "json": {}
+                    }
+                }
+            },
+            "MdnsRepeater": {
+                "plugin": "os-mdns-repeater",
+                "commands": {
+                    "status": {
+                        "module": "mdnsrepeater",
+                        "controller": "service",
+                        "command": "status"
+                    },
+                    "start": {
+                        "module": "mdnsrepeater",
+                        "controller": "service",
+                        "command": "start",
+                        "json": {}
+                    },
+                    "stop": {
+                        "module": "mdnsrepeater",
+                        "controller": "service",
+                        "command": "stop",
+                        "json": {}
+                    },
+                    "restart": {
+                        "module": "mdnsrepeater",
+                        "controller": "service",
+                        "command": "restart",
+                        "json": {}
+                    }
+                }
+            },
+            "Monit": {
+                "plugin": "os-monit",
+                "commands": {
+                    "status": {
+                        "module": "monit",
+                        "controller": "service",
+                        "command": "status"
+                    },
+                    "start": {
+                        "module": "monit",
+                        "controller": "service",
+                        "command": "start",
+                        "json": {}
+                    },
+                    "stop": {
+                        "module": "monit",
+                        "controller": "service",
+                        "command": "stop",
+                        "json": {}
+                    },
+                    "restart": {
+                        "module": "monit",
+                        "controller": "service",
+                        "command": "restart",
+                        "json": {}
+                    },
+                    "reconfigure": {
+                        "module": "monit",
+                        "controller": "service",
+                        "command": "reconfigure",
+                        "json": {}
+                    },
+                    "configtest": {
+                        "module": "monit",
+                        "controller": "service",
+                        "command": "configtest",
+                        "json": {}
+                    }
+                }
+            },
+            "NodeExporter": {
+                "plugin": "os-node_exporter",
+                "commands": {
+                    "status": {
+                        "module": "nodeexporter",
+                        "controller": "service",
+                        "command": "status"
+                    },
+                    "start": {
+                        "module": "nodeexporter",
+                        "controller": "service",
+                        "command": "start",
+                        "json": {}
+                    },
+                    "stop": {
+                        "module": "nodeexporter",
+                        "controller": "service",
+                        "command": "stop",
+                        "json": {}
+                    },
+                    "restart": {
+                        "module": "nodeexporter",
+                        "controller": "service",
+                        "command": "restart",
+                        "json": {}
+                    },
+                    "reconfigure": {
+                        "module": "nodeexporter",
+                        "controller": "service",
+                        "command": "reconfigure",
+                        "json": {}
+                    }
+                }
+            },
+            "Nut": {
+                "plugin": "os-nut",
+                "commands": {
+                    "reconfigure": {
+                        "module": "nut",
+                        "controller": "service",
+                        "command": "reconfigure",
+                        "json": {}
+                    }
+                }
+            },
+            "OpenConnect": {
+                "plugin": "os-openconnect",
+                "commands": {
+                    "status": {
+                        "module": "openconnect",
+                        "controller": "service",
+                        "command": "status"
+                    },
+                    "start": {
+                        "module": "openconnect",
+                        "controller": "service",
+                        "command": "start",
+                        "json": {}
+                    },
+                    "stop": {
+                        "module": "openconnect",
+                        "controller": "service",
+                        "command": "stop",
+                        "json": {}
+                    },
+                    "restart": {
+                        "module": "openconnect",
+                        "controller": "service",
+                        "command": "restart",
+                        "json": {}
+                    },
+                    "reconfigure": {
+                        "module": "openconnect",
+                        "controller": "service",
+                        "command": "reconfigure",
+                        "json": {}
+                    }
+                }
+            },
+            "Postfix": {
+                "plugin": "os-postfix",
+                "commands": {
+                    "status": {
+                        "module": "postfix",
+                        "controller": "service",
+                        "command": "status"
+                    },
+                    "start": {
+                        "module": "postfix",
+                        "controller": "service",
+                        "command": "start",
+                        "json": {}
+                    },
+                    "stop": {
+                        "module": "postfix",
+                        "controller": "service",
+                        "command": "stop",
+                        "json": {}
+                    },
+                    "restart": {
+                        "module": "postfix",
+                        "controller": "service",
+                        "command": "restart",
+                        "json": {}
+                    },
+                    "reconfigure": {
+                        "module": "postfix",
+                        "controller": "service",
+                        "command": "reconfigure",
+                        "json": {}
+                    }
+                }
+            },
+            "Proxy": {
+                "commands": {
+                    "status": {
+                        "module": "proxy",
+                        "controller": "service",
+                        "command": "status"
+                    },
+                    "start": {
+                        "module": "proxy",
+                        "controller": "service",
+                        "command": "start",
+                        "json": {}
+                    },
+                    "stop": {
+                        "module": "proxy",
+                        "controller": "service",
+                        "command": "stop",
+                        "json": {}
+                    },
+                    "restart": {
+                        "module": "proxy",
+                        "controller": "service",
+                        "command": "restart",
+                        "json": {}
+                    },
+                    "reconfigure": {
+                        "module": "proxy",
+                        "controller": "service",
+                        "command": "reconfigure",
+                        "json": {}
+                    }
+                }
+            },
+            "Quagga": {
+                "plugin": "os-frr",
+                "commands": {
+                    "status": {
+                        "module": "quagga",
+                        "controller": "service",
+                        "command": "status"
+                    },
+                    "start": {
+                        "module": "quagga",
+                        "controller": "service",
+                        "command": "start",
+                        "json": {}
+                    },
+                    "stop": {
+                        "module": "quagga",
+                        "controller": "service",
+                        "command": "stop",
+                        "json": {}
+                    },
+                    "restart": {
+                        "module": "quagga",
+                        "controller": "service",
+                        "command": "restart",
+                        "json": {}
+                    },
+                    "reconfigure": {
+                        "module": "quagga",
+                        "controller": "service",
+                        "command": "reconfigure",
+                        "json": {}
+                    }
+                }
+            },
+            "Redis": {
+                "plugin": "os-redis",
+                "commands": {
+                    "status": {
+                        "module": "redis",
+                        "controller": "service",
+                        "command": "status"
+                    },
+                    "start": {
+                        "module": "redis",
+                        "controller": "service",
+                        "command": "start",
+                        "json": {}
+                    },
+                    "stop": {
+                        "module": "redis",
+                        "controller": "service",
+                        "command": "stop",
+                        "json": {}
+                    },
+                    "restart": {
+                        "module": "redis",
+                        "controller": "service",
+                        "command": "restart",
+                        "json": {}
+                    },
+                    "reconfigure": {
+                        "module": "redis",
+                        "controller": "service",
+                        "command": "reconfigure",
+                        "json": {}
+                    }
+                }
+            },
+            "Relayd": {
+                "plugin": "os-relayd",
+                "commands": {
+                    "status": {
+                        "module": "relayd",
+                        "controller": "service",
+                        "command": "status"
+                    },
+                    "start": {
+                        "module": "relayd",
+                        "controller": "service",
+                        "command": "start",
+                        "json": {}
+                    },
+                    "stop": {
+                        "module": "relayd",
+                        "controller": "service",
+                        "command": "stop",
+                        "json": {}
+                    },
+                    "restart": {
+                        "module": "relayd",
+                        "controller": "service",
+                        "command": "restart",
+                        "json": {}
+                    },
+                    "reconfigure": {
+                        "module": "relayd",
+                        "controller": "service",
+                        "command": "reconfigure",
+                        "json": {}
+                    },
+                    "configtest": {
+                        "module": "relayd",
+                        "controller": "service",
+                        "command": "configtest",
+                        "json": {}
+                    }
+                }
+            },
+            "Routes": {
+                "commands": {
+                    "reconfigure": {
+                        "module": "routes",
+                        "controller": "routes",
+                        "command": "reconfigure",
+                        "json": {}
+                    }
+                }
+            },
+            "Rspamd": {
+                "plugin": "os-rspamd",
+                "commands": {
+                    "status": {
+                        "module": "rspamd",
+                        "controller": "service",
+                        "command": "status"
+                    },
+                    "start": {
+                        "module": "rspamd",
+                        "controller": "service",
+                        "command": "start",
+                        "json": {}
+                    },
+                    "stop": {
+                        "module": "rspamd",
+                        "controller": "service",
+                        "command": "stop",
+                        "json": {}
+                    },
+                    "restart": {
+                        "module": "rspamd",
+                        "controller": "service",
+                        "command": "restart",
+                        "json": {}
+                    },
+                    "reconfigure": {
+                        "module": "rspamd",
+                        "controller": "service",
+                        "command": "reconfigure",
+                        "json": {}
+                    }
+                }
+            },
+            "Shadowsocks": {
+                "plugin": "os-shadowsocks",
+                "commands": {
+                    "status": {
+                        "module": "shadowsocks",
+                        "controller": "service",
+                        "command": "status"
+                    },
+                    "start": {
+                        "module": "shadowsocks",
+                        "controller": "service",
+                        "command": "start",
+                        "json": {}
+                    },
+                    "stop": {
+                        "module": "shadowsocks",
+                        "controller": "service",
+                        "command": "stop",
+                        "json": {}
+                    },
+                    "restart": {
+                        "module": "shadowsocks",
+                        "controller": "service",
+                        "command": "restart",
+                        "json": {}
+                    },
+                    "reconfigure": {
+                        "module": "shadowsocks",
+                        "controller": "service",
+                        "command": "reconfigure",
+                        "json": {}
+                    }
+                }
+            },
+            "Siproxd": {
+                "plugin": "os-siproxd",
+                "commands": {
+                    "status": {
+                        "module": "siproxd",
+                        "controller": "service",
+                        "command": "status"
+                    },
+                    "start": {
+                        "module": "siproxd",
+                        "controller": "service",
+                        "command": "start",
+                        "json": {}
+                    },
+                    "stop": {
+                        "module": "siproxd",
+                        "controller": "service",
+                        "command": "stop",
+                        "json": {}
+                    },
+                    "restart": {
+                        "module": "siproxd",
+                        "controller": "service",
+                        "command": "restart",
+                        "json": {}
+                    },
+                    "reconfigure": {
+                        "module": "siproxd",
+                        "controller": "service",
+                        "command": "reconfigure",
+                        "json": {}
+                    }
+                }
+            },
+            "Telegraf": {
+                "plugin": "os-telegraf",
+                "commands": {
+                    "status": {
+                        "module": "telegraf",
+                        "controller": "service",
+                        "command": "status"
+                    },
+                    "start": {
+                        "module": "telegraf",
+                        "controller": "service",
+                        "command": "start",
+                        "json": {}
+                    },
+                    "stop": {
+                        "module": "telegraf",
+                        "controller": "service",
+                        "command": "stop",
+                        "json": {}
+                    },
+                    "restart": {
+                        "module": "telegraf",
+                        "controller": "service",
+                        "command": "restart",
+                        "json": {}
+                    },
+                    "reconfigure": {
+                        "module": "telegraf",
+                        "controller": "service",
+                        "command": "reconfigure",
+                        "json": {}
+                    }
+                }
+            },
+            "Tinc": {
+                "plugin": "os-tinc",
+                "commands": {
+                    "start": {
+                        "module": "tinc",
+                        "controller": "service",
+                        "command": "start"
+                    },
+                    "stop": {
+                        "module": "tinc",
+                        "controller": "service",
+                        "command": "stop",
+                        "json": {}
+                    },
+                    "restart": {
+                        "module": "tinc",
+                        "controller": "service",
+                        "command": "restart",
+                        "json": {}
+                    },
+                    "reconfigure": {
+                        "module": "tinc",
+                        "controller": "service",
+                        "command": "reconfigure",
+                        "json": {}
+                    }
+                }
+            },
+            "Tor": {
+                "plugin": "os-tor",
+                "commands": {
+                    "status": {
+                        "module": "tor",
+                        "controller": "service",
+                        "command": "status"
+                    },
+                    "start": {
+                        "module": "tor",
+                        "controller": "service",
+                        "command": "start",
+                        "json": {}
+                    },
+                    "stop": {
+                        "module": "tor",
+                        "controller": "service",
+                        "command": "stop",
+                        "json": {}
+                    },
+                    "restart": {
+                        "module": "tor",
+                        "controller": "service",
+                        "command": "restart",
+                        "json": {}
+                    },
+                    "reconfigure": {
+                        "module": "tor",
+                        "controller": "service",
+                        "command": "reconfigure",
+                        "json": {}
+                    }
+                }
+            },
+            "TrafficShaper": {
+                "commands": {
+                    "reconfigure": {
+                        "module": "trafficshaper",
+                        "controller": "service",
+                        "command": "reconfigure",
+                        "json": {}
+                    },
+                    "flushreload": {
+                        "reconfigure": {
+                            "module": "trafficshaper",
+                            "controller": "service",
+                            "command": "flushreload",
+                            "json": {}
+                        }
+                    }
+                }
+            },
+            "ZabbixAgent": {
+                "plugin": "os-zabbix-agent",
+                "commands": {
+                    "status": {
+                        "module": "zabbixagent",
+                        "controller": "service",
+                        "command": "status"
+                    },
+                    "start": {
+                        "module": "zabbixagent",
+                        "controller": "service",
+                        "command": "start",
+                        "json": {}
+                    },
+                    "stop": {
+                        "module": "zabbixagent",
+                        "controller": "service",
+                        "command": "stop",
+                        "json": {}
+                    },
+                    "restart": {
+                        "module": "zabbixagent",
+                        "controller": "service",
+                        "command": "restart",
+                        "json": {}
+                    },
+                    "reconfigure": {
+                        "module": "zabbixagent",
+                        "controller": "service",
+                        "command": "reconfigure",
+                        "json": {}
+                    }
+                }
+            },
+            "ZabbixProxy": {
+                "plugin": "os-zabbix-proxy",
+                "commands": {
+                    "status": {
+                        "module": "zabbixproxy",
+                        "controller": "service",
+                        "command": "status"
+                    },
+                    "start": {
+                        "module": "zabbixproxy",
+                        "controller": "service",
+                        "command": "start",
+                        "json": {}
+                    },
+                    "stop": {
+                        "module": "zabbixproxy",
+                        "controller": "service",
+                        "command": "stop",
+                        "json": {}
+                    },
+                    "restart": {
+                        "module": "zabbixproxy",
+                        "controller": "service",
+                        "command": "restart",
+                        "json": {}
+                    },
+                    "reconfigure": {
+                        "module": "zabbixproxy",
+                        "controller": "service",
+                        "command": "reconfigure",
+                        "json": {}
+                    }
+                }
+            },
+            "Zerotier": {
+                "plugin": "os-zerotier",
+                "commands": {
+                    "status": {
+                        "module": "zerotier",
+                        "controller": "settings",
+                        "command": "status"
+                    }
+                }
+            }
+        }
+    }

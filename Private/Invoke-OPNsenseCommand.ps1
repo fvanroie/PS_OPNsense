@@ -41,7 +41,11 @@ Function Invoke-OPNsenseCommand {
         $Form,
         [parameter(Mandatory = $false)][System.IO.FileInfo]$OutFile,
 
-        [parameter(Mandatory = $false)][HashTable]$AddProperty
+        [parameter(Mandatory = $false)][String[]]$Property,
+
+        [parameter(Mandatory = $false)][HashTable]$AddProperty,
+
+        [parameter(Mandatory = $false)][String]$Method
     )
 
     if ($DebugPreference -eq "Inquire") { $DebugPreference = "Continue" }
@@ -60,17 +64,17 @@ Function Invoke-OPNsenseCommand {
     try {
         if ($Json) {
             $Result = Invoke-OPNsenseApiRestCommand -Uri $Uri -credential $Credentials -Json $Json `
-                -SkipCertificateCheck:$SkipCertificateCheck -Verbose:$VerbosePreference `
-                -ErrorAction Stop
+                -SkipCertificateCheck:$SkipCertificateCheck -Method $Method `
+                -Verbose:$VerbosePreference -ErrorAction Stop
         } else {
             if ($Form) {
                 $Result = Invoke-OPNsenseApiRestCommand -Uri $Uri -credential $Credentials -Form $Form `
-                    -SkipCertificateCheck:$SkipCertificateCheck -Verbose:$VerbosePreference `
-                    -ErrorAction Stop -OutFile $OutFile
+                    -SkipCertificateCheck:$SkipCertificateCheck -OutFile $OutFile -Method $Method `
+                    -Verbose:$VerbosePreference -ErrorAction Stop 
             } else {
                 $Result = Invoke-OPNsenseApiRestCommand -Uri $Uri -credential $Credentials `
-                    -SkipCertificateCheck:$SkipCertificateCheck -Verbose:$VerbosePreference `
-                    -ErrorAction Stop
+                    -SkipCertificateCheck:$SkipCertificateCheck -Method $Method `
+                    -Verbose:$VerbosePreference -ErrorAction Stop
             }
         }
     } catch [Microsoft.PowerShell.Commands.WriteErrorException] {
@@ -98,13 +102,23 @@ Function Invoke-OPNsenseCommand {
             }
         }
 
+        # Drill down to the requested property level
+        foreach ($prop in $Property) {
+            #if ($prop -in (Get-NoteProperty $result)) {
+            if ($prop -in $result.psobject.Properties.name) {
+                $result = Select-Object -InputObject $result -ExpandProperty $prop       
+            } else {
+                Throw "$prop is an invalid property for object $Module/$Controller/$Command"
+            }
+        }
+
         # Add a custom property to the output, if specified
         if ($AddProperty) {
             Write-Verbose "Adding Property:"
             if ($addProperty.GetType().Name -eq "HashTable") {
                 $addProperty.keys | ForEach-Object {
                     Write-Verbose ("* $_ : " + $addProperty.Item($_))
-                    $result |  Add-Member $_ $addProperty.Item($_)
+                    $result |  Add-Member $_ $addProperty.Item($_) -Force
                 }
             }
         }

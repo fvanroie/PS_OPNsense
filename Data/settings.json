@@ -1,0 +1,1373 @@
+{
+    "Compatibility": {
+        "MinimumVersion": "18.1",
+        "MaximumVersion": "18.1.6"
+    },
+    "Settings": {
+        "AcmeClient": {
+            "plugin": "os-acme-client",
+            "General": {
+                "objectname": "AcmeClient General Settings",
+                "mountpoint": "\\\\OPNsense\\AcmeClient\\settings",
+                "get": {
+                    "returntype": "OPNsense.Settings.AcmeClient.General",
+                    "command": {
+                        "module": "acmeclient",
+                        "controller": "settings",
+                        "command": "get",
+                        "property": [
+                            "acmeclient",
+                            "settings"
+                        ]
+                    }
+                },
+                "set": {
+                    "returntype": "OPNsense.Settings.AcmeClient.General",
+                    "command": {
+                        "module": "acmeclient",
+                        "controller": "settings",
+                        "command": "set",
+                        "json": {}
+                    }
+                }
+            }
+        },
+        "ARPScanner": {
+            "plugin": "os-arp-scan",
+            "General": {
+                "objectname": "ARP Scanner General Settings",
+                "mountpoint": "\\\\OPNsense\\ARPscanner\\general",
+                "get": {
+                    "returntype": "OPNsense.Settings.Arpscanner.General",
+                    "command": {
+                        "module": "arpscanner",
+                        "controller": "settings",
+                        "command": "get",
+                        "property": [
+                            "arpscanner",
+                            "general"
+                        ]
+                    }
+                },
+                "set": {
+                    "returntype": "OPNsense.Settings.Arpscanner.General",
+                    "command": {
+                        "module": "arpscanner",
+                        "controller": "settings",
+                        "command": "set",
+                        "json": {}
+                    }
+                }
+            }
+        },
+        "C-ICAP": {
+            "plugin": "os-freeradius",
+            "General": {
+                "objectname": "C-ICAP General Settings",
+                "mountpoint": "\\\\OPNsense\\cicap\\general",
+                "get": {
+                    "returntype": "OPNsense.Settings.Cicap.General",
+                    "command": {
+                        "module": "cicap",
+                        "controller": "general",
+                        "command": "get",
+                        "property": "general"
+                    }
+                },
+                "set": {
+                    "returntype": "OPNsense.Settings.Cicap.General",
+                    "command": {
+                        "module": "cicap",
+                        "controller": "general",
+                        "command": "set",
+                        "json": {}
+                    }
+                }
+            },
+            "Antivirus": {
+                "objectname": "C-ICAP Antivirus Settings",
+                "mountpoint": "\\\\OPNsense\\cicap\\antivirus",
+                "get": {
+                    "returntype": "OPNsense.Settings.Cicap.Antivirus",
+                    "command": {
+                        "module": "cicap",
+                        "controller": "antivirus",
+                        "command": "get",
+                        "property": "antivirus"
+                    }
+                },
+                "set": {
+                    "returntype": "OPNsense.Settings.Cicap.Antivirus",
+                    "command": {
+                        "module": "cicap",
+                        "controller": "antivirus",
+                        "command": "set",
+                        "json": {}
+                    }
+                }
+            }
+        },
+        "ClamAV": {
+            "plugin": "os-clamav",
+            "General": {
+                "objectname": "ClamAV General Settings",
+                "mountpoint": "\\\\OPNsense\\clamav\\general",
+                "get": {
+                    "returntype": "OPNsense.Settings.Clamav.General",
+                    "command": {
+                        "module": "clamav",
+                        "controller": "general",
+                        "command": "get",
+                        "property": "general"
+                    }
+                },
+                "set": {
+                    "returntype": "OPNsense.Settings.Clamav.General",
+                    "command": {
+                        "module": "clamav",
+                        "controller": "general",
+                        "command": "set",
+                        "json": {}
+                    }
+                }
+            }
+        },
+        "Collectd": {
+            "plugin": "os-collectd",
+            "General": {
+                "objectname": "Collectd General Settings",
+                "mountpoint": "\\\\OPNsense\\collectd\\general",
+                "get": {
+                    "returntype": "OPNsense.Settings.Collectd.General",
+                    "command": {
+                        "module": "collectd",
+                        "controller": "general",
+                        "command": "get",
+                        "property": "general"
+                    }
+                },
+                "set": {
+                    "returntype": "OPNsense.Settings.Collectd.General",
+                    "command": {
+                        "module": "collectd",
+                        "controller": "general",
+                        "command": "set",
+                        "json": {}
+                    }
+                }
+            }
+        },
+        "FreeRadius": {
+            "plugin": "os-freeradius",
+            "General": {
+                "objectname": "FreeRadius General Settings",
+                "mountpoint": "\\\\OPNsense\\freeradius",
+                "get": {
+                    "returntype": "OPNsense.Settings.FreeRadius.General",
+                    "command": {
+                        "module": "freeradius",
+                        "controller": "general",
+                        "command": "get",
+                        "property": "general"
+                    }
+                },
+                "set": {
+                    "returntype": "OPNsense.Settings.FreeRadius.General",
+                    "command": {
+                        "module": "freeradius",
+                        "controller": "general",
+                        "command": "set",
+                        "json": {}
+                    }
+                }
+            },
+            "EAP": {
+                "objectname": "FreeRadius EAP Settings",
+                "mountpoint": "\\\\OPNsense\\freeradius",
+                "get": {
+                    "returntype": "OPNsense.Settings.FreeRadius.Eap",
+                    "command": {
+                        "module": "freeradius",
+                        "controller": "eap",
+                        "command": "get",
+                        "property": "eap"
+                    }
+                },
+                "set": {
+                    "returntype": "OPNsense.Settings.FreeRadius.Eap",
+                    "command": {
+                        "module": "freeradius",
+                        "controller": "eap",
+                        "command": "set",
+                        "json": {}
+                    }
+                }
+            },
+            "LDAP": {
+                "objectname": "FreeRadius LDAP Settings",
+                "mountpoint": "\\\\OPNsense\\freeradius",
+                "get": {
+                    "returntype": "OPNsense.Settings.FreeRadius.Ldap",
+                    "command": {
+                        "module": "freeradius",
+                        "controller": "ldap",
+                        "command": "get",
+                        "property": "ldap"
+                    }
+                },
+                "set": {
+                    "returntype": "OPNsense.Settings.FreeRadius.Ldap",
+                    "command": {
+                        "module": "freeradius",
+                        "controller": "ldap",
+                        "command": "set",
+                        "json": {}
+                    }
+                }
+            }
+        },
+        "HAProxy": {
+            "plugin": "os-haproxy",
+            "General": {
+                "objectname": "HAProxy General Settings",
+                "mountpoint": "\\\\OPNsense\\HAProxy\\general",
+                "get": {
+                    "returntype": "OPNsense.Settings.HAProxy.General",
+                    "command": {
+                        "module": "haproxy",
+                        "controller": "settings",
+                        "command": "get",
+                        "property": [
+                            "haproxy",
+                            "general"
+                        ]
+                    }
+                },
+                "set": {
+                    "returntype": "OPNsense.Settings.HAProxy.General",
+                    "command": {
+                        "module": "haproxy",
+                        "controller": "settings",
+                        "command": "set",
+                        "json": {}
+                    }
+                }
+            },
+            "Peers": {
+                "objectname": "HAProxy Peers Settings",
+                "mountpoint": "\\\\OPNsense\\HAProxy\\general\\peers",
+                "get": {
+                    "returntype": "OPNsense.Settings.HAProxy.Peers",
+                    "command": {
+                        "module": "haproxy",
+                        "controller": "settings",
+                        "command": "get",
+                        "property": [
+                            "haproxy",
+                            "general",
+                            "peers"
+                        ]
+                    }
+                },
+                "set": {
+                    "returntype": "OPNsense.Settings.HAProxy.Peers",
+                    "command": {
+                        "module": "haproxy",
+                        "controller": "settings",
+                        "command": "set",
+                        "json": {}
+                    }
+                }
+            },
+            "Tuning": {
+                "objectname": "HAProxy Tuning Settings",
+                "mountpoint": "\\\\OPNsense\\HAProxy\\general\\tuning",
+                "get": {
+                    "returntype": "OPNsense.Settings.HAProxy.Tuning",
+                    "command": {
+                        "module": "haproxy",
+                        "controller": "settings",
+                        "command": "get",
+                        "property": [
+                            "haproxy",
+                            "general",
+                            "tuning"
+                        ]
+                    }
+                },
+                "set": {
+                    "returntype": "OPNsense.Settings.HAProxy.Tuning",
+                    "command": {
+                        "module": "haproxy",
+                        "controller": "settings",
+                        "command": "set",
+                        "json": {}
+                    }
+                }
+            },
+            "Defaults": {
+                "objectname": "HAProxy Defaults Settings",
+                "mountpoint": "\\\\OPNsense\\HAProxy\\general\\defaults",
+                "get": {
+                    "returntype": "OPNsense.Settings.HAProxy.Defaults",
+                    "command": {
+                        "module": "haproxy",
+                        "controller": "settings",
+                        "command": "get",
+                        "property": [
+                            "haproxy",
+                            "general",
+                            "defaults"
+                        ]
+                    }
+                },
+                "set": {
+                    "returntype": "OPNsense.Settings.HAProxy.Defaults",
+                    "command": {
+                        "module": "haproxy",
+                        "controller": "settings",
+                        "command": "set",
+                        "json": {}
+                    }
+                }
+            },
+            "Logging": {
+                "objectname": "HAProxy Logging Settings",
+                "mountpoint": "\\\\OPNsense\\HAProxy\\general\\logging",
+                "get": {
+                    "returntype": "OPNsense.Settings.HAProxy.Logging",
+                    "command": {
+                        "module": "haproxy",
+                        "controller": "settings",
+                        "command": "get",
+                        "property": [
+                            "haproxy",
+                            "general",
+                            "logging"
+                        ]
+                    }
+                },
+                "set": {
+                    "returntype": "OPNsense.Settings.HAProxy.Logging",
+                    "command": {
+                        "module": "haproxy",
+                        "controller": "settings",
+                        "command": "set",
+                        "json": {}
+                    }
+                }
+            },
+            "Statistics": {
+                "objectname": "HAProxy Statistics Settings",
+                "mountpoint": "\\\\OPNsense\\HAProxy\\general\\stats",
+                "get": {
+                    "returntype": "OPNsense.Settings.HAProxy.Statistics",
+                    "command": {
+                        "module": "haproxy",
+                        "controller": "settings",
+                        "command": "get",
+                        "property": [
+                            "haproxy",
+                            "general",
+                            "stats"
+                        ]
+                    }
+                },
+                "set": {
+                    "returntype": "OPNsense.Settings.HAProxy.Statistics",
+                    "command": {
+                        "module": "haproxy",
+                        "controller": "settings",
+                        "command": "set",
+                        "json": {}
+                    }
+                }
+            }
+        },
+        "HelloWorld": {
+            "plugin": "os-helloworld",
+            "General": {
+                "objectname": "HelloWorld Settings",
+                "mountpoint": "\\\\OPNsense\\helloworld\\general",
+                "get": {
+                    "returntype": "OPNsense.Settings.Helloworld.General",
+                    "command": {
+                        "module": "helloworld",
+                        "controller": "settings",
+                        "command": "get",
+                        "property": [
+                            "helloworld",
+                            "general"
+                        ]
+                    }
+                },
+                "set": {
+                    "returntype": "OPNsense.Settings.Helloworld.General",
+                    "command": {
+                        "module": "helloworld",
+                        "controller": "settings",
+                        "command": "set",
+                        "json": {}
+                    }
+                }
+            }
+        },
+        "IDS": {
+            "RuleSet": {
+                "objectname": "IDS General Settings",
+                "mountpoint": "\\\\OPNsense\\IDS\\userDefinedRules\\rule",
+                "get": {
+                    "returntype": "OPNsense.Settings.IDS.General",
+                    "command": {
+                        "module": "ids",
+                        "controller": "settings",
+                        "command": "get",
+                        "property": [
+                            "ids",
+                            "general"
+                        ]
+                    }
+                },
+                "set": {
+                    "returntype": "OPNsense.Settings.IDS.General",
+                    "command": {
+                        "module": "ids",
+                        "controller": "settings",
+                        "command": "set",
+                        "json": {}
+                    }
+                }
+            }
+        },
+        "IPerf": {
+            "plugin": "os-iperf",
+            "Instance": {
+                "objectname": "Iperf General Settings",
+                "mountpoint": "\\\\OPNsense\\iperf\\instances",
+                "get": {
+                    "returntype": "OPNsense.Settings.Iperf.Instance",
+                    "command": {
+                        "module": "iperf",
+                        "controller": "instance",
+                        "command": "get",
+                        "property": "instance"
+                    }
+                },
+                "set": {
+                    "returntype": "OPNsense.Settings.Iperf.Instance",
+                    "command": {
+                        "module": "iperf",
+                        "controller": "instance",
+                        "command": "set",
+                        "json": {}
+                    }
+                }
+            }
+        },
+        "LLDPd": {
+            "plugin": "os-lldpd",
+            "General": {
+                "objectname": "LLDPd General Settings",
+                "mountpoint": "\\\\OPNsense\\lldpd\\general",
+                "get": {
+                    "returntype": "OPNsense.Settings.Lldpd.General",
+                    "command": {
+                        "module": "lldpd",
+                        "controller": "general",
+                        "command": "get",
+                        "property": "general"
+                    }
+                },
+                "set": {
+                    "returntype": "OPNsense.Settings.Lldpd.General",
+                    "command": {
+                        "module": "lldpd",
+                        "controller": "general",
+                        "command": "set",
+                        "json": {}
+                    }
+                }
+            }
+        },
+        "MdnsRepeater": {
+            "plugin": "os-mdns-repeater",
+            "General": {
+                "objectname": "MDNS Repeater Settings",
+                "mountpoint": "\\\\OPNsense\\MDNSRepeater",
+                "get": {
+                    "returntype": "OPNsense.Settings.Mdnsrepeater.General",
+                    "command": {
+                        "module": "mdnsrepeater",
+                        "controller": "settings",
+                        "command": "get",
+                        "property": "mdnsrepeater"
+                    }
+                },
+                "set": {
+                    "returntype": "OPNsense.Settings.Mdnsrepeater.General",
+                    "command": {
+                        "module": "mdnsrepeater",
+                        "controller": "settings",
+                        "command": "set",
+                        "json": {}
+                    }
+                }
+            }
+        },
+        "Monit": {
+            "plugin": "os-monit",
+            "General": {
+                "objectname": "Monit General Settings",
+                "mountpoint": "\\\\OPNsense\\IDS\\userDefinedRules\\rule",
+                "get": {
+                    "returntype": "OPNsense.Settings.Monit.General",
+                    "command": {
+                        "module": "monit",
+                        "controller": "settings",
+                        "command": "get/general",
+                        "property": [
+                            "monit",
+                            "general"
+                        ]
+                    }
+                },
+                "set": {
+                    "returntype": "OPNsense.Settings.Monit.General",
+                    "command": {
+                        "module": "monit",
+                        "controller": "settings",
+                        "command": "set/general",
+                        "json": {}
+                    }
+                }
+            }
+        },
+        "Netflow": {
+            "Capture": {
+                "objectname": "Netflow Capture Settings",
+                "mountpoint": "\\\\OPNsense\\postfix\\domain\\domains\\domain",
+                "get": {
+                    "returntype": "OPNsense.Settings.Netflow.Capture",
+                    "command": {
+                        "module": "diagnostics",
+                        "controller": "netflow",
+                        "command": "getconfig",
+                        "property": [
+                            "netflow",
+                            "capture"
+                        ]
+                    }
+                },
+                "set": {
+                    "returntype": "OPNsense.Settings.Netflow.Capture",
+                    "command": {
+                        "module": "diagnostics",
+                        "controller": "netflow",
+                        "command": "setconfig",
+                        "json": {}
+                    }
+                }
+            },
+            "Collect": {
+                "objectname": "Netflow Collect Settings",
+                "mountpoint": "\\\\OPNsense\\postfix\\recipient\\recipients\\recipient",
+                "get": {
+                    "returntype": "OPNsense.Settings.Netflow.Collect",
+                    "command": {
+                        "module": "diagnostics",
+                        "controller": "netflow",
+                        "command": "getconfig",
+                        "property": [
+                            "netflow",
+                            "collect"
+                        ]
+                    }
+                },
+                "set": {
+                    "returntype": "OPNsense.Settings.Netflow.Collect",
+                    "command": {
+                        "module": "diagnostics",
+                        "controller": "netflow",
+                        "command": "setconfig"
+                    }
+                }
+            }
+        },
+        "NodeExporter": {
+            "plugin": "os-node-exporter",
+            "General": {
+                "objectname": "Node Exporter General Settings",
+                "mountpoint": "\\\\OPNsense\\NodeExporter",
+                "get": {
+                    "returntype": "OPNsense.Settings.Nodeexporter.General",
+                    "command": {
+                        "module": "nodeexporter",
+                        "controller": "general",
+                        "command": "get",
+                        "property": "general"
+                    }
+                },
+                "set": {
+                    "returntype": "OPNsense.Settings.Nodeexporter.General",
+                    "command": {
+                        "module": "nodeexporter",
+                        "controller": "general",
+                        "command": "set",
+                        "json": {}
+                    }
+                }
+            }
+        },
+        "Nut": {
+            "plugin": "os-nut",
+            "General": {
+                "objectname": "Node Exporter General Settings",
+                "mountpoint": "\\\\OPNsense\\NodeExporter",
+                "get": {
+                    "returntype": "OPNsense.Settings.Nut.General",
+                    "command": {
+                        "module": "nut",
+                        "controller": "settings",
+                        "command": "get",
+                        "property": [
+                            "nut",
+                            "general"
+                        ]
+                    }
+                },
+                "set": {
+                    "returntype": "OPNsense.Settings.Nut.General",
+                    "command": {
+                        "module": "nut",
+                        "controller": "settings",
+                        "command": "set",
+                        "json": {}
+                    }
+                }
+            }
+        },
+        "OpenConnect": {
+            "plugin": "os-openconnect",
+            "General": {
+                "objectname": "OpenConnect General Settings",
+                "mountpoint": "\\\\OPNsense\\openconnect\\general",
+                "get": {
+                    "returntype": "OPNsense.Settings.Openconnect.General",
+                    "command": {
+                        "module": "openconnect",
+                        "controller": "general",
+                        "command": "get",
+                        "property": "general"
+                    }
+                },
+                "set": {
+                    "returntype": "OPNsense.Settings.Openconnect.General",
+                    "command": {
+                        "module": "openconnect",
+                        "controller": "general",
+                        "command": "set",
+                        "json": {}
+                    }
+                }
+            }
+        },
+        "Postfix": {
+            "plugin": "os-postfix",
+            "General": {
+                "objectname": "Postfix General Settings",
+                "mountpoint": "\\\\OPNsense\\postfix\\domain\\domains\\domain",
+                "get": {
+                    "returntype": "OPNsense.Settings.Postfix.General",
+                    "command": {
+                        "module": "postfix",
+                        "controller": "general",
+                        "command": "get",
+                        "property": "general"
+                    }
+                },
+                "set": {
+                    "returntype": "OPNsense.Settings.Postfix.General",
+                    "command": {
+                        "module": "postfix",
+                        "controller": "general",
+                        "command": "set",
+                        "json": {}
+                    }
+                }
+            },
+            "Antispam": {
+                "objectname": "Postfix Antispam Settings",
+                "mountpoint": "\\\\OPNsense\\postfix\\recipient\\recipients\\recipient",
+                "get": {
+                    "returntype": "OPNsense.Settings.Postfix.Antispam",
+                    "command": {
+                        "module": "postfix",
+                        "controller": "antispam",
+                        "command": "get",
+                        "property": "antispam"
+                    }
+                },
+                "set": {
+                    "returntype": "OPNsense.Settings.Postfix.Antispam",
+                    "command": {
+                        "module": "postfix",
+                        "controller": "antispam",
+                        "command": "set",
+                        "json": {}
+                    }
+                }
+            }
+        },
+        "Proxy": {
+            "General": {
+                "objectname": "Proxy General Settings",
+                "mountpoint": "\\\\OPNsense\\proxy\\general",
+                "get": {
+                    "returntype": "OPNsense.Settings.Proxy.General",
+                    "command": {
+                        "module": "proxy",
+                        "controller": "settings",
+                        "command": "get",
+                        "property": [
+                            "proxy",
+                            "general"
+                        ]
+                    }
+                },
+                "set": {
+                    "returntype": "OPNsense.Settings.Proxy.General",
+                    "command": {
+                        "module": "proxy",
+                        "controller": "settings",
+                        "command": "set",
+                        "json": {}
+                    }
+                }
+            },
+            "Forward": {
+                "objectname": "Proxy Forward Settings",
+                "mountpoint": "\\\\OPNsense\\proxy\\forward",
+                "get": {
+                    "returntype": "OPNsense.Settings.Proxy.Forward",
+                    "command": {
+                        "module": "proxy",
+                        "controller": "settings",
+                        "command": "get",
+                        "property": [
+                            "proxy",
+                            "forward"
+                        ]
+                    }
+                },
+                "set": {
+                    "returntype": "OPNsense.Settings.Proxy.Forward",
+                    "command": {
+                        "module": "proxy",
+                        "controller": "settings",
+                        "command": "set"
+                    }
+                }
+            }
+        },
+        "ProxySSO": {
+            "General": {
+                "objectname": "ProxySSO General Settings",
+                "mountpoint": "\\\\OPNsense\\ProxySSO",
+                "get": {
+                    "returntype": "OPNsense.Settings.ProxySSO.General",
+                    "command": {
+                        "module": "proxysso",
+                        "controller": "settings",
+                        "command": "get",
+                        "property": "proxysso"
+                    }
+                },
+                "set": {
+                    "returntype": "OPNsense.Settings.ProxySSO.General",
+                    "command": {
+                        "module": "proxysso",
+                        "controller": "settings",
+                        "command": "set",
+                        "json": {}
+                    }
+                }
+            }
+        },
+        "Quagga": {
+            "plugin": "os-frr",
+            "General": {
+                "objectname": "Quagga General Settings",
+                "mountpoint": "\\\\OPNsense\\quagga\\general",
+                "get": {
+                    "returntype": "OPNsense.Settings.Quagga.General",
+                    "command": {
+                        "module": "quagga",
+                        "controller": "general",
+                        "command": "get",
+                        "property": "general"
+                    }
+                },
+                "set": {
+                    "returntype": "OPNsense.Settings.Quagga.General",
+                    "command": {
+                        "module": "quagga",
+                        "controller": "general",
+                        "command": "set",
+                        "json": {}
+                    }
+                }
+            },
+            "RIP": {
+                "objectname": "Quagga RIP Settings",
+                "mountpoint": "\\\\OPNsense\\quagga\\rip",
+                "get": {
+                    "returntype": "OPNsense.Settings.Quagga.Rip",
+                    "command": {
+                        "module": "quagga",
+                        "controller": "rip",
+                        "command": "get",
+                        "property": "rip"
+                    }
+                },
+                "set": {
+                    "returntype": "OPNsense.Settings.Quagga.Rip",
+                    "command": {
+                        "module": "quagga",
+                        "controller": "rip",
+                        "command": "set",
+                        "json": {}
+                    }
+                }
+            },
+            "OSPF": {
+                "objectname": "Quagga OSPF Settings",
+                "mountpoint": "\\\\OPNsense\\quagga\\ospf",
+                "get": {
+                    "returntype": "OPNsense.Settings.Quagga.Ospf",
+                    "command": {
+                        "module": "quagga",
+                        "controller": "ospfsettings",
+                        "command": "get",
+                        "property": "ospf"
+                    }
+                },
+                "set": {
+                    "returntype": "OPNsense.Settings.Quagga.Ospf",
+                    "command": {
+                        "module": "quagga",
+                        "controller": "ospfsettings",
+                        "command": "set",
+                        "json": {}
+                    }
+                }
+            },
+            "OSPF6": {
+                "objectname": "Quagga OSPF6 Settings",
+                "mountpoint": "\\\\OPNsense\\quagga\\ospf6",
+                "get": {
+                    "returntype": "OPNsense.Settings.Quagga.Ospf6",
+                    "command": {
+                        "module": "quagga",
+                        "controller": "ospf6settings",
+                        "command": "get",
+                        "property": "ospf6"
+                    }
+                },
+                "set": {
+                    "returntype": "OPNsense.Settings.Quagga.Ospf6",
+                    "command": {
+                        "module": "quagga",
+                        "controller": "ospf6settings",
+                        "command": "set",
+                        "json": {}
+                    }
+                }
+            },
+            "BGP": {
+                "objectname": "Quagga BGP Settings",
+                "mountpoint": "\\\\OPNsense\\quagga\\bgp",
+                "get": {
+                    "returntype": "OPNsense.Settings.Quagga.Bgp",
+                    "command": {
+                        "module": "quagga",
+                        "controller": "bgp",
+                        "command": "get",
+                        "property": "bgp"
+                    }
+                },
+                "set": {
+                    "returntype": "OPNsense.Settings.Quagga.Bgp",
+                    "command": {
+                        "module": "quagga",
+                        "controller": "bgp",
+                        "command": "set",
+                        "json": {}
+                    }
+                }
+            }
+        },
+        "Redis": {
+            "plugin": "os-redis",
+            "General": {
+                "objectname": "Redis General Settings",
+                "mountpoint": "\\\\OPNsense\\redis\\general",
+                "get": {
+                    "returntype": "OPNsense.Settings.Redis.General",
+                    "command": {
+                        "module": "redis",
+                        "controller": "settings",
+                        "command": "get",
+                        "property": [
+                            "redis",
+                            "general"
+                        ]
+                    }
+                },
+                "set": {
+                    "returntype": "OPNsense.Settings.Redis.General",
+                    "command": {
+                        "module": "redis",
+                        "controller": "settings",
+                        "command": "set",
+                        "json": {}
+                    }
+                }
+            },
+            "Limits": {
+                "objectname": "Redis Limit Settings",
+                "mountpoint": "\\\\OPNsense\\redis\\limits",
+                "get": {
+                    "returntype": "OPNsense.Settings.Redis.Limits",
+                    "command": {
+                        "module": "redis",
+                        "controller": "settings",
+                        "command": "get",
+                        "property": [
+                            "redis",
+                            "limits"
+                        ]
+                    }
+                },
+                "set": {
+                    "returntype": "OPNsense.Settings.Redis.Limits",
+                    "command": {
+                        "module": "redis",
+                        "controller": "settings",
+                        "command": "set"
+                    }
+                }
+            },
+            "Security": {
+                "objectname": "Redis Security Settings",
+                "mountpoint": "\\\\OPNsense\\redis\\security",
+                "get": {
+                    "returntype": "OPNsense.Settings.Redis.Security",
+                    "command": {
+                        "module": "redis",
+                        "controller": "settings",
+                        "command": "get",
+                        "property": [
+                            "redis",
+                            "security"
+                        ]
+                    }
+                },
+                "set": {
+                    "returntype": "OPNsense.Settings.Redis.Security",
+                    "command": {
+                        "module": "redis",
+                        "controller": "settings",
+                        "command": "set"
+                    }
+                }
+            },
+            "SlowLog": {
+                "objectname": "Redis Slow Log Settings",
+                "mountpoint": "\\\\OPNsense\\redis\\slowlog",
+                "get": {
+                    "returntype": "OPNsense.Settings.Redis.SlowLog",
+                    "command": {
+                        "module": "redis",
+                        "controller": "settings",
+                        "command": "get",
+                        "property": [
+                            "redis",
+                            "slowlog"
+                        ]
+                    }
+                },
+                "set": {
+                    "returntype": "OPNsense.Settings.Redis.SlowLog",
+                    "command": {
+                        "module": "redis",
+                        "controller": "settings",
+                        "command": "set"
+                    }
+                }
+            }
+        },
+        "Relayd": {
+            "plugin": "os-relayd",
+            "General": {
+                "objectname": "Relayd General Settings",
+                "mountpoint": "\\\\OPNsense\\relayd\\general",
+                "get": {
+                    "returntype": "OPNsense.Settings.Relayd.General",
+                    "command": {
+                        "module": "relayd",
+                        "controller": "settings",
+                        "command": "get/general",
+                        "property": [
+                            "general"
+                        ]
+                    }
+                }
+            }
+        },
+        "Rspamd": {
+            "plugin": "os-rspamd",
+            "General": {
+                "objectname": "Rspamd General Settings",
+                "mountpoint": "\\\\OPNsense\\rspamd\\general",
+                "get": {
+                    "returntype": "OPNsense.Settings.Rspamd.General",
+                    "command": {
+                        "module": "rspamd",
+                        "controller": "settings",
+                        "command": "get",
+                        "property": [
+                            "rspamd",
+                            "general"
+                        ]
+                    }
+                },
+                "set": {
+                    "returntype": "OPNsense.Settings.Rspamd.General",
+                    "command": {
+                        "module": "rspamd",
+                        "controller": "settings",
+                        "command": "set",
+                        "json": {}
+                    }
+                }
+            }
+        },
+        "Shadowsocks": {
+            "plugin": "os-postfix",
+            "General": {
+                "objectname": "ShadowSocks General Settings",
+                "mountpoint": "\\\\OPNsense\\shadowsocks\\general",
+                "get": {
+                    "returntype": "OPNsense.Settings.Shadowsocks.General",
+                    "command": {
+                        "module": "shadowsocks",
+                        "controller": "general",
+                        "command": "get",
+                        "property": "general"
+                    }
+                },
+                "set": {
+                    "returntype": "OPNsense.Settings.Shadowsocks.General",
+                    "command": {
+                        "module": "shadowsocks",
+                        "controller": "general",
+                        "command": "set",
+                        "json": {}
+                    }
+                }
+            },
+            "Local": {
+                "objectname": "ShadowSocks Local Settings",
+                "mountpoint": "\\\\OPNsense\\shadowsocks\\local",
+                "get": {
+                    "returntype": "OPNsense.Settings.Shadowsocks.Local",
+                    "command": {
+                        "module": "shadowsocks",
+                        "controller": "local",
+                        "command": "get",
+                        "property": "local"
+                    }
+                },
+                "set": {
+                    "returntype": "OPNsense.Settings.Shadowsocks.Local",
+                    "command": {
+                        "module": "shadowsocks",
+                        "controller": "local",
+                        "command": "set",
+                        "json": {}
+                    }
+                }
+            }
+        },
+        "Siproxd": {
+            "plugin": "os-siproxd",
+            "General": {
+                "objectname": "Siproxd General Settings",
+                "mountpoint": "\\\\OPNsense\\siproxd\\general",
+                "get": {
+                    "returntype": "OPNsense.Settings.Siproxd.General",
+                    "command": {
+                        "module": "siproxd",
+                        "controller": "general",
+                        "command": "get",
+                        "Property": "general"
+                    }
+                },
+                "set": {
+                    "returntype": "OPNsense.Settings.Siproxd.General",
+                    "command": {
+                        "module": "siproxd",
+                        "controller": "general",
+                        "command": "set",
+                        "json": {}
+                    }
+                }
+            }
+        },
+        "Telegraf": {
+            "plugin": "os-redis",
+            "General": {
+                "objectname": "Telegraf General Settings",
+                "mountpoint": "\\\\OPNsense\\telegraf\\general",
+                "get": {
+                    "returntype": "OPNsense.Settings.Telegraf.General",
+                    "command": {
+                        "module": "telegraf",
+                        "controller": "general",
+                        "command": "get",
+                        "property": "general"
+                    }
+                },
+                "set": {
+                    "returntype": "OPNsense.Settings.Telegraf.General",
+                    "command": {
+                        "module": "telegraf",
+                        "controller": "general",
+                        "command": "set",
+                        "json": {}
+                    }
+                }
+            },
+            "Input": {
+                "objectname": "Telegraf Input Settings",
+                "mountpoint": "\\\\OPNsense\\telegraf\\input",
+                "get": {
+                    "returntype": "OPNsense.Settings.Telegraf.Input",
+                    "command": {
+                        "module": "telegraf",
+                        "controller": "input",
+                        "command": "get",
+                        "property": "input"
+                    }
+                },
+                "set": {
+                    "returntype": "OPNsense.Settings.Telegraf.Input",
+                    "command": {
+                        "module": "telegraf",
+                        "controller": "input",
+                        "command": "set",
+                        "json": {}
+                    }
+                }
+            },
+            "Output": {
+                "objectname": "Telegraf Output Settings",
+                "mountpoint": "\\\\OPNsense\\telegraf\\output",
+                "get": {
+                    "returntype": "OPNsense.Settings.Telegraf.Output",
+                    "command": {
+                        "module": "telegraf",
+                        "controller": "output",
+                        "command": "get",
+                        "property": "output"
+                    }
+                },
+                "set": {
+                    "returntype": "OPNsense.Settings.Telegraf.Output",
+                    "command": {
+                        "module": "telegraf",
+                        "controller": "output",
+                        "command": "set",
+                        "json": {}
+                    }
+                }
+            }
+        },
+        "Tor": {
+            "plugin": "os-tor",
+            "General": {
+                "objectname": "Tor General Settings",
+                "mountpoint": "\\\\OPNsense\\tor\\general",
+                "get": {
+                    "returntype": "OPNsense.Settings.Tor.General",
+                    "command": {
+                        "module": "tor",
+                        "controller": "general",
+                        "command": "get",
+                        "property": "general"
+                    }
+                },
+                "set": {
+                    "returntype": "OPNsense.Settings.Tor.General",
+                    "command": {
+                        "module": "tor",
+                        "controller": "general",
+                        "command": "set",
+                        "json": {}
+                    }
+                }
+            },
+            "Relay": {
+                "objectname": "Tor Relay Settings",
+                "mountpoint": "\\\\OPNsense\\tor\\relay",
+                "get": {
+                    "returntype": "OPNsense.Settings.Tor.Relay",
+                    "command": {
+                        "module": "tor",
+                        "controller": "relay",
+                        "command": "get",
+                        "property": "relay"
+                    }
+                },
+                "set": {
+                    "returntype": "OPNsense.Settings.Tor.Relay",
+                    "command": {
+                        "module": "tor",
+                        "controller": "relay",
+                        "command": "set",
+                        "json": {}
+                    }
+                }
+            }
+        },
+        "ZabbixAgent": {
+            "plugin": "os-zabbixagent",
+            "General": {
+                "objectname": "ZabbixAgent General Settings",
+                "mountpoint": "\\\\OPNsense\\ZabbixAgent\\settings\\main",
+                "get": {
+                    "returntype": "OPNsense.Settings.Zabbixagent.General",
+                    "command": {
+                        "module": "zabbixagent",
+                        "controller": "settings",
+                        "command": "get",
+                        "property": [
+                            "zabbixagent",
+                            "settings",
+                            "main"
+                        ]
+                    }
+                },
+                "set": {
+                    "returntype": "OPNsense.Settings.Zabbixagent.General",
+                    "command": {
+                        "module": "zabbixagent",
+                        "controller": "settings",
+                        "command": "set",
+                        "json": {}
+                    }
+                }
+            },
+            "Features": {
+                "objectname": "ZabbixAgent Features Settings",
+                "mountpoint": "\\\\OPNsense\\ZabbixAgent\\settings\\features",
+                "get": {
+                    "returntype": "OPNsense.Settings.Zabbixagent.Features",
+                    "command": {
+                        "module": "zabbixagent",
+                        "controller": "settings",
+                        "command": "get",
+                        "property": [
+                            "zabbixagent",
+                            "settings",
+                            "features"
+                        ]
+                    }
+                },
+                "set": {
+                    "returntype": "OPNsense.Settings.Zabbixagent.Features",
+                    "command": {
+                        "module": "zabbixagent",
+                        "controller": "settings",
+                        "command": "set"
+                    }
+                }
+            },
+            "Tuning": {
+                "objectname": "ZabbixAgent Tuning Settings",
+                "mountpoint": "\\\\OPNsense\\ZabbixAgent\\settings\\tuning",
+                "get": {
+                    "returntype": "OPNsense.Settings.Zabbixagent.Tuning",
+                    "command": {
+                        "module": "zabbixagent",
+                        "controller": "settings",
+                        "command": "get",
+                        "property": [
+                            "zabbixagent",
+                            "settings",
+                            "tuning"
+                        ]
+                    }
+                },
+                "set": {
+                    "returntype": "OPNsense.Settings.Zabbixagent.Tuning",
+                    "command": {
+                        "module": "zabbixagent",
+                        "controller": "settings",
+                        "command": "set"
+                    }
+                }
+            }
+        },
+        "ZabbixProxy": {
+            "plugin": "os-zabbixproxy",
+            "General": {
+                "objectname": "ZabbixProxy General Settings",
+                "mountpoint": "\\\\OPNsense\\zabbixproxy\\general",
+                "get": {
+                    "returntype": "OPNsense.Settings.Zabbixproxy.General",
+                    "command": {
+                        "module": "zabbixproxy",
+                        "controller": "general",
+                        "command": "get",
+                        "property": "general"
+                    }
+                },
+                "set": {
+                    "returntype": "OPNsense.Settings.Zabbixproxy.General",
+                    "command": {
+                        "module": "zabbixproxy",
+                        "controller": "general",
+                        "command": "set",
+                        "json": {}
+                    }
+                }
+            }
+        },
+        "Zerotier": {
+            "plugin": "os-zerotier",
+            "General": {
+                "objectname": "ZeroTier General Settings",
+                "mountpoint": "\\\\OPNsense\\zerotier",
+                "get": {
+                    "returntype": "OPNsense.Settings.Zerotier",
+                    "command": {
+                        "module": "zerotier",
+                        "controller": "settings",
+                        "command": "get",
+                        "property": "zerotier"
+                    }
+                },
+                "set": {
+                    "returntype": "OPNsense.Settings.Zerotier",
+                    "command": {
+                        "module": "zerotier",
+                        "controller": "settings",
+                        "command": "set",
+                        "json": {}
+                    }
+                }
+            }
+        }
+    }
+}

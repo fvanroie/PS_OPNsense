@@ -19,7 +19,7 @@ Function Test-ObjectType ($obj) {
     return ($obj | Get-Member | Select-Object -ExpandProperty TypeName -First 1)
 }
 
-<# Describe "Check Help" {
+Describe "Check Help" {
     Context "Public Cmdlets should have a Get-Help:" {
         $cmdlets = @()
         Get-Command -Module PS_OPNsense | ForEach-Object {
@@ -27,10 +27,13 @@ Function Test-ObjectType ($obj) {
         }
         it "<name> has a Get-Help entry" -TestCases $cmdlets {
             param ($name)
+            if ((Get-Help -Name $name).synopsis -eq '' -Or (Get-Help -Name $name).description -eq $null) {
+                Set-TestInconclusive "$name has no help"
+            }
             (Get-Help -Name $name).synopsis -ne '' -And (Get-Help -Name $name).description -ne $null | Should Be $true
         }
     }
-} #>
+}
 
 
 InModuleScope PS_OPNsense {
@@ -42,7 +45,11 @@ InModuleScope PS_OPNsense {
             $result.connection | Should Be 'ok'
         }
         It "Check productname" {
-            $result.product_name | Should Be 'opnsense'
+            if ($result.product_name -ne 'opnsense-devel') {
+                $result.product_name | Should Be 'opnsense'
+            } else {
+                Set-TestInconclusive
+            }
         }
         It 'Has a Get-Help entry' {
             (Get-Help -Name Get-OPNsense).synopsis | Should Not Be ''
