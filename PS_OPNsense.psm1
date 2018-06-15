@@ -128,7 +128,7 @@ $f = @(########## PLUGINS ##########
 
     ########## CORE ##########
     # RestApi
-    'Invoke-OPNsenseCommand', 'Invoke-OPNsenseOpenApiPath',
+    'Invoke-OPNsenseCommand', #'Invoke-OPNsenseOpenApiPath',
     # Firmware
     'Get-OPNsense', 'Set-OPNsense',
 
@@ -139,7 +139,7 @@ $f = @(########## PLUGINS ##########
     #'Get-OPNsenseIdsUserRule',
     'New-OPNsenseIdsUserRule',
     # Proxy
-    'New-OPNsenseProxyRemoteBlacklist', 'Get-OPNsenseProxyRemoteBlacklist', 'Remove-OPNsenseProxyRemoteBlacklist',
+    'New-OPNsenseProxyRemoteBlacklist', #'Get-OPNsenseProxyRemoteBlacklist', 'Remove-OPNsenseProxyRemoteBlacklist',
     'Sync-OPNsenseProxyRemoteBlacklist',
     # CaptivePortal
     'New-OPNsenseCaptivePortalZone', 'Remove-OPNsenseCaptivePortalZone',
