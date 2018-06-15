@@ -146,7 +146,7 @@ function New-OPNsenseHAProxyObject {
                 $snapAfter = Invoke-OPNsenseCommand haproxy settings $("search{0}s" -f $ObjectType.ToLower()) -Form @{ searchPhrase = $Item.Name} -Property rows
                 $uuid = Compare-Object -ReferenceObject $snapBefore -DifferenceObject $snapAfter -Property Uuid | Select-Object -ExpandProperty Uuid
 
-                $result = Get-OPNsenseHAProxyDetail -ObjectType $ObjectType -Uuid $Uuid
+                $result = Get-OPNsenseItem -HAProxy $ObjectType -Uuid $Uuid
                 #if ($PassThru) {
                 $results += $result
                 #}
@@ -451,7 +451,7 @@ function Set-OPNsenseHAProxyObject {
                 #    return Invoke-OPNsenseCommand haproxy settings get | Select-Object -ExpandProperty haproxy | Select-Object -ExpandProperty $("{0}s" -f $ObjectType) | Select-Object -ExpandProperty $("{0}s" -f $ObjectType)
                 $result = Invoke-OPNsenseCommand haproxy settings $("set{0}/{1}" -f $ObjectType.ToLower(), $Uuid) -Json @{ $ObjectType.ToLower() = $Item }
                 if (Test-OPNsenseApiResult $result) {
-                    $result = Get-OPNsenseHAProxyDetail -ObjectType $ObjectType -Uuid $Uuid
+                    $result = Get-OPNsenseItem -HAProxy $ObjectType -Uuid $Uuid
                     if ($PassThru) {
                         $results += $result
                     }
