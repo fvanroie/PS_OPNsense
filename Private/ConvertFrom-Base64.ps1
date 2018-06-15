@@ -25,9 +25,7 @@
 Function ConvertFrom-Base64 {
     Param(
         [parameter(Mandatory = $true, Position = 0)]
-        [String]$Input
+        [String]$EncodedString
     )
-    Write-Verbose $Input
-    return $input
-    #Return [System.Text.Encoding]::ASCII.GetString([System.Convert]::FromBase64String($Input)).toString()
+    Return [System.Text.Encoding]::ASCII.GetString([System.Convert]::FromBase64String($EncodedString)).toString()
 }
