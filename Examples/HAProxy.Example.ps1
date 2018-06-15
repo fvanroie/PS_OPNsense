@@ -23,7 +23,7 @@ If (-Not $haproxy.installed) {
 
 # Create some Backend server objects
 $webservers = 1..3 | foreach-Object {
-    [OPNsense.HAProxy.Server]@{
+    [OPNsense.HAProxy.Servers.Server]@{
         'name'        = ("web" + $_.tostring("000"))
         'address'     = "192.168.0.$_"
         'port'        = '80'
@@ -41,7 +41,7 @@ $webservers | Format-Table *
 
 # Create Custom Error objects
 $errorfiles = 200, 400, 403, 405, 408, 429, 500, 502, 503, 504 | foreach-Object {
-    [OPNsense.HAProxy.ErrorFile]@{
+    [OPNsense.HAProxy.Errorfiles.ErrorFile]@{
         'name'        = ("err" + $_.tostring("000"))
         'description' = "Errorfile $_"
         'code'        = $_
@@ -58,7 +58,7 @@ $errorfiles | Format-Table *
 
 # Add Lua Scripts
 $luascripts = 1..2 | foreach-Object {
-    [OPNsense.HAProxy.Lua]@{
+    [OPNsense.HAProxy.Luas.Lua]@{
         'name'        = ("lua" + $_.tostring("000"))
         'enabled'     = $_ % 2 # Enable every other script
         'content'     = '-- placeholder script'
@@ -76,7 +76,7 @@ $luascripts | Format-Table *
 
 # Add Backend pool
 $backends = 1..2 | foreach-Object {
-    [OPNsense.HAProxy.Backend]@{
+    [OPNsense.HAProxy.Backends.Backend]@{
         'name'             = ("pool" + $_.tostring("00"))
         'enabled'          = $_ % 2 # Enable every other script
         'description'      = "Created {0}" -f [DateTime]::now
@@ -96,7 +96,7 @@ $backends | Format-Table *
 
 # Create Frontend service
 $frontends = 1..2 | foreach-Object {
-    [OPNsense.HAProxy.Frontend]@{
+    [OPNsense.HAProxy.Frontends.Frontend]@{
         'name'                = ("public" + $_.tostring("00"))
         'enabled'             = $_ % 2 # Enable every other script
         'description'         = "Created {0}" -f [DateTime]::now
