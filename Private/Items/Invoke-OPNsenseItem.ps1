@@ -77,6 +77,10 @@ Function Invoke-OPNsenseItem {
 
     # Also Output results
     if ($PassThru) {
-        Invoke-OPNsenseOpenApiPath -Module $Call.Module -Action 'get' -Object $Call.Object -Uuid $InputObject.UUID
+        if ($Verb -ne 'Remove') {
+            Invoke-OPNsenseOpenApiPath -Module $Call.Module -Action 'get' -Object $Call.Object -Uuid $InputObject.UUID
+        } else {
+            $InputObject
+        }
     } # PassThru
 }
