@@ -129,8 +129,6 @@ $f = @(########## PLUGINS ##########
     ########## CORE ##########
     # RestApi
     'Invoke-OPNsenseCommand', #'Invoke-OPNsenseOpenApiPath',
-    # Firmware
-    'Get-OPNsense', 'Set-OPNsense',
 
     # Cron
     #'Get-OPNsenseCronJob', 'Enable-OPNsenseCronJob', 'Disable-OPNsenseCronJob', 'Remove-OPNsenseCronJob',
