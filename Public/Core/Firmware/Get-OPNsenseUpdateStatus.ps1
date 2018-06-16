@@ -51,9 +51,9 @@ Function Get-OPNsenseUpdateStatus {
     Do {
         try {
             # TO DO : Check why sometimes Invoke-RestMethod takes 110 seconds to complete
-            Write-Verbose 'Getting Firmware Upgrade Status ...'
+            Write-Debug 'Getting Firmware Upgrade Status ...'
             $result = Invoke-OPNsenseCommand core firmware upgradestatus -Verbose:$false
-            Write-Verbose ('Firmware Upgrade Status : {0}' -f $result.status)
+            Write-Debug ('Firmware Upgrade Status : {0}' -f $result.status)
             $retries = 0
         } catch {
             $retries += 1
