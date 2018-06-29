@@ -459,6 +459,10 @@ namespace OPNsense.HAProxy.backends {
 		public PSObject linkedServers { get; set; }
 		public PSObject mode { get; set; }
 		public string name { get; set; }
+		public PSObject persistence { get; set; }
+		public PSObject persistence_cookiemode { get; set; }
+		public string persistence_cookiename { get; set; }
+		public bool persistence_stripquotes { get; set; }
 		public PSObject proxyProtocol { get; set; }
 		public string source { get; set; }
 		public string stickiness_bytesInRatePeriod { get; set; }
@@ -499,6 +503,10 @@ namespace OPNsense.HAProxy.backends {
 			linkedServers = null;
 			mode = null;
 			name = null;
+			persistence = null;
+			persistence_cookiemode = null;
+			persistence_cookiename = "SRVCOOKIE";
+			persistence_stripquotes = true;
 			proxyProtocol = null;
 			source = null;
 			stickiness_bytesInRatePeriod = "1m";
@@ -539,6 +547,10 @@ namespace OPNsense.HAProxy.backends {
 			PSObject LinkedServers,
 			PSObject Mode,
 			string Name,
+			PSObject Persistence,
+			PSObject Persistence_Cookiemode,
+			string Persistence_Cookiename,
+			byte Persistence_Stripquotes,
 			PSObject ProxyProtocol,
 			string Source,
 			string Stickiness_BytesInRatePeriod,
@@ -577,6 +589,10 @@ namespace OPNsense.HAProxy.backends {
 			linkedServers = LinkedServers;
 			mode = Mode;
 			name = Name;
+			persistence = Persistence;
+			persistence_cookiemode = Persistence_Cookiemode;
+			persistence_cookiename = Persistence_Cookiename;
+			persistence_stripquotes = (Persistence_Stripquotes == 0) ? false : true;
 			proxyProtocol = ProxyProtocol;
 			source = Source;
 			stickiness_bytesInRatePeriod = Stickiness_BytesInRatePeriod;
@@ -993,6 +1009,7 @@ namespace OPNsense.HAProxy.servers {
 		public string checkInterval { get; set; }
 		public uint checkport { get; set; }
 		public string description { get; set; }
+		public string id { get; set; }
 		public PSObject mode { get; set; }
 		public string name { get; set; }
 		public uint port { get; set; }
@@ -1012,6 +1029,7 @@ namespace OPNsense.HAProxy.servers {
 			checkInterval = null;
 			checkport = 0;
 			description = null;
+			id = null;
 			mode = null;
 			name = null;
 			port = 0;
@@ -1031,6 +1049,7 @@ namespace OPNsense.HAProxy.servers {
 			string CheckInterval,
 			uint Checkport,
 			string Description,
+			string Id,
 			PSObject Mode,
 			string Name,
 			uint Port,
@@ -1048,6 +1067,7 @@ namespace OPNsense.HAProxy.servers {
 			checkInterval = CheckInterval;
 			checkport = Checkport;
 			description = Description;
+			id = Id;
 			mode = Mode;
 			name = Name;
 			port = Port;
