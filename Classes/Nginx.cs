@@ -63,11 +63,13 @@ namespace OPNsense.Nginx {
 		public PSObject ca { get; set; }
 		public PSObject certificate { get; set; }
 		public PSObject charset { get; set; }
+		public bool enable_acme_support { get; set; }
 		public bool https_only { get; set; }
 		public PSObject listen_https_port { get; set; }
 		public PSObject listen_http_port { get; set; }
 		public PSObject locations { get; set; }
 		public bool naxsi_extensive_log { get; set; }
+		public PSObject rewrites { get; set; }
 		public string root { get; set; }
 		public bool sendfile { get; set; }
 		public Object servername { get; set; }
@@ -80,11 +82,13 @@ namespace OPNsense.Nginx {
 			ca = null;
 			certificate = null;
 			charset = null;
+			enable_acme_support = true;
 			https_only = true;
 			listen_https_port = null;
 			listen_http_port = null;
 			locations = null;
 			naxsi_extensive_log = true;
+			rewrites = null;
 			root = null;
 			sendfile = true;
 			servername = null;
@@ -97,11 +101,13 @@ namespace OPNsense.Nginx {
 			PSObject Ca,
 			PSObject Certificate,
 			PSObject Charset,
+			byte Enable_Acme_Support,
 			byte Https_Only,
 			PSObject Listen_Https_Port,
 			PSObject Listen_Http_Port,
 			PSObject Locations,
 			byte Naxsi_Extensive_Log,
+			PSObject Rewrites,
 			string Root,
 			byte Sendfile,
 			Object Servername,
@@ -112,11 +118,13 @@ namespace OPNsense.Nginx {
 			ca = Ca;
 			certificate = Certificate;
 			charset = Charset;
+			enable_acme_support = (Enable_Acme_Support == 0) ? false : true;
 			https_only = (Https_Only == 0) ? false : true;
 			listen_https_port = Listen_Https_Port;
 			listen_http_port = Listen_Http_Port;
 			locations = Locations;
 			naxsi_extensive_log = (Naxsi_Extensive_Log == 0) ? false : true;
+			rewrites = Rewrites;
 			root = Root;
 			sendfile = (Sendfile == 0) ? false : true;
 			servername = Servername;
@@ -127,6 +135,7 @@ namespace OPNsense.Nginx {
 namespace OPNsense.Nginx {
 	public class Location {
 		#region Parameters
+		public bool advanced_acl { get; set; }
 		public string authbasic { get; set; }
 		public PSObject authbasicuserfile { get; set; }
 		public bool autoindex { get; set; }
@@ -137,6 +146,7 @@ namespace OPNsense.Nginx {
 		public string force_https { get; set; }
 		public Object index { get; set; }
 		public PSObject matchtype { get; set; }
+		public PSObject rewrites { get; set; }
 		public string root { get; set; }
 		public int sqli_block_score { get; set; }
 		public PSObject upstream { get; set; }
@@ -145,6 +155,7 @@ namespace OPNsense.Nginx {
 		#endregion Parameters
 
 		public Location () {
+			advanced_acl = true;
 			authbasic = null;
 			authbasicuserfile = null;
 			autoindex = false;
@@ -155,6 +166,7 @@ namespace OPNsense.Nginx {
 			force_https = null;
 			index = null;
 			matchtype = null;
+			rewrites = null;
 			root = null;
 			sqli_block_score = 0;
 			upstream = null;
@@ -163,6 +175,7 @@ namespace OPNsense.Nginx {
 		}
 
 		public Location (
+			byte Advanced_Acl,
 			string Authbasic,
 			PSObject Authbasicuserfile,
 			byte Autoindex,
@@ -173,12 +186,14 @@ namespace OPNsense.Nginx {
 			string Force_Https,
 			Object Index,
 			PSObject Matchtype,
+			PSObject Rewrites,
 			string Root,
 			int Sqli_Block_Score,
 			PSObject Upstream,
 			string Urlpattern,
 			int Xss_Block_Score
 		) {
+			advanced_acl = (Advanced_Acl == 0) ? false : true;
 			authbasic = Authbasic;
 			authbasicuserfile = Authbasicuserfile;
 			autoindex = (Autoindex == 0) ? false : true;
@@ -189,6 +204,7 @@ namespace OPNsense.Nginx {
 			force_https = Force_Https;
 			index = Index;
 			matchtype = Matchtype;
+			rewrites = Rewrites;
 			root = Root;
 			sqli_block_score = Sqli_Block_Score;
 			upstream = Upstream;
@@ -291,19 +307,55 @@ namespace OPNsense.Nginx {
 		#region Parameters
 		public string description { get; set; }
 		public PSObject serverentries { get; set; }
+		public bool store { get; set; }
+		public PSObject tls_client_certificate { get; set; }
+		public bool tls_enable { get; set; }
+		public string tls_name_override { get; set; }
+		public PSObject tls_protocol_versions { get; set; }
+		public bool tls_session_reuse { get; set; }
+		public PSObject tls_trusted_certificate { get; set; }
+		public bool tls_verify { get; set; }
+		public uint tls_verify_depth { get; set; }
 		#endregion Parameters
 
 		public Upstream () {
 			description = null;
 			serverentries = null;
+			store = true;
+			tls_client_certificate = null;
+			tls_enable = true;
+			tls_name_override = null;
+			tls_protocol_versions = null;
+			tls_session_reuse = true;
+			tls_trusted_certificate = null;
+			tls_verify = true;
+			tls_verify_depth = 1;
 		}
 
 		public Upstream (
 			string Description,
-			PSObject Serverentries
+			PSObject Serverentries,
+			byte Store,
+			PSObject Tls_Client_Certificate,
+			byte Tls_Enable,
+			string Tls_Name_Override,
+			PSObject Tls_Protocol_Versions,
+			byte Tls_Session_Reuse,
+			PSObject Tls_Trusted_Certificate,
+			byte Tls_Verify,
+			uint Tls_Verify_Depth
 		) {
 			description = Description;
 			serverentries = Serverentries;
+			store = (Store == 0) ? false : true;
+			tls_client_certificate = Tls_Client_Certificate;
+			tls_enable = (Tls_Enable == 0) ? false : true;
+			tls_name_override = Tls_Name_Override;
+			tls_protocol_versions = Tls_Protocol_Versions;
+			tls_session_reuse = (Tls_Session_Reuse == 0) ? false : true;
+			tls_trusted_certificate = Tls_Trusted_Certificate;
+			tls_verify = (Tls_Verify == 0) ? false : true;
+			tls_verify_depth = Tls_Verify_Depth;
 		}
 	}
 }

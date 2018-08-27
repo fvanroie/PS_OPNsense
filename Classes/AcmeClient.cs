@@ -96,6 +96,7 @@ namespace OPNsense.AcmeClient.certificates {
 		public PSObject keyLength { get; set; }
 		public int lastUpdate { get; set; }
 		public string name { get; set; }
+		public bool ocsp { get; set; }
 		public uint renewInterval { get; set; }
 		public PSObject restartActions { get; set; }
 		public uint statusCode { get; set; }
@@ -114,6 +115,7 @@ namespace OPNsense.AcmeClient.certificates {
 			keyLength = null;
 			lastUpdate = 0;
 			name = null;
+			ocsp = true;
 			renewInterval = 60;
 			restartActions = null;
 			statusCode = 0;
@@ -132,6 +134,7 @@ namespace OPNsense.AcmeClient.certificates {
 			PSObject KeyLength,
 			int LastUpdate,
 			string Name,
+			byte Ocsp,
 			uint RenewInterval,
 			PSObject RestartActions,
 			uint StatusCode,
@@ -148,6 +151,7 @@ namespace OPNsense.AcmeClient.certificates {
 			keyLength = KeyLength;
 			lastUpdate = LastUpdate;
 			name = Name;
+			ocsp = (Ocsp == 0) ? false : true;
 			renewInterval = RenewInterval;
 			restartActions = RestartActions;
 			statusCode = StatusCode;
@@ -163,8 +167,15 @@ namespace OPNsense.AcmeClient.validations {
 		public string dns_ad_key { get; set; }
 		public string dns_ali_key { get; set; }
 		public string dns_ali_secret { get; set; }
+		public string dns_autodns_context { get; set; }
+		public string dns_autodns_password { get; set; }
+		public string dns_autodns_user { get; set; }
 		public string dns_aws_id { get; set; }
 		public string dns_aws_secret { get; set; }
+		public string dns_azuredns_appid { get; set; }
+		public string dns_azuredns_clientsecret { get; set; }
+		public string dns_azuredns_subscriptionid { get; set; }
+		public string dns_azuredns_tenantid { get; set; }
 		public string dns_cf_email { get; set; }
 		public string dns_cf_key { get; set; }
 		public string dns_cloudns_auth_id { get; set; }
@@ -174,7 +185,10 @@ namespace OPNsense.AcmeClient.validations {
 		public string dns_cx_secret { get; set; }
 		public string dns_cyon_password { get; set; }
 		public string dns_cyon_user { get; set; }
+		public bool dns_da_insecure { get; set; }
+		public string dns_da_key { get; set; }
 		public string dns_dgon_key { get; set; }
+		public string dns_dh_key { get; set; }
 		public string dns_dnsimple_token { get; set; }
 		public string dns_do_password { get; set; }
 		public string dns_do_pid { get; set; }
@@ -195,10 +209,16 @@ namespace OPNsense.AcmeClient.validations {
 		public string dns_he_user { get; set; }
 		public string dns_infoblox_credentials { get; set; }
 		public string dns_infoblox_server { get; set; }
+		public string dns_inws_password { get; set; }
+		public string dns_inwx_user { get; set; }
 		public string dns_ispconfig_api { get; set; }
 		public bool dns_ispconfig_insecure { get; set; }
 		public string dns_ispconfig_password { get; set; }
 		public string dns_ispconfig_user { get; set; }
+		public string dns_kinghost_password { get; set; }
+		public string dns_kinghost_username { get; set; }
+		public string dns_knot_key { get; set; }
+		public string dns_knot_server { get; set; }
 		public PSObject dns_lexicon_provider { get; set; }
 		public string dns_lexicon_token { get; set; }
 		public string dns_lexicon_user { get; set; }
@@ -209,6 +229,7 @@ namespace OPNsense.AcmeClient.validations {
 		public string dns_me_secret { get; set; }
 		public string dns_namecom_token { get; set; }
 		public string dns_namecom_user { get; set; }
+		public string dns_namesilo_key { get; set; }
 		public string dns_nsone_key { get; set; }
 		public string dns_nsupdate_key { get; set; }
 		public string dns_nsupdate_server { get; set; }
@@ -219,10 +240,17 @@ namespace OPNsense.AcmeClient.validations {
 		public string dns_pdns_serverid { get; set; }
 		public string dns_pdns_token { get; set; }
 		public string dns_pdns_url { get; set; }
+		public string dns_servercow_password { get; set; }
+		public string dns_servercow_username { get; set; }
 		public PSObject dns_service { get; set; }
 		public uint dns_sleep { get; set; }
+		public string dns_sl_key { get; set; }
+		public string dns_uno_key { get; set; }
+		public string dns_uno_user { get; set; }
 		public string dns_vscale_key { get; set; }
 		public string dns_yandex_token { get; set; }
+		public string dns_zilore_key { get; set; }
+		public string dns_zm_key { get; set; }
 		public bool enabled { get; set; }
 		public PSObject http_haproxyFrontends { get; set; }
 		public bool http_haproxyInject { get; set; }
@@ -240,8 +268,15 @@ namespace OPNsense.AcmeClient.validations {
 			dns_ad_key = null;
 			dns_ali_key = null;
 			dns_ali_secret = null;
+			dns_autodns_context = null;
+			dns_autodns_password = null;
+			dns_autodns_user = null;
 			dns_aws_id = null;
 			dns_aws_secret = null;
+			dns_azuredns_appid = null;
+			dns_azuredns_clientsecret = null;
+			dns_azuredns_subscriptionid = null;
+			dns_azuredns_tenantid = null;
 			dns_cf_email = null;
 			dns_cf_key = null;
 			dns_cloudns_auth_id = null;
@@ -251,7 +286,10 @@ namespace OPNsense.AcmeClient.validations {
 			dns_cx_secret = null;
 			dns_cyon_password = null;
 			dns_cyon_user = null;
+			dns_da_insecure = true;
+			dns_da_key = null;
 			dns_dgon_key = null;
+			dns_dh_key = null;
 			dns_dnsimple_token = null;
 			dns_do_password = null;
 			dns_do_pid = null;
@@ -272,10 +310,16 @@ namespace OPNsense.AcmeClient.validations {
 			dns_he_user = null;
 			dns_infoblox_credentials = null;
 			dns_infoblox_server = null;
+			dns_inws_password = null;
+			dns_inwx_user = null;
 			dns_ispconfig_api = null;
 			dns_ispconfig_insecure = true;
 			dns_ispconfig_password = null;
 			dns_ispconfig_user = null;
+			dns_kinghost_password = null;
+			dns_kinghost_username = null;
+			dns_knot_key = null;
+			dns_knot_server = null;
 			dns_lexicon_provider = null;
 			dns_lexicon_token = null;
 			dns_lexicon_user = null;
@@ -286,6 +330,7 @@ namespace OPNsense.AcmeClient.validations {
 			dns_me_secret = null;
 			dns_namecom_token = null;
 			dns_namecom_user = null;
+			dns_namesilo_key = null;
 			dns_nsone_key = null;
 			dns_nsupdate_key = null;
 			dns_nsupdate_server = null;
@@ -296,10 +341,17 @@ namespace OPNsense.AcmeClient.validations {
 			dns_pdns_serverid = null;
 			dns_pdns_token = null;
 			dns_pdns_url = null;
+			dns_servercow_password = null;
+			dns_servercow_username = null;
 			dns_service = null;
 			dns_sleep = 120;
+			dns_sl_key = null;
+			dns_uno_key = null;
+			dns_uno_user = null;
 			dns_vscale_key = null;
 			dns_yandex_token = null;
+			dns_zilore_key = null;
+			dns_zm_key = null;
 			enabled = true;
 			http_haproxyFrontends = null;
 			http_haproxyInject = true;
@@ -317,8 +369,15 @@ namespace OPNsense.AcmeClient.validations {
 			string Dns_Ad_Key,
 			string Dns_Ali_Key,
 			string Dns_Ali_Secret,
+			string Dns_Autodns_Context,
+			string Dns_Autodns_Password,
+			string Dns_Autodns_User,
 			string Dns_Aws_Id,
 			string Dns_Aws_Secret,
+			string Dns_Azuredns_Appid,
+			string Dns_Azuredns_Clientsecret,
+			string Dns_Azuredns_Subscriptionid,
+			string Dns_Azuredns_Tenantid,
 			string Dns_Cf_Email,
 			string Dns_Cf_Key,
 			string Dns_Cloudns_Auth_Id,
@@ -328,7 +387,10 @@ namespace OPNsense.AcmeClient.validations {
 			string Dns_Cx_Secret,
 			string Dns_Cyon_Password,
 			string Dns_Cyon_User,
+			byte Dns_Da_Insecure,
+			string Dns_Da_Key,
 			string Dns_Dgon_Key,
+			string Dns_Dh_Key,
 			string Dns_Dnsimple_Token,
 			string Dns_Do_Password,
 			string Dns_Do_Pid,
@@ -349,10 +411,16 @@ namespace OPNsense.AcmeClient.validations {
 			string Dns_He_User,
 			string Dns_Infoblox_Credentials,
 			string Dns_Infoblox_Server,
+			string Dns_Inws_Password,
+			string Dns_Inwx_User,
 			string Dns_Ispconfig_Api,
 			byte Dns_Ispconfig_Insecure,
 			string Dns_Ispconfig_Password,
 			string Dns_Ispconfig_User,
+			string Dns_Kinghost_Password,
+			string Dns_Kinghost_Username,
+			string Dns_Knot_Key,
+			string Dns_Knot_Server,
 			PSObject Dns_Lexicon_Provider,
 			string Dns_Lexicon_Token,
 			string Dns_Lexicon_User,
@@ -363,6 +431,7 @@ namespace OPNsense.AcmeClient.validations {
 			string Dns_Me_Secret,
 			string Dns_Namecom_Token,
 			string Dns_Namecom_User,
+			string Dns_Namesilo_Key,
 			string Dns_Nsone_Key,
 			string Dns_Nsupdate_Key,
 			string Dns_Nsupdate_Server,
@@ -373,10 +442,17 @@ namespace OPNsense.AcmeClient.validations {
 			string Dns_Pdns_Serverid,
 			string Dns_Pdns_Token,
 			string Dns_Pdns_Url,
+			string Dns_Servercow_Password,
+			string Dns_Servercow_Username,
 			PSObject Dns_Service,
 			uint Dns_Sleep,
+			string Dns_Sl_Key,
+			string Dns_Uno_Key,
+			string Dns_Uno_User,
 			string Dns_Vscale_Key,
 			string Dns_Yandex_Token,
+			string Dns_Zilore_Key,
+			string Dns_Zm_Key,
 			byte Enabled,
 			PSObject Http_HaproxyFrontends,
 			byte Http_HaproxyInject,
@@ -392,8 +468,15 @@ namespace OPNsense.AcmeClient.validations {
 			dns_ad_key = Dns_Ad_Key;
 			dns_ali_key = Dns_Ali_Key;
 			dns_ali_secret = Dns_Ali_Secret;
+			dns_autodns_context = Dns_Autodns_Context;
+			dns_autodns_password = Dns_Autodns_Password;
+			dns_autodns_user = Dns_Autodns_User;
 			dns_aws_id = Dns_Aws_Id;
 			dns_aws_secret = Dns_Aws_Secret;
+			dns_azuredns_appid = Dns_Azuredns_Appid;
+			dns_azuredns_clientsecret = Dns_Azuredns_Clientsecret;
+			dns_azuredns_subscriptionid = Dns_Azuredns_Subscriptionid;
+			dns_azuredns_tenantid = Dns_Azuredns_Tenantid;
 			dns_cf_email = Dns_Cf_Email;
 			dns_cf_key = Dns_Cf_Key;
 			dns_cloudns_auth_id = Dns_Cloudns_Auth_Id;
@@ -403,7 +486,10 @@ namespace OPNsense.AcmeClient.validations {
 			dns_cx_secret = Dns_Cx_Secret;
 			dns_cyon_password = Dns_Cyon_Password;
 			dns_cyon_user = Dns_Cyon_User;
+			dns_da_insecure = (Dns_Da_Insecure == 0) ? false : true;
+			dns_da_key = Dns_Da_Key;
 			dns_dgon_key = Dns_Dgon_Key;
+			dns_dh_key = Dns_Dh_Key;
 			dns_dnsimple_token = Dns_Dnsimple_Token;
 			dns_do_password = Dns_Do_Password;
 			dns_do_pid = Dns_Do_Pid;
@@ -424,10 +510,16 @@ namespace OPNsense.AcmeClient.validations {
 			dns_he_user = Dns_He_User;
 			dns_infoblox_credentials = Dns_Infoblox_Credentials;
 			dns_infoblox_server = Dns_Infoblox_Server;
+			dns_inws_password = Dns_Inws_Password;
+			dns_inwx_user = Dns_Inwx_User;
 			dns_ispconfig_api = Dns_Ispconfig_Api;
 			dns_ispconfig_insecure = (Dns_Ispconfig_Insecure == 0) ? false : true;
 			dns_ispconfig_password = Dns_Ispconfig_Password;
 			dns_ispconfig_user = Dns_Ispconfig_User;
+			dns_kinghost_password = Dns_Kinghost_Password;
+			dns_kinghost_username = Dns_Kinghost_Username;
+			dns_knot_key = Dns_Knot_Key;
+			dns_knot_server = Dns_Knot_Server;
 			dns_lexicon_provider = Dns_Lexicon_Provider;
 			dns_lexicon_token = Dns_Lexicon_Token;
 			dns_lexicon_user = Dns_Lexicon_User;
@@ -438,6 +530,7 @@ namespace OPNsense.AcmeClient.validations {
 			dns_me_secret = Dns_Me_Secret;
 			dns_namecom_token = Dns_Namecom_Token;
 			dns_namecom_user = Dns_Namecom_User;
+			dns_namesilo_key = Dns_Namesilo_Key;
 			dns_nsone_key = Dns_Nsone_Key;
 			dns_nsupdate_key = Dns_Nsupdate_Key;
 			dns_nsupdate_server = Dns_Nsupdate_Server;
@@ -448,10 +541,17 @@ namespace OPNsense.AcmeClient.validations {
 			dns_pdns_serverid = Dns_Pdns_Serverid;
 			dns_pdns_token = Dns_Pdns_Token;
 			dns_pdns_url = Dns_Pdns_Url;
+			dns_servercow_password = Dns_Servercow_Password;
+			dns_servercow_username = Dns_Servercow_Username;
 			dns_service = Dns_Service;
 			dns_sleep = Dns_Sleep;
+			dns_sl_key = Dns_Sl_Key;
+			dns_uno_key = Dns_Uno_Key;
+			dns_uno_user = Dns_Uno_User;
 			dns_vscale_key = Dns_Vscale_Key;
 			dns_yandex_token = Dns_Yandex_Token;
+			dns_zilore_key = Dns_Zilore_Key;
+			dns_zm_key = Dns_Zm_Key;
 			enabled = (Enabled == 0) ? false : true;
 			http_haproxyFrontends = Http_HaproxyFrontends;
 			http_haproxyInject = (Http_HaproxyInject == 0) ? false : true;
