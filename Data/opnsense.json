@@ -1,7 +1,7 @@
 ﻿{
     "openapi": "3.0.1",
     "info": {
-        "version": "0.0.1",
+        "version": "0.0.2",
         "title": "OPNsense REST API",
         "description": "This file describes the endpoints of the OPNsense REST API.",
         "termsOfService": "https://opnsense.org/about/legal-notices/",
@@ -3756,10 +3756,8 @@
                             "application/json": {
                                 "schema": {
                                     "properties": {
-                                        "monit": {
-                                            "alert": {
-                                                "$ref": "#/components/schemas/OPNsense.monit.alert"
-                                            }
+                                        "System.Object[]": {
+                                            "$ref": "#/components/schemas/OPNsense.monit.alert"
                                         }
                                     }
                                 }
@@ -3781,10 +3779,8 @@
                         "application/json": {
                             "schema": {
                                 "properties": {
-                                    "monit": {
-                                        "alert": {
-                                            "$ref": "#/components/schemas/OPNsense.monit.alert"
-                                        }
+                                    "alert": {
+                                        "$ref": "#/components/schemas/OPNsense.monit.alert"
                                     }
                                 }
                             }
@@ -3945,10 +3941,8 @@
                             "application/json": {
                                 "schema": {
                                     "properties": {
-                                        "monit": {
-                                            "service": {
-                                                "$ref": "#/components/schemas/OPNsense.monit.service"
-                                            }
+                                        "System.Object[]": {
+                                            "$ref": "#/components/schemas/OPNsense.monit.service"
                                         }
                                     }
                                 }
@@ -3970,10 +3964,8 @@
                         "application/json": {
                             "schema": {
                                 "properties": {
-                                    "monit": {
-                                        "service": {
-                                            "$ref": "#/components/schemas/OPNsense.monit.service"
-                                        }
+                                    "service": {
+                                        "$ref": "#/components/schemas/OPNsense.monit.service"
                                     }
                                 }
                             }
@@ -4134,10 +4126,8 @@
                             "application/json": {
                                 "schema": {
                                     "properties": {
-                                        "monit": {
-                                            "test": {
-                                                "$ref": "#/components/schemas/OPNsense.monit.test"
-                                            }
+                                        "System.Object[]": {
+                                            "$ref": "#/components/schemas/OPNsense.monit.test"
                                         }
                                     }
                                 }
@@ -4159,10 +4149,8 @@
                         "application/json": {
                             "schema": {
                                 "properties": {
-                                    "monit": {
-                                        "test": {
-                                            "$ref": "#/components/schemas/OPNsense.monit.test"
-                                        }
+                                    "test": {
+                                        "$ref": "#/components/schemas/OPNsense.monit.test"
                                     }
                                 }
                             }
@@ -7599,6 +7587,611 @@
                 ]
             }
         },
+        "/relayd/settings/search/host/": {
+            "post": {
+                "operationId": "searchRelaydHost",
+                "summary": "Search a Host",
+                "tags": [
+                    "Relayd"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
+        "/relayd/settings/get/host/{uuid}": {
+            "get": {
+                "operationId": "getRelaydHost",
+                "summary": "Returns a Host",
+                "tags": [
+                    "Relayd"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "host": {
+                                            "$ref": "#/components/schemas/relayd.host"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/relayd/settings/set/host/{uuid}": {
+            "post": {
+                "operationId": "setRelaydHost",
+                "summary": "Updates a Host",
+                "tags": [
+                    "Relayd"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "host": {
+                                        "$ref": "#/components/schemas/relayd.host"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/relayd/settings/del/host/{uuid}": {
+            "post": {
+                "operationId": "deleteRelaydHost",
+                "summary": "Removes a Host",
+                "tags": [
+                    "Relayd"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/relayd/settings/search/protocol/": {
+            "post": {
+                "operationId": "searchRelaydProtocol",
+                "summary": "Search a Protocol",
+                "tags": [
+                    "Relayd"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
+        "/relayd/settings/get/protocol/{uuid}": {
+            "get": {
+                "operationId": "getRelaydProtocol",
+                "summary": "Returns a Protocol",
+                "tags": [
+                    "Relayd"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "protocol": {
+                                            "$ref": "#/components/schemas/relayd.protocol"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/relayd/settings/set/protocol/{uuid}": {
+            "post": {
+                "operationId": "setRelaydProtocol",
+                "summary": "Updates a Protocol",
+                "tags": [
+                    "Relayd"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "protocol": {
+                                        "$ref": "#/components/schemas/relayd.protocol"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/relayd/settings/del/protocol/{uuid}": {
+            "post": {
+                "operationId": "deleteRelaydProtocol",
+                "summary": "Removes a Protocol",
+                "tags": [
+                    "Relayd"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/relayd/settings/search/table/": {
+            "post": {
+                "operationId": "searchRelaydTable",
+                "summary": "Search a Table",
+                "tags": [
+                    "Relayd"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
+        "/relayd/settings/get/table/{uuid}": {
+            "get": {
+                "operationId": "getRelaydTable",
+                "summary": "Returns a Table",
+                "tags": [
+                    "Relayd"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "table": {
+                                            "$ref": "#/components/schemas/relayd.table"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/relayd/settings/set/table/{uuid}": {
+            "post": {
+                "operationId": "setRelaydTable",
+                "summary": "Updates a Table",
+                "tags": [
+                    "Relayd"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "table": {
+                                        "$ref": "#/components/schemas/relayd.table"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/relayd/settings/del/table/{uuid}": {
+            "post": {
+                "operationId": "deleteRelaydTable",
+                "summary": "Removes a Table",
+                "tags": [
+                    "Relayd"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/relayd/settings/search/tablecheck/": {
+            "post": {
+                "operationId": "searchRelaydTableCheck",
+                "summary": "Search a TableCheck",
+                "tags": [
+                    "Relayd"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
+        "/relayd/settings/get/tablecheck/{uuid}": {
+            "get": {
+                "operationId": "getRelaydTableCheck",
+                "summary": "Returns a TableCheck",
+                "tags": [
+                    "Relayd"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "tablecheck": {
+                                            "$ref": "#/components/schemas/relayd.tablecheck"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/relayd/settings/set/tablecheck/{uuid}": {
+            "post": {
+                "operationId": "setRelaydTableCheck",
+                "summary": "Updates a TableCheck",
+                "tags": [
+                    "Relayd"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "tablecheck": {
+                                        "$ref": "#/components/schemas/relayd.tablecheck"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/relayd/settings/del/tablecheck/{uuid}": {
+            "post": {
+                "operationId": "deleteRelaydTableCheck",
+                "summary": "Removes a TableCheck",
+                "tags": [
+                    "Relayd"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/relayd/settings/search/virtualserver/": {
+            "post": {
+                "operationId": "searchRelaydVirtualServer",
+                "summary": "Search a VirtualServer",
+                "tags": [
+                    "Relayd"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
+        "/relayd/settings/get/virtualserver/{uuid}": {
+            "get": {
+                "operationId": "getRelaydVirtualServer",
+                "summary": "Returns a VirtualServer",
+                "tags": [
+                    "Relayd"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "virtualserver": {
+                                            "$ref": "#/components/schemas/relayd.virtualserver"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/relayd/settings/set/virtualserver/{uuid}": {
+            "post": {
+                "operationId": "setRelaydVirtualServer",
+                "summary": "Updates a VirtualServer",
+                "tags": [
+                    "Relayd"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "virtualserver": {
+                                        "$ref": "#/components/schemas/relayd.virtualserver"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/relayd/settings/del/virtualserver/{uuid}": {
+            "post": {
+                "operationId": "deleteRelaydVirtualServer",
+                "summary": "Removes a VirtualServer",
+                "tags": [
+                    "Relayd"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/routes/routes/addroute": {
             "description": "Route",
             "summary": "Create Routes Route items",
@@ -10166,7 +10759,1642 @@
                     }
                 ]
             }
-        }
+        },
+        "/acmeclient/service/{action}": {
+            "post": {
+                "operationId": "do-AcmeClient-Service",
+                "summary": "Perform an action on the AcmeClient service",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "action",
+                        "description": "The action to perform on the AcmeClient service.",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "status",
+                                "start",
+                                "stop",
+                                "restart",
+                                "reconfigure",
+                                "configtest"
+                            ]
+                        }
+                    }
+                ],
+                "tags": [
+                    "AcmeClient"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/arpscanner/service/{action}": {
+            "post": {
+                "operationId": "do-ARPScanner-Service",
+                "summary": "Perform an action on the ARPScanner service",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "action",
+                        "description": "The action to perform on the ARPScanner service.",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "status",
+                                "start",
+                                "stop",
+                                "check"
+                            ]
+                        }
+                    }
+                ],
+                "tags": [
+                    "ARPScanner"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/captiveportal/service/{action}": {
+            "post": {
+                "operationId": "do-CaptivePortal-Service",
+                "summary": "Perform an action on the CaptivePortal service",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "action",
+                        "description": "The action to perform on the CaptivePortal service.",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "reconfigure"
+                            ]
+                        }
+                    }
+                ],
+                "tags": [
+                    "CaptivePortal"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/cicap/service/{action}": {
+            "post": {
+                "operationId": "do-C-ICAP-Service",
+                "summary": "Perform an action on the C-ICAP service",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "action",
+                        "description": "The action to perform on the C-ICAP service.",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "status",
+                                "start",
+                                "stop",
+                                "restart",
+                                "reconfigure"
+                            ]
+                        }
+                    }
+                ],
+                "tags": [
+                    "C-ICAP"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/clamav/service/{action}": {
+            "post": {
+                "operationId": "do-ClamAV-Service",
+                "summary": "Perform an action on the ClamAV service",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "action",
+                        "description": "The action to perform on the ClamAV service.",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "status",
+                                "start",
+                                "stop",
+                                "restart",
+                                "reconfigure"
+                            ]
+                        }
+                    }
+                ],
+                "tags": [
+                    "ClamAV"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/collectd/service/{action}": {
+            "post": {
+                "operationId": "do-Collectd-Service",
+                "summary": "Perform an action on the Collectd service",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "action",
+                        "description": "The action to perform on the Collectd service.",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "status",
+                                "start",
+                                "stop",
+                                "restart",
+                                "reconfigure"
+                            ]
+                        }
+                    }
+                ],
+                "tags": [
+                    "Collectd"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/cron/service/{action}": {
+            "post": {
+                "operationId": "do-Cron-Service",
+                "summary": "Perform an action on the Cron service",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "action",
+                        "description": "The action to perform on the Cron service.",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "reconfigure"
+                            ]
+                        }
+                    }
+                ],
+                "tags": [
+                    "Cron"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/freeradius/service/{action}": {
+            "post": {
+                "operationId": "do-FreeRadius-Service",
+                "summary": "Perform an action on the FreeRadius service",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "action",
+                        "description": "The action to perform on the FreeRadius service.",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "status",
+                                "start",
+                                "stop",
+                                "restart",
+                                "reconfigure"
+                            ]
+                        }
+                    }
+                ],
+                "tags": [
+                    "FreeRadius"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/ftpproxy/service/{action}": {
+            "post": {
+                "operationId": "do-FTPProxy-Service",
+                "summary": "Perform an action on the FTPProxy service",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "action",
+                        "description": "The action to perform on the FTPProxy service.",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "status",
+                                "start",
+                                "stop",
+                                "restart",
+                                "reload"
+                            ]
+                        }
+                    }
+                ],
+                "tags": [
+                    "FTPProxy"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/haproxy/service/{action}": {
+            "post": {
+                "operationId": "do-HAProxy-Service",
+                "summary": "Perform an action on the HAProxy service",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "action",
+                        "description": "The action to perform on the HAProxy service.",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "status",
+                                "start",
+                                "stop",
+                                "restart",
+                                "reconfigure",
+                                "configtest"
+                            ]
+                        }
+                    }
+                ],
+                "tags": [
+                    "HAProxy"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/helloworld/service/{action}": {
+            "post": {
+                "operationId": "do-HelloWorld-Service",
+                "summary": "Perform an action on the HelloWorld service",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "action",
+                        "description": "The action to perform on the HelloWorld service.",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "reload",
+                                "test"
+                            ]
+                        }
+                    }
+                ],
+                "tags": [
+                    "HelloWorld"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/ids/service/{action}": {
+            "post": {
+                "operationId": "do-IDS-Service",
+                "summary": "Perform an action on the IDS service",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "action",
+                        "description": "The action to perform on the IDS service.",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "status",
+                                "start",
+                                "stop",
+                                "restart",
+                                "reconfigure"
+                            ]
+                        }
+                    }
+                ],
+                "tags": [
+                    "IDS"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/iperf/service/{action}": {
+            "post": {
+                "operationId": "do-IPerf-Service",
+                "summary": "Perform an action on the IPerf service",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "action",
+                        "description": "The action to perform on the IPerf service.",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "status",
+                                "start",
+                                "stop",
+                                "restart",
+                                "reconfigure"
+                            ]
+                        }
+                    }
+                ],
+                "tags": [
+                    "IPerf"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/lldpd/service/{action}": {
+            "post": {
+                "operationId": "do-LLDPd-Service",
+                "summary": "Perform an action on the LLDPd service",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "action",
+                        "description": "The action to perform on the LLDPd service.",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "status",
+                                "start",
+                                "stop",
+                                "restart",
+                                "reconfigure"
+                            ]
+                        }
+                    }
+                ],
+                "tags": [
+                    "LLDPd"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/mdnsrepeater/service/{action}": {
+            "post": {
+                "operationId": "do-MdnsRepeater-Service",
+                "summary": "Perform an action on the MdnsRepeater service",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "action",
+                        "description": "The action to perform on the MdnsRepeater service.",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "status",
+                                "start",
+                                "stop",
+                                "restart"
+                            ]
+                        }
+                    }
+                ],
+                "tags": [
+                    "MdnsRepeater"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/monit/service/{action}": {
+            "post": {
+                "operationId": "do-Monit-Service",
+                "summary": "Perform an action on the Monit service",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "action",
+                        "description": "The action to perform on the Monit service.",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "status",
+                                "start",
+                                "stop",
+                                "restart",
+                                "reconfigure",
+                                "configtest"
+                            ]
+                        }
+                    }
+                ],
+                "tags": [
+                    "Monit"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/nodeexporter/service/{action}": {
+            "post": {
+                "operationId": "do-NodeExporter-Service",
+                "summary": "Perform an action on the NodeExporter service",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "action",
+                        "description": "The action to perform on the NodeExporter service.",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "status",
+                                "start",
+                                "stop",
+                                "restart",
+                                "reconfigure"
+                            ]
+                        }
+                    }
+                ],
+                "tags": [
+                    "NodeExporter"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/nut/service/{action}": {
+            "post": {
+                "operationId": "do-Nut-Service",
+                "summary": "Perform an action on the Nut service",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "action",
+                        "description": "The action to perform on the Nut service.",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "reconfigure"
+                            ]
+                        }
+                    }
+                ],
+                "tags": [
+                    "Nut"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/openconnect/service/{action}": {
+            "post": {
+                "operationId": "do-OpenConnect-Service",
+                "summary": "Perform an action on the OpenConnect service",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "action",
+                        "description": "The action to perform on the OpenConnect service.",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "status",
+                                "start",
+                                "stop",
+                                "restart",
+                                "reconfigure"
+                            ]
+                        }
+                    }
+                ],
+                "tags": [
+                    "OpenConnect"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/postfix/service/{action}": {
+            "post": {
+                "operationId": "do-Postfix-Service",
+                "summary": "Perform an action on the Postfix service",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "action",
+                        "description": "The action to perform on the Postfix service.",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "status",
+                                "start",
+                                "stop",
+                                "restart",
+                                "reconfigure"
+                            ]
+                        }
+                    }
+                ],
+                "tags": [
+                    "Postfix"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/proxy/service/{action}": {
+            "post": {
+                "operationId": "do-Proxy-Service",
+                "summary": "Perform an action on the Proxy service",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "action",
+                        "description": "The action to perform on the Proxy service.",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "status",
+                                "start",
+                                "stop",
+                                "restart",
+                                "reconfigure"
+                            ]
+                        }
+                    }
+                ],
+                "tags": [
+                    "Proxy"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/quagga/service/{action}": {
+            "post": {
+                "operationId": "do-Quagga-Service",
+                "summary": "Perform an action on the Quagga service",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "action",
+                        "description": "The action to perform on the Quagga service.",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "status",
+                                "start",
+                                "stop",
+                                "restart",
+                                "reconfigure"
+                            ]
+                        }
+                    }
+                ],
+                "tags": [
+                    "Quagga"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/redis/service/{action}": {
+            "post": {
+                "operationId": "do-Redis-Service",
+                "summary": "Perform an action on the Redis service",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "action",
+                        "description": "The action to perform on the Redis service.",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "status",
+                                "start",
+                                "stop",
+                                "restart",
+                                "reconfigure"
+                            ]
+                        }
+                    }
+                ],
+                "tags": [
+                    "Redis"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/relayd/service/{action}": {
+            "post": {
+                "operationId": "do-Relayd-Service",
+                "summary": "Perform an action on the Relayd service",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "action",
+                        "description": "The action to perform on the Relayd service.",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "status",
+                                "start",
+                                "stop",
+                                "restart",
+                                "reconfigure",
+                                "configtest"
+                            ]
+                        }
+                    }
+                ],
+                "tags": [
+                    "Relayd"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/routes/routes/{action}": {
+            "post": {
+                "operationId": "do-Routes-Service",
+                "summary": "Perform an action on the Routes service",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "action",
+                        "description": "The action to perform on the Routes service.",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "reconfigure"
+                            ]
+                        }
+                    }
+                ],
+                "tags": [
+                    "Routes"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/rspamd/service/{action}": {
+            "post": {
+                "operationId": "do-Rspamd-Service",
+                "summary": "Perform an action on the Rspamd service",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "action",
+                        "description": "The action to perform on the Rspamd service.",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "status",
+                                "start",
+                                "stop",
+                                "restart",
+                                "reconfigure"
+                            ]
+                        }
+                    }
+                ],
+                "tags": [
+                    "Rspamd"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/shadowsocks/service/{action}": {
+            "post": {
+                "operationId": "do-Shadowsocks-Service",
+                "summary": "Perform an action on the Shadowsocks service",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "action",
+                        "description": "The action to perform on the Shadowsocks service.",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "status",
+                                "start",
+                                "stop",
+                                "restart",
+                                "reconfigure"
+                            ]
+                        }
+                    }
+                ],
+                "tags": [
+                    "Shadowsocks"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/siproxd/service/{action}": {
+            "post": {
+                "operationId": "do-Siproxd-Service",
+                "summary": "Perform an action on the Siproxd service",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "action",
+                        "description": "The action to perform on the Siproxd service.",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "status",
+                                "start",
+                                "stop",
+                                "restart",
+                                "reconfigure"
+                            ]
+                        }
+                    }
+                ],
+                "tags": [
+                    "Siproxd"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/telegraf/service/{action}": {
+            "post": {
+                "operationId": "do-Telegraf-Service",
+                "summary": "Perform an action on the Telegraf service",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "action",
+                        "description": "The action to perform on the Telegraf service.",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "status",
+                                "start",
+                                "stop",
+                                "restart",
+                                "reconfigure"
+                            ]
+                        }
+                    }
+                ],
+                "tags": [
+                    "Telegraf"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/tinc/service/{action}": {
+            "post": {
+                "operationId": "do-Tinc-Service",
+                "summary": "Perform an action on the Tinc service",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "action",
+                        "description": "The action to perform on the Tinc service.",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "start",
+                                "stop",
+                                "restart",
+                                "reconfigure"
+                            ]
+                        }
+                    }
+                ],
+                "tags": [
+                    "Tinc"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/tor/service/{action}": {
+            "post": {
+                "operationId": "do-Tor-Service",
+                "summary": "Perform an action on the Tor service",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "action",
+                        "description": "The action to perform on the Tor service.",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "status",
+                                "start",
+                                "stop",
+                                "restart",
+                                "reconfigure"
+                            ]
+                        }
+                    }
+                ],
+                "tags": [
+                    "Tor"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "///{action}": {
+            "post": {
+                "operationId": "do-TrafficShaper-Service",
+                "summary": "Perform an action on the TrafficShaper service",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "action",
+                        "description": "The action to perform on the TrafficShaper service.",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "reconfigure",
+                                null
+                            ]
+                        }
+                    }
+                ],
+                "tags": [
+                    "TrafficShaper"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/zabbixagent/service/{action}": {
+            "post": {
+                "operationId": "do-ZabbixAgent-Service",
+                "summary": "Perform an action on the ZabbixAgent service",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "action",
+                        "description": "The action to perform on the ZabbixAgent service.",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "status",
+                                "start",
+                                "stop",
+                                "restart",
+                                "reconfigure"
+                            ]
+                        }
+                    }
+                ],
+                "tags": [
+                    "ZabbixAgent"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/zabbixproxy/service/{action}": {
+            "post": {
+                "operationId": "do-ZabbixProxy-Service",
+                "summary": "Perform an action on the ZabbixProxy service",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "action",
+                        "description": "The action to perform on the ZabbixProxy service.",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "status",
+                                "start",
+                                "stop",
+                                "restart",
+                                "reconfigure"
+                            ]
+                        }
+                    }
+                ],
+                "tags": [
+                    "ZabbixProxy"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/zerotier/settings/{action}": {
+            "post": {
+                "operationId": "do-Zerotier-Service",
+                "summary": "Perform an action on the Zerotier service",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "action",
+                        "description": "The action to perform on the Zerotier service.",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "status"
+                            ]
+                        }
+                    }
+                ],
+                "tags": [
+                    "Zerotier"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/acmeclient/settings/get": {},
+        "/acmeclient/settings/set": {},
+        "/arpscanner/settings/get": {},
+        "/arpscanner/settings/set": {},
+        "/cicap/general/get": {},
+        "/cicap/general/set": {},
+        "/cicap/antivirus/get": {},
+        "/cicap/antivirus/set": {},
+        "/clamav/general/get": {},
+        "/clamav/general/set": {},
+        "/collectd/general/get": {},
+        "/collectd/general/set": {},
+        "/freeradius/general/get": {},
+        "/freeradius/general/set": {},
+        "/freeradius/eap/get": {},
+        "/freeradius/eap/set": {},
+        "/freeradius/ldap/get": {},
+        "/freeradius/ldap/set": {},
+        "/haproxy/settings/get": {},
+        "/haproxy/settings/set": {},
+        "/helloworld/settings/get": {},
+        "/helloworld/settings/set": {},
+        "/ids/settings/get": {},
+        "/ids/settings/set": {},
+        "/iperf/instance/get": {},
+        "/iperf/instance/set": {},
+        "/lldpd/general/get": {},
+        "/lldpd/general/set": {},
+        "/mdnsrepeater/settings/get": {},
+        "/mdnsrepeater/settings/set": {},
+        "/monit/settings/get": {},
+        "/monit/settings/set": {},
+        "/diagnostics/netflow/get": {},
+        "/diagnostics/netflow/set": {},
+        "/nodeexporter/general/get": {},
+        "/nodeexporter/general/set": {},
+        "/nut/settings/get": {},
+        "/nut/settings/set": {},
+        "/openconnect/general/get": {},
+        "/openconnect/general/set": {},
+        "/postfix/general/get": {},
+        "/postfix/general/set": {},
+        "/postfix/antispam/get": {},
+        "/postfix/antispam/set": {},
+        "/proxy/settings/get": {},
+        "/proxy/settings/set": {},
+        "/proxysso/settings/get": {},
+        "/proxysso/settings/set": {},
+        "/quagga/general/get": {},
+        "/quagga/general/set": {},
+        "/quagga/rip/get": {},
+        "/quagga/rip/set": {},
+        "/quagga/ospfsettings/get": {},
+        "/quagga/ospfsettings/set": {},
+        "/quagga/ospf6settings/get": {},
+        "/quagga/ospf6settings/set": {},
+        "/quagga/bgp/get": {},
+        "/quagga/bgp/set": {},
+        "/redis/settings/get": {},
+        "/redis/settings/set": {},
+        "/relayd/settings/get": {},
+        "/rspamd/settings/get": {},
+        "/rspamd/settings/set": {},
+        "/shadowsocks/general/get": {},
+        "/shadowsocks/general/set": {},
+        "/shadowsocks/local/get": {},
+        "/shadowsocks/local/set": {},
+        "/siproxd/general/get": {},
+        "/siproxd/general/set": {},
+        "/telegraf/general/get": {},
+        "/telegraf/general/set": {},
+        "/telegraf/input/get": {},
+        "/telegraf/input/set": {},
+        "/telegraf/output/get": {},
+        "/telegraf/output/set": {},
+        "/tor/general/get": {},
+        "/tor/general/set": {},
+        "/tor/relay/get": {},
+        "/tor/relay/set": {},
+        "/zabbixagent/settings/get": {},
+        "/zabbixagent/settings/set": {},
+        "/zabbixproxy/general/get": {},
+        "/zabbixproxy/general/set": {},
+        "/zerotier/settings/get": {},
+        "/zerotier/settings/set": {}
     },
     "components": {
         "parameters": {
@@ -10377,6 +12605,9 @@
                         "type": "string",
                         "pattern": "/^[^\\s^\\t^,^;^\\\\^\\/^(^)^\\[^\\]]{1,255}$/u"
                     },
+                    "ocsp": {
+                        "type": "boolean"
+                    },
                     "renewInterval": {
                         "type": "integer",
                         "minimum": 1,
@@ -10412,6 +12643,9 @@
                     },
                     {
                         "enabled": true
+                    },
+                    {
+                        "ocsp": true
                     },
                     {
                         "renewInterval": 60
@@ -10504,10 +12738,31 @@
                     "dns_ali_secret": {
                         "type": "string"
                     },
+                    "dns_autodns_context": {
+                        "type": "string"
+                    },
+                    "dns_autodns_password": {
+                        "type": "string"
+                    },
+                    "dns_autodns_user": {
+                        "type": "string"
+                    },
                     "dns_aws_id": {
                         "type": "string"
                     },
                     "dns_aws_secret": {
+                        "type": "string"
+                    },
+                    "dns_azuredns_appid": {
+                        "type": "string"
+                    },
+                    "dns_azuredns_clientsecret": {
+                        "type": "string"
+                    },
+                    "dns_azuredns_subscriptionid": {
+                        "type": "string"
+                    },
+                    "dns_azuredns_tenantid": {
                         "type": "string"
                     },
                     "dns_cf_email": {
@@ -10537,7 +12792,16 @@
                     "dns_cyon_user": {
                         "type": "string"
                     },
+                    "dns_da_insecure": {
+                        "type": "boolean"
+                    },
+                    "dns_da_key": {
+                        "type": "string"
+                    },
                     "dns_dgon_key": {
+                        "type": "string"
+                    },
+                    "dns_dh_key": {
                         "type": "string"
                     },
                     "dns_dnsimple_token": {
@@ -10600,6 +12864,12 @@
                     "dns_infoblox_server": {
                         "type": "string"
                     },
+                    "dns_inws_password": {
+                        "type": "string"
+                    },
+                    "dns_inwx_user": {
+                        "type": "string"
+                    },
                     "dns_ispconfig_api": {
                         "type": "string"
                     },
@@ -10610,6 +12880,18 @@
                         "type": "string"
                     },
                     "dns_ispconfig_user": {
+                        "type": "string"
+                    },
+                    "dns_kinghost_password": {
+                        "type": "string"
+                    },
+                    "dns_kinghost_username": {
+                        "type": "string"
+                    },
+                    "dns_knot_key": {
+                        "type": "string"
+                    },
+                    "dns_knot_server": {
                         "type": "string"
                     },
                     "dns_lexicon_provider": {
@@ -10642,6 +12924,9 @@
                     "dns_namecom_user": {
                         "type": "string"
                     },
+                    "dns_namesilo_key": {
+                        "type": "string"
+                    },
                     "dns_nsone_key": {
                         "type": "string"
                     },
@@ -10672,6 +12957,12 @@
                     "dns_pdns_url": {
                         "type": "string"
                     },
+                    "dns_servercow_password": {
+                        "type": "string"
+                    },
+                    "dns_servercow_username": {
+                        "type": "string"
+                    },
                     "dns_service": {
                         "type": "string"
                     },
@@ -10680,10 +12971,25 @@
                         "minimum": 1,
                         "maximum": 10000
                     },
+                    "dns_sl_key": {
+                        "type": "string"
+                    },
+                    "dns_uno_key": {
+                        "type": "string"
+                    },
+                    "dns_uno_user": {
+                        "type": "string"
+                    },
                     "dns_vscale_key": {
                         "type": "string"
                     },
                     "dns_yandex_token": {
+                        "type": "string"
+                    },
+                    "dns_zilore_key": {
+                        "type": "string"
+                    },
+                    "dns_zm_key": {
                         "type": "string"
                     },
                     "enabled": {
@@ -10728,6 +13034,9 @@
                 ],
                 "default": [
                     {
+                        "dns_da_insecure": true
+                    },
+                    {
                         "dns_ispconfig_insecure": true
                     },
                     {
@@ -10761,6 +13070,70 @@
                 "default": [
                     {
                         "Interface": "lan"
+                    }
+                ]
+            },
+            "OPNsense.bind": {
+                "type": "object",
+                "properties": {
+                    "dnsbl": {
+                        "type": "string"
+                    }
+                }
+            },
+            "OPNsense.bind.general": {
+                "type": "object",
+                "properties": {
+                    "dnssecvalidation": {
+                        "type": "string"
+                    },
+                    "enabled": {
+                        "type": "boolean"
+                    },
+                    "forwarders": {
+                        "type": "string"
+                    },
+                    "listenv4": {
+                        "type": "string"
+                    },
+                    "listenv6": {
+                        "type": "string"
+                    },
+                    "logsize": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 1000
+                    },
+                    "maxcachesize": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 99
+                    },
+                    "port": {
+                        "type": "integer"
+                    },
+                    "recursion": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "dnssecvalidation",
+                    "enabled",
+                    "listenv4",
+                    "listenv6",
+                    "logsize",
+                    "maxcachesize",
+                    "port"
+                ],
+                "default": [
+                    {
+                        "enabled": true
+                    },
+                    {
+                        "logsize": 5
+                    },
+                    {
+                        "maxcachesize": 80
                     }
                 ]
             },
@@ -11456,6 +13829,9 @@
             "OPNSense.Firewall.Alias.aliases.alias": {
                 "type": "object",
                 "properties": {
+                    "content": {
+                        "type": ""
+                    },
                     "description": {
                         "type": "string"
                     },
@@ -11464,12 +13840,18 @@
                     },
                     "name": {
                         "type": ""
+                    },
+                    "proto": {
+                        "type": "string"
+                    },
+                    "type": {
+                        "type": "string"
                     }
                 },
                 "required": [
-                    "description",
                     "enabled",
-                    "name"
+                    "name",
+                    "type"
                 ],
                 "default": [
                     {
@@ -12267,12 +14649,25 @@
                         "type": "string",
                         "pattern": "/^([0-9a-zA-Z._]){1,255}$/u"
                     },
+                    "persistence": {
+                        "type": "string"
+                    },
+                    "persistence_cookiemode": {
+                        "type": "string"
+                    },
+                    "persistence_cookiename": {
+                        "type": "string",
+                        "pattern": "/^([0-9a-zA-Z\\.,_\\-:]){1,1024}$/u"
+                    },
+                    "persistence_stripquotes": {
+                        "type": "boolean"
+                    },
                     "proxyProtocol": {
                         "type": "string"
                     },
                     "source": {
                         "type": "string",
-                        "pattern": "/^((([0-9a-zA-Z._\\-\\*]+:[0-9]+(-[0-9]+)?)([,]){0,1}))*/u"
+                        "pattern": "/^((([0-9a-zA-Z._\\-\\*:]+)))*/u"
                     },
                     "stickiness_bytesInRatePeriod": {
                         "type": "string",
@@ -12351,6 +14746,8 @@
                     "healthCheckEnabled",
                     "mode",
                     "name",
+                    "persistence_cookiemode",
+                    "persistence_stripquotes",
                     "stickiness_expire",
                     "stickiness_size",
                     "tuning_noport"
@@ -12364,6 +14761,12 @@
                     },
                     {
                         "healthCheckLogStatus": true
+                    },
+                    {
+                        "persistence_cookiename": "SRVCOOKIE"
+                    },
+                    {
+                        "persistence_stripquotes": true
                     },
                     {
                         "stickiness_bytesInRatePeriod": "1m"
@@ -13161,6 +15564,9 @@
                         "type": "string",
                         "pattern": "/^.{1,255}$/u"
                     },
+                    "id": {
+                        "type": "string"
+                    },
                     "mode": {
                         "type": "string"
                     },
@@ -13175,7 +15581,7 @@
                     },
                     "source": {
                         "type": "string",
-                        "pattern": "/^((([0-9a-zA-Z._\\-\\*]+:[0-9]+(-[0-9]+)?)([,]){0,1}))*/u"
+                        "pattern": "/^((([0-9a-zA-Z._\\-\\*:]+)))*/u"
                     },
                     "ssl": {
                         "type": "boolean"
@@ -13200,6 +15606,7 @@
                 },
                 "required": [
                     "address",
+                    "id",
                     "mode",
                     "name",
                     "ssl",
@@ -13498,257 +15905,6 @@
                     }
                 ]
             },
-            "OPNsense.monit.alert": {
-                "type": "object",
-                "properties": {
-                    "description": {
-                        "type": "string",
-                        "pattern": "/^.{1,255}$/u"
-                    },
-                    "enabled": {
-                        "type": "boolean"
-                    },
-                    "events": {
-                        "type": "string"
-                    },
-                    "format": {
-                        "type": "string",
-                        "pattern": "/^.{1,255}$/u"
-                    },
-                    "noton": {
-                        "type": "boolean"
-                    },
-                    "recipient": {
-                        "type": "string"
-                    },
-                    "reminder": {
-                        "type": "integer",
-                        "minimum": 0,
-                        "maximum": 86400
-                    }
-                },
-                "required": [
-                    "enabled",
-                    "noton",
-                    "recipient"
-                ],
-                "default": [
-                    {
-                        "enabled": true
-                    },
-                    {
-                        "noton": true
-                    },
-                    {
-                        "recipient": "root@localhost.local"
-                    },
-                    {
-                        "reminder": 10
-                    }
-                ]
-            },
-            "OPNsense.monit.general": {
-                "type": "object",
-                "properties": {
-                    "enabled": {
-                        "type": "boolean"
-                    },
-                    "eventqueuePath": {
-                        "type": "string",
-                        "pattern": "/^(\\/[^\\/ ]*)+\\/?$/"
-                    },
-                    "eventqueueSlots": {
-                        "type": "integer"
-                    },
-                    "httpdAllow": {
-                        "type": "string"
-                    },
-                    "httpdEnabled": {
-                        "type": "boolean"
-                    },
-                    "httpdPassword": {
-                        "type": "string"
-                    },
-                    "httpdPort": {
-                        "type": "integer",
-                        "minimum": 1,
-                        "maximum": 65535
-                    },
-                    "httpdUsername": {
-                        "type": "string"
-                    },
-                    "interval": {
-                        "type": "integer",
-                        "minimum": 0,
-                        "maximum": 86400
-                    },
-                    "logfile": {
-                        "type": "string",
-                        "pattern": "/^(\\/[^\\/ ]*)+\\/?|syslog.*$/"
-                    },
-                    "mailserver": {
-                        "type": "string",
-                        "pattern": "/^([0-9a-zA-Z\\.,_\\-:]){0,1024}$/u"
-                    },
-                    "mmonitRegisterCredentials": {
-                        "type": "boolean"
-                    },
-                    "mmonitTimeout": {
-                        "type": "integer",
-                        "minimum": 0,
-                        "maximum": 86400
-                    },
-                    "mmonitUrl": {
-                        "type": "string"
-                    },
-                    "password": {
-                        "type": "string"
-                    },
-                    "port": {
-                        "type": "integer",
-                        "minimum": 0,
-                        "maximum": 65535
-                    },
-                    "ssl": {
-                        "type": "boolean"
-                    },
-                    "startdelay": {
-                        "type": "integer",
-                        "minimum": 0,
-                        "maximum": 86400
-                    },
-                    "statefile": {
-                        "type": "string",
-                        "pattern": "/^(\\/[^\\/ ]*)+\\/?$/"
-                    },
-                    "username": {
-                        "type": "string"
-                    }
-                },
-                "required": [
-                    "enabled",
-                    "httpdEnabled",
-                    "httpdPort",
-                    "interval",
-                    "mailserver",
-                    "mmonitRegisterCredentials",
-                    "mmonitTimeout",
-                    "port",
-                    "ssl",
-                    "startdelay"
-                ],
-                "default": [
-                    {
-                        "enabled": true
-                    },
-                    {
-                        "httpdEnabled": true
-                    },
-                    {
-                        "httpdPort": 2812
-                    },
-                    {
-                        "interval": 120
-                    },
-                    {
-                        "logfile": "syslog facility log_daemon"
-                    },
-                    {
-                        "mmonitRegisterCredentials": true
-                    },
-                    {
-                        "mmonitTimeout": 5
-                    },
-                    {
-                        "port": 25
-                    },
-                    {
-                        "ssl": true
-                    },
-                    {
-                        "startdelay": 120
-                    }
-                ]
-            },
-            "OPNsense.monit.service": {
-                "type": "object",
-                "properties": {
-                    "address": {
-                        "type": "string",
-                        "pattern": "/^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-4]|2[0-5][0-9]|[01]?[0-9][0-9]?)$/"
-                    },
-                    "enabled": {
-                        "type": "boolean"
-                    },
-                    "Interface": {
-                        "type": "string"
-                    },
-                    "match": {
-                        "type": "string"
-                    },
-                    "name": {
-                        "type": "string",
-                        "pattern": "/^([0-9a-zA-Z\\._\\-\\$]){1,255}$/u"
-                    },
-                    "path": {
-                        "type": "string",
-                        "pattern": "/^(\\/[^\\/ ]*)+\\/?.*$/"
-                    },
-                    "pidfile": {
-                        "type": "string",
-                        "pattern": "/^(\\/[^\\/ ]*)+\\/?$/"
-                    },
-                    "start": {
-                        "type": "string",
-                        "pattern": "/^(\\/[^\\/ ]*)+\\/? .*$/"
-                    },
-                    "stop": {
-                        "type": "string",
-                        "pattern": "/^(\\/[^\\/ ]*)+\\/? .*$/"
-                    },
-                    "tests": {
-                        "type": "string"
-                    },
-                    "type": {
-                        "type": "string"
-                    }
-                },
-                "required": [
-                    "enabled",
-                    "name",
-                    "type"
-                ],
-                "default": [
-                    {
-                        "enabled": true
-                    }
-                ]
-            },
-            "OPNsense.monit.test": {
-                "type": "object",
-                "properties": {
-                    "action": {
-                        "type": "string"
-                    },
-                    "condition": {
-                        "type": "string",
-                        "pattern": "/^.{1,255}$/u"
-                    },
-                    "name": {
-                        "type": "string",
-                        "pattern": "/^([0-9a-zA-Z\\._\\- ]){1,255}$/u"
-                    },
-                    "path": {
-                        "type": "string",
-                        "pattern": "/^(\\/[^\\/ ]*)+\\/?.*$/"
-                    }
-                },
-                "required": [
-                    "action",
-                    "condition",
-                    "name"
-                ]
-            },
             "OPNsense.Netflow.capture": {
                 "type": "object",
                 "properties": {
@@ -13783,6 +15939,65 @@
                 "default": [
                     {
                         "enable": true
+                    }
+                ]
+            },
+            "OPNsense.netsnmp.general": {
+                "type": "object",
+                "properties": {
+                    "community": {
+                        "type": "string"
+                    },
+                    "enabled": {
+                        "type": "boolean"
+                    },
+                    "listen": {
+                        "type": "string"
+                    },
+                    "syscontact": {
+                        "type": "string"
+                    },
+                    "syslocation": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "enabled"
+                ],
+                "default": [
+                    {
+                        "enabled": true
+                    }
+                ]
+            },
+            "OPNsense.netsnmp.user.users.user": {
+                "type": "object",
+                "properties": {
+                    "enabled": {
+                        "type": "boolean"
+                    },
+                    "enckey": {
+                        "type": "string",
+                        "pattern": "/^([0-9a-zA-Z._\\-\\!\\$\\%\\/\\(\\)\\+\\#\\=]){8,64}$/u"
+                    },
+                    "password": {
+                        "type": "string",
+                        "pattern": "/^([0-9a-zA-Z._\\-\\!\\$\\%\\/\\(\\)\\+\\#\\=]){8,64}$/u"
+                    },
+                    "username": {
+                        "type": "string",
+                        "pattern": "/^([0-9a-zA-Z._\\-]){1,64}$/u"
+                    }
+                },
+                "required": [
+                    "enabled",
+                    "enckey",
+                    "password",
+                    "username"
+                ],
+                "default": [
+                    {
+                        "enabled": true
                     }
                 ]
             },
@@ -13866,6 +16081,30 @@
                     }
                 ]
             },
+            "OPNsense.Nginx.http_rewrite": {
+                "type": "object",
+                "properties": {
+                    "description": {
+                        "type": "string",
+                        "pattern": "/^[^\" \\t]+$/i"
+                    },
+                    "destination": {
+                        "type": "string",
+                        "pattern": "/^[^\" \\t]+$/i"
+                    },
+                    "flag": {
+                        "type": "string"
+                    },
+                    "source": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "description",
+                    "destination",
+                    "source"
+                ]
+            },
             "OPNsense.Nginx.http_server": {
                 "type": "object",
                 "properties": {
@@ -13884,6 +16123,9 @@
                     "charset": {
                         "type": "string"
                     },
+                    "enable_acme_support": {
+                        "type": "boolean"
+                    },
                     "https_only": {
                         "type": "boolean"
                     },
@@ -13898,6 +16140,9 @@
                     },
                     "naxsi_extensive_log": {
                         "type": "boolean"
+                    },
+                    "rewrites": {
+                        "type": "string"
                     },
                     "root": {
                         "type": "string"
@@ -13915,6 +16160,7 @@
                 "required": [
                     "access_log_format",
                     "block_nonpublic_data",
+                    "enable_acme_support",
                     "https_only",
                     "naxsi_extensive_log",
                     "sendfile",
@@ -13924,6 +16170,9 @@
                 "default": [
                     {
                         "block_nonpublic_data": true
+                    },
+                    {
+                        "enable_acme_support": true
                     },
                     {
                         "https_only": true
@@ -13939,6 +16188,9 @@
             "OPNsense.Nginx.location": {
                 "type": "object",
                 "properties": {
+                    "advanced_acl": {
+                        "type": "boolean"
+                    },
                     "authbasic": {
                         "type": "string"
                     },
@@ -13969,6 +16221,9 @@
                     "matchtype": {
                         "type": "string"
                     },
+                    "rewrites": {
+                        "type": "string"
+                    },
                     "root": {
                         "type": "string"
                     },
@@ -13986,12 +16241,16 @@
                     }
                 },
                 "required": [
+                    "advanced_acl",
                     "description",
                     "enable_learning_mode",
                     "enable_secrules",
                     "urlpattern"
                 ],
                 "default": [
+                    {
+                        "advanced_acl": true
+                    },
                     {
                         "enable_learning_mode": true
                     },
@@ -14091,11 +16350,60 @@
                     },
                     "serverentries": {
                         "type": "string"
+                    },
+                    "store": {
+                        "type": "boolean"
+                    },
+                    "tls_client_certificate": {
+                        "type": "string"
+                    },
+                    "tls_enable": {
+                        "type": "boolean"
+                    },
+                    "tls_name_override": {
+                        "type": "string"
+                    },
+                    "tls_protocol_versions": {
+                        "type": "string"
+                    },
+                    "tls_session_reuse": {
+                        "type": "boolean"
+                    },
+                    "tls_trusted_certificate": {
+                        "type": "string"
+                    },
+                    "tls_verify": {
+                        "type": "boolean"
+                    },
+                    "tls_verify_depth": {
+                        "type": "integer",
+                        "minimum": 1
                     }
                 },
                 "required": [
                     "description",
-                    "serverentries"
+                    "serverentries",
+                    "store",
+                    "tls_enable",
+                    "tls_session_reuse",
+                    "tls_verify"
+                ],
+                "default": [
+                    {
+                        "store": true
+                    },
+                    {
+                        "tls_enable": true
+                    },
+                    {
+                        "tls_session_reuse": true
+                    },
+                    {
+                        "tls_verify": true
+                    },
+                    {
+                        "tls_verify_depth": 1
+                    }
                 ]
             },
             "OPNsense.Nginx.upstream_server": {
@@ -14147,6 +16455,22 @@
                 "required": [
                     "name",
                     "users"
+                ]
+            },
+            "OPNsense.Nginx.webgui": {
+                "type": "object",
+                "properties": {
+                    "limitnetworks": {
+                        "type": "boolean"
+                    }
+                },
+                "required": [
+                    "limitnetworks"
+                ],
+                "default": [
+                    {
+                        "limitnetworks": true
+                    }
                 ]
             },
             "OPNsense.NodeExporter": {
@@ -14345,12 +16669,19 @@
                     "enabled": {
                         "type": "boolean"
                     },
+                    "hash": {
+                        "type": "string"
+                    },
                     "password": {
                         "type": "string"
                     },
                     "server": {
                         "type": "string",
                         "pattern": "/\\S*/"
+                    },
+                    "servercert": {
+                        "type": "string",
+                        "pattern": "/^[a-z0-9]{40,64}$/"
                     },
                     "user": {
                         "type": "string",
@@ -14359,6 +16690,7 @@
                 },
                 "required": [
                     "enabled",
+                    "hash",
                     "password",
                     "server",
                     "user"
@@ -14425,6 +16757,12 @@
                     "banner": {
                         "type": "string"
                     },
+                    "bind_address": {
+                        "type": "string"
+                    },
+                    "bind_address6": {
+                        "type": "string"
+                    },
                     "ca": {
                         "type": "string"
                     },
@@ -14438,6 +16776,9 @@
                         "type": "boolean"
                     },
                     "enabled": {
+                        "type": "boolean"
+                    },
+                    "enforce_recipient_check": {
                         "type": "boolean"
                     },
                     "inet_interfaces": {
@@ -14506,6 +16847,7 @@
                     "disable_ssl",
                     "disable_weak_ciphers",
                     "enabled",
+                    "enforce_recipient_check",
                     "inet_interfaces",
                     "message_size_limit",
                     "mynetworks",
@@ -14530,6 +16872,9 @@
                     },
                     {
                         "enabled": true
+                    },
+                    {
+                        "enforce_recipient_check": true
                     },
                     {
                         "inet_interfaces": "all"
@@ -14907,8 +17252,6 @@
                     "EncodeUsername",
                     "OptionsTTL",
                     "PreviewSize",
-                    "RequestURL",
-                    "ResponseURL",
                     "SendClientIP",
                     "SendUsername",
                     "UsernameHeader"
@@ -15156,6 +17499,132 @@
                     },
                     {
                         "perHostTrotteling": 256
+                    }
+                ]
+            },
+            "OPNsense.proxy.pac.match": {
+                "type": "object",
+                "properties": {
+                    "date_from": {
+                        "type": "string"
+                    },
+                    "date_to": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "domain_level_from": {
+                        "type": "integer",
+                        "minimum": 0
+                    },
+                    "domain_level_to": {
+                        "type": "integer",
+                        "minimum": 0
+                    },
+                    "hostname": {
+                        "type": "string"
+                    },
+                    "match_type": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "negate": {
+                        "type": "boolean"
+                    },
+                    "network": {
+                        "type": "string"
+                    },
+                    "time_from": {
+                        "type": "integer",
+                        "minimum": 0
+                    },
+                    "time_to": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 23
+                    },
+                    "url": {
+                        "type": "string",
+                        "pattern": "/^[^\"]*$/"
+                    },
+                    "weekday_from": {
+                        "type": "string"
+                    },
+                    "weekday_to": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "date_from",
+                    "date_to",
+                    "match_type",
+                    "name",
+                    "negate",
+                    "weekday_from",
+                    "weekday_to"
+                ],
+                "default": [
+                    {
+                        "negate": true
+                    }
+                ]
+            },
+            "OPNsense.proxy.pac.proxy": {
+                "type": "object",
+                "properties": {
+                    "description": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "proxy_type": {
+                        "type": "string"
+                    },
+                    "url": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "name",
+                    "proxy_type"
+                ]
+            },
+            "OPNsense.proxy.pac.rule": {
+                "type": "object",
+                "properties": {
+                    "description": {
+                        "type": "string"
+                    },
+                    "enabled": {
+                        "type": "boolean"
+                    },
+                    "join_type": {
+                        "type": "string"
+                    },
+                    "matches": {
+                        "type": "string"
+                    },
+                    "match_type": {
+                        "type": "string"
+                    },
+                    "proxies": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "enabled",
+                    "join_type",
+                    "matches",
+                    "match_type",
+                    "proxies"
+                ],
+                "default": [
+                    {
+                        "enabled": true
                     }
                 ]
             },
@@ -16041,6 +18510,9 @@
                         "pattern": "/^([0-9a-zA-Z\\._\\- ]){1,255}$/u"
                     },
                     "protocol": {
+                        "type": "string"
+                    },
+                    "routing_interface": {
                         "type": "string"
                     },
                     "sessiontimeout": {
@@ -18161,6 +20633,17 @@
                     "enabled": {
                         "type": "boolean"
                     },
+                    "encryption": {
+                        "type": "boolean"
+                    },
+                    "encryptionidentity": {
+                        "type": "string",
+                        "pattern": "/^.{1,128}$/"
+                    },
+                    "encryptionpsk": {
+                        "type": "string",
+                        "pattern": "/^[A-Fa-f0-9]{32,512}$/"
+                    },
                     "historycachesize": {
                         "type": "string"
                     },
@@ -18215,6 +20698,7 @@
                 },
                 "required": [
                     "enabled",
+                    "encryption",
                     "hostname",
                     "proxymode"
                 ],
@@ -18224,6 +20708,9 @@
                     },
                     {
                         "enabled": true
+                    },
+                    {
+                        "encryption": true
                     },
                     {
                         "historycachesize": "16M"
@@ -18349,6 +20836,9 @@
                         "type": "boolean"
                     },
                     "password": {
+                        "type": "string"
+                    },
+                    "password_encryption": {
                         "type": "string"
                     },
                     "url": {
