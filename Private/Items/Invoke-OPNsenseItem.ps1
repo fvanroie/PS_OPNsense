@@ -64,8 +64,8 @@ Function Invoke-OPNsenseItem {
     }
     if ($Verb -eq 'set') {
         $body = @{}
-        $body[$Call.Object.toLower()] = $InputObject #| Select-Object -ExcludeProperty 'Uuid'
-        $Splat.Add('Body', $(ConvertTo-JSON $body) )
+        $body[$Call.Object.toLower()] = ConvertTo-OPNsenseItem $InputObject #| Select-Object -ExcludeProperty 'Uuid'
+        $Splat.Add('Body', $body)
     }
 
     $Result = Invoke-OPNsenseOpenApiPath @Splat
