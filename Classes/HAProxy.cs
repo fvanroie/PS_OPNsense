@@ -289,6 +289,8 @@ namespace OPNsense.HAProxy.actions {
 		public uint http_response_set_status_code { get; set; }
 		public string http_response_set_status_reason { get; set; }
 		public PSObject linkedAcls { get; set; }
+		public PSObject map_use_backend_default { get; set; }
+		public PSObject map_use_backend_file { get; set; }
 		public string name { get; set; }
 		public PSObject Operator { get; set; }
 		public string tcp_request_content_lua { get; set; }
@@ -335,6 +337,8 @@ namespace OPNsense.HAProxy.actions {
 			http_response_set_status_code = 0;
 			http_response_set_status_reason = null;
 			linkedAcls = null;
+			map_use_backend_default = null;
+			map_use_backend_file = null;
 			name = null;
 			Operator = null;
 			tcp_request_content_lua = null;
@@ -381,6 +385,8 @@ namespace OPNsense.HAProxy.actions {
 			uint Http_Response_Set_Status_Code,
 			string Http_Response_Set_Status_Reason,
 			PSObject LinkedAcls,
+			PSObject Map_Use_Backend_Default,
+			PSObject Map_Use_Backend_File,
 			string Name,
 			PSObject Operator_,
 			string Tcp_Request_Content_Lua,
@@ -425,6 +431,8 @@ namespace OPNsense.HAProxy.actions {
 			http_response_set_status_code = Http_Response_Set_Status_Code;
 			http_response_set_status_reason = Http_Response_Set_Status_Reason;
 			linkedAcls = LinkedAcls;
+			map_use_backend_default = Map_Use_Backend_Default;
+			map_use_backend_file = Map_Use_Backend_File;
 			name = Name;
 			Operator = Operator_;
 			tcp_request_content_lua = Tcp_Request_Content_Lua;

@@ -71,6 +71,7 @@ namespace OPNsense.Nginx {
 		public bool naxsi_extensive_log { get; set; }
 		public PSObject rewrites { get; set; }
 		public string root { get; set; }
+		public PSObject security_header { get; set; }
 		public bool sendfile { get; set; }
 		public Object servername { get; set; }
 		public PSObject verify_client { get; set; }
@@ -90,6 +91,7 @@ namespace OPNsense.Nginx {
 			naxsi_extensive_log = true;
 			rewrites = null;
 			root = null;
+			security_header = null;
 			sendfile = true;
 			servername = null;
 			verify_client = null;
@@ -109,6 +111,7 @@ namespace OPNsense.Nginx {
 			byte Naxsi_Extensive_Log,
 			PSObject Rewrites,
 			string Root,
+			PSObject Security_Header,
 			byte Sendfile,
 			Object Servername,
 			PSObject Verify_Client
@@ -126,6 +129,7 @@ namespace OPNsense.Nginx {
 			naxsi_extensive_log = (Naxsi_Extensive_Log == 0) ? false : true;
 			rewrites = Rewrites;
 			root = Root;
+			security_header = Security_Header;
 			sendfile = (Sendfile == 0) ? false : true;
 			servername = Servername;
 			verify_client = Verify_Client;
@@ -146,6 +150,8 @@ namespace OPNsense.Nginx {
 		public string force_https { get; set; }
 		public Object index { get; set; }
 		public PSObject matchtype { get; set; }
+		public bool php_enable { get; set; }
+		public string php_override_scriptname { get; set; }
 		public PSObject rewrites { get; set; }
 		public string root { get; set; }
 		public int sqli_block_score { get; set; }
@@ -166,6 +172,8 @@ namespace OPNsense.Nginx {
 			force_https = null;
 			index = null;
 			matchtype = null;
+			php_enable = true;
+			php_override_scriptname = null;
 			rewrites = null;
 			root = null;
 			sqli_block_score = 0;
@@ -186,6 +194,8 @@ namespace OPNsense.Nginx {
 			string Force_Https,
 			Object Index,
 			PSObject Matchtype,
+			byte Php_Enable,
+			string Php_Override_Scriptname,
 			PSObject Rewrites,
 			string Root,
 			int Sqli_Block_Score,
@@ -204,6 +214,8 @@ namespace OPNsense.Nginx {
 			force_https = Force_Https;
 			index = Index;
 			matchtype = Matchtype;
+			php_enable = (Php_Enable == 0) ? false : true;
+			php_override_scriptname = Php_Override_Scriptname;
 			rewrites = Rewrites;
 			root = Root;
 			sqli_block_score = Sqli_Block_Score;
