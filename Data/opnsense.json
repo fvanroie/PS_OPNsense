@@ -13846,6 +13846,9 @@
                     },
                     "type": {
                         "type": "string"
+                    },
+                    "updatefreq": {
+                        "type": "integer"
                     }
                 },
                 "required": [
@@ -13945,6 +13948,9 @@
                     "sessionlimit": {
                         "type": "boolean"
                     },
+                    "sqlite": {
+                        "type": "boolean"
+                    },
                     "vlanassign": {
                         "type": "boolean"
                     },
@@ -13980,6 +13986,9 @@
                     },
                     {
                         "sessionlimit": true
+                    },
+                    {
+                        "sqlite": true
                     },
                     {
                         "vlanassign": true
@@ -14543,6 +14552,12 @@
                     "linkedAcls": {
                         "type": "string"
                     },
+                    "map_use_backend_default": {
+                        "type": "string"
+                    },
+                    "map_use_backend_file": {
+                        "type": "string"
+                    },
                     "name": {
                         "type": "string",
                         "pattern": "/^[^\\t^,^;^\\.^\\[^\\]^\\{^\\}]{1,255}$/u"
@@ -15091,13 +15106,17 @@
                     "gracefulStop": {
                         "type": "boolean"
                     },
+                    "seamlessReload": {
+                        "type": "boolean"
+                    },
                     "showIntro": {
                         "type": "boolean"
                     }
                 },
                 "required": [
                     "enabled",
-                    "gracefulStop"
+                    "gracefulStop",
+                    "seamlessReload"
                 ],
                 "default": [
                     {
@@ -15105,6 +15124,9 @@
                     },
                     {
                         "gracefulStop": true
+                    },
+                    {
+                        "seamlessReload": true
                     },
                     {
                         "showIntro": true
@@ -15535,6 +15557,30 @@
                     {
                         "enabled": true
                     }
+                ]
+            },
+            "OPNsense.HAProxy.mapfiles.mapfile": {
+                "type": "object",
+                "properties": {
+                    "content": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string",
+                        "pattern": "/^.{1,255}$/u"
+                    },
+                    "id": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string",
+                        "pattern": "/^[^\\t^,^;^\\.^\\[^\\]^\\{^\\}]{1,255}$/u"
+                    }
+                },
+                "required": [
+                    "content",
+                    "id",
+                    "name"
                 ]
             },
             "OPNsense.HAProxy.servers.server": {
@@ -16147,6 +16193,9 @@
                     "root": {
                         "type": "string"
                     },
+                    "security_header": {
+                        "type": "string"
+                    },
                     "sendfile": {
                         "type": "boolean"
                     },
@@ -16221,6 +16270,12 @@
                     "matchtype": {
                         "type": "string"
                     },
+                    "php_enable": {
+                        "type": "boolean"
+                    },
+                    "php_override_scriptname": {
+                        "type": "string"
+                    },
                     "rewrites": {
                         "type": "string"
                     },
@@ -16245,6 +16300,7 @@
                     "description",
                     "enable_learning_mode",
                     "enable_secrules",
+                    "php_enable",
                     "urlpattern"
                 ],
                 "default": [
@@ -16256,6 +16312,9 @@
                     },
                     {
                         "enable_secrules": true
+                    },
+                    {
+                        "php_enable": true
                     }
                 ]
             },
@@ -16339,6 +16398,527 @@
                 "default": [
                     {
                         "score": 8
+                    }
+                ]
+            },
+            "OPNsense.Nginx.security_header": {
+                "type": "object",
+                "properties": {
+                    "content_type_options": {
+                        "type": "boolean"
+                    },
+                    "csp_default_src_blob": {
+                        "type": "boolean"
+                    },
+                    "csp_default_src_data_urls": {
+                        "type": "boolean"
+                    },
+                    "csp_default_src_enabled": {
+                        "type": "boolean"
+                    },
+                    "csp_default_src_eval": {
+                        "type": "boolean"
+                    },
+                    "csp_default_src_filesystem": {
+                        "type": "boolean"
+                    },
+                    "csp_default_src_http_urls": {
+                        "type": "string"
+                    },
+                    "csp_default_src_inline": {
+                        "type": "boolean"
+                    },
+                    "csp_default_src_mediastream": {
+                        "type": "boolean"
+                    },
+                    "csp_default_src_none": {
+                        "type": "boolean"
+                    },
+                    "csp_default_src_self": {
+                        "type": "boolean"
+                    },
+                    "csp_font_src_blob": {
+                        "type": "boolean"
+                    },
+                    "csp_font_src_data_urls": {
+                        "type": "boolean"
+                    },
+                    "csp_font_src_enabled": {
+                        "type": "boolean"
+                    },
+                    "csp_font_src_eval": {
+                        "type": "boolean"
+                    },
+                    "csp_font_src_filesystem": {
+                        "type": "boolean"
+                    },
+                    "csp_font_src_http_urls": {
+                        "type": "string"
+                    },
+                    "csp_font_src_inline": {
+                        "type": "boolean"
+                    },
+                    "csp_font_src_mediastream": {
+                        "type": "boolean"
+                    },
+                    "csp_font_src_none": {
+                        "type": "boolean"
+                    },
+                    "csp_font_src_self": {
+                        "type": "boolean"
+                    },
+                    "csp_form_action_blob": {
+                        "type": "boolean"
+                    },
+                    "csp_form_action_data_urls": {
+                        "type": "boolean"
+                    },
+                    "csp_form_action_enabled": {
+                        "type": "boolean"
+                    },
+                    "csp_form_action_eval": {
+                        "type": "boolean"
+                    },
+                    "csp_form_action_filesystem": {
+                        "type": "boolean"
+                    },
+                    "csp_form_action_http_urls": {
+                        "type": "string"
+                    },
+                    "csp_form_action_inline": {
+                        "type": "boolean"
+                    },
+                    "csp_form_action_mediastream": {
+                        "type": "boolean"
+                    },
+                    "csp_form_action_none": {
+                        "type": "boolean"
+                    },
+                    "csp_form_action_self": {
+                        "type": "boolean"
+                    },
+                    "csp_img_src_blob": {
+                        "type": "boolean"
+                    },
+                    "csp_img_src_data_urls": {
+                        "type": "boolean"
+                    },
+                    "csp_img_src_enabled": {
+                        "type": "boolean"
+                    },
+                    "csp_img_src_eval": {
+                        "type": "boolean"
+                    },
+                    "csp_img_src_filesystem": {
+                        "type": "boolean"
+                    },
+                    "csp_img_src_http_urls": {
+                        "type": "string"
+                    },
+                    "csp_img_src_inline": {
+                        "type": "boolean"
+                    },
+                    "csp_img_src_mediastream": {
+                        "type": "boolean"
+                    },
+                    "csp_img_src_none": {
+                        "type": "boolean"
+                    },
+                    "csp_img_src_self": {
+                        "type": "boolean"
+                    },
+                    "csp_media_src_blob": {
+                        "type": "boolean"
+                    },
+                    "csp_media_src_data_urls": {
+                        "type": "boolean"
+                    },
+                    "csp_media_src_enabled": {
+                        "type": "boolean"
+                    },
+                    "csp_media_src_eval": {
+                        "type": "boolean"
+                    },
+                    "csp_media_src_filesystem": {
+                        "type": "boolean"
+                    },
+                    "csp_media_src_http_urls": {
+                        "type": "string"
+                    },
+                    "csp_media_src_inline": {
+                        "type": "boolean"
+                    },
+                    "csp_media_src_mediastream": {
+                        "type": "boolean"
+                    },
+                    "csp_media_src_none": {
+                        "type": "boolean"
+                    },
+                    "csp_media_src_self": {
+                        "type": "boolean"
+                    },
+                    "csp_report_only": {
+                        "type": "boolean"
+                    },
+                    "csp_script_src_blob": {
+                        "type": "boolean"
+                    },
+                    "csp_script_src_data_urls": {
+                        "type": "boolean"
+                    },
+                    "csp_script_src_enabled": {
+                        "type": "boolean"
+                    },
+                    "csp_script_src_eval": {
+                        "type": "boolean"
+                    },
+                    "csp_script_src_filesystem": {
+                        "type": "boolean"
+                    },
+                    "csp_script_src_http_urls": {
+                        "type": "string"
+                    },
+                    "csp_script_src_inline": {
+                        "type": "boolean"
+                    },
+                    "csp_script_src_mediastream": {
+                        "type": "boolean"
+                    },
+                    "csp_script_src_none": {
+                        "type": "boolean"
+                    },
+                    "csp_script_src_self": {
+                        "type": "boolean"
+                    },
+                    "csp_style_src_blob": {
+                        "type": "boolean"
+                    },
+                    "csp_style_src_data_urls": {
+                        "type": "boolean"
+                    },
+                    "csp_style_src_enabled": {
+                        "type": "boolean"
+                    },
+                    "csp_style_src_eval": {
+                        "type": "boolean"
+                    },
+                    "csp_style_src_filesystem": {
+                        "type": "boolean"
+                    },
+                    "csp_style_src_http_urls": {
+                        "type": "string"
+                    },
+                    "csp_style_src_inline": {
+                        "type": "boolean"
+                    },
+                    "csp_style_src_mediastream": {
+                        "type": "boolean"
+                    },
+                    "csp_style_src_none": {
+                        "type": "boolean"
+                    },
+                    "csp_style_src_self": {
+                        "type": "boolean"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "enable_csp": {
+                        "type": "boolean"
+                    },
+                    "hpkp_include_subdomains": {
+                        "type": "boolean"
+                    },
+                    "hpkp_keys": {
+                        "type": "string",
+                        "pattern": "/[a-z0-9\\+\\/=]+(,[a-z0-9\\+\\/=]+)*/i"
+                    },
+                    "hpkp_report_only": {
+                        "type": "boolean"
+                    },
+                    "hpkp_time": {
+                        "type": "integer"
+                    },
+                    "referrer": {
+                        "type": "string"
+                    },
+                    "strict_transport_security_include_subdomains": {
+                        "type": "boolean"
+                    },
+                    "strict_transport_security_time": {
+                        "type": "integer"
+                    },
+                    "xssprotection": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "content_type_options",
+                    "csp_default_src_blob",
+                    "csp_default_src_data_urls",
+                    "csp_default_src_enabled",
+                    "csp_default_src_eval",
+                    "csp_default_src_filesystem",
+                    "csp_default_src_inline",
+                    "csp_default_src_mediastream",
+                    "csp_default_src_none",
+                    "csp_default_src_self",
+                    "csp_font_src_blob",
+                    "csp_font_src_data_urls",
+                    "csp_font_src_enabled",
+                    "csp_font_src_eval",
+                    "csp_font_src_filesystem",
+                    "csp_font_src_inline",
+                    "csp_font_src_mediastream",
+                    "csp_font_src_none",
+                    "csp_font_src_self",
+                    "csp_form_action_blob",
+                    "csp_form_action_data_urls",
+                    "csp_form_action_enabled",
+                    "csp_form_action_eval",
+                    "csp_form_action_filesystem",
+                    "csp_form_action_inline",
+                    "csp_form_action_mediastream",
+                    "csp_form_action_none",
+                    "csp_form_action_self",
+                    "csp_img_src_blob",
+                    "csp_img_src_data_urls",
+                    "csp_img_src_enabled",
+                    "csp_img_src_eval",
+                    "csp_img_src_filesystem",
+                    "csp_img_src_inline",
+                    "csp_img_src_mediastream",
+                    "csp_img_src_none",
+                    "csp_img_src_self",
+                    "csp_media_src_blob",
+                    "csp_media_src_data_urls",
+                    "csp_media_src_enabled",
+                    "csp_media_src_eval",
+                    "csp_media_src_filesystem",
+                    "csp_media_src_inline",
+                    "csp_media_src_mediastream",
+                    "csp_media_src_none",
+                    "csp_media_src_self",
+                    "csp_report_only",
+                    "csp_script_src_blob",
+                    "csp_script_src_data_urls",
+                    "csp_script_src_enabled",
+                    "csp_script_src_eval",
+                    "csp_script_src_filesystem",
+                    "csp_script_src_inline",
+                    "csp_script_src_mediastream",
+                    "csp_script_src_none",
+                    "csp_script_src_self",
+                    "csp_style_src_blob",
+                    "csp_style_src_data_urls",
+                    "csp_style_src_enabled",
+                    "csp_style_src_eval",
+                    "csp_style_src_filesystem",
+                    "csp_style_src_inline",
+                    "csp_style_src_mediastream",
+                    "csp_style_src_none",
+                    "csp_style_src_self",
+                    "description",
+                    "enable_csp",
+                    "hpkp_include_subdomains",
+                    "hpkp_report_only",
+                    "strict_transport_security_include_subdomains"
+                ],
+                "default": [
+                    {
+                        "csp_default_src_blob": true
+                    },
+                    {
+                        "csp_default_src_data_urls": true
+                    },
+                    {
+                        "csp_default_src_enabled": true
+                    },
+                    {
+                        "csp_default_src_eval": true
+                    },
+                    {
+                        "csp_default_src_filesystem": true
+                    },
+                    {
+                        "csp_default_src_inline": true
+                    },
+                    {
+                        "csp_default_src_mediastream": true
+                    },
+                    {
+                        "csp_default_src_none": true
+                    },
+                    {
+                        "csp_default_src_self": true
+                    },
+                    {
+                        "csp_font_src_blob": true
+                    },
+                    {
+                        "csp_font_src_data_urls": true
+                    },
+                    {
+                        "csp_font_src_enabled": true
+                    },
+                    {
+                        "csp_font_src_eval": true
+                    },
+                    {
+                        "csp_font_src_filesystem": true
+                    },
+                    {
+                        "csp_font_src_inline": true
+                    },
+                    {
+                        "csp_font_src_mediastream": true
+                    },
+                    {
+                        "csp_font_src_none": true
+                    },
+                    {
+                        "csp_font_src_self": true
+                    },
+                    {
+                        "csp_form_action_blob": true
+                    },
+                    {
+                        "csp_form_action_data_urls": true
+                    },
+                    {
+                        "csp_form_action_enabled": true
+                    },
+                    {
+                        "csp_form_action_eval": true
+                    },
+                    {
+                        "csp_form_action_filesystem": true
+                    },
+                    {
+                        "csp_form_action_inline": true
+                    },
+                    {
+                        "csp_form_action_mediastream": true
+                    },
+                    {
+                        "csp_form_action_none": true
+                    },
+                    {
+                        "csp_form_action_self": true
+                    },
+                    {
+                        "csp_img_src_blob": true
+                    },
+                    {
+                        "csp_img_src_data_urls": true
+                    },
+                    {
+                        "csp_img_src_enabled": true
+                    },
+                    {
+                        "csp_img_src_eval": true
+                    },
+                    {
+                        "csp_img_src_filesystem": true
+                    },
+                    {
+                        "csp_img_src_inline": true
+                    },
+                    {
+                        "csp_img_src_mediastream": true
+                    },
+                    {
+                        "csp_img_src_none": true
+                    },
+                    {
+                        "csp_img_src_self": true
+                    },
+                    {
+                        "csp_media_src_blob": true
+                    },
+                    {
+                        "csp_media_src_data_urls": true
+                    },
+                    {
+                        "csp_media_src_enabled": true
+                    },
+                    {
+                        "csp_media_src_eval": true
+                    },
+                    {
+                        "csp_media_src_filesystem": true
+                    },
+                    {
+                        "csp_media_src_inline": true
+                    },
+                    {
+                        "csp_media_src_mediastream": true
+                    },
+                    {
+                        "csp_media_src_none": true
+                    },
+                    {
+                        "csp_media_src_self": true
+                    },
+                    {
+                        "csp_report_only": true
+                    },
+                    {
+                        "csp_script_src_blob": true
+                    },
+                    {
+                        "csp_script_src_data_urls": true
+                    },
+                    {
+                        "csp_script_src_enabled": true
+                    },
+                    {
+                        "csp_script_src_eval": true
+                    },
+                    {
+                        "csp_script_src_filesystem": true
+                    },
+                    {
+                        "csp_script_src_inline": true
+                    },
+                    {
+                        "csp_script_src_mediastream": true
+                    },
+                    {
+                        "csp_script_src_none": true
+                    },
+                    {
+                        "csp_script_src_self": true
+                    },
+                    {
+                        "csp_style_src_blob": true
+                    },
+                    {
+                        "csp_style_src_data_urls": true
+                    },
+                    {
+                        "csp_style_src_enabled": true
+                    },
+                    {
+                        "csp_style_src_eval": true
+                    },
+                    {
+                        "csp_style_src_filesystem": true
+                    },
+                    {
+                        "csp_style_src_inline": true
+                    },
+                    {
+                        "csp_style_src_mediastream": true
+                    },
+                    {
+                        "csp_style_src_none": true
+                    },
+                    {
+                        "csp_style_src_self": true
+                    },
+                    {
+                        "strict_transport_security_include_subdomains": true
                     }
                 ]
             },
@@ -16589,6 +17169,28 @@
                     }
                 ]
             },
+            "OPNsense.Nut.apcsmart": {
+                "type": "object",
+                "properties": {
+                    "args": {
+                        "type": "string"
+                    },
+                    "enable": {
+                        "type": "boolean"
+                    }
+                },
+                "required": [
+                    "enable"
+                ],
+                "default": [
+                    {
+                        "args": "port=auto"
+                    },
+                    {
+                        "enable": true
+                    }
+                ]
+            },
             "OPNsense.Nut.general": {
                 "type": "object",
                 "properties": {
@@ -16741,7 +17343,6 @@
                     }
                 },
                 "required": [
-                    "destination",
                     "domainname",
                     "enabled"
                 ],
@@ -19599,6 +20200,18 @@
             "OPNsense.telegraf.output": {
                 "type": "object",
                 "properties": {
+                    "elastic_enable": {
+                        "type": "boolean"
+                    },
+                    "elastic_indexname": {
+                        "type": "string"
+                    },
+                    "elastic_timeout": {
+                        "type": "integer"
+                    },
+                    "elastic_url": {
+                        "type": "string"
+                    },
                     "graphite_enable": {
                         "type": "boolean"
                     },
@@ -19640,6 +20253,15 @@
                     }
                 },
                 "default": [
+                    {
+                        "elastic_enable": true
+                    },
+                    {
+                        "elastic_indexname": "telegraf-%Y.%m.%d"
+                    },
+                    {
+                        "elastic_timeout": 5
+                    },
                     {
                         "graphite_enable": true
                     },
@@ -20455,6 +21077,100 @@
                     },
                     {
                         "source_not": true
+                    }
+                ]
+            },
+            "OPNsense.wireguard.client.clients.client": {
+                "type": "object",
+                "properties": {
+                    "enabled": {
+                        "type": "boolean"
+                    },
+                    "name": {
+                        "type": "string",
+                        "pattern": "/^([0-9a-zA-Z]){1,32}$/u"
+                    },
+                    "pubkey": {
+                        "type": "string"
+                    },
+                    "serveraddress": {
+                        "type": "string"
+                    },
+                    "serverport": {
+                        "type": "integer"
+                    },
+                    "tunneladdress": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "enabled",
+                    "name",
+                    "tunneladdress"
+                ],
+                "default": [
+                    {
+                        "enabled": true
+                    }
+                ]
+            },
+            "OPNsense.wireguard.general": {
+                "type": "object",
+                "properties": {
+                    "enabled": {
+                        "type": "boolean"
+                    }
+                },
+                "required": [
+                    "enabled"
+                ],
+                "default": [
+                    {
+                        "enabled": true
+                    }
+                ]
+            },
+            "OPNsense.wireguard.server.servers.server": {
+                "type": "object",
+                "properties": {
+                    "enabled": {
+                        "type": "boolean"
+                    },
+                    "instance": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 19
+                    },
+                    "name": {
+                        "type": "string",
+                        "pattern": "/^([0-9a-zA-Z]){1,32}$/u"
+                    },
+                    "peers": {
+                        "type": "string"
+                    },
+                    "port": {
+                        "type": "integer"
+                    },
+                    "privkey": {
+                        "type": "string"
+                    },
+                    "pubkey": {
+                        "type": "string"
+                    },
+                    "tunneladdress": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "enabled",
+                    "instance",
+                    "name",
+                    "port",
+                    "tunneladdress"
+                ],
+                "default": [
+                    {
+                        "enabled": true
                     }
                 ]
             },
