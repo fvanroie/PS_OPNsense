@@ -486,6 +486,7 @@ namespace OPNsense.HAProxy.backends {
 		public string stickiness_sessRatePeriod { get; set; }
 		public string stickiness_size { get; set; }
 		public string tuning_defaultserver { get; set; }
+		public PSObject tuning_httpreuse { get; set; }
 		public bool tuning_noport { get; set; }
 		public uint tuning_retries { get; set; }
 		public string tuning_timeoutCheck { get; set; }
@@ -530,6 +531,7 @@ namespace OPNsense.HAProxy.backends {
 			stickiness_sessRatePeriod = "10s";
 			stickiness_size = "50k";
 			tuning_defaultserver = null;
+			tuning_httpreuse = null;
 			tuning_noport = true;
 			tuning_retries = 0;
 			tuning_timeoutCheck = null;
@@ -574,6 +576,7 @@ namespace OPNsense.HAProxy.backends {
 			string Stickiness_SessRatePeriod,
 			string Stickiness_Size,
 			string Tuning_Defaultserver,
+			PSObject Tuning_Httpreuse,
 			byte Tuning_Noport,
 			uint Tuning_Retries,
 			string Tuning_TimeoutCheck,
@@ -616,6 +619,7 @@ namespace OPNsense.HAProxy.backends {
 			stickiness_sessRatePeriod = Stickiness_SessRatePeriod;
 			stickiness_size = Stickiness_Size;
 			tuning_defaultserver = Tuning_Defaultserver;
+			tuning_httpreuse = Tuning_Httpreuse;
 			tuning_noport = (Tuning_Noport == 0) ? false : true;
 			tuning_retries = Tuning_Retries;
 			tuning_timeoutCheck = Tuning_TimeoutCheck;

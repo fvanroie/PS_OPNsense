@@ -65,6 +65,7 @@ namespace OPNsense.Nginx {
 		public PSObject charset { get; set; }
 		public bool enable_acme_support { get; set; }
 		public bool https_only { get; set; }
+		public PSObject limit_request_connections { get; set; }
 		public PSObject listen_https_port { get; set; }
 		public PSObject listen_http_port { get; set; }
 		public PSObject locations { get; set; }
@@ -85,6 +86,7 @@ namespace OPNsense.Nginx {
 			charset = null;
 			enable_acme_support = true;
 			https_only = true;
+			limit_request_connections = null;
 			listen_https_port = null;
 			listen_http_port = null;
 			locations = null;
@@ -105,6 +107,7 @@ namespace OPNsense.Nginx {
 			PSObject Charset,
 			byte Enable_Acme_Support,
 			byte Https_Only,
+			PSObject Limit_Request_Connections,
 			PSObject Listen_Https_Port,
 			PSObject Listen_Http_Port,
 			PSObject Locations,
@@ -123,6 +126,7 @@ namespace OPNsense.Nginx {
 			charset = Charset;
 			enable_acme_support = (Enable_Acme_Support == 0) ? false : true;
 			https_only = (Https_Only == 0) ? false : true;
+			limit_request_connections = Limit_Request_Connections;
 			listen_https_port = Listen_Https_Port;
 			listen_http_port = Listen_Http_Port;
 			locations = Locations;
@@ -149,6 +153,7 @@ namespace OPNsense.Nginx {
 		public bool enable_secrules { get; set; }
 		public string force_https { get; set; }
 		public Object index { get; set; }
+		public PSObject limit_request_connections { get; set; }
 		public PSObject matchtype { get; set; }
 		public bool php_enable { get; set; }
 		public string php_override_scriptname { get; set; }
@@ -171,6 +176,7 @@ namespace OPNsense.Nginx {
 			enable_secrules = true;
 			force_https = null;
 			index = null;
+			limit_request_connections = null;
 			matchtype = null;
 			php_enable = true;
 			php_override_scriptname = null;
@@ -193,6 +199,7 @@ namespace OPNsense.Nginx {
 			byte Enable_Secrules,
 			string Force_Https,
 			Object Index,
+			PSObject Limit_Request_Connections,
 			PSObject Matchtype,
 			byte Php_Enable,
 			string Php_Override_Scriptname,
@@ -213,6 +220,7 @@ namespace OPNsense.Nginx {
 			enable_secrules = (Enable_Secrules == 0) ? false : true;
 			force_https = Force_Https;
 			index = Index;
+			limit_request_connections = Limit_Request_Connections;
 			matchtype = Matchtype;
 			php_enable = (Php_Enable == 0) ? false : true;
 			php_override_scriptname = Php_Override_Scriptname;

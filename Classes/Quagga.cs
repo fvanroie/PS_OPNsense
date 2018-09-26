@@ -33,7 +33,7 @@ namespace OPNsense.quagga.bgp.aspaths {
 namespace OPNsense.quagga.bgp.neighbors {
 	public class Neighbor {
 		#region Parameters
-		public string address { get; set; }
+		public PSObject address { get; set; }
 		public bool defaultoriginate { get; set; }
 		public bool enabled { get; set; }
 		public PSObject linkedPrefixlistIn { get; set; }
@@ -59,7 +59,7 @@ namespace OPNsense.quagga.bgp.neighbors {
 		}
 
 		public Neighbor (
-			string Address,
+			PSObject Address,
 			byte Defaultoriginate,
 			byte Enabled,
 			PSObject LinkedPrefixlistIn,
@@ -91,6 +91,7 @@ namespace OPNsense.quagga.bgp.prefixlists {
 		public string name { get; set; }
 		public string network { get; set; }
 		public uint seqnumber { get; set; }
+		public PSObject version { get; set; }
 		#endregion Parameters
 
 		public Prefixlist () {
@@ -99,6 +100,7 @@ namespace OPNsense.quagga.bgp.prefixlists {
 			name = null;
 			network = null;
 			seqnumber = 0;
+			version = null;
 		}
 
 		public Prefixlist (
@@ -106,13 +108,15 @@ namespace OPNsense.quagga.bgp.prefixlists {
 			byte Enabled,
 			string Name,
 			string Network,
-			uint Seqnumber
+			uint Seqnumber,
+			PSObject Version
 		) {
 			action = Action;
 			enabled = (Enabled == 0) ? false : true;
 			name = Name;
 			network = Network;
 			seqnumber = Seqnumber;
+			version = Version;
 		}
 	}
 }

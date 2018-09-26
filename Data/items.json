@@ -219,6 +219,62 @@
             }
         }
     },
+    "Bind": {
+        "Acl": {
+            "objectname": "Bind ACL",
+            "mountpoint": "",
+            "remove": {
+                "returntype": "OPNsense.Bind.Acl",
+                "command": {
+                    "module": "bind",
+                    "controller": "acl",
+                    "command": "delacl/<uuid>"
+                }
+            },
+            "get": {
+                "returntype": "OPNsense.Bind.Acl",
+                "command": {
+                    "module": "bind",
+                    "controller": "acl",
+                    "command": "getacl/<uuid>",
+                    "property": "acl"
+                }
+            },
+            "search": {
+                "command": {
+                    "module": "bind",
+                    "controller": "acl",
+                    "command": "searchacl",
+                    "property": "rows"
+                }
+            },
+            "toggle": {
+                "returntype": "OPNsense.Bind.Acl",
+                "command": {
+                    "module": "bind",
+                    "controller": "acl",
+                    "command": "toggleacl/<uuid>",
+                    "Form": "toggle"
+                }
+            },
+            "add": {
+                "returntype": "OPNsense.Bind.Acl",
+                "command": {
+                    "module": "bind",
+                    "controller": "acl",
+                    "command": "addacl"
+                }
+            },
+            "set": {
+                "returntype": "OPNsense.Bind.Acl",
+                "command": {
+                    "module": "bind",
+                    "controller": "acl",
+                    "command": "setacl/<uuid>"
+                }
+            }
+        }
+    },
     "CaptivePortal": {
         "Template": {
             "objectname": "CaptivePortal Template",
@@ -382,6 +438,63 @@
                     "module": "cron",
                     "controller": "settings",
                     "command": "setjob/<uuid>"
+                }
+            }
+        }
+    },
+    "Firewall": {
+        "Alias": {
+            "objectname": "Firewall Alias",
+            "mountpoint": "\\\\OPNsense\\Firewall\\Alias\\aliases\\alias",
+            "remove": {
+                "returntype": "OPNsense.Firewall.Alias",
+                "command": {
+                    "module": "firewall",
+                    "controller": "alias",
+                    "command": "delitem/<uuid>",
+                    "Form": "remove"
+                }
+            },
+            "get": {
+                "returntype": "OPNsense.Firewall.Alias",
+                "command": {
+                    "module": "firewall",
+                    "controller": "alias",
+                    "command": "getitem/<uuid>",
+                    "property": "alias"
+                }
+            },
+            "search": {
+                "command": {
+                    "module": "firewall",
+                    "controller": "alias",
+                    "command": "searchitem",
+                    "property": "rows"
+                }
+            },
+            "toggle": {
+                "returntype": "OPNsense.Firewall.Alias",
+                "command": {
+                    "module": "firewall",
+                    "controller": "alias",
+                    "command": "toggleitem/<uuid>/<disabled>",
+                    "Form": "toggle"
+                }
+            },
+            "add": {
+                "returntype": "OPNsense.Firewall.Alias",
+                "command": {
+                    "module": "firewall",
+                    "controller": "alias",
+                    "command": "additem"
+                }
+            },
+            "set": {
+                "returntype": "OPNsense.Firewall.Alias",
+                "command": {
+                    "module": "firewall",
+                    "controller": "alias",
+                    "command": "setitem/<uuid>"
                 }
             }
         }
@@ -1231,6 +1344,63 @@
             }
         }
     },
+    "NetSNMP": {
+        "User": {
+            "objectname": "SNMP User",
+            "mountpoint": "\\\\OPNsense\\netsnmp\\user\\users\\user",
+            "remove": {
+                "returntype": "OPNsense.NetSnmp.User",
+                "command": {
+                    "module": "netsnmp",
+                    "controller": "user",
+                    "command": "deluser/<uuid>",
+                    "Form": "remove"
+                }
+            },
+            "get": {
+                "returntype": "OPNsense.NetSnmp.User",
+                "command": {
+                    "module": "netsnmp",
+                    "controller": "user",
+                    "command": "getuser/<uuid>",
+                    "property": "user"
+                }
+            },
+            "search": {
+                "command": {
+                    "module": "netsnmp",
+                    "controller": "user",
+                    "command": "searchuser",
+                    "property": "rows"
+                }
+            },
+            "toggle": {
+                "returntype": "OPNsense.NetSnmp.User",
+                "command": {
+                    "module": "netsnmp",
+                    "controller": "user",
+                    "command": "toggleuser/<uuid>",
+                    "Form": "toggle"
+                }
+            },
+            "add": {
+                "returntype": "OPNsense.NetSnmp.User",
+                "command": {
+                    "module": "netsnmp",
+                    "controller": "user",
+                    "command": "adduser"
+                }
+            },
+            "set": {
+                "returntype": "OPNsense.NetSnmp.User",
+                "command": {
+                    "module": "netsnmp",
+                    "controller": "user",
+                    "command": "setuser/<uuid>"
+                }
+            }
+        }
+    },
     "Nginx": {
         "Credential": {
             "objectname": "Nginx Credential",
@@ -1259,6 +1429,14 @@
                     "controller": "settings",
                     "command": "searchcredential/",
                     "property": "rows"
+                }
+            },
+            "add": {
+                "returntype": "OPNsense.Nginx.Credential",
+                "command": {
+                    "module": "nginx",
+                    "controller": "settings",
+                    "command": "addcredential"
                 }
             },
             "set": {
@@ -1300,12 +1478,67 @@
                     "property": "rows"
                 }
             },
+            "add": {
+                "returntype": "OPNsense.Nginx.CustomPolicy",
+                "command": {
+                    "module": "nginx",
+                    "controller": "settings",
+                    "command": "addcustompolicy"
+                }
+            },
             "set": {
                 "returntype": "OPNsense.Nginx.CustomPolicy",
                 "command": {
                     "module": "nginx",
                     "controller": "settings",
                     "command": "setcustompolicy/<uuid>",
+                    "json": {}
+                }
+            }
+        },
+        "HttpRewrite": {
+            "objectname": "Nginx HttpRewrite",
+            "mountpoint": "",
+            "remove": {
+                "returntype": "OPNsense.Nginx.HttpRewrite",
+                "command": {
+                    "module": "nginx",
+                    "controller": "settings",
+                    "command": "delhttprewrite/<uuid>",
+                    "Form": "remove"
+                }
+            },
+            "get": {
+                "returntype": "OPNsense.Nginx.HttpRewrite",
+                "command": {
+                    "module": "nginx",
+                    "controller": "settings",
+                    "command": "gethttprewrite/<uuid>",
+                    "property": "httprewrite"
+                }
+            },
+            "search": {
+                "command": {
+                    "module": "nginx",
+                    "controller": "settings",
+                    "command": "searchhttprewrite/",
+                    "property": "rows"
+                }
+            },
+            "add": {
+                "returntype": "OPNsense.Nginx.HttpRewrite",
+                "command": {
+                    "module": "nginx",
+                    "controller": "settings",
+                    "command": "addhttprewrite"
+                }
+            },
+            "set": {
+                "returntype": "OPNsense.Nginx.HttpRewrite",
+                "command": {
+                    "module": "nginx",
+                    "controller": "settings",
+                    "command": "sethttprewrite/<uuid>",
                     "json": {}
                 }
             }
@@ -1337,6 +1570,14 @@
                     "controller": "settings",
                     "command": "searchhttpserver/",
                     "property": "rows"
+                }
+            },
+            "add": {
+                "returntype": "OPNsense.Nginx.HttpServer",
+                "command": {
+                    "module": "nginx",
+                    "controller": "settings",
+                    "command": "addhttpserver"
                 }
             },
             "set": {
@@ -1713,6 +1954,171 @@
         }
     },
     "Proxy": {
+        "PacMatch": {
+            "objectname": "Proxy PAC Match",
+            "mountpoint": "\\\\OPNsense\\proxy\\pac\\match",
+            "remove": {
+                "returntype": "OPNsense.Proxy.PacMatch",
+                "command": {
+                    "module": "proxy",
+                    "controller": "settings",
+                    "command": "delpacmatch/<uuid>",
+                    "Form": "remove"
+                }
+            },
+            "get": {
+                "returntype": "OPNsense.Proxy.PacMatch",
+                "command": {
+                    "module": "proxy",
+                    "controller": "settings",
+                    "command": "getpacmatch/<uuid>",
+                    "property": "pacmatch"
+                }
+            },
+            "search": {
+                "command": {
+                    "module": "proxy",
+                    "controller": "settings",
+                    "command": "searchpacmatch",
+                    "property": "rows"
+                }
+            },
+            "toggle": {
+                "returntype": "OPNsense.Proxy.PacMatch",
+                "command": {
+                    "module": "proxy",
+                    "controller": "settings",
+                    "command": "togglepacmatch/<uuid>",
+                    "Form": "toggle"
+                }
+            },
+            "add": {
+                "returntype": "OPNsense.Proxy.PacMatch",
+                "command": {
+                    "module": "proxy",
+                    "controller": "settings",
+                    "command": "addpacmatch"
+                }
+            },
+            "set": {
+                "returntype": "OPNsense.Proxy.PacMatch",
+                "command": {
+                    "module": "proxy",
+                    "controller": "settings",
+                    "command": "setpacmatch/<uuid>"
+                }
+            }
+        },
+        "PacProxy": {
+            "objectname": "Proxy PAC Proxy",
+            "mountpoint": "\\\\OPNsense\\proxy\\pac\\proxy",
+            "remove": {
+                "returntype": "OPNsense.Proxy.PacProxy",
+                "command": {
+                    "module": "proxy",
+                    "controller": "settings",
+                    "command": "delpacproxy/<uuid>",
+                    "Form": "remove"
+                }
+            },
+            "get": {
+                "returntype": "OPNsense.Proxy.PacProxy",
+                "command": {
+                    "module": "proxy",
+                    "controller": "settings",
+                    "command": "getpacproxy/<uuid>",
+                    "property": "pacproxy"
+                }
+            },
+            "search": {
+                "command": {
+                    "module": "proxy",
+                    "controller": "settings",
+                    "command": "searchpacproxy",
+                    "property": "rows"
+                }
+            },
+            "toggle": {
+                "returntype": "OPNsense.Proxy.PacProxy",
+                "command": {
+                    "module": "proxy",
+                    "controller": "settings",
+                    "command": "togglepacproxy/<uuid>",
+                    "Form": "toggle"
+                }
+            },
+            "add": {
+                "returntype": "OPNsense.Proxy.PacProxy",
+                "command": {
+                    "module": "proxy",
+                    "controller": "settings",
+                    "command": "addpacproxy"
+                }
+            },
+            "set": {
+                "returntype": "OPNsense.Proxy.PacProxy",
+                "command": {
+                    "module": "proxy",
+                    "controller": "settings",
+                    "command": "setpacproxy/<uuid>"
+                }
+            }
+        },
+        "PacRule": {
+            "objectname": "Proxy PAC Rule",
+            "mountpoint": "\\\\OPNsense\\proxy\\pac\\rule",
+            "remove": {
+                "returntype": "OPNsense.Proxy.PacRule",
+                "command": {
+                    "module": "proxy",
+                    "controller": "settings",
+                    "command": "delpacrule/<uuid>",
+                    "Form": "remove"
+                }
+            },
+            "get": {
+                "returntype": "OPNsense.Proxy.PacRule",
+                "command": {
+                    "module": "proxy",
+                    "controller": "settings",
+                    "command": "getpacrule/<uuid>",
+                    "property": "pacrule"
+                }
+            },
+            "search": {
+                "command": {
+                    "module": "proxy",
+                    "controller": "settings",
+                    "command": "searchpacrule",
+                    "property": "rows"
+                }
+            },
+            "toggle": {
+                "returntype": "OPNsense.Proxy.PacRule",
+                "command": {
+                    "module": "proxy",
+                    "controller": "settings",
+                    "command": "togglepacrule/<uuid>",
+                    "Form": "toggle"
+                }
+            },
+            "add": {
+                "returntype": "OPNsense.Proxy.PacRule",
+                "command": {
+                    "module": "proxy",
+                    "controller": "settings",
+                    "command": "addpacrule"
+                }
+            },
+            "set": {
+                "returntype": "OPNsense.Proxy.PacRule",
+                "command": {
+                    "module": "proxy",
+                    "controller": "settings",
+                    "command": "setpacrule/<uuid>"
+                }
+            }
+        },
         "RemoteBlacklist": {
             "objectname": "Proxy RemoteBlacklist",
             "mountpoint": "\\\\OPNsense\\proxy\\forward\\acl\\remoteACLs\\blacklists\\blacklist",
@@ -2271,7 +2677,7 @@
     "Relayd": {
         "Host": {
             "objectname": "Relayd Host",
-            "mountpoint": "\\\\relayd\\host",
+            "mountpoint": "\\\\OPNsense\\relayd\\host",
             "remove": {
                 "returntype": "OPNsense.Rlayd.Host",
                 "command": {
@@ -2310,7 +2716,7 @@
         },
         "TableCheck": {
             "objectname": "Relayd TableCheck",
-            "mountpoint": "\\\\relayd\\tablecheck",
+            "mountpoint": "\\\\OPNsense\\relayd\\tablecheck",
             "remove": {
                 "returntype": "OPNsense.Rlayd.TableCheck",
                 "command": {
@@ -2349,7 +2755,7 @@
         },
         "Table": {
             "objectname": "Relayd Table",
-            "mountpoint": "\\\\relayd\\table",
+            "mountpoint": "\\\\OPNsense\\relayd\\table",
             "remove": {
                 "returntype": "OPNsense.Rlayd.Table",
                 "command": {
@@ -2388,7 +2794,7 @@
         },
         "Protocol": {
             "objectname": "Relayd Protocol",
-            "mountpoint": "\\\\relayd\\protocol",
+            "mountpoint": "\\\\OPNsense\\relayd\\protocol",
             "remove": {
                 "returntype": "OPNsense.Rlayd.Protocol",
                 "command": {
@@ -2427,7 +2833,7 @@
         },
         "VirtualServer": {
             "objectname": "Relayd VirtualServer",
-            "mountpoint": "\\\\relayd\\virtualserver",
+            "mountpoint": "\\\\OPNsense\\relayd\\virtualserver",
             "remove": {
                 "returntype": "OPNsense.Rlayd.VirtualServer",
                 "command": {
@@ -2630,6 +3036,63 @@
                     "module": "siproxd",
                     "controller": "user",
                     "command": "setuser/<uuid>"
+                }
+            }
+        }
+    },
+    "Telegraf": {
+        "Key": {
+            "objectname": "Telegraf Key",
+            "mountpoint": "\\\\OPNsense\\telegraf\\key\\keys\\key",
+            "remove": {
+                "returntype": "OPNsense.Telegraf.Key",
+                "command": {
+                    "module": "telegraf",
+                    "controller": "key",
+                    "command": "delkey/<uuid>",
+                    "Form": "remove"
+                }
+            },
+            "get": {
+                "returntype": "OPNsense.Telegraf.Key",
+                "command": {
+                    "module": "telegraf",
+                    "controller": "key",
+                    "command": "getkey/<uuid>",
+                    "property": "host"
+                }
+            },
+            "search": {
+                "command": {
+                    "module": "telegraf",
+                    "controller": "key",
+                    "command": "searchkey",
+                    "property": "rows"
+                }
+            },
+            "toggle": {
+                "returntype": "OPNsense.Telegraf.Key",
+                "command": {
+                    "module": "telegraf",
+                    "controller": "key",
+                    "command": "togglekey/<uuid>",
+                    "Form": "toggle"
+                }
+            },
+            "add": {
+                "returntype": "OPNsense.Telegraf.Key",
+                "command": {
+                    "module": "telegraf",
+                    "controller": "key",
+                    "command": "addkey"
+                }
+            },
+            "set": {
+                "returntype": "OPNsense.Telegraf.Key",
+                "command": {
+                    "module": "telegraf",
+                    "controller": "key",
+                    "command": "setkey/<uuid>"
                 }
             }
         }
@@ -3177,6 +3640,166 @@
                     "module": "trafficshaper",
                     "controller": "settings",
                     "command": "setrule/<uuid>"
+                }
+            }
+        }
+    },
+    "Wireguard": {
+        "Client": {
+            "objectname": "Wireguard Client",
+            "mountpoint": "\\\\OPNsense\\wireguard\\client\\clients\\client",
+            "remove": {
+                "returntype": "OPNsense.Wireguard.Client",
+                "command": {
+                    "module": "wireguard",
+                    "controller": "client",
+                    "command": "delclient/<uuid>",
+                    "Form": "remove"
+                }
+            },
+            "get": {
+                "returntype": "OPNsense.Wireguard.Client",
+                "command": {
+                    "module": "wireguard",
+                    "controller": "client",
+                    "command": "getclient/<uuid>",
+                    "property": "pipe"
+                }
+            },
+            "search": {
+                "command": {
+                    "module": "wireguard",
+                    "controller": "client",
+                    "command": "searchclient",
+                    "property": "rows"
+                }
+            },
+            "toggle": {
+                "returntype": "OPNsense.Wireguard.Client",
+                "command": {
+                    "module": "wireguard",
+                    "controller": "client",
+                    "command": "toggleclient/<uuid>",
+                    "Form": "toggle"
+                }
+            },
+            "add": {
+                "returntype": "OPNsense.Wireguard.Client",
+                "command": {
+                    "module": "wireguard",
+                    "controller": "client",
+                    "command": "addclient"
+                }
+            },
+            "set": {
+                "returntype": "OPNsense.Wireguard.Client",
+                "command": {
+                    "module": "wireguard",
+                    "controller": "client",
+                    "command": "setclient/<uuid>"
+                }
+            }
+        },
+        "Server": {
+            "objectname": "Wireguard Server",
+            "mountpoint": "\\\\OPNsense\\wireguard\\server\\servers\\server",
+            "remove": {
+                "returntype": "OPNsense.Wireguard.Server",
+                "command": {
+                    "module": "wireguard",
+                    "controller": "server",
+                    "command": "delserver/<uuid>",
+                    "Form": "remove"
+                }
+            },
+            "get": {
+                "returntype": "OPNsense.Wireguard.Server",
+                "command": {
+                    "module": "wireguard",
+                    "controller": "server",
+                    "command": "getserver/<uuid>",
+                    "property": "queue"
+                }
+            },
+            "search": {
+                "command": {
+                    "module": "wireguard",
+                    "controller": "server",
+                    "command": "searchserver",
+                    "property": "rows"
+                }
+            },
+            "toggle": {
+                "returntype": "OPNsense.Wireguard.Server",
+                "command": {
+                    "module": "wireguard",
+                    "controller": "server",
+                    "command": "toggleserver/<uuid>",
+                    "Form": "toggle"
+                }
+            },
+            "add": {
+                "returntype": "OPNsense.Wireguard.Server",
+                "command": {
+                    "module": "wireguard",
+                    "controller": "server",
+                    "command": "addserver"
+                }
+            },
+            "set": {
+                "returntype": "OPNsense.Wireguard.Server",
+                "command": {
+                    "module": "wireguard",
+                    "controller": "server",
+                    "command": "setserver/<uuid>"
+                }
+            }
+        }
+    },
+    "Wol": {
+        "Host": {
+            "objectname": "WOL Host",
+            "mountpoint": "",
+            "remove": {
+                "returntype": "OPNsense.Wol.Host",
+                "command": {
+                    "module": "wol",
+                    "controller": "host",
+                    "command": "delhost/<uuid>",
+                    "Form": "remove"
+                }
+            },
+            "get": {
+                "returntype": "OPNsense.Wol.Host",
+                "command": {
+                    "module": "wol",
+                    "controller": "host",
+                    "command": "gethost/<uuid>",
+                    "property": "host"
+                }
+            },
+            "search": {
+                "command": {
+                    "module": "wol",
+                    "controller": "host",
+                    "command": "searchhost",
+                    "property": "rows"
+                }
+            },
+            "add": {
+                "returntype": "OPNsense.Wol.Host",
+                "command": {
+                    "module": "wol",
+                    "controller": "host",
+                    "command": "addhost"
+                }
+            },
+            "set": {
+                "returntype": "OPNsense.Wol.Host",
+                "command": {
+                    "module": "wol",
+                    "controller": "host",
+                    "command": "sethost/<uuid>"
                 }
             }
         }
