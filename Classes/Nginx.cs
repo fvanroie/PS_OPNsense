@@ -147,14 +147,24 @@ namespace OPNsense.Nginx {
 		public string authbasic { get; set; }
 		public PSObject authbasicuserfile { get; set; }
 		public bool autoindex { get; set; }
+		public bool cache_background_update { get; set; }
+		public bool cache_lock { get; set; }
+		public PSObject cache_methods { get; set; }
+		public int cache_min_uses { get; set; }
+		public PSObject cache_path { get; set; }
+		public bool cache_revalidate { get; set; }
+		public PSObject cache_use_stale { get; set; }
 		public PSObject custom_policy { get; set; }
 		public string description { get; set; }
 		public bool enable_learning_mode { get; set; }
 		public bool enable_secrules { get; set; }
 		public string force_https { get; set; }
+		public bool honeypot { get; set; }
+		public bool http2_push_preload { get; set; }
 		public Object index { get; set; }
 		public PSObject limit_request_connections { get; set; }
 		public PSObject matchtype { get; set; }
+		public string path_prefix { get; set; }
 		public bool php_enable { get; set; }
 		public string php_override_scriptname { get; set; }
 		public PSObject rewrites { get; set; }
@@ -162,6 +172,7 @@ namespace OPNsense.Nginx {
 		public int sqli_block_score { get; set; }
 		public PSObject upstream { get; set; }
 		public string urlpattern { get; set; }
+		public bool websocket { get; set; }
 		public int xss_block_score { get; set; }
 		#endregion Parameters
 
@@ -170,14 +181,24 @@ namespace OPNsense.Nginx {
 			authbasic = null;
 			authbasicuserfile = null;
 			autoindex = false;
+			cache_background_update = true;
+			cache_lock = true;
+			cache_methods = null;
+			cache_min_uses = 1;
+			cache_path = null;
+			cache_revalidate = true;
+			cache_use_stale = null;
 			custom_policy = null;
 			description = null;
 			enable_learning_mode = true;
 			enable_secrules = true;
 			force_https = null;
+			honeypot = true;
+			http2_push_preload = true;
 			index = null;
 			limit_request_connections = null;
 			matchtype = null;
+			path_prefix = null;
 			php_enable = true;
 			php_override_scriptname = null;
 			rewrites = null;
@@ -185,6 +206,7 @@ namespace OPNsense.Nginx {
 			sqli_block_score = 0;
 			upstream = null;
 			urlpattern = null;
+			websocket = true;
 			xss_block_score = 0;
 		}
 
@@ -193,14 +215,24 @@ namespace OPNsense.Nginx {
 			string Authbasic,
 			PSObject Authbasicuserfile,
 			byte Autoindex,
+			byte Cache_Background_Update,
+			byte Cache_Lock,
+			PSObject Cache_Methods,
+			int Cache_Min_Uses,
+			PSObject Cache_Path,
+			byte Cache_Revalidate,
+			PSObject Cache_Use_Stale,
 			PSObject Custom_Policy,
 			string Description,
 			byte Enable_Learning_Mode,
 			byte Enable_Secrules,
 			string Force_Https,
+			byte Honeypot,
+			byte Http2_Push_Preload,
 			Object Index,
 			PSObject Limit_Request_Connections,
 			PSObject Matchtype,
+			string Path_Prefix,
 			byte Php_Enable,
 			string Php_Override_Scriptname,
 			PSObject Rewrites,
@@ -208,20 +240,31 @@ namespace OPNsense.Nginx {
 			int Sqli_Block_Score,
 			PSObject Upstream,
 			string Urlpattern,
+			byte Websocket,
 			int Xss_Block_Score
 		) {
 			advanced_acl = (Advanced_Acl == 0) ? false : true;
 			authbasic = Authbasic;
 			authbasicuserfile = Authbasicuserfile;
 			autoindex = (Autoindex == 0) ? false : true;
+			cache_background_update = (Cache_Background_Update == 0) ? false : true;
+			cache_lock = (Cache_Lock == 0) ? false : true;
+			cache_methods = Cache_Methods;
+			cache_min_uses = Cache_Min_Uses;
+			cache_path = Cache_Path;
+			cache_revalidate = (Cache_Revalidate == 0) ? false : true;
+			cache_use_stale = Cache_Use_Stale;
 			custom_policy = Custom_Policy;
 			description = Description;
 			enable_learning_mode = (Enable_Learning_Mode == 0) ? false : true;
 			enable_secrules = (Enable_Secrules == 0) ? false : true;
 			force_https = Force_Https;
+			honeypot = (Honeypot == 0) ? false : true;
+			http2_push_preload = (Http2_Push_Preload == 0) ? false : true;
 			index = Index;
 			limit_request_connections = Limit_Request_Connections;
 			matchtype = Matchtype;
+			path_prefix = Path_Prefix;
 			php_enable = (Php_Enable == 0) ? false : true;
 			php_override_scriptname = Php_Override_Scriptname;
 			rewrites = Rewrites;
@@ -229,6 +272,7 @@ namespace OPNsense.Nginx {
 			sqli_block_score = Sqli_Block_Score;
 			upstream = Upstream;
 			urlpattern = Urlpattern;
+			websocket = (Websocket == 0) ? false : true;
 			xss_block_score = Xss_Block_Score;
 		}
 	}

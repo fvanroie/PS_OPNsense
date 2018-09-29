@@ -112,6 +112,11 @@ Function Connect-OPNsense {
             $MyInvocation.MyCommand.Module.PrivateData['OPNsenseUri'] = $Url
             $MyInvocation.MyCommand.Module.PrivateData['OPNsenseApi'] = "$Url/api"
             $MyInvocation.MyCommand.Module.PrivateData['OPNsenseSkipCert'] = [bool]::Parse($SkipCertificateCheck)
+
+            [OPNsenseDrive]::Url = $Url
+            [OPNsenseDrive]::Credential = $Credential
+            [OPNsenseDrive]::SkipCertificateCheck = [bool]::Parse($SkipCertificateCheck)
+
         } else {
             Throw "ERROR : Failed to get the OPNsense version of server '$Url'."
         }
