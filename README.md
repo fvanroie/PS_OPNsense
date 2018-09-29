@@ -4,20 +4,10 @@
 This is a PowerShell module that uses the OPNsense REST api to manage [OPNsense](https://opnsense.org/) firewall appliances.
 The development of the OPNsense REST api and this PowerShell module is still ongoing, so additional functionality will be added in the future.
 
-## Supported Modules
-Currently there are basic api hooks for these OPNsense modules:
-- Firmware
-- CaptivePortal
-- Cron
-- Diagnostics
-- IDS
-- Packages
-- Proxy
-- Services
-
-Not all functionality is implemented yet and this is an *early development alpha release*. All testing and [feedback](https://github.com/fvanroie/PS_OPNsense/issues) is appreciated.
 
 ## Supported Objects
+
+Not all functionality is implemented yet and this is a *development alpha release*. All testing and [feedback](https://github.com/fvanroie/PS_OPNsense/issues) is appreciated.
 
 ### Items
 All CRUD items are supported using Get-OPNsenseItem, Remove-OPNsenseItem and Switch-OPNsenseItem.
@@ -33,7 +23,7 @@ You can get the Settings for all API modules. Changing the Settings is not suppo
 Currently only Start, Stop, Update and Restart services are implemented for the other plugins. More work is needed to support all available REST api commands.
 
 ### Firmware
-Updating firmware via PowerShell is implemented.
+Updating firmware via PowerShell is implemented, more testing is needed for updates between major versions.
 
 ### Legacy Commands
 There is legacy WebUI support for these commands:
@@ -43,6 +33,7 @@ There is legacy WebUI support for these commands:
 
 A minimal set of legacy commands are also available in this PowerShell module. Only crucial functionality that is not yet available via the REST api yet will be exposed using the WebUI.
 These cmdlets will be ported over to use the REST api functions when they are ported to the REST api when they are made available in future OPNsense firmware versions.
+
 
 ## Getting Started
 
@@ -108,8 +99,8 @@ This module is tested on:
 Platform          | Edition            | Version
 ------------------|--------------------|--------
 Windows 10        | PowerShell Desktop | 5.1
-Windows 10        | PowerShell Core    | 6.0
-[Ubuntu 18.04](https://github.com/fvanroie/PS_OPNsense/wiki/Install-PowerShell-on-Ubuntu-18.04-beta) | PowerShell Core    | 6.0
+Windows 10        | PowerShell Core    | 6.x
+[Ubuntu 18.04](https://github.com/fvanroie/PS_OPNsense/wiki/Install-PowerShell-on-Ubuntu-18.04-beta) | PowerShell Core    | 6.x
 
 PS_OPNsense aims to be cross-platform on PowerShell Core 6.0 and up, however it has not been extensively tested on MacOS yet. Let me know what works and what doesn't.
 Feel free to use it on these platforms and report back any [issues](https://github.com/fvanroie/PS_OPNsense/issues) you encouter. The goal is to make PS_OPNsense crossplatform with PowerShell Core.
