@@ -1,3 +1,6 @@
+using namespace Microsoft.PowerShell.SHiPS
+#using module ".\PS_OPNsense.psm1"
+
 <#  MIT License
 
     Copyright (c) 2018 fvanroie, NetwiZe.be
@@ -24,15 +27,21 @@
 
 ##### Module Variables
 #$IsPSCoreEdition = ($PSVersionTable.PSEdition -eq 'Core')
-$minversion = [System.Version]'18.1.9'
+$minversion = [System.Version]'18.7.4'
 
 $debug = $false  
+
+# Dot source the OPNsensePSDrive Classes
+. $(Join-Path -Path $PSScriptRoot -ChildPath 'OPNsensePSDrive.ps1')
 
 # Load individual functions from scriptfiles
 # TODO : itterate over the objectmap and test if all Objects can be instantiated
 ForEach ($Folder in 'Classes', 'Core', 'Plugins', 'Private', 'Public') {
-    $FullPath = ("{0}/{1}/" -f $PSScriptRoot, $Folder)
-    $Scripts = Get-ChildItem -Recurse -Filter '*.ps1' -Path $FullPath | Where-Object { $_.Name -notlike '*.Tests.ps1' }
+    $FullPath = Join-Path -Path $PSScriptRoot -ChildPath $Folder
+
+    $Scripts = Get-ChildItem -Recurse -Filter '*.ps1' -Path $FullPath |
+        Where-Object { $_.Name -notlike '*.Tests.ps1' }
+
     ForEach ($Script in $Scripts) {
         Try {
             # Dot Source each function file
@@ -119,8 +128,7 @@ Export-ModuleMember -Function Connect-OPNsense, Disconnect-OPNsense, Invoke-OPNs
 $f = @(########## PLUGINS ##########
     # ArpScanner
     'Update-OPNsenseArp', #'Get-OPNsenseArpScanner', 'Start-OPNsenseArpScanner', 'Wait-OPNsenseArpScanner', 'Stop-OPNsenseArpScanner',
-    # Lldpd
-    'Get-OPNsenseLldp', 'Set-OPNsenseLldp',
+
     # HAProxy
     'New-OPNsenseHAProxyServer', 'New-OPNsenseHAProxyFrontend', 'New-OPNsenseHAProxyBackend', 'New-OPNsenseHAProxyErrorfile', 'New-OPNsenseHAProxyLuaScript', 'New-OPNsenseHAProxyAcl', 'New-OPNsenseHAProxyHealthCheck',
     'Set-OPNsenseHAProxyServer', 'Set-OPNsenseHAProxyLuaScript',
@@ -130,21 +138,13 @@ $f = @(########## PLUGINS ##########
     # RestApi
     'Invoke-OPNsenseCommand', #'Invoke-OPNsenseOpenApiPath',
 
-    # Cron
-    #'Get-OPNsenseCronJob', 'Enable-OPNsenseCronJob', 'Disable-OPNsenseCronJob', 'Remove-OPNsenseCronJob',
-    #'New-OPNsenseCronJob', 'Set-OPNsenseCronJob',
-    #IDS
-    #'Get-OPNsenseIdsUserRule',
-    'New-OPNsenseIdsUserRule',
     # Proxy
     'New-OPNsenseProxyRemoteBlacklist', #'Get-OPNsenseProxyRemoteBlacklist', 'Remove-OPNsenseProxyRemoteBlacklist',
     'Sync-OPNsenseProxyRemoteBlacklist',
-    # CaptivePortal
-    'New-OPNsenseCaptivePortalZone', 'Remove-OPNsenseCaptivePortalZone',
-    'New-OPNsenseCaptivePortalTemplate', 'Set-OPNsenseCaptivePortalTemplate', 'Remove-OPNsenseCaptivePortalTemplate', 'Save-OPNsenseCaptivePortalTemplate',
-    #'Get-OPNsenseCaptivePortal', 'Get-OPNsenseCaptivePortalTemplate',
+
     # Diagnostics
     'Get-OPNsenseSystemHealth', 'Get-OPNsenseResource', 'Get-OPNsenseInterface', 'Get-OPNsenseRoute', 'Get-OPNsenseARP', 'Clear-OPNsenseARP',
+
     # Services
     'Get-OPNsenseService', 'Start-OPNsenseService', 'Update-OPNsenseService', 'Test-OPNsenseService', 'Restart-OPNsenseService', 'Stop-OPNsenseService', 'Invoke-OPNsenseService'
 )

@@ -34,7 +34,7 @@
     RootModule             = 'PS_OPNsense.psm1'
 
     # Version number of this module.
-    ModuleVersion          = '0.1.6'
+    ModuleVersion          = '0.2.0'
 
     # Supported PSEditions
     CompatiblePSEditions   = @('Core', 'Desktop')
@@ -73,7 +73,7 @@
     ProcessorArchitecture  = 'None'
 
     # Modules that must be imported into the global environment prior to importing this module
-    # RequiredModules = @()
+    RequiredModules        = @('SHiPS')
 
     # Assemblies that must be loaded prior to importing this module
     # RequiredAssemblies = @()
