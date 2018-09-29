@@ -1,6 +1,6 @@
 {
-    "MinimumVersion": "18.1",
-    "MaximumVersion": "18.1.6",
+    "MinimumVersion": "18.7",
+    "MaximumVersion": "19.1",
     "AcmeClient": {
         "Account": {
             "objectname": "AcmeClient Account",
@@ -222,7 +222,7 @@
     "Bind": {
         "Acl": {
             "objectname": "Bind ACL",
-            "mountpoint": "",
+            "mountpoint": "\\\\OPNsense\\bind\\acl\\acls\\acl",
             "remove": {
                 "returntype": "OPNsense.Bind.Acl",
                 "command": {
