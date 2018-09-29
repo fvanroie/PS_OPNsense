@@ -3759,7 +3759,7 @@
     "Wol": {
         "Host": {
             "objectname": "WOL Host",
-            "mountpoint": "",
+            "mountpoint": "\\\\wol\\wolentry",
             "remove": {
                 "returntype": "OPNsense.Wol.Host",
                 "command": {
