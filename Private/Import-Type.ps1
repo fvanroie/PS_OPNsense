@@ -32,9 +32,10 @@ Function Import-Type {
 
     # Check Module Debug Variable
     if (-not $Debug) {
+        # BUG: this debuf tests does not work in SHiPS
         try {
             # In production, check if the TypeName already exists. Only Add TypeDefinition when needed
-            New-Object $Path.basename | Out-Null
+            # New-Object $Path.basename | Out-Null
             # Object creation succeeded, no need to add the Type again
             return
         } catch {

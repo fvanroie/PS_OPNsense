@@ -60,8 +60,11 @@ ForEach ($Folder in 'Classes', 'Core', 'Plugins', 'Private', 'Public') {
 }
 
 ForEach ($Folder in 'Classes') {
-    $FullPath = ("{0}/{1}/" -f $PSScriptRoot, $Folder)
-    $Files = Get-ChildItem -Recurse -Filter '*.cs' -Path $FullPath | Where-Object { $_.Name -notlike '*.Tests.ps1' }
+    $FullPath = Join-Path -Path $PSScriptRoot -ChildPath $Folder
+
+    $Files = Get-ChildItem -Recurse -Filter '*.cs' -Path $FullPath |
+        Where-Object { $_.Name -notlike '*.Tests.ps1' }
+    
     ForEach ($File in $Files) {
         if ($debug) {
             Write-Host -ForegroundColor Gray "Loading class file $file"
