@@ -79,7 +79,7 @@ Function Get-OPNsenseUpdateStatus {
                 $elipsis = ''
                 $start += $lines[$i - 1].length + 1
                 $line = $lines[$i - 1]
-                Write-Verbose ('   ' + $line)
+                Write-Verbose ([System.Web.HttpUtility]::HtmlDecode('   ' + $line))
 
                 if ($line -match '! (.*) !') {
                     $ProgressSplat.Status = $matches[1]
@@ -153,7 +153,7 @@ Function Get-OPNsenseUpdateStatus {
 
         # Write-Verbose buffer, including last line as it is complete
         for ($i = 0; $i -lt $lines.length; $i++) {
-            Write-Verbose ('   ' + $lines[$i])
+            Write-Verbose ([System.Web.HttpUtility]::HtmlDecode('   ' + $lines[$i]))
             $start += $lines[$i].length + 1
         }
     }
