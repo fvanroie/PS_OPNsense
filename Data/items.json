@@ -961,7 +961,7 @@
         },
         "LuaScript": {
             "objectname": "HAProxy LuaScript",
-            "mountpoint": "\\\\OPNsense\\HAProxy\\luas\\lua",
+            "mountpoint": "\\\\OPNsense\\HAProxy\\mapfiles\\mapfile",
             "remove": {
                 "returntype": "OPNsense.HAProxy.Lua",
                 "command": {
@@ -1010,6 +1010,52 @@
                     "module": "haproxy",
                     "controller": "settings",
                     "command": "setlua/<uuid>"
+                }
+            }
+        },
+        "MapFile": {
+            "objectname": "HAProxy MapFile",
+            "mountpoint": "\\\\OPNsense\\HAProxy\\luas\\lua",
+            "remove": {
+                "returntype": "OPNsense.HAProxy.MapFile",
+                "command": {
+                    "module": "haproxy",
+                    "controller": "settings",
+                    "command": "delmapfile/<uuid>",
+                    "Form": "remove"
+                }
+            },
+            "get": {
+                "returntype": "OPNsense.HAProxy.MapFile",
+                "command": {
+                    "module": "haproxy",
+                    "controller": "settings",
+                    "command": "getmapfile/<uuid>",
+                    "property": "mapfile"
+                }
+            },
+            "search": {
+                "command": {
+                    "module": "haproxy",
+                    "controller": "settings",
+                    "command": "searchmapfiles",
+                    "property": "rows"
+                }
+            },
+            "add": {
+                "returntype": "OPNsense.HAProxy.MapFile",
+                "command": {
+                    "module": "haproxy",
+                    "controller": "settings",
+                    "command": "addmapfile"
+                }
+            },
+            "set": {
+                "returntype": "OPNsense.HAProxy.MapFile",
+                "command": {
+                    "module": "haproxy",
+                    "controller": "settings",
+                    "command": "setmapfile/<uuid>"
                 }
             }
         },
@@ -1498,7 +1544,7 @@
         },
         "HttpRewrite": {
             "objectname": "Nginx HttpRewrite",
-            "mountpoint": "",
+            "mountpoint": "\\\\OPNsense\\Nginx\\http_rewrite",
             "remove": {
                 "returntype": "OPNsense.Nginx.HttpRewrite",
                 "command": {
@@ -1590,6 +1636,100 @@
                 }
             }
         },
+        "LimitRequestConnection": {
+            "objectname": "Nginx LimitRequestConnection",
+            "mountpoint": "\\\\OPNsense\\Nginx\\limit_request_connection",
+            "remove": {
+                "returntype": "OPNsense.Nginx.LimitRequestConnection",
+                "command": {
+                    "module": "nginx",
+                    "controller": "settings",
+                    "command": "dellimit_request_connection/<uuid>",
+                    "Form": "remove"
+                }
+            },
+            "get": {
+                "returntype": "OPNsense.Nginx.LimitRequestConnection",
+                "command": {
+                    "module": "nginx",
+                    "controller": "settings",
+                    "command": "getlimit_request_connection/<uuid>",
+                    "property": "limit_request_connection"
+                }
+            },
+            "search": {
+                "command": {
+                    "module": "nginx",
+                    "controller": "settings",
+                    "command": "searchlimit_request_connection/",
+                    "property": "rows"
+                }
+            },
+            "add": {
+                "returntype": "OPNsense.Nginx.LimitRequestConnection",
+                "command": {
+                    "module": "nginx",
+                    "controller": "settings",
+                    "command": "addlimit_request_connection"
+                }
+            },
+            "set": {
+                "returntype": "OPNsense.Nginx.LimitRequestConnection",
+                "command": {
+                    "module": "nginx",
+                    "controller": "settings",
+                    "command": "setlimit_request_connection/<uuid>",
+                    "json": {}
+                }
+            }
+        },
+        "LimitZone": {
+            "objectname": "Nginx LimitZone",
+            "mountpoint": "\\\\OPNsense\\Nginx\\limit_zone",
+            "remove": {
+                "returntype": "OPNsense.Nginx.LimitZone",
+                "command": {
+                    "module": "nginx",
+                    "controller": "settings",
+                    "command": "dellimit_zone/<uuid>",
+                    "Form": "remove"
+                }
+            },
+            "get": {
+                "returntype": "OPNsense.Nginx.LimitZone",
+                "command": {
+                    "module": "nginx",
+                    "controller": "settings",
+                    "command": "getlimit_zone/<uuid>",
+                    "property": "limit_zone"
+                }
+            },
+            "search": {
+                "command": {
+                    "module": "nginx",
+                    "controller": "settings",
+                    "command": "searchlimit_zone/",
+                    "property": "rows"
+                }
+            },
+            "add": {
+                "returntype": "OPNsense.Nginx.LimitZone",
+                "command": {
+                    "module": "nginx",
+                    "controller": "settings",
+                    "command": "addlimit_zone"
+                }
+            },
+            "set": {
+                "returntype": "OPNsense.Nginx.LimitZone",
+                "command": {
+                    "module": "nginx",
+                    "controller": "settings",
+                    "command": "setlimit_zone/<uuid>",
+                    "json": {}
+                }
+            }
+        },
         "Location": {
             "objectname": "Nginx Location",
             "mountpoint": "\\\\OPNsense\\Nginx\\location",
@@ -1664,6 +1804,45 @@
                     "module": "nginx",
                     "controller": "settings",
                     "command": "setnaxsirule/<uuid>",
+                    "json": {}
+                }
+            }
+        },
+        "SecurityHeader": {
+            "objectname": "Nginx SecurityHeader",
+            "mountpoint": "\\\\OPNsense\\Nginx\\security_header",
+            "remove": {
+                "returntype": "OPNsense.Nginx.SecurityHeader",
+                "command": {
+                    "module": "nginx",
+                    "controller": "settings",
+                    "command": "delsecurity_header/<uuid>",
+                    "Form": "remove"
+                }
+            },
+            "get": {
+                "returntype": "OPNsense.Nginx.SecurityHeader",
+                "command": {
+                    "module": "nginx",
+                    "controller": "settings",
+                    "command": "getsecurity_header/<uuid>",
+                    "property": "security_header"
+                }
+            },
+            "search": {
+                "command": {
+                    "module": "nginx",
+                    "controller": "settings",
+                    "command": "searchsecurity_header/",
+                    "property": "rows"
+                }
+            },
+            "set": {
+                "returntype": "OPNsense.Nginx.SecurityHeader",
+                "command": {
+                    "module": "nginx",
+                    "controller": "settings",
+                    "command": "setsecurity_header/<uuid>",
                     "json": {}
                 }
             }

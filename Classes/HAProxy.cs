@@ -979,6 +979,35 @@ namespace OPNsense.HAProxy.healthchecks {
 		}
 	}
 }
+namespace OPNsense.HAProxy.mapfiles {
+	public class Mapfile {
+		#region Parameters
+		public string content { get; set; }
+		public string description { get; set; }
+		public string id { get; set; }
+		public string name { get; set; }
+		#endregion Parameters
+
+		public Mapfile () {
+			content = null;
+			description = null;
+			id = null;
+			name = null;
+		}
+
+		public Mapfile (
+			string Content,
+			string Description,
+			string Id,
+			string Name
+		) {
+			content = Content;
+			description = Description;
+			id = Id;
+			name = Name;
+		}
+	}
+}
 namespace OPNsense.HAProxy.luas {
 	public class Lua {
 		#region Parameters

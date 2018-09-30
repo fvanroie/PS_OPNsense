@@ -56,6 +56,35 @@ namespace OPNsense.Nginx {
 	}
 }
 namespace OPNsense.Nginx {
+	public class Http_Rewrite {
+		#region Parameters
+		public string description { get; set; }
+		public string destination { get; set; }
+		public PSObject flag { get; set; }
+		public string source { get; set; }
+		#endregion Parameters
+
+		public Http_Rewrite () {
+			description = null;
+			destination = null;
+			flag = null;
+			source = null;
+		}
+
+		public Http_Rewrite (
+			string Description,
+			string Destination,
+			PSObject Flag,
+			string Source
+		) {
+			description = Description;
+			destination = Destination;
+			flag = Flag;
+			source = Source;
+		}
+	}
+}
+namespace OPNsense.Nginx {
 	public class Http_Server {
 		#region Parameters
 		public PSObject access_log_format { get; set; }
@@ -137,6 +166,72 @@ namespace OPNsense.Nginx {
 			sendfile = (Sendfile == 0) ? false : true;
 			servername = Servername;
 			verify_client = Verify_Client;
+		}
+	}
+}
+namespace OPNsense.Nginx {
+	public class Limit_Request_Connection {
+		#region Parameters
+		public uint burst { get; set; }
+		public uint connection_count { get; set; }
+		public string description { get; set; }
+		public PSObject limit_zone { get; set; }
+		public bool nodelay { get; set; }
+		#endregion Parameters
+
+		public Limit_Request_Connection () {
+			burst = 20;
+			connection_count = 5;
+			description = null;
+			limit_zone = null;
+			nodelay = true;
+		}
+
+		public Limit_Request_Connection (
+			uint Burst,
+			uint Connection_Count,
+			string Description,
+			PSObject Limit_Zone,
+			byte Nodelay
+		) {
+			burst = Burst;
+			connection_count = Connection_Count;
+			description = Description;
+			limit_zone = Limit_Zone;
+			nodelay = (Nodelay == 0) ? false : true;
+		}
+	}
+}
+namespace OPNsense.Nginx {
+	public class Limit_Zone {
+		#region Parameters
+		public string description { get; set; }
+		public PSObject key { get; set; }
+		public uint rate { get; set; }
+		public PSObject rate_unit { get; set; }
+		public uint size { get; set; }
+		#endregion Parameters
+
+		public Limit_Zone () {
+			description = null;
+			key = null;
+			rate = 20;
+			rate_unit = null;
+			size = 10;
+		}
+
+		public Limit_Zone (
+			string Description,
+			PSObject Key,
+			uint Rate,
+			PSObject Rate_Unit,
+			uint Size
+		) {
+			description = Description;
+			key = Key;
+			rate = Rate;
+			rate_unit = Rate_Unit;
+			size = Size;
 		}
 	}
 }
@@ -363,6 +458,347 @@ namespace OPNsense.Nginx {
 			ruletype = Ruletype;
 			score = Score;
 			url = Url;
+		}
+	}
+}
+namespace OPNsense.Nginx {
+	public class Security_Header {
+		#region Parameters
+		public bool content_type_options { get; set; }
+		public bool csp_default_src_blob { get; set; }
+		public bool csp_default_src_data_urls { get; set; }
+		public bool csp_default_src_enabled { get; set; }
+		public bool csp_default_src_eval { get; set; }
+		public bool csp_default_src_filesystem { get; set; }
+		public Object csp_default_src_http_urls { get; set; }
+		public bool csp_default_src_inline { get; set; }
+		public bool csp_default_src_mediastream { get; set; }
+		public bool csp_default_src_none { get; set; }
+		public bool csp_default_src_self { get; set; }
+		public bool csp_font_src_blob { get; set; }
+		public bool csp_font_src_data_urls { get; set; }
+		public bool csp_font_src_enabled { get; set; }
+		public bool csp_font_src_eval { get; set; }
+		public bool csp_font_src_filesystem { get; set; }
+		public Object csp_font_src_http_urls { get; set; }
+		public bool csp_font_src_inline { get; set; }
+		public bool csp_font_src_mediastream { get; set; }
+		public bool csp_font_src_none { get; set; }
+		public bool csp_font_src_self { get; set; }
+		public bool csp_form_action_blob { get; set; }
+		public bool csp_form_action_data_urls { get; set; }
+		public bool csp_form_action_enabled { get; set; }
+		public bool csp_form_action_eval { get; set; }
+		public bool csp_form_action_filesystem { get; set; }
+		public Object csp_form_action_http_urls { get; set; }
+		public bool csp_form_action_inline { get; set; }
+		public bool csp_form_action_mediastream { get; set; }
+		public bool csp_form_action_none { get; set; }
+		public bool csp_form_action_self { get; set; }
+		public bool csp_img_src_blob { get; set; }
+		public bool csp_img_src_data_urls { get; set; }
+		public bool csp_img_src_enabled { get; set; }
+		public bool csp_img_src_eval { get; set; }
+		public bool csp_img_src_filesystem { get; set; }
+		public Object csp_img_src_http_urls { get; set; }
+		public bool csp_img_src_inline { get; set; }
+		public bool csp_img_src_mediastream { get; set; }
+		public bool csp_img_src_none { get; set; }
+		public bool csp_img_src_self { get; set; }
+		public bool csp_media_src_blob { get; set; }
+		public bool csp_media_src_data_urls { get; set; }
+		public bool csp_media_src_enabled { get; set; }
+		public bool csp_media_src_eval { get; set; }
+		public bool csp_media_src_filesystem { get; set; }
+		public Object csp_media_src_http_urls { get; set; }
+		public bool csp_media_src_inline { get; set; }
+		public bool csp_media_src_mediastream { get; set; }
+		public bool csp_media_src_none { get; set; }
+		public bool csp_media_src_self { get; set; }
+		public bool csp_report_only { get; set; }
+		public bool csp_script_src_blob { get; set; }
+		public bool csp_script_src_data_urls { get; set; }
+		public bool csp_script_src_enabled { get; set; }
+		public bool csp_script_src_eval { get; set; }
+		public bool csp_script_src_filesystem { get; set; }
+		public Object csp_script_src_http_urls { get; set; }
+		public bool csp_script_src_inline { get; set; }
+		public bool csp_script_src_mediastream { get; set; }
+		public bool csp_script_src_none { get; set; }
+		public bool csp_script_src_self { get; set; }
+		public bool csp_style_src_blob { get; set; }
+		public bool csp_style_src_data_urls { get; set; }
+		public bool csp_style_src_enabled { get; set; }
+		public bool csp_style_src_eval { get; set; }
+		public bool csp_style_src_filesystem { get; set; }
+		public Object csp_style_src_http_urls { get; set; }
+		public bool csp_style_src_inline { get; set; }
+		public bool csp_style_src_mediastream { get; set; }
+		public bool csp_style_src_none { get; set; }
+		public bool csp_style_src_self { get; set; }
+		public string description { get; set; }
+		public bool enable_csp { get; set; }
+		public bool hpkp_include_subdomains { get; set; }
+		public Object hpkp_keys { get; set; }
+		public bool hpkp_report_only { get; set; }
+		public int hpkp_time { get; set; }
+		public PSObject referrer { get; set; }
+		public bool strict_transport_security_include_subdomains { get; set; }
+		public int strict_transport_security_time { get; set; }
+		public PSObject xssprotection { get; set; }
+		#endregion Parameters
+
+		public Security_Header () {
+			content_type_options = false;
+			csp_default_src_blob = true;
+			csp_default_src_data_urls = true;
+			csp_default_src_enabled = true;
+			csp_default_src_eval = true;
+			csp_default_src_filesystem = true;
+			csp_default_src_http_urls = null;
+			csp_default_src_inline = true;
+			csp_default_src_mediastream = true;
+			csp_default_src_none = true;
+			csp_default_src_self = true;
+			csp_font_src_blob = true;
+			csp_font_src_data_urls = true;
+			csp_font_src_enabled = true;
+			csp_font_src_eval = true;
+			csp_font_src_filesystem = true;
+			csp_font_src_http_urls = null;
+			csp_font_src_inline = true;
+			csp_font_src_mediastream = true;
+			csp_font_src_none = true;
+			csp_font_src_self = true;
+			csp_form_action_blob = true;
+			csp_form_action_data_urls = true;
+			csp_form_action_enabled = true;
+			csp_form_action_eval = true;
+			csp_form_action_filesystem = true;
+			csp_form_action_http_urls = null;
+			csp_form_action_inline = true;
+			csp_form_action_mediastream = true;
+			csp_form_action_none = true;
+			csp_form_action_self = true;
+			csp_img_src_blob = true;
+			csp_img_src_data_urls = true;
+			csp_img_src_enabled = true;
+			csp_img_src_eval = true;
+			csp_img_src_filesystem = true;
+			csp_img_src_http_urls = null;
+			csp_img_src_inline = true;
+			csp_img_src_mediastream = true;
+			csp_img_src_none = true;
+			csp_img_src_self = true;
+			csp_media_src_blob = true;
+			csp_media_src_data_urls = true;
+			csp_media_src_enabled = true;
+			csp_media_src_eval = true;
+			csp_media_src_filesystem = true;
+			csp_media_src_http_urls = null;
+			csp_media_src_inline = true;
+			csp_media_src_mediastream = true;
+			csp_media_src_none = true;
+			csp_media_src_self = true;
+			csp_report_only = true;
+			csp_script_src_blob = true;
+			csp_script_src_data_urls = true;
+			csp_script_src_enabled = true;
+			csp_script_src_eval = true;
+			csp_script_src_filesystem = true;
+			csp_script_src_http_urls = null;
+			csp_script_src_inline = true;
+			csp_script_src_mediastream = true;
+			csp_script_src_none = true;
+			csp_script_src_self = true;
+			csp_style_src_blob = true;
+			csp_style_src_data_urls = true;
+			csp_style_src_enabled = true;
+			csp_style_src_eval = true;
+			csp_style_src_filesystem = true;
+			csp_style_src_http_urls = null;
+			csp_style_src_inline = true;
+			csp_style_src_mediastream = true;
+			csp_style_src_none = true;
+			csp_style_src_self = true;
+			description = null;
+			enable_csp = false;
+			hpkp_include_subdomains = false;
+			hpkp_keys = null;
+			hpkp_report_only = false;
+			hpkp_time = 0;
+			referrer = null;
+			strict_transport_security_include_subdomains = true;
+			strict_transport_security_time = 0;
+			xssprotection = null;
+		}
+
+		public Security_Header (
+			byte Content_Type_Options,
+			byte Csp_Default_Src_Blob,
+			byte Csp_Default_Src_Data_Urls,
+			byte Csp_Default_Src_Enabled,
+			byte Csp_Default_Src_Eval,
+			byte Csp_Default_Src_Filesystem,
+			Object Csp_Default_Src_Http_Urls,
+			byte Csp_Default_Src_Inline,
+			byte Csp_Default_Src_Mediastream,
+			byte Csp_Default_Src_None,
+			byte Csp_Default_Src_Self,
+			byte Csp_Font_Src_Blob,
+			byte Csp_Font_Src_Data_Urls,
+			byte Csp_Font_Src_Enabled,
+			byte Csp_Font_Src_Eval,
+			byte Csp_Font_Src_Filesystem,
+			Object Csp_Font_Src_Http_Urls,
+			byte Csp_Font_Src_Inline,
+			byte Csp_Font_Src_Mediastream,
+			byte Csp_Font_Src_None,
+			byte Csp_Font_Src_Self,
+			byte Csp_Form_Action_Blob,
+			byte Csp_Form_Action_Data_Urls,
+			byte Csp_Form_Action_Enabled,
+			byte Csp_Form_Action_Eval,
+			byte Csp_Form_Action_Filesystem,
+			Object Csp_Form_Action_Http_Urls,
+			byte Csp_Form_Action_Inline,
+			byte Csp_Form_Action_Mediastream,
+			byte Csp_Form_Action_None,
+			byte Csp_Form_Action_Self,
+			byte Csp_Img_Src_Blob,
+			byte Csp_Img_Src_Data_Urls,
+			byte Csp_Img_Src_Enabled,
+			byte Csp_Img_Src_Eval,
+			byte Csp_Img_Src_Filesystem,
+			Object Csp_Img_Src_Http_Urls,
+			byte Csp_Img_Src_Inline,
+			byte Csp_Img_Src_Mediastream,
+			byte Csp_Img_Src_None,
+			byte Csp_Img_Src_Self,
+			byte Csp_Media_Src_Blob,
+			byte Csp_Media_Src_Data_Urls,
+			byte Csp_Media_Src_Enabled,
+			byte Csp_Media_Src_Eval,
+			byte Csp_Media_Src_Filesystem,
+			Object Csp_Media_Src_Http_Urls,
+			byte Csp_Media_Src_Inline,
+			byte Csp_Media_Src_Mediastream,
+			byte Csp_Media_Src_None,
+			byte Csp_Media_Src_Self,
+			byte Csp_Report_Only,
+			byte Csp_Script_Src_Blob,
+			byte Csp_Script_Src_Data_Urls,
+			byte Csp_Script_Src_Enabled,
+			byte Csp_Script_Src_Eval,
+			byte Csp_Script_Src_Filesystem,
+			Object Csp_Script_Src_Http_Urls,
+			byte Csp_Script_Src_Inline,
+			byte Csp_Script_Src_Mediastream,
+			byte Csp_Script_Src_None,
+			byte Csp_Script_Src_Self,
+			byte Csp_Style_Src_Blob,
+			byte Csp_Style_Src_Data_Urls,
+			byte Csp_Style_Src_Enabled,
+			byte Csp_Style_Src_Eval,
+			byte Csp_Style_Src_Filesystem,
+			Object Csp_Style_Src_Http_Urls,
+			byte Csp_Style_Src_Inline,
+			byte Csp_Style_Src_Mediastream,
+			byte Csp_Style_Src_None,
+			byte Csp_Style_Src_Self,
+			string Description,
+			byte Enable_Csp,
+			byte Hpkp_Include_Subdomains,
+			Object Hpkp_Keys,
+			byte Hpkp_Report_Only,
+			int Hpkp_Time,
+			PSObject Referrer,
+			byte Strict_Transport_Security_Include_Subdomains,
+			int Strict_Transport_Security_Time,
+			PSObject Xssprotection
+		) {
+			content_type_options = (Content_Type_Options == 0) ? false : true;
+			csp_default_src_blob = (Csp_Default_Src_Blob == 0) ? false : true;
+			csp_default_src_data_urls = (Csp_Default_Src_Data_Urls == 0) ? false : true;
+			csp_default_src_enabled = (Csp_Default_Src_Enabled == 0) ? false : true;
+			csp_default_src_eval = (Csp_Default_Src_Eval == 0) ? false : true;
+			csp_default_src_filesystem = (Csp_Default_Src_Filesystem == 0) ? false : true;
+			csp_default_src_http_urls = Csp_Default_Src_Http_Urls;
+			csp_default_src_inline = (Csp_Default_Src_Inline == 0) ? false : true;
+			csp_default_src_mediastream = (Csp_Default_Src_Mediastream == 0) ? false : true;
+			csp_default_src_none = (Csp_Default_Src_None == 0) ? false : true;
+			csp_default_src_self = (Csp_Default_Src_Self == 0) ? false : true;
+			csp_font_src_blob = (Csp_Font_Src_Blob == 0) ? false : true;
+			csp_font_src_data_urls = (Csp_Font_Src_Data_Urls == 0) ? false : true;
+			csp_font_src_enabled = (Csp_Font_Src_Enabled == 0) ? false : true;
+			csp_font_src_eval = (Csp_Font_Src_Eval == 0) ? false : true;
+			csp_font_src_filesystem = (Csp_Font_Src_Filesystem == 0) ? false : true;
+			csp_font_src_http_urls = Csp_Font_Src_Http_Urls;
+			csp_font_src_inline = (Csp_Font_Src_Inline == 0) ? false : true;
+			csp_font_src_mediastream = (Csp_Font_Src_Mediastream == 0) ? false : true;
+			csp_font_src_none = (Csp_Font_Src_None == 0) ? false : true;
+			csp_font_src_self = (Csp_Font_Src_Self == 0) ? false : true;
+			csp_form_action_blob = (Csp_Form_Action_Blob == 0) ? false : true;
+			csp_form_action_data_urls = (Csp_Form_Action_Data_Urls == 0) ? false : true;
+			csp_form_action_enabled = (Csp_Form_Action_Enabled == 0) ? false : true;
+			csp_form_action_eval = (Csp_Form_Action_Eval == 0) ? false : true;
+			csp_form_action_filesystem = (Csp_Form_Action_Filesystem == 0) ? false : true;
+			csp_form_action_http_urls = Csp_Form_Action_Http_Urls;
+			csp_form_action_inline = (Csp_Form_Action_Inline == 0) ? false : true;
+			csp_form_action_mediastream = (Csp_Form_Action_Mediastream == 0) ? false : true;
+			csp_form_action_none = (Csp_Form_Action_None == 0) ? false : true;
+			csp_form_action_self = (Csp_Form_Action_Self == 0) ? false : true;
+			csp_img_src_blob = (Csp_Img_Src_Blob == 0) ? false : true;
+			csp_img_src_data_urls = (Csp_Img_Src_Data_Urls == 0) ? false : true;
+			csp_img_src_enabled = (Csp_Img_Src_Enabled == 0) ? false : true;
+			csp_img_src_eval = (Csp_Img_Src_Eval == 0) ? false : true;
+			csp_img_src_filesystem = (Csp_Img_Src_Filesystem == 0) ? false : true;
+			csp_img_src_http_urls = Csp_Img_Src_Http_Urls;
+			csp_img_src_inline = (Csp_Img_Src_Inline == 0) ? false : true;
+			csp_img_src_mediastream = (Csp_Img_Src_Mediastream == 0) ? false : true;
+			csp_img_src_none = (Csp_Img_Src_None == 0) ? false : true;
+			csp_img_src_self = (Csp_Img_Src_Self == 0) ? false : true;
+			csp_media_src_blob = (Csp_Media_Src_Blob == 0) ? false : true;
+			csp_media_src_data_urls = (Csp_Media_Src_Data_Urls == 0) ? false : true;
+			csp_media_src_enabled = (Csp_Media_Src_Enabled == 0) ? false : true;
+			csp_media_src_eval = (Csp_Media_Src_Eval == 0) ? false : true;
+			csp_media_src_filesystem = (Csp_Media_Src_Filesystem == 0) ? false : true;
+			csp_media_src_http_urls = Csp_Media_Src_Http_Urls;
+			csp_media_src_inline = (Csp_Media_Src_Inline == 0) ? false : true;
+			csp_media_src_mediastream = (Csp_Media_Src_Mediastream == 0) ? false : true;
+			csp_media_src_none = (Csp_Media_Src_None == 0) ? false : true;
+			csp_media_src_self = (Csp_Media_Src_Self == 0) ? false : true;
+			csp_report_only = (Csp_Report_Only == 0) ? false : true;
+			csp_script_src_blob = (Csp_Script_Src_Blob == 0) ? false : true;
+			csp_script_src_data_urls = (Csp_Script_Src_Data_Urls == 0) ? false : true;
+			csp_script_src_enabled = (Csp_Script_Src_Enabled == 0) ? false : true;
+			csp_script_src_eval = (Csp_Script_Src_Eval == 0) ? false : true;
+			csp_script_src_filesystem = (Csp_Script_Src_Filesystem == 0) ? false : true;
+			csp_script_src_http_urls = Csp_Script_Src_Http_Urls;
+			csp_script_src_inline = (Csp_Script_Src_Inline == 0) ? false : true;
+			csp_script_src_mediastream = (Csp_Script_Src_Mediastream == 0) ? false : true;
+			csp_script_src_none = (Csp_Script_Src_None == 0) ? false : true;
+			csp_script_src_self = (Csp_Script_Src_Self == 0) ? false : true;
+			csp_style_src_blob = (Csp_Style_Src_Blob == 0) ? false : true;
+			csp_style_src_data_urls = (Csp_Style_Src_Data_Urls == 0) ? false : true;
+			csp_style_src_enabled = (Csp_Style_Src_Enabled == 0) ? false : true;
+			csp_style_src_eval = (Csp_Style_Src_Eval == 0) ? false : true;
+			csp_style_src_filesystem = (Csp_Style_Src_Filesystem == 0) ? false : true;
+			csp_style_src_http_urls = Csp_Style_Src_Http_Urls;
+			csp_style_src_inline = (Csp_Style_Src_Inline == 0) ? false : true;
+			csp_style_src_mediastream = (Csp_Style_Src_Mediastream == 0) ? false : true;
+			csp_style_src_none = (Csp_Style_Src_None == 0) ? false : true;
+			csp_style_src_self = (Csp_Style_Src_Self == 0) ? false : true;
+			description = Description;
+			enable_csp = (Enable_Csp == 0) ? false : true;
+			hpkp_include_subdomains = (Hpkp_Include_Subdomains == 0) ? false : true;
+			hpkp_keys = Hpkp_Keys;
+			hpkp_report_only = (Hpkp_Report_Only == 0) ? false : true;
+			hpkp_time = Hpkp_Time;
+			referrer = Referrer;
+			strict_transport_security_include_subdomains = (Strict_Transport_Security_Include_Subdomains == 0) ? false : true;
+			strict_transport_security_time = Strict_Transport_Security_Time;
+			xssprotection = Xssprotection;
 		}
 	}
 }
