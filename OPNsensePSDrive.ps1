@@ -34,7 +34,7 @@ class OPNsenseDrive : SHiPSDirectory {
         $menuItems = Invoke-OPNsenseCommand core menu tree
         foreach ($item in $menuItems) {   
             #if ($item.isVisible) {
-                $obj += [OPNsenseDrivePackages]::new($item.Id, $item.VisibleName, $item.Children)
+            $obj += [OPNsenseMenuItem]::new($item.Id, $item.VisibleName, '/', $item.Children)
             #}
         }
         
@@ -43,28 +43,44 @@ class OPNsenseDrive : SHiPSDirectory {
 }
 
 [SHiPSProvider(UseCache = $true)]
-class OPNsenseDrivePackages : SHiPSDirectory {
+class OPNsenseMenuItem : SHiPSDirectory {
     [string] $item
+    [string] $parent
     [Object[]]$children
 
-    OPNsenseDrivePackages([string]$id, [string]$item, [Object[]]$children): base($name) {
+    OPNsenseMenuItem([string]$id, [string]$item, [string]$parent, [Object[]]$children): base($name) {
         $this.name = $id
         $this.item = $item
+        $this.parent = $parent
         $this.children = $children
     }
 
     [object[]] GetChildItem() {
-        $obj = @()  
         
-        foreach ($item in $this.children) {         
-            
-            #$obj += $pkg
-            #if ($item.isVisible) {
-                $obj += [OPNsenseDrivePackages]::new($item.Id, $item.VisibleName, $item.Children)
-            #}
-            
+        $obj = @()
+        $fullPath = $this.parent + $this.name + '/'
+
+        Switch ($fullPath) {
+            '/Services/Freeradius/Clients/' {
+                $obj += Get-OPNsenseItem -Freeradius Client
+            }
+            '/Services/Freeradius/Users/' {
+                $obj += Get-OPNsenseItem -Freeradius User
+            }
+        
+            default {
+                foreach ($item in $this.children) {         
+                    #$obj += $pkg
+                    if ($item.isVisible -and $item.url -notlike '*.php*') {
+                        $newParent = '{0}{1}/' -f $this.parent, $this.name
+                        $obj += [OPNsenseMenuItem]::new($item.Id, $item.VisibleName, $newParent, $item.Children)
+                    }
+                    
+                }
+            }
         }
 
         return $obj;
     }
+
 }
