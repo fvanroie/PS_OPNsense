@@ -21,14 +21,80 @@
     SOFTWARE.
 #>
 
+Function New-HttpClientHelper {
+    param (
+        [string]$uri ,
+        $key = '/DIgoRS//BlEy/ja0uD3plAAM3lMdV4pyDZ8dCHMZaGl2Q3M3lorvDDob8F3dJmS0nvqcIuRMWrgTHYd',
+        $secret = 'oLUek7OBDlLdopSwNjFJ7W+UMvhK5MyLqAOBB5PaDrmFPWPZWxOTOghdILBmB2LDw894dhn4sugJnmnY'
+    )
+
+    Add-Type -AssemblyName System.Net.Http
+    $bytes = [System.Text.Encoding]::UTF8.GetBytes($key + ":" + $secret)
+
+    $httpClientHandler = New-Object System.Net.Http.HttpClientHandler
+    $networkCredential = New-Object System.Net.NetworkCredential @($key, $secret)
+    $httpClientHandler.Credentials = $networkCredential
+
+    $client = New-Object System.Net.Http.Httpclient $httpClientHandler
+
+    [Net.ServicePointManager]::DnsRefreshTimeout = 1000
+    [Net.ServicePointManager]::FindServicePoint($uri).ConnectionLeaseTimeout = 1000
+    [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12
+    [System.Net.ServicePointManager]::Expect100Continue = $false
+
+    Try {
+        [System.Net.ServicePointManager]::CertificatePolicy = New-Object -TypeName 'OPNsense.Policy.TrustAllCerts'
+    } Catch {
+        Add-Type @"
+    using System.Net;
+    using System.Security.Cryptography.X509Certificates;
+    namespace OPNsense.Policy {
+        public class TrustAllCerts : ICertificatePolicy {
+            public bool CheckValidationResult(
+                ServicePoint srvPoint, X509Certificate certificate,
+                WebRequest request, int certificateProblem) {
+                return true;
+            }
+        }
+    }
+"@
+        [System.Net.ServicePointManager]::CertificatePolicy = New-Object -TypeName 'OPNsense.Policy.TrustAllCerts'
+    }
+
+    $client.DefaultRequestHeaders.Add("Authorization", ("Basic {0}" -f [System.Convert]::ToBase64String($bytes)) )
+    return $client
+}
+
+Function Get-HttpClientStringASync {
+    param (
+        [System.Net.Http.Httpclient]$client,
+        [string]$uri
+    )
+
+    # Get the web content.
+    $task = $client.GetStringAsync($uri)
+
+    # Wait for the async call to finish
+    $task.wait(15000)
+
+    # Use the result
+    if ($task.IsCompleted) {
+        return $task.GetAwaiter().GetResult() | ConvertFrom-json
+    } else {
+        Write-Warning ("Something went wrong: " + $task.Exception)
+    }
+}
 
 Function Get-OPNsenseUpdateStatus {
     [CmdletBinding()]
     Param(
         [String]$Title = 'Busy',
         [String]$Status = 'This can take a while',
-        [double]$Seconds = 0.8
+        [double]$Seconds = 1
     )
+
+    $uri = "https://10.1.0.169/api/core/firmware/upgradestatus"
+    $client = New-HttpClientHelper -uri $uri
 
     # Progress status
     $start = 0              # Characters received
@@ -52,7 +118,11 @@ Function Get-OPNsenseUpdateStatus {
         try {
             # TO DO : Check why sometimes Invoke-RestMethod takes 110 seconds to complete
             Write-Debug 'Getting Firmware Upgrade Status ...'
-            $result = Invoke-OPNsenseCommand core firmware upgradestatus -Verbose:$false
+            #$prevLimit = [System.Net.ServicePointManager]::DefaultConnectionLimit
+            #[System.Net.ServicePointManager]::DefaultConnectionLimit = 1024
+            #$result = Invoke-OPNsenseCommand core firmware upgradestatus -Verbose:$false
+            #[System.Net.ServicePointManager]::DefaultConnectionLimit = $prevLimit
+            $result = Get-HttpClientStringASync -client $client -Uri $uri
             Write-Debug ('Firmware Upgrade Status : {0}' -f $result.status)
             $retries = 0
         } catch {
@@ -157,5 +227,6 @@ Function Get-OPNsenseUpdateStatus {
             $start += $lines[$i].length + 1
         }
     }
+    Write-Verbose ($result.status)
     return $Result
 }
