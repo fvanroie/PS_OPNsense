@@ -28,5 +28,10 @@ Function New-OPNsenseDrive {
     Param (
         [String]$Name
     )
+
+    [OPNsenseDrive]::Url = $MyInvocation.MyCommand.Module.PrivateData['OPNsenseUri']
+    [OPNsenseDrive]::Credential = $MyInvocation.MyCommand.Module.PrivateData['ApiCredentials']
+    [OPNsenseDrive]::SkipCertificateCheck = $MyInvocation.MyCommand.Module.PrivateData['OPNsenseSkipCert']
+
     New-PSDrive -Name $Name -PSProvider Ships -Root 'PS_OPNsense#OPNsenseDrive' -Scope Global
 }
