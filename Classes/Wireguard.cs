@@ -6,6 +6,7 @@ namespace OPNsense.wireguard.client.clients {
 		#region Parameters
 		public bool enabled { get; set; }
 		public string name { get; set; }
+		public string psk { get; set; }
 		public string pubkey { get; set; }
 		public string serveraddress { get; set; }
 		public PSObject serverport { get; set; }
@@ -15,6 +16,7 @@ namespace OPNsense.wireguard.client.clients {
 		public Client () {
 			enabled = true;
 			name = null;
+			psk = null;
 			pubkey = null;
 			serveraddress = null;
 			serverport = null;
@@ -24,6 +26,7 @@ namespace OPNsense.wireguard.client.clients {
 		public Client (
 			byte Enabled,
 			string Name,
+			string Psk,
 			string Pubkey,
 			string Serveraddress,
 			PSObject Serverport,
@@ -31,6 +34,7 @@ namespace OPNsense.wireguard.client.clients {
 		) {
 			enabled = (Enabled == 0) ? false : true;
 			name = Name;
+			psk = Psk;
 			pubkey = Pubkey;
 			serveraddress = Serveraddress;
 			serverport = Serverport;
