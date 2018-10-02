@@ -37,7 +37,7 @@ Function Import-Type {
             # In production, check if the TypeName already exists. Only Add TypeDefinition when needed
             # New-Object $Path.basename | Out-Null
             # Object creation succeeded, no need to add the Type again
-            return
+            #return
         } catch {
             # Failed to load the type, it does not exist yet so go ahead and add the TypeDefinition
         }
