@@ -99,8 +99,8 @@ This module is tested on:
 Platform          | Edition            | Version
 ------------------|--------------------|--------
 Windows 10        | PowerShell Desktop | 5.1
-Windows 10        | PowerShell Core    | 6.x
-[Ubuntu 18.04](https://github.com/fvanroie/PS_OPNsense/wiki/Install-PowerShell-on-Ubuntu-18.04-beta) | PowerShell Core    | 6.x
+Windows 10        | PowerShell Core    | 6.1
+[Ubuntu 18.04](https://github.com/fvanroie/PS_OPNsense/wiki/Install-PowerShell-on-Ubuntu-18.04-beta) | PowerShell Core    | 6.1
 
-PS_OPNsense aims to be cross-platform on PowerShell Core 6.0 and up, however it has not been extensively tested on MacOS yet. Let me know what works and what doesn't.
+PS_OPNsense aims to be cross-platform on PowerShell Core 6.1 and up, however it has not been extensively tested on MacOS yet. Let me know what works and what doesn't.
 Feel free to use it on these platforms and report back any [issues](https://github.com/fvanroie/PS_OPNsense/issues) you encouter. The goal is to make PS_OPNsense crossplatform with PowerShell Core.
