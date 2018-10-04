@@ -1,7 +1,7 @@
 ﻿{
     "openapi": "3.0.1",
     "info": {
-        "version": "0.0.2",
+        "version": "0.0.1",
         "title": "OPNsense REST API",
         "description": "This file describes the endpoints of the OPNsense REST API.",
         "termsOfService": "https://opnsense.org/about/legal-notices/",
@@ -795,6 +795,191 @@
                 ]
             }
         },
+        "/bind/acl/addacl": {
+            "description": "Acl",
+            "summary": "Create Bind Acl items",
+            "post": {
+                "operationId": "addBindAcl",
+                "summary": "Add a new Acl",
+                "tags": [
+                    "Bind"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "acl": {
+                                        "$ref": "#/components/schemas/OPNsense.bind.acl.acls.acl"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/bind/acl/searchacl": {
+            "post": {
+                "operationId": "searchBindAcl",
+                "summary": "Search a Acl",
+                "tags": [
+                    "Bind"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
+        "/bind/acl/getacl/{uuid}": {
+            "get": {
+                "operationId": "getBindAcl",
+                "summary": "Returns a Acl",
+                "tags": [
+                    "Bind"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "acl": {
+                                            "$ref": "#/components/schemas/OPNsense.bind.acl.acls.acl"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/bind/acl/setacl/{uuid}": {
+            "post": {
+                "operationId": "setBindAcl",
+                "summary": "Updates a Acl",
+                "tags": [
+                    "Bind"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "acl": {
+                                        "$ref": "#/components/schemas/OPNsense.bind.acl.acls.acl"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/bind/acl/delacl/{uuid}": {
+            "post": {
+                "operationId": "deleteBindAcl",
+                "summary": "Removes a Acl",
+                "tags": [
+                    "Bind"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/bind/acl/toggleacl/{uuid}": {
+            "post": {
+                "operationId": "toggleBindAcl",
+                "summary": "Toggle a Acl",
+                "tags": [
+                    "Bind"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                },
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/uuid"
+                    },
+                    {
+                        "$ref": "#/components/parameters/enabled"
+                    }
+                ]
+            }
+        },
         "/captiveportal/service/addtemplate": {
             "description": "Template",
             "summary": "Create CaptivePortal Template items",
@@ -1488,6 +1673,191 @@
                 "summary": "Toggle a Job",
                 "tags": [
                     "Cron"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                },
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/uuid"
+                    },
+                    {
+                        "$ref": "#/components/parameters/enabled"
+                    }
+                ]
+            }
+        },
+        "/firewall/alias/additem": {
+            "description": "Alias",
+            "summary": "Create Firewall Alias items",
+            "post": {
+                "operationId": "addFirewallAlias",
+                "summary": "Add a new Alias",
+                "tags": [
+                    "Firewall"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "alias": {
+                                        "$ref": "#/components/schemas/OPNsense.Firewall.Alias.aliases.alias"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/firewall/alias/searchitem": {
+            "post": {
+                "operationId": "searchFirewallAlias",
+                "summary": "Search a Alias",
+                "tags": [
+                    "Firewall"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
+        "/firewall/alias/getitem/{uuid}": {
+            "get": {
+                "operationId": "getFirewallAlias",
+                "summary": "Returns a Alias",
+                "tags": [
+                    "Firewall"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "alias": {
+                                            "$ref": "#/components/schemas/OPNsense.Firewall.Alias.aliases.alias"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/firewall/alias/setitem/{uuid}": {
+            "post": {
+                "operationId": "setFirewallAlias",
+                "summary": "Updates a Alias",
+                "tags": [
+                    "Firewall"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "alias": {
+                                        "$ref": "#/components/schemas/OPNsense.Firewall.Alias.aliases.alias"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/firewall/alias/delitem/{uuid}": {
+            "post": {
+                "operationId": "deleteFirewallAlias",
+                "summary": "Removes a Alias",
+                "tags": [
+                    "Firewall"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/firewall/alias/toggleitem/{uuid}/{disabled}": {
+            "post": {
+                "operationId": "toggleFirewallAlias",
+                "summary": "Toggle a Alias",
+                "tags": [
+                    "Firewall"
                 ],
                 "responses": {
                     "200": {
@@ -3096,7 +3466,7 @@
                             "schema": {
                                 "properties": {
                                     "luascript": {
-                                        "$ref": "#/components/schemas/OPNsense.HAProxy.luas.lua"
+                                        "$ref": "#/components/schemas/OPNsense.HAProxy.mapfiles.mapfile"
                                     }
                                 }
                             }
@@ -3157,7 +3527,7 @@
                                 "schema": {
                                     "properties": {
                                         "lua": {
-                                            "$ref": "#/components/schemas/OPNsense.HAProxy.luas.lua"
+                                            "$ref": "#/components/schemas/OPNsense.HAProxy.mapfiles.mapfile"
                                         }
                                     }
                                 }
@@ -3180,7 +3550,7 @@
                             "schema": {
                                 "properties": {
                                     "luascript": {
-                                        "$ref": "#/components/schemas/OPNsense.HAProxy.luas.lua"
+                                        "$ref": "#/components/schemas/OPNsense.HAProxy.mapfiles.mapfile"
                                     }
                                 }
                             }
@@ -3264,6 +3634,169 @@
                         "$ref": "#/components/parameters/enabled"
                     }
                 ]
+            }
+        },
+        "/haproxy/settings/addmapfile": {
+            "description": "MapFile",
+            "summary": "Create HAProxy MapFile items",
+            "post": {
+                "operationId": "addHAProxyMapFile",
+                "summary": "Add a new MapFile",
+                "tags": [
+                    "HAProxy"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "mapfile": {
+                                        "$ref": "#/components/schemas/OPNsense.HAProxy.luas.lua"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/haproxy/settings/searchmapfiles": {
+            "post": {
+                "operationId": "searchHAProxyMapFile",
+                "summary": "Search a MapFile",
+                "tags": [
+                    "HAProxy"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
+        "/haproxy/settings/getmapfile/{uuid}": {
+            "get": {
+                "operationId": "getHAProxyMapFile",
+                "summary": "Returns a MapFile",
+                "tags": [
+                    "HAProxy"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "mapfile": {
+                                            "$ref": "#/components/schemas/OPNsense.HAProxy.luas.lua"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/haproxy/settings/setmapfile/{uuid}": {
+            "post": {
+                "operationId": "setHAProxyMapFile",
+                "summary": "Updates a MapFile",
+                "tags": [
+                    "HAProxy"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "mapfile": {
+                                        "$ref": "#/components/schemas/OPNsense.HAProxy.luas.lua"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/haproxy/settings/delmapfile/{uuid}": {
+            "post": {
+                "operationId": "deleteHAProxyMapFile",
+                "summary": "Removes a MapFile",
+                "tags": [
+                    "HAProxy"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
         },
         "/haproxy/settings/addserver": {
@@ -3756,8 +4289,10 @@
                             "application/json": {
                                 "schema": {
                                     "properties": {
-                                        "System.Object[]": {
-                                            "$ref": "#/components/schemas/OPNsense.monit.alert"
+                                        "monit": {
+                                            "alert": {
+                                                "$ref": "#/components/schemas/OPNsense.monit.alert"
+                                            }
                                         }
                                     }
                                 }
@@ -3941,8 +4476,10 @@
                             "application/json": {
                                 "schema": {
                                     "properties": {
-                                        "System.Object[]": {
-                                            "$ref": "#/components/schemas/OPNsense.monit.service"
+                                        "monit": {
+                                            "service": {
+                                                "$ref": "#/components/schemas/OPNsense.monit.service"
+                                            }
                                         }
                                     }
                                 }
@@ -4126,8 +4663,10 @@
                             "application/json": {
                                 "schema": {
                                     "properties": {
-                                        "System.Object[]": {
-                                            "$ref": "#/components/schemas/OPNsense.monit.test"
+                                        "monit": {
+                                            "test": {
+                                                "$ref": "#/components/schemas/OPNsense.monit.test"
+                                            }
                                         }
                                     }
                                 }
@@ -4194,6 +4733,233 @@
                         "$ref": "#/components/parameters/uuid"
                     }
                 ],
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/netsnmp/user/adduser": {
+            "description": "User",
+            "summary": "Create NetSNMP User items",
+            "post": {
+                "operationId": "addNetSNMPUser",
+                "summary": "Add a new User",
+                "tags": [
+                    "NetSNMP"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "user": {
+                                        "$ref": "#/components/schemas/OPNsense.netsnmp.user.users.user"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/netsnmp/user/searchuser": {
+            "post": {
+                "operationId": "searchNetSNMPUser",
+                "summary": "Search a User",
+                "tags": [
+                    "NetSNMP"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
+        "/netsnmp/user/getuser/{uuid}": {
+            "get": {
+                "operationId": "getNetSNMPUser",
+                "summary": "Returns a User",
+                "tags": [
+                    "NetSNMP"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "user": {
+                                            "$ref": "#/components/schemas/OPNsense.netsnmp.user.users.user"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/netsnmp/user/setuser/{uuid}": {
+            "post": {
+                "operationId": "setNetSNMPUser",
+                "summary": "Updates a User",
+                "tags": [
+                    "NetSNMP"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "user": {
+                                        "$ref": "#/components/schemas/OPNsense.netsnmp.user.users.user"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/netsnmp/user/deluser/{uuid}": {
+            "post": {
+                "operationId": "deleteNetSNMPUser",
+                "summary": "Removes a User",
+                "tags": [
+                    "NetSNMP"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/netsnmp/user/toggleuser/{uuid}": {
+            "post": {
+                "operationId": "toggleNetSNMPUser",
+                "summary": "Toggle a User",
+                "tags": [
+                    "NetSNMP"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                },
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/uuid"
+                    },
+                    {
+                        "$ref": "#/components/parameters/enabled"
+                    }
+                ]
+            }
+        },
+        "/nginx/settings/addcredential": {
+            "description": "Credential",
+            "summary": "Create Nginx Credential items",
+            "post": {
+                "operationId": "addNginxCredential",
+                "summary": "Add a new Credential",
+                "tags": [
+                    "Nginx"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "credential": {
+                                        "$ref": "#/components/schemas/OPNsense.Nginx.credential"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
                         "description": "Check the status field in the reponse.",
@@ -4335,6 +5101,48 @@
                 }
             }
         },
+        "/nginx/settings/addcustompolicy": {
+            "description": "CustomPolicy",
+            "summary": "Create Nginx CustomPolicy items",
+            "post": {
+                "operationId": "addNginxCustomPolicy",
+                "summary": "Add a new CustomPolicy",
+                "tags": [
+                    "Nginx"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "custompolicy": {
+                                        "$ref": "#/components/schemas/OPNsense.Nginx.custom_policy"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/nginx/settings/searchcustompolicy/": {
             "post": {
                 "operationId": "searchNginxCustomPolicy",
@@ -4456,6 +5264,211 @@
                 }
             }
         },
+        "/nginx/settings/addhttprewrite": {
+            "description": "HttpRewrite",
+            "summary": "Create Nginx HttpRewrite items",
+            "post": {
+                "operationId": "addNginxHttpRewrite",
+                "summary": "Add a new HttpRewrite",
+                "tags": [
+                    "Nginx"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "httprewrite": {
+                                        "$ref": "#/components/schemas/OPNsense.Nginx.http_rewrite"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/nginx/settings/searchhttprewrite/": {
+            "post": {
+                "operationId": "searchNginxHttpRewrite",
+                "summary": "Search a HttpRewrite",
+                "tags": [
+                    "Nginx"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
+        "/nginx/settings/gethttprewrite/{uuid}": {
+            "get": {
+                "operationId": "getNginxHttpRewrite",
+                "summary": "Returns a HttpRewrite",
+                "tags": [
+                    "Nginx"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "httprewrite": {
+                                            "$ref": "#/components/schemas/OPNsense.Nginx.http_rewrite"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/nginx/settings/sethttprewrite/{uuid}": {
+            "post": {
+                "operationId": "setNginxHttpRewrite",
+                "summary": "Updates a HttpRewrite",
+                "tags": [
+                    "Nginx"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "httprewrite": {
+                                        "$ref": "#/components/schemas/OPNsense.Nginx.http_rewrite"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/nginx/settings/delhttprewrite/{uuid}": {
+            "post": {
+                "operationId": "deleteNginxHttpRewrite",
+                "summary": "Removes a HttpRewrite",
+                "tags": [
+                    "Nginx"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/nginx/settings/addhttpserver": {
+            "description": "HttpServer",
+            "summary": "Create Nginx HttpServer items",
+            "post": {
+                "operationId": "addNginxHttpServer",
+                "summary": "Add a new HttpServer",
+                "tags": [
+                    "Nginx"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "httpserver": {
+                                        "$ref": "#/components/schemas/OPNsense.Nginx.http_server"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/nginx/settings/searchhttpserver/": {
             "post": {
                 "operationId": "searchNginxHttpServer",
@@ -4549,6 +5562,332 @@
             "post": {
                 "operationId": "deleteNginxHttpServer",
                 "summary": "Removes a HttpServer",
+                "tags": [
+                    "Nginx"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/nginx/settings/addlimit_request_connection": {
+            "description": "LimitRequestConnection",
+            "summary": "Create Nginx LimitRequestConnection items",
+            "post": {
+                "operationId": "addNginxLimitRequestConnection",
+                "summary": "Add a new LimitRequestConnection",
+                "tags": [
+                    "Nginx"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "limitrequestconnection": {
+                                        "$ref": "#/components/schemas/OPNsense.Nginx.limit_request_connection"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/nginx/settings/searchlimit_request_connection/": {
+            "post": {
+                "operationId": "searchNginxLimitRequestConnection",
+                "summary": "Search a LimitRequestConnection",
+                "tags": [
+                    "Nginx"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
+        "/nginx/settings/getlimit_request_connection/{uuid}": {
+            "get": {
+                "operationId": "getNginxLimitRequestConnection",
+                "summary": "Returns a LimitRequestConnection",
+                "tags": [
+                    "Nginx"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "limit_request_connection": {
+                                            "$ref": "#/components/schemas/OPNsense.Nginx.limit_request_connection"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/nginx/settings/setlimit_request_connection/{uuid}": {
+            "post": {
+                "operationId": "setNginxLimitRequestConnection",
+                "summary": "Updates a LimitRequestConnection",
+                "tags": [
+                    "Nginx"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "limitrequestconnection": {
+                                        "$ref": "#/components/schemas/OPNsense.Nginx.limit_request_connection"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/nginx/settings/dellimit_request_connection/{uuid}": {
+            "post": {
+                "operationId": "deleteNginxLimitRequestConnection",
+                "summary": "Removes a LimitRequestConnection",
+                "tags": [
+                    "Nginx"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/nginx/settings/addlimit_zone": {
+            "description": "LimitZone",
+            "summary": "Create Nginx LimitZone items",
+            "post": {
+                "operationId": "addNginxLimitZone",
+                "summary": "Add a new LimitZone",
+                "tags": [
+                    "Nginx"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "limitzone": {
+                                        "$ref": "#/components/schemas/OPNsense.Nginx.limit_zone"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/nginx/settings/searchlimit_zone/": {
+            "post": {
+                "operationId": "searchNginxLimitZone",
+                "summary": "Search a LimitZone",
+                "tags": [
+                    "Nginx"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
+        "/nginx/settings/getlimit_zone/{uuid}": {
+            "get": {
+                "operationId": "getNginxLimitZone",
+                "summary": "Returns a LimitZone",
+                "tags": [
+                    "Nginx"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "limit_zone": {
+                                            "$ref": "#/components/schemas/OPNsense.Nginx.limit_zone"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/nginx/settings/setlimit_zone/{uuid}": {
+            "post": {
+                "operationId": "setNginxLimitZone",
+                "summary": "Updates a LimitZone",
+                "tags": [
+                    "Nginx"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "limitzone": {
+                                        "$ref": "#/components/schemas/OPNsense.Nginx.limit_zone"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/nginx/settings/dellimit_zone/{uuid}": {
+            "post": {
+                "operationId": "deleteNginxLimitZone",
+                "summary": "Removes a LimitZone",
                 "tags": [
                     "Nginx"
                 ],
@@ -4791,6 +6130,127 @@
             "post": {
                 "operationId": "deleteNginxNaxsiRule",
                 "summary": "Removes a NaxsiRule",
+                "tags": [
+                    "Nginx"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/nginx/settings/searchsecurity_header/": {
+            "post": {
+                "operationId": "searchNginxSecurityHeader",
+                "summary": "Search a SecurityHeader",
+                "tags": [
+                    "Nginx"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
+        "/nginx/settings/getsecurity_header/{uuid}": {
+            "get": {
+                "operationId": "getNginxSecurityHeader",
+                "summary": "Returns a SecurityHeader",
+                "tags": [
+                    "Nginx"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "security_header": {
+                                            "$ref": "#/components/schemas/OPNsense.Nginx.security_header"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/nginx/settings/setsecurity_header/{uuid}": {
+            "post": {
+                "operationId": "setNginxSecurityHeader",
+                "summary": "Updates a SecurityHeader",
+                "tags": [
+                    "Nginx"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "securityheader": {
+                                        "$ref": "#/components/schemas/OPNsense.Nginx.security_header"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/nginx/settings/delsecurity_header/{uuid}": {
+            "post": {
+                "operationId": "deleteNginxSecurityHeader",
+                "summary": "Removes a SecurityHeader",
                 "tags": [
                     "Nginx"
                 ],
@@ -5721,6 +7181,561 @@
                 "summary": "Toggle a Sender",
                 "tags": [
                     "Postfix"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                },
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/uuid"
+                    },
+                    {
+                        "$ref": "#/components/parameters/enabled"
+                    }
+                ]
+            }
+        },
+        "/proxy/settings/addpacmatch": {
+            "description": "PacMatch",
+            "summary": "Create Proxy PacMatch items",
+            "post": {
+                "operationId": "addProxyPacMatch",
+                "summary": "Add a new PacMatch",
+                "tags": [
+                    "Proxy"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "pacmatch": {
+                                        "$ref": "#/components/schemas/OPNsense.proxy.pac.match"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/proxy/settings/searchpacmatch": {
+            "post": {
+                "operationId": "searchProxyPacMatch",
+                "summary": "Search a PacMatch",
+                "tags": [
+                    "Proxy"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
+        "/proxy/settings/getpacmatch/{uuid}": {
+            "get": {
+                "operationId": "getProxyPacMatch",
+                "summary": "Returns a PacMatch",
+                "tags": [
+                    "Proxy"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "pacmatch": {
+                                            "$ref": "#/components/schemas/OPNsense.proxy.pac.match"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/proxy/settings/setpacmatch/{uuid}": {
+            "post": {
+                "operationId": "setProxyPacMatch",
+                "summary": "Updates a PacMatch",
+                "tags": [
+                    "Proxy"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "pacmatch": {
+                                        "$ref": "#/components/schemas/OPNsense.proxy.pac.match"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/proxy/settings/delpacmatch/{uuid}": {
+            "post": {
+                "operationId": "deleteProxyPacMatch",
+                "summary": "Removes a PacMatch",
+                "tags": [
+                    "Proxy"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/proxy/settings/togglepacmatch/{uuid}": {
+            "post": {
+                "operationId": "toggleProxyPacMatch",
+                "summary": "Toggle a PacMatch",
+                "tags": [
+                    "Proxy"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                },
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/uuid"
+                    },
+                    {
+                        "$ref": "#/components/parameters/enabled"
+                    }
+                ]
+            }
+        },
+        "/proxy/settings/addpacproxy": {
+            "description": "PacProxy",
+            "summary": "Create Proxy PacProxy items",
+            "post": {
+                "operationId": "addProxyPacProxy",
+                "summary": "Add a new PacProxy",
+                "tags": [
+                    "Proxy"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "pacproxy": {
+                                        "$ref": "#/components/schemas/OPNsense.proxy.pac.proxy"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/proxy/settings/searchpacproxy": {
+            "post": {
+                "operationId": "searchProxyPacProxy",
+                "summary": "Search a PacProxy",
+                "tags": [
+                    "Proxy"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
+        "/proxy/settings/getpacproxy/{uuid}": {
+            "get": {
+                "operationId": "getProxyPacProxy",
+                "summary": "Returns a PacProxy",
+                "tags": [
+                    "Proxy"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "pacproxy": {
+                                            "$ref": "#/components/schemas/OPNsense.proxy.pac.proxy"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/proxy/settings/setpacproxy/{uuid}": {
+            "post": {
+                "operationId": "setProxyPacProxy",
+                "summary": "Updates a PacProxy",
+                "tags": [
+                    "Proxy"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "pacproxy": {
+                                        "$ref": "#/components/schemas/OPNsense.proxy.pac.proxy"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/proxy/settings/delpacproxy/{uuid}": {
+            "post": {
+                "operationId": "deleteProxyPacProxy",
+                "summary": "Removes a PacProxy",
+                "tags": [
+                    "Proxy"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/proxy/settings/togglepacproxy/{uuid}": {
+            "post": {
+                "operationId": "toggleProxyPacProxy",
+                "summary": "Toggle a PacProxy",
+                "tags": [
+                    "Proxy"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                },
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/uuid"
+                    },
+                    {
+                        "$ref": "#/components/parameters/enabled"
+                    }
+                ]
+            }
+        },
+        "/proxy/settings/addpacrule": {
+            "description": "PacRule",
+            "summary": "Create Proxy PacRule items",
+            "post": {
+                "operationId": "addProxyPacRule",
+                "summary": "Add a new PacRule",
+                "tags": [
+                    "Proxy"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "pacrule": {
+                                        "$ref": "#/components/schemas/OPNsense.proxy.pac.rule"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/proxy/settings/searchpacrule": {
+            "post": {
+                "operationId": "searchProxyPacRule",
+                "summary": "Search a PacRule",
+                "tags": [
+                    "Proxy"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
+        "/proxy/settings/getpacrule/{uuid}": {
+            "get": {
+                "operationId": "getProxyPacRule",
+                "summary": "Returns a PacRule",
+                "tags": [
+                    "Proxy"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "pacrule": {
+                                            "$ref": "#/components/schemas/OPNsense.proxy.pac.rule"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/proxy/settings/setpacrule/{uuid}": {
+            "post": {
+                "operationId": "setProxyPacRule",
+                "summary": "Updates a PacRule",
+                "tags": [
+                    "Proxy"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "pacrule": {
+                                        "$ref": "#/components/schemas/OPNsense.proxy.pac.rule"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/proxy/settings/delpacrule/{uuid}": {
+            "post": {
+                "operationId": "deleteProxyPacRule",
+                "summary": "Removes a PacRule",
+                "tags": [
+                    "Proxy"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/proxy/settings/togglepacrule/{uuid}": {
+            "post": {
+                "operationId": "toggleProxyPacRule",
+                "summary": "Toggle a PacRule",
+                "tags": [
+                    "Proxy"
                 ],
                 "responses": {
                     "200": {
@@ -7621,7 +9636,7 @@
                                 "schema": {
                                     "properties": {
                                         "host": {
-                                            "$ref": "#/components/schemas/relayd.host"
+                                            "$ref": "#/components/schemas/OPNsense.relayd.host"
                                         }
                                     }
                                 }
@@ -7644,7 +9659,7 @@
                             "schema": {
                                 "properties": {
                                     "host": {
-                                        "$ref": "#/components/schemas/relayd.host"
+                                        "$ref": "#/components/schemas/OPNsense.relayd.host"
                                     }
                                 }
                             }
@@ -7742,7 +9757,7 @@
                                 "schema": {
                                     "properties": {
                                         "protocol": {
-                                            "$ref": "#/components/schemas/relayd.protocol"
+                                            "$ref": "#/components/schemas/OPNsense.relayd.protocol"
                                         }
                                     }
                                 }
@@ -7765,7 +9780,7 @@
                             "schema": {
                                 "properties": {
                                     "protocol": {
-                                        "$ref": "#/components/schemas/relayd.protocol"
+                                        "$ref": "#/components/schemas/OPNsense.relayd.protocol"
                                     }
                                 }
                             }
@@ -7863,7 +9878,7 @@
                                 "schema": {
                                     "properties": {
                                         "table": {
-                                            "$ref": "#/components/schemas/relayd.table"
+                                            "$ref": "#/components/schemas/OPNsense.relayd.table"
                                         }
                                     }
                                 }
@@ -7886,7 +9901,7 @@
                             "schema": {
                                 "properties": {
                                     "table": {
-                                        "$ref": "#/components/schemas/relayd.table"
+                                        "$ref": "#/components/schemas/OPNsense.relayd.table"
                                     }
                                 }
                             }
@@ -7983,8 +9998,10 @@
                             "application/json": {
                                 "schema": {
                                     "properties": {
-                                        "tablecheck": {
-                                            "$ref": "#/components/schemas/relayd.tablecheck"
+                                        "relayd": {
+                                            "tablecheck": {
+                                                "$ref": "#/components/schemas/OPNsense.relayd.tablecheck"
+                                            }
                                         }
                                     }
                                 }
@@ -8007,7 +10024,7 @@
                             "schema": {
                                 "properties": {
                                     "tablecheck": {
-                                        "$ref": "#/components/schemas/relayd.tablecheck"
+                                        "$ref": "#/components/schemas/OPNsense.relayd.tablecheck"
                                     }
                                 }
                             }
@@ -8105,7 +10122,7 @@
                                 "schema": {
                                     "properties": {
                                         "virtualserver": {
-                                            "$ref": "#/components/schemas/relayd.virtualserver"
+                                            "$ref": "#/components/schemas/OPNsense.relayd.virtualserver"
                                         }
                                     }
                                 }
@@ -8128,7 +10145,7 @@
                             "schema": {
                                 "properties": {
                                     "virtualserver": {
-                                        "$ref": "#/components/schemas/relayd.virtualserver"
+                                        "$ref": "#/components/schemas/OPNsense.relayd.virtualserver"
                                     }
                                 }
                             }
@@ -8731,6 +10748,191 @@
                 "summary": "Toggle a User",
                 "tags": [
                     "Siproxd"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                },
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/uuid"
+                    },
+                    {
+                        "$ref": "#/components/parameters/enabled"
+                    }
+                ]
+            }
+        },
+        "/telegraf/key/addkey": {
+            "description": "Key",
+            "summary": "Create Telegraf Key items",
+            "post": {
+                "operationId": "addTelegrafKey",
+                "summary": "Add a new Key",
+                "tags": [
+                    "Telegraf"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "key": {
+                                        "$ref": "#/components/schemas/OPNsense.telegraf.key.keys.key"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/telegraf/key/searchkey": {
+            "post": {
+                "operationId": "searchTelegrafKey",
+                "summary": "Search a Key",
+                "tags": [
+                    "Telegraf"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
+        "/telegraf/key/getkey/{uuid}": {
+            "get": {
+                "operationId": "getTelegrafKey",
+                "summary": "Returns a Key",
+                "tags": [
+                    "Telegraf"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "host": {
+                                            "$ref": "#/components/schemas/OPNsense.telegraf.key.keys.key"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/telegraf/key/setkey/{uuid}": {
+            "post": {
+                "operationId": "setTelegrafKey",
+                "summary": "Updates a Key",
+                "tags": [
+                    "Telegraf"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "key": {
+                                        "$ref": "#/components/schemas/OPNsense.telegraf.key.keys.key"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/telegraf/key/delkey/{uuid}": {
+            "post": {
+                "operationId": "deleteTelegrafKey",
+                "summary": "Removes a Key",
+                "tags": [
+                    "Telegraf"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/telegraf/key/togglekey/{uuid}": {
+            "post": {
+                "operationId": "toggleTelegrafKey",
+                "summary": "Toggle a Key",
+                "tags": [
+                    "Telegraf"
                 ],
                 "responses": {
                     "200": {
@@ -10575,6 +12777,539 @@
                 }
             }
         },
+        "/wireguard/client/addclient": {
+            "description": "Client",
+            "summary": "Create Wireguard Client items",
+            "post": {
+                "operationId": "addWireguardClient",
+                "summary": "Add a new Client",
+                "tags": [
+                    "Wireguard"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "client": {
+                                        "$ref": "#/components/schemas/OPNsense.wireguard.client.clients.client"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/wireguard/client/searchclient": {
+            "post": {
+                "operationId": "searchWireguardClient",
+                "summary": "Search a Client",
+                "tags": [
+                    "Wireguard"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
+        "/wireguard/client/getclient/{uuid}": {
+            "get": {
+                "operationId": "getWireguardClient",
+                "summary": "Returns a Client",
+                "tags": [
+                    "Wireguard"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "pipe": {
+                                            "$ref": "#/components/schemas/OPNsense.wireguard.client.clients.client"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/wireguard/client/setclient/{uuid}": {
+            "post": {
+                "operationId": "setWireguardClient",
+                "summary": "Updates a Client",
+                "tags": [
+                    "Wireguard"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "client": {
+                                        "$ref": "#/components/schemas/OPNsense.wireguard.client.clients.client"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/wireguard/client/delclient/{uuid}": {
+            "post": {
+                "operationId": "deleteWireguardClient",
+                "summary": "Removes a Client",
+                "tags": [
+                    "Wireguard"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/wireguard/client/toggleclient/{uuid}": {
+            "post": {
+                "operationId": "toggleWireguardClient",
+                "summary": "Toggle a Client",
+                "tags": [
+                    "Wireguard"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                },
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/uuid"
+                    },
+                    {
+                        "$ref": "#/components/parameters/enabled"
+                    }
+                ]
+            }
+        },
+        "/wireguard/server/addserver": {
+            "description": "Server",
+            "summary": "Create Wireguard Server items",
+            "post": {
+                "operationId": "addWireguardServer",
+                "summary": "Add a new Server",
+                "tags": [
+                    "Wireguard"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "server": {
+                                        "$ref": "#/components/schemas/OPNsense.wireguard.server.servers.server"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/wireguard/server/searchserver": {
+            "post": {
+                "operationId": "searchWireguardServer",
+                "summary": "Search a Server",
+                "tags": [
+                    "Wireguard"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
+        "/wireguard/server/getserver/{uuid}": {
+            "get": {
+                "operationId": "getWireguardServer",
+                "summary": "Returns a Server",
+                "tags": [
+                    "Wireguard"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "queue": {
+                                            "$ref": "#/components/schemas/OPNsense.wireguard.server.servers.server"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/wireguard/server/setserver/{uuid}": {
+            "post": {
+                "operationId": "setWireguardServer",
+                "summary": "Updates a Server",
+                "tags": [
+                    "Wireguard"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "server": {
+                                        "$ref": "#/components/schemas/OPNsense.wireguard.server.servers.server"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/wireguard/server/delserver/{uuid}": {
+            "post": {
+                "operationId": "deleteWireguardServer",
+                "summary": "Removes a Server",
+                "tags": [
+                    "Wireguard"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/wireguard/server/toggleserver/{uuid}": {
+            "post": {
+                "operationId": "toggleWireguardServer",
+                "summary": "Toggle a Server",
+                "tags": [
+                    "Wireguard"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                },
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/uuid"
+                    },
+                    {
+                        "$ref": "#/components/parameters/enabled"
+                    }
+                ]
+            }
+        },
+        "/wol/wol/addhost": {
+            "description": "Host",
+            "summary": "Create Wol Host items",
+            "post": {
+                "operationId": "addWolHost",
+                "summary": "Add a new Host",
+                "tags": [
+                    "Wol"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "host": {
+                                        "$ref": "#/components/schemas/wol.wolentry"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/wol/wol/searchhost": {
+            "post": {
+                "operationId": "searchWolHost",
+                "summary": "Search a Host",
+                "tags": [
+                    "Wol"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
+        "/wol/wol/gethost/{uuid}": {
+            "get": {
+                "operationId": "getWolHost",
+                "summary": "Returns a Host",
+                "tags": [
+                    "Wol"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "host": {
+                                            "$ref": "#/components/schemas/wol.wolentry"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/wol/wol/sethost/{uuid}": {
+            "post": {
+                "operationId": "setWolHost",
+                "summary": "Updates a Host",
+                "tags": [
+                    "Wol"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "host": {
+                                        "$ref": "#/components/schemas/wol.wolentry"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/wol/wol/delhost/{uuid}": {
+            "post": {
+                "operationId": "deleteWolHost",
+                "summary": "Removes a Host",
+                "tags": [
+                    "Wol"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Check the status field in the reponse.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The response status of the operation."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/zerotier/network/add": {
             "description": "Network",
             "summary": "Create Zerotier Network items",
@@ -12309,92 +15044,7 @@
                     }
                 }
             }
-        },
-        "/acmeclient/settings/get": {},
-        "/acmeclient/settings/set": {},
-        "/arpscanner/settings/get": {},
-        "/arpscanner/settings/set": {},
-        "/cicap/general/get": {},
-        "/cicap/general/set": {},
-        "/cicap/antivirus/get": {},
-        "/cicap/antivirus/set": {},
-        "/clamav/general/get": {},
-        "/clamav/general/set": {},
-        "/collectd/general/get": {},
-        "/collectd/general/set": {},
-        "/freeradius/general/get": {},
-        "/freeradius/general/set": {},
-        "/freeradius/eap/get": {},
-        "/freeradius/eap/set": {},
-        "/freeradius/ldap/get": {},
-        "/freeradius/ldap/set": {},
-        "/haproxy/settings/get": {},
-        "/haproxy/settings/set": {},
-        "/helloworld/settings/get": {},
-        "/helloworld/settings/set": {},
-        "/ids/settings/get": {},
-        "/ids/settings/set": {},
-        "/iperf/instance/get": {},
-        "/iperf/instance/set": {},
-        "/lldpd/general/get": {},
-        "/lldpd/general/set": {},
-        "/mdnsrepeater/settings/get": {},
-        "/mdnsrepeater/settings/set": {},
-        "/monit/settings/get": {},
-        "/monit/settings/set": {},
-        "/diagnostics/netflow/get": {},
-        "/diagnostics/netflow/set": {},
-        "/nodeexporter/general/get": {},
-        "/nodeexporter/general/set": {},
-        "/nut/settings/get": {},
-        "/nut/settings/set": {},
-        "/openconnect/general/get": {},
-        "/openconnect/general/set": {},
-        "/postfix/general/get": {},
-        "/postfix/general/set": {},
-        "/postfix/antispam/get": {},
-        "/postfix/antispam/set": {},
-        "/proxy/settings/get": {},
-        "/proxy/settings/set": {},
-        "/proxysso/settings/get": {},
-        "/proxysso/settings/set": {},
-        "/quagga/general/get": {},
-        "/quagga/general/set": {},
-        "/quagga/rip/get": {},
-        "/quagga/rip/set": {},
-        "/quagga/ospfsettings/get": {},
-        "/quagga/ospfsettings/set": {},
-        "/quagga/ospf6settings/get": {},
-        "/quagga/ospf6settings/set": {},
-        "/quagga/bgp/get": {},
-        "/quagga/bgp/set": {},
-        "/redis/settings/get": {},
-        "/redis/settings/set": {},
-        "/relayd/settings/get": {},
-        "/rspamd/settings/get": {},
-        "/rspamd/settings/set": {},
-        "/shadowsocks/general/get": {},
-        "/shadowsocks/general/set": {},
-        "/shadowsocks/local/get": {},
-        "/shadowsocks/local/set": {},
-        "/siproxd/general/get": {},
-        "/siproxd/general/set": {},
-        "/telegraf/general/get": {},
-        "/telegraf/general/set": {},
-        "/telegraf/input/get": {},
-        "/telegraf/input/set": {},
-        "/telegraf/output/get": {},
-        "/telegraf/output/set": {},
-        "/tor/general/get": {},
-        "/tor/general/set": {},
-        "/tor/relay/get": {},
-        "/tor/relay/set": {},
-        "/zabbixagent/settings/get": {},
-        "/zabbixagent/settings/set": {},
-        "/zabbixproxy/general/get": {},
-        "/zabbixproxy/general/set": {},
-        "/zerotier/settings/get": {},
-        "/zerotier/settings/set": {}
+        }
     },
     "components": {
         "parameters": {
@@ -13686,8 +16336,7 @@
                     }
                 },
                 "required": [
-                    "enabled",
-                    "hostname"
+                    "enabled"
                 ],
                 "default": [
                     {
@@ -13826,7 +16475,7 @@
                     }
                 ]
             },
-            "OPNSense.Firewall.Alias.aliases.alias": {
+            "OPNsense.Firewall.Alias.aliases.alias": {
                 "type": "object",
                 "properties": {
                     "content": {
@@ -14732,6 +17381,9 @@
                         "pattern": "/^([0-9]{1,5}[k|m|g]{1})*/u"
                     },
                     "tuning_defaultserver": {
+                        "type": "string"
+                    },
+                    "tuning_httpreuse": {
                         "type": "string"
                     },
                     "tuning_noport": {
@@ -15848,6 +18500,9 @@
                     "description": {
                         "type": "string"
                     },
+                    "destination": {
+                        "type": "string"
+                    },
                     "enabled": {
                         "type": "boolean"
                     },
@@ -15859,6 +18514,9 @@
                         "type": "string"
                     },
                     "geoip_direction": {
+                        "type": "string"
+                    },
+                    "source": {
                         "type": "string"
                     }
                 },
@@ -16030,6 +18688,9 @@
                         "type": "string",
                         "pattern": "/^([0-9a-zA-Z._\\-\\!\\$\\%\\/\\(\\)\\+\\#\\=]){8,64}$/u"
                     },
+                    "readwrite": {
+                        "type": "boolean"
+                    },
                     "username": {
                         "type": "string",
                         "pattern": "/^([0-9a-zA-Z._\\-]){1,64}$/u"
@@ -16039,11 +18700,66 @@
                     "enabled",
                     "enckey",
                     "password",
+                    "readwrite",
                     "username"
                 ],
                 "default": [
                     {
                         "enabled": true
+                    },
+                    {
+                        "readwrite": true
+                    }
+                ]
+            },
+            "OPNsense.Nginx.ban": {
+                "type": "object",
+                "properties": {
+                    "ip": {
+                        "type": "string"
+                    },
+                    "time": {
+                        "type": "integer",
+                        "minimum": 0
+                    }
+                },
+                "required": [
+                    "ip"
+                ]
+            },
+            "OPNsense.Nginx.cache_path": {
+                "type": "object",
+                "properties": {
+                    "inactive": {
+                        "type": "integer",
+                        "minimum": 1
+                    },
+                    "max_size": {
+                        "type": "integer",
+                        "minimum": 1
+                    },
+                    "path": {
+                        "type": "string",
+                        "pattern": "/\\/(srv|var|tmp|mnt)[a-z0-9\\-\\._\\:\\,\\/]+[a-z0-9\\-\\._\\:\\,]+/i"
+                    },
+                    "size": {
+                        "type": "integer",
+                        "minimum": 10
+                    },
+                    "use_temp_path": {
+                        "type": "boolean"
+                    }
+                },
+                "required": [
+                    "path",
+                    "use_temp_path"
+                ],
+                "default": [
+                    {
+                        "size": 10
+                    },
+                    {
+                        "use_temp_path": true
                     }
                 ]
             },
@@ -16175,6 +18891,9 @@
                     "https_only": {
                         "type": "boolean"
                     },
+                    "limit_request_connections": {
+                        "type": "string"
+                    },
                     "listen_https_port": {
                         "type": "integer"
                     },
@@ -16234,6 +18953,82 @@
                     }
                 ]
             },
+            "OPNsense.Nginx.limit_request_connection": {
+                "type": "object",
+                "properties": {
+                    "burst": {
+                        "type": "integer",
+                        "minimum": 1
+                    },
+                    "connection_count": {
+                        "type": "integer",
+                        "minimum": 1
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "limit_zone": {
+                        "type": "string"
+                    },
+                    "nodelay": {
+                        "type": "boolean"
+                    }
+                },
+                "required": [
+                    "connection_count",
+                    "description",
+                    "limit_zone",
+                    "nodelay"
+                ],
+                "default": [
+                    {
+                        "burst": 20
+                    },
+                    {
+                        "connection_count": 5
+                    },
+                    {
+                        "nodelay": true
+                    }
+                ]
+            },
+            "OPNsense.Nginx.limit_zone": {
+                "type": "object",
+                "properties": {
+                    "description": {
+                        "type": "string"
+                    },
+                    "key": {
+                        "type": "string"
+                    },
+                    "rate": {
+                        "type": "integer",
+                        "minimum": 1
+                    },
+                    "rate_unit": {
+                        "type": "string"
+                    },
+                    "size": {
+                        "type": "integer",
+                        "minimum": 1
+                    }
+                },
+                "required": [
+                    "description",
+                    "key",
+                    "rate",
+                    "rate_unit",
+                    "size"
+                ],
+                "default": [
+                    {
+                        "rate": 20
+                    },
+                    {
+                        "size": 10
+                    }
+                ]
+            },
             "OPNsense.Nginx.location": {
                 "type": "object",
                 "properties": {
@@ -16248,6 +19043,27 @@
                     },
                     "autoindex": {
                         "type": "boolean"
+                    },
+                    "cache_background_update": {
+                        "type": "boolean"
+                    },
+                    "cache_lock": {
+                        "type": "boolean"
+                    },
+                    "cache_methods": {
+                        "type": "string"
+                    },
+                    "cache_min_uses": {
+                        "type": "integer"
+                    },
+                    "cache_path": {
+                        "type": "string"
+                    },
+                    "cache_revalidate": {
+                        "type": "boolean"
+                    },
+                    "cache_use_stale": {
+                        "type": "string"
                     },
                     "custom_policy": {
                         "type": "string"
@@ -16264,11 +19080,24 @@
                     "force_https": {
                         "type": "string"
                     },
+                    "honeypot": {
+                        "type": "boolean"
+                    },
+                    "http2_push_preload": {
+                        "type": "boolean"
+                    },
                     "index": {
+                        "type": "string"
+                    },
+                    "limit_request_connections": {
                         "type": "string"
                     },
                     "matchtype": {
                         "type": "string"
+                    },
+                    "path_prefix": {
+                        "type": "string",
+                        "pattern": "/^[^\" \\t]+$/"
                     },
                     "php_enable": {
                         "type": "boolean"
@@ -16291,21 +19120,43 @@
                     "urlpattern": {
                         "type": "string"
                     },
+                    "websocket": {
+                        "type": "boolean"
+                    },
                     "xss_block_score": {
                         "type": "integer"
                     }
                 },
                 "required": [
                     "advanced_acl",
+                    "cache_background_update",
+                    "cache_lock",
+                    "cache_min_uses",
+                    "cache_revalidate",
                     "description",
                     "enable_learning_mode",
                     "enable_secrules",
+                    "honeypot",
+                    "http2_push_preload",
                     "php_enable",
-                    "urlpattern"
+                    "urlpattern",
+                    "websocket"
                 ],
                 "default": [
                     {
                         "advanced_acl": true
+                    },
+                    {
+                        "cache_background_update": true
+                    },
+                    {
+                        "cache_lock": true
+                    },
+                    {
+                        "cache_min_uses": 1
+                    },
+                    {
+                        "cache_revalidate": true
                     },
                     {
                         "enable_learning_mode": true
@@ -16314,7 +19165,16 @@
                         "enable_secrules": true
                     },
                     {
+                        "honeypot": true
+                    },
+                    {
+                        "http2_push_preload": true
+                    },
+                    {
                         "php_enable": true
+                    },
+                    {
+                        "websocket": true
                     }
                 ]
             },
@@ -17146,6 +20006,32 @@
                     }
                 ]
             },
+            "OPNsense.ntopng.general": {
+                "type": "object",
+                "properties": {
+                    "dnsmode": {
+                        "type": "string"
+                    },
+                    "enabled": {
+                        "type": "boolean"
+                    },
+                    "httpport": {
+                        "type": "integer"
+                    },
+                    "Interface": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "enabled",
+                    "httpport"
+                ],
+                "default": [
+                    {
+                        "enabled": true
+                    }
+                ]
+            },
             "OPNsense.Nut.account": {
                 "type": "object",
                 "properties": {
@@ -17287,7 +20173,7 @@
                     },
                     "user": {
                         "type": "string",
-                        "pattern": "/^[a-z0-9._-]{1,32}$/"
+                        "pattern": "/^[a-z0-9.\\@_-]{1,32}$/"
                     }
                 },
                 "required": [
@@ -17385,6 +20271,9 @@
                     "inet_interfaces": {
                         "type": "string"
                     },
+                    "inet_port": {
+                        "type": "integer"
+                    },
                     "message_size_limit": {
                         "type": "integer"
                     },
@@ -17450,6 +20339,7 @@
                     "enabled",
                     "enforce_recipient_check",
                     "inet_interfaces",
+                    "inet_port",
                     "message_size_limit",
                     "mynetworks",
                     "permit_mynetworks",
@@ -20136,10 +23026,16 @@
                     "disk_mount_points": {
                         "type": "string"
                     },
+                    "haproxy": {
+                        "type": "boolean"
+                    },
                     "mem": {
                         "type": "boolean"
                     },
                     "network": {
+                        "type": "boolean"
+                    },
+                    "pf": {
                         "type": "boolean"
                     },
                     "ping": {
@@ -20178,10 +23074,16 @@
                         "diskio": true
                     },
                     {
+                        "haproxy": true
+                    },
+                    {
                         "mem": true
                     },
                     {
                         "network": true
+                    },
+                    {
+                        "pf": true
                     },
                     {
                         "ping": true
@@ -20194,6 +23096,30 @@
                     },
                     {
                         "system": true
+                    }
+                ]
+            },
+            "OPNsense.telegraf.key.keys.key": {
+                "type": "object",
+                "properties": {
+                    "enabled": {
+                        "type": "boolean"
+                    },
+                    "name": {
+                        "type": "string",
+                        "pattern": "/^([0-9a-zA-Z._\\-]){1,128}$/u"
+                    },
+                    "value": {
+                        "type": "string",
+                        "pattern": "/^([0-9a-zA-Z._\\-]){1,128}$/u"
+                    }
+                },
+                "required": [
+                    "enabled"
+                ],
+                "default": [
+                    {
+                        "enabled": true
                     }
                 ]
             },
@@ -20250,6 +23176,18 @@
                     },
                     "influx_username": {
                         "type": "string"
+                    },
+                    "prometheus_enable": {
+                        "type": "boolean"
+                    },
+                    "prometheus_exclude": {
+                        "type": "string"
+                    },
+                    "prometheus_listen": {
+                        "type": "integer"
+                    },
+                    "prometheus_stringaslabel": {
+                        "type": "boolean"
                     }
                 },
                 "default": [
@@ -20276,6 +23214,12 @@
                     },
                     {
                         "influx_timeout": 5
+                    },
+                    {
+                        "prometheus_enable": true
+                    },
+                    {
+                        "prometheus_stringaslabel": true
                     }
                 ]
             },
@@ -20740,6 +23684,9 @@
                         "minimum": 1,
                         "maximum": 65535
                     },
+                    "dir_frontpage": {
+                        "type": "boolean"
+                    },
                     "enabled": {
                         "type": "boolean"
                     },
@@ -20788,6 +23735,7 @@
                     }
                 },
                 "required": [
+                    "dir_frontpage",
                     "enabled",
                     "exitenabled",
                     "exitrejectlocalif",
@@ -20797,6 +23745,9 @@
                     "relay"
                 ],
                 "default": [
+                    {
+                        "dir_frontpage": true
+                    },
                     {
                         "enabled": true
                     },
@@ -21080,6 +24031,25 @@
                     }
                 ]
             },
+            "OPNsense.vnstat.general": {
+                "type": "object",
+                "properties": {
+                    "enabled": {
+                        "type": "boolean"
+                    },
+                    "Interface": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "enabled"
+                ],
+                "default": [
+                    {
+                        "enabled": true
+                    }
+                ]
+            },
             "OPNsense.wireguard.client.clients.client": {
                 "type": "object",
                 "properties": {
@@ -21089,6 +24059,10 @@
                     "name": {
                         "type": "string",
                         "pattern": "/^([0-9a-zA-Z]){1,32}$/u"
+                    },
+                    "psk": {
+                        "type": "string",
+                        "pattern": "/^[a-zA-Z0-9+\\/]{43}=$/"
                     },
                     "pubkey": {
                         "type": "string"
@@ -21133,6 +24107,13 @@
             "OPNsense.wireguard.server.servers.server": {
                 "type": "object",
                 "properties": {
+                    "disableroutes": {
+                        "type": "boolean"
+                    },
+                    "dns": {
+                        "type": "string",
+                        "pattern": "/^([a-fA-F0-9\\.:\\[\\]]*?,)*([a-fA-F0-9\\.:\\[\\]]*)$/"
+                    },
                     "enabled": {
                         "type": "boolean"
                     },
@@ -21162,6 +24143,7 @@
                     }
                 },
                 "required": [
+                    "disableroutes",
                     "enabled",
                     "instance",
                     "name",
@@ -21169,6 +24151,9 @@
                     "tunneladdress"
                 ],
                 "default": [
+                    {
+                        "disableroutes": true
+                    },
                     {
                         "enabled": true
                     }
@@ -21662,6 +24647,9 @@
             "name": "ARPScanner"
         },
         {
+            "name": "Bind"
+        },
+        {
             "name": "CaptivePortal"
         },
         {
@@ -21675,6 +24663,9 @@
         },
         {
             "name": "Cron"
+        },
+        {
+            "name": "Firewall"
         },
         {
             "name": "Firmware"
@@ -21707,7 +24698,7 @@
             "name": "Monit"
         },
         {
-            "name": "Netflow"
+            "name": "NetSNMP"
         },
         {
             "name": "Nginx"
@@ -21726,9 +24717,6 @@
         },
         {
             "name": "Proxy"
-        },
-        {
-            "name": "ProxySSO"
         },
         {
             "name": "ProxyUserACL"
@@ -21765,6 +24753,12 @@
         },
         {
             "name": "TrafficShaper"
+        },
+        {
+            "name": "Wireguard"
+        },
+        {
+            "name": "Wol"
         },
         {
             "name": "ZabbixAgent"
