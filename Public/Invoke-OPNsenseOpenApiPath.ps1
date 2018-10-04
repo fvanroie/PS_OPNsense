@@ -27,9 +27,9 @@ Function Invoke-OPNsenseOpenApiPath {
     [CmdletBinding()]
     Param(
         [parameter(Mandatory = $true, position = 0)]
-        [ValidateSet("AcmeClient", "ArpScanner", "C-ICAP", "CaptivePortal", "ClamAV", "Collectd", "Cron", "FreeRadius", "FtpProxy", "HAProxy", "HelloWorld",
-            "IDS", "Iperf", "LLDPd", "MDNSrepeater", "Monit", "Netflow", "Nginx", "NodeExporter", "Nut", "OpenConnect", "Postfix", "Proxy", "ProxySSO", "ProxyUserAcl",
-            "Quagga", "Redis", "Relayd", "Routes", "Rspamd", "ShadowSocks", "Siproxd", "Telegraf", "Tinc", "Tor", "TrafficShaper",
+        [ValidateSet("AcmeClient", "ArpScanner", "Bind", "C-ICAP", "CaptivePortal", "ClamAV", "Collectd", "Cron", "Firewall", "FreeRadius", "FtpProxy", "HAProxy", "HelloWorld",
+            "IDS", "Iperf", "LLDPd", "MDNSrepeater", "Monit", "Netflow", "NetSnmp", "Nginx", "NodeExporter", "Nut", "Ntopng", "OpenConnect", "Postfix", "Proxy", "ProxySSO", "ProxyUserAcl",
+            "Quagga", "Redis", "Relayd", "Routes", "Rspamd", "ShadowSocks", "Siproxd", "Telegraf", "Tinc", "Tor", "TrafficShaper", "VnStat", "Wireguard", "Wol",
             "ZabbixAgent", "ZabbixProxy", "ZeroTier")]
         [String]$Module,
 
