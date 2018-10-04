@@ -20,48 +20,6 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
 #>
-
-Function Format-SystemHealthData {
-    Param (
-        [ValidateNotNullOrEmpty()]
-        $data
-    )
-    $rawdata = $data | Select-Object -ExpandProperty d3 | Select-Object -ExpandProperty data
-    $table = @()
-    $rows = $rawdata[0].values.Count
-    for ($i = 0; $i -lt $rows; $i++) {
-        $unixdt = Convert-UnixSecondstoLocal ($rawdata.values[$i][0] / 1000)
-        $row = New-Object PSObject -Property @{ timestamp = $Unixdt }
-        foreach ($column in $rawdata) {
-            $row | Add-Member -NotePropertyName $column.key -NotePropertyValue $column.values[$i][1]
-        }
-        $table += $row
-    }
-
-    return $table
-}
-
-Function ValidateSystemHealthOptions {
-    Param (
-        [ValidateSet("packets", "system", "traffic")]
-        [String]$type,
-        [String]$data,
-        [String]$collection
-    )
-
-    $result = Invoke-OPNsenseCommand diagnostics systemhealth getRRDlist
-    switch ($type) {
-        'packets' { $options = $result.data.packets }
-        'system' { $options = $result.data.system }
-        'traffic' { $options = $result.data.traffic }
-        default { Throw "Invalid SystemHealthOptions type: $type" }
-    }
-    if ($options -NotContains $data) {
-        $choices = $options | ConvertTo-Json -compress
-        Throw """$data"" is not a valid $type $collection option. ""$data"" needs to be in $choices"
-    }
-}
-
 Function Get-OPNsenseSystemHealth {
     # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
     [CmdletBinding()]
@@ -155,54 +113,4 @@ Function Get-OPNsenseSystemHealth {
     }
 
     return Format-SystemHealthData $result
-}
-
-Function Get-OPNsenseInterface {
-    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
-    [CmdletBinding()]
-    Param()
-    $result = $(Invoke-OPNsenseCommand diagnostics systemhealth getRRDlist).data.traffic |
-        Select-Object -Property @{"N" = "Interface"; "E" = {$_}}
-    return $result
-}
-
-Function Get-OPNsenseResource {
-    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
-    [CmdletBinding()]
-    Param()
-    $result = $(Invoke-OPNsenseCommand diagnostics systemhealth getRRDlist).data.system |
-        Select-Object -Property @{"N" = "Resource"; "E" = {$_}}
-    return $result
-}
-
-Function Get-OPNsenseRoute {
-    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
-    [CmdletBinding()]
-    param (
-    )
-    $result = Invoke-OPNsenseCommand diagnostics interface getroutes
-    return $result
-}
-
-Function Get-OPNsenseARP {
-    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
-    [CmdletBinding()]
-    param (
-    )
-    $result = Invoke-OPNsenseCommand diagnostics interface getarp
-    return $result  | Add-ObjectDetail -TypeName 'OPNsense.Diagnostics.Interface.Arp' | Sort-Object -Property Interface, { [System.Version]$_.IP } 
-}
-
-Function Clear-OPNsenseARP {
-    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
-    [CmdletBinding(
-        SupportsShouldProcess = $true,
-        ConfirmImpact = "High"
-    )]
-    Param (
-    )
-    if ($pscmdlet.ShouldProcess($MyInvocation.MyCommand.Module.PrivateData['OPNsenseApi'])) {
-        $result = Invoke-OPNsenseCommand diagnostics interface flusharp -Form flusharp
-        return $result.Split("`n") | Where-Object { $_ -ne '' }
-    }
 }
