@@ -1253,7 +1253,8 @@
                     "module": "monit",
                     "controller": "settings",
                     "command": "search/alert",
-                    "property": "rows"
+                    "property": "rows",
+                    "Form": "search"
                 }
             },
             "toggle": {
@@ -1311,7 +1312,8 @@
                     "module": "monit",
                     "controller": "settings",
                     "command": "search/service",
-                    "property": "rows"
+                    "property": "rows",
+                    "Form": "search"
                 }
             },
             "toggle": {
@@ -1369,7 +1371,8 @@
                     "module": "monit",
                     "controller": "settings",
                     "command": "search/test",
-                    "property": "rows"
+                    "property": "rows",
+                    "Form": "search"
                 }
             },
             "add": {
@@ -2911,7 +2914,10 @@
                     "module": "relayd",
                     "controller": "settings",
                     "command": "get/tablecheck/<uuid>",
-                    "property": "tablecheck"
+                    "property": [
+                        "relayd",
+                        "tablecheck"
+                    ]
                 }
             },
             "search": {
@@ -3943,7 +3949,7 @@
                 "returntype": "OPNsense.Wol.Host",
                 "command": {
                     "module": "wol",
-                    "controller": "host",
+                    "controller": "wol",
                     "command": "delhost/<uuid>",
                     "Form": "remove"
                 }
@@ -3952,7 +3958,7 @@
                 "returntype": "OPNsense.Wol.Host",
                 "command": {
                     "module": "wol",
-                    "controller": "host",
+                    "controller": "wol",
                     "command": "gethost/<uuid>",
                     "property": "host"
                 }
@@ -3960,7 +3966,7 @@
             "search": {
                 "command": {
                     "module": "wol",
-                    "controller": "host",
+                    "controller": "wol",
                     "command": "searchhost",
                     "property": "rows"
                 }
@@ -3969,7 +3975,7 @@
                 "returntype": "OPNsense.Wol.Host",
                 "command": {
                     "module": "wol",
-                    "controller": "host",
+                    "controller": "wol",
                     "command": "addhost"
                 }
             },
@@ -3977,7 +3983,7 @@
                 "returntype": "OPNsense.Wol.Host",
                 "command": {
                     "module": "wol",
-                    "controller": "host",
+                    "controller": "wol",
                     "command": "sethost/<uuid>"
                 }
             }
