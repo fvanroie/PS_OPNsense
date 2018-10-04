@@ -38,7 +38,7 @@ Describe "Check Help" {
 
 InModuleScope PS_OPNsense {
 
-    Describe "Connect-OPNsense" {
+    Describe "Connect-OPNsense" -Tags Connect {
         $result = Get-OPNsense
 
         It "Connection succeeded" {

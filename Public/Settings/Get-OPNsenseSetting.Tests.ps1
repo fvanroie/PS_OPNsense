@@ -20,7 +20,7 @@ InModuleScope PS_OPNsense {
             It "<module> <setting> Settings should not throw" -TestCases $testcases {
                 param($module, $setting)
                 if ($module -eq 'Relayd') {
-                    Set-TestInconclusive "$Module is under development"
+                    #Set-TestInconclusive "$Module is under development"
                 } 
                 {
                     $result = Get-OPNsenseSetting -Module $module -Setting $setting 

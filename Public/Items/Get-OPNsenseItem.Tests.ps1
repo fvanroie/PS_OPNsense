@@ -9,25 +9,30 @@ InModuleScope PS_OPNsense {
 
     Describe "Get-OPNsenseItem" {
         foreach ($Module in $modules) {
-    
-            $testcases = foreach ($action in $OPNsenseOpenApi.$Module.keys) {
+            
+            $testcases = @()
+
+            foreach ($action in $OPNsenseOpenApi.$Module.keys) {
                 foreach ($object in $OPNsenseOpenApi.$Module.$Action.keys) {
                     # CRUD items implement search action
                     if ($action -eq 'search') {
                         $testcase = @{ 'Module' = $module; 'Item' = $object}
                         Write-Output $testcase
+                        $testcases += $testcase
                     }
-                }        
+                }    
             }
+
+            if ($testcases.count -eq 0) { Continue }
 
             Context "Module $Module" {
             
                 It "Get <module> <item>" -TestCases $testcases {
                     param($module, $item)
                     if ($module -eq 'relayd') {
-                        Set-TestInconclusive "$Module is under development"
+                        #Set-TestInconclusive "$Module is under development"
                     }
-                    $Splat = @{ "$Module" = "$Item"}
+                    $Splat = @{ 'Module' = $module; 'Item' = $item}
                     {
                         $result = Get-OPNsenseItem @Splat
                     }  | should Not Throw
