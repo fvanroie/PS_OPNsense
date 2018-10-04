@@ -1018,6 +1018,7 @@
                         "controller": "settings",
                         "command": "get/general",
                         "property": [
+                            "relayd",
                             "general"
                         ]
                     }
