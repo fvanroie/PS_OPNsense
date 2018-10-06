@@ -14,7 +14,7 @@ InModuleScope PS_OPNsense {
         }
     }
 
-    Describe "Getting All Settings" {
+    Describe "Getting All Settings" -Tags Settings {
         Context "Get-OPNsenseSetting" {
             
             It "<module> <setting> Settings should not throw" -TestCases $testcases {

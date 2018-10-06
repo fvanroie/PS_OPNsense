@@ -19,40 +19,42 @@ Function Test-ObjectType ($obj) {
     return ($obj | Get-Member | Select-Object -ExpandProperty TypeName -First 1)
 }
 
-Describe "Check Help" {
-    Context "Public Cmdlets should have a Get-Help:" {
+Describe "Check Help" -Tags 'Help' {
+    Context "All public Cmdlets should have a Get-Help:" {
         $cmdlets = @()
+
         Get-Command -Module PS_OPNsense | ForEach-Object {
             $cmdlets += @{'name' = $_.name}
         }
-        it "<name> has a Get-Help entry" -TestCases $cmdlets {
+
+        it "<name> has a help entry" -TestCases $cmdlets {
             param ($name)
             if ((Get-Help -Name $name).synopsis -eq '' -Or (Get-Help -Name $name).description -eq $null) {
                 Set-TestInconclusive "$name has no help"
             }
             (Get-Help -Name $name).synopsis -ne '' -And (Get-Help -Name $name).description -ne $null | Should Be $true
         }
+
     }
 }
 
 
 InModuleScope PS_OPNsense {
 
-    Describe "Connect-OPNsense" -Tags Connect {
+    Describe "Connect-OPNsense" -Tags 'Connect' {
         $result = Get-OPNsense
 
-        It "Connection succeeded" {
+        It "Connection should succeed" {
             $result.connection | Should Be 'ok'
         }
+
         It "Check productname" {
             if ($result.product_name -ne 'opnsense-devel') {
                 $result.product_name | Should Be 'opnsense'
             } else {
-                Set-TestInconclusive
+                $result.product_name | Should Be 'opnsense-devel'
+                #Set-TestInconclusive
             }
-        }
-        It 'Has a Get-Help entry' {
-            (Get-Help -Name Get-OPNsense).synopsis | Should Not Be ''
         }
 
     }

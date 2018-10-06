@@ -7,7 +7,7 @@ InModuleScope PS_OPNsense {
 
     $Modules = $OPNsenseOpenApi.Keys | Sort-Object
 
-    Describe "Get-OPNsenseItem" {
+    Describe "Get-OPNsenseItem" -Tags Items {
         foreach ($Module in $modules) {
             
             $testcases = @()
