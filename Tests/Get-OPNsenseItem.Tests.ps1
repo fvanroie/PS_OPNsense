@@ -16,7 +16,11 @@ InModuleScope PS_OPNsense {
                 foreach ($object in $OPNsenseOpenApi.$Module.$Action.keys) {
                     # CRUD items implement search action
                     if ($action -eq 'search') {
-                        $testcase = @{ 'Module' = $module; 'Item' = $object}
+                        $testcase = @{
+                            'Module'   = $module
+                            'Item'     = $object
+                            'TypeName' = $OPNsenseOpenApi.$Module.'get'.$Object.ResponseType
+                        }
                         Write-Output $testcase
                         $testcases += $testcase
                     }
@@ -28,7 +32,7 @@ InModuleScope PS_OPNsense {
             Context "Module $Module" {
             
                 It "Get <module> <item>" -TestCases $testcases {
-                    param($module, $item)
+                    param($module, $item, $TypeName)
                     if ($module -eq 'relayd') {
                         #Set-TestInconclusive "$Module is under development"
                     }
@@ -39,7 +43,15 @@ InModuleScope PS_OPNsense {
                     #{
                     #    $result = New-OPNsenseItem @Splat
                     #}  | should Not Throw
+
                 }
+
+                It "<typename> has a View:" -TestCases $testcases {
+                    param($module, $item, $typename)
+                    (Get-FormatData | ? { $_.TypeNames -eq $typename} | Measure-Object).Count | Should be 1
+                }
+
+
             }
         }
 
