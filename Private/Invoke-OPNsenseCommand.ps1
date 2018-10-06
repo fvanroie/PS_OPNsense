@@ -104,7 +104,6 @@ Function Invoke-OPNsenseCommand {
 
         # Drill down to the requested property level
         foreach ($prop in $Property) {
-            #if ($prop -in (Get-NoteProperty $result)) {
             if ($prop -in $result.psobject.Properties.name) {
                 $result = Select-Object -InputObject $result -ExpandProperty $prop       
             } else {
@@ -123,15 +122,7 @@ Function Invoke-OPNsenseCommand {
             }
         }
     }
-
-    #$CurrentTime = $Timer.Elapsed
-    #write-Debug $([string]::Format("Time passed: {0:d2}h {1:d2}m {2:d2}.{3:d3}s",
-    #        $CurrentTime.hours, 
-    #        $CurrentTime.minutes, 
-    #        $CurrentTime.seconds,
-    #        $CurrentTime.milliseconds))
-    #$Timer.stop()
-    
+   
     # Return the object
     return $result
 }
