@@ -22,7 +22,7 @@
 #>
 
 Function Get-OPNsenseARP {
-    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
+    # .EXTERNALHELP ../../PS_OPNsense.psd1-Help.xml
     [CmdletBinding()]
     param (
     )

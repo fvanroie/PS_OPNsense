@@ -22,7 +22,7 @@
 #>
 
 Function Get-OPNsenseResource {
-    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
+    # .EXTERNALHELP ../../PS_OPNsense.psd1-Help.xml
     [CmdletBinding()]
     Param()
     $result = $(Invoke-OPNsenseCommand diagnostics systemhealth getRRDlist).data.system |

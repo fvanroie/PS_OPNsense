@@ -21,7 +21,7 @@
     SOFTWARE.
 #>
 Function Get-OPNsenseSystemHealth {
-    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
+    # .EXTERNALHELP ../../PS_OPNsense.psd1-Help.xml
     [CmdletBinding()]
     param (
         [parameter(Mandatory = $true, ParameterSetName = "Packets")]
