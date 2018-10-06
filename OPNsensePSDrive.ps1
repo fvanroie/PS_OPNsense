@@ -140,7 +140,7 @@ class OPNsenseMenuItem : SHiPSDirectory {
                 $obj += Get-OPNsenseItem -Routes Route
             }
             '/System/Routes/Status/' {
-                $obj += Get-OPNsenseRoute
+                $obj += Get-OPNsenseRouteTable
             }
 
             default {

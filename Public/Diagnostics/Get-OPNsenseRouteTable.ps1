@@ -21,11 +21,11 @@
     SOFTWARE.
 #>
 
-Function Get-OPNsenseRoute {
-    # .EXTERNALHELP ../PS_OPNsense.psd1-Help.xml
+Function Get-OPNsenseRouteTable {
+    # .EXTERNALHELP ../../PS_OPNsense.psd1-Help.xml
     [CmdletBinding()]
     param (
     )
-    $result = Invoke-OPNsenseCommand diagnostics interface getroutes
-    return $result
+    $result = Invoke-OPNsenseCommand diagnostics interface getroutes 
+    return $result | Add-ObjectDetail -TypeName 'OPNsense.Diagnostics.RouteTable'
 }

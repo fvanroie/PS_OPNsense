@@ -89,6 +89,7 @@
         'Formats/ArpScanner.format.ps1xml',
         'Formats/Core.format.ps1xml',
         'Formats/Cron.format.ps1xml',
+        'Formats/Diagnostics.format.ps1xml',
         'Formats/Firmware.format.ps1xml',
         'Formats/FirmwareUpdate.format.ps1xml',
         'Formats/HAProxy.format.ps1xml',
