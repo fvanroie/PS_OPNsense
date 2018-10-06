@@ -28,10 +28,7 @@ InModuleScope PS_OPNsense {
                         Set-TestInconclusive "$Module is under development"
                     }
                     $Splat = @{ "$Module" = "$Item"}
-                    $Splat = @{
-                        "Module" = $Module
-                        "Item"   = $Item
-                    }
+                    
                     #{
                     #    $result = Get-OPNsenseItem @Splat
                     #}  | should Not Throw
