@@ -20,15 +20,18 @@ InModuleScope PS_OPNsense {
                 }        
             }
 
+            if ($testcases.count -eq 0) { Continue }
+
             Context "Module $Module" {
             
                 It "New <module> <item>" -TestCases $testcases {
                     param($module, $item)
                     if ($module -eq 'relayd') {
-                        Set-TestInconclusive "$Module is under development"
+                        #Set-TestInconclusive "$Module is under development"
                     }
-                    $Splat = @{ "$Module" = "$Item"}
-                    
+                    #$Splat = @{ "$Module" = "$Item"}
+                    $Splat = @{ 'Module' = $module; 'Item' = $item}
+
                     #{
                     #    $result = Get-OPNsenseItem @Splat
                     #}  | should Not Throw

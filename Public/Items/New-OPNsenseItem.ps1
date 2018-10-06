@@ -33,6 +33,7 @@ Function New-OPNsenseItem {
     [OutputType([Object[]])]
     [CmdletBinding()]
     Param (
+
         <# Start ParametersetName #>
         [parameter(Mandatory = $true, ParametersetName = 'AcmeClient')]
         [ValidateSet("Account", "Action", "Certificate", "Validation")]
@@ -93,12 +94,24 @@ Function New-OPNsenseItem {
         [String]$TrafficShaper,
         [parameter(Mandatory = $true, ParametersetName = 'ZeroTier')]
         [ValidateSet("Network")]
-        [String]$ZeroTier
+        [String]$ZeroTier,
         <# End ParametersetName #>
+
+        [parameter(Mandatory = $true, position = 0, ParametersetName = 'Module')]
+        [ValidateSet("AcmeClient", "ArpScanner", "Bind", "C-ICAP", "CaptivePortal", "ClamAV", "Collectd", "Cron", "Firewall", "FreeRadius", "FTPProxy",
+            "HAProxy", "HelloWorld", "IDS", "Iperf", "LLDPd", "MDNSrepeater", "Monit", "Netflow", "NetSnmp", "Nginx", "NodeExporter", "Ntopng", "Nut", "OpenConnect", 
+            "Postfix", "Proxy", "ProxySSO", "ProxyUserAcl", "Quagga", "Redis", "Relayd", "Routes", "Rspamd", "ShadowSocks", "Siproxd",
+            "Telegraf", "Tinc", "Tor", "TrafficShaper", "VnStat", "Wireguard", "Wol", "ZabbixAgent", "ZabbixProxy", "ZeroTier")]
+        [String]$Module,
+
+        [parameter(Mandatory = $true, position = 1, ParametersetName = 'Module')]
+        [String]$Item
     )
 
-    $Module = $PsCmdlet.ParameterSetName
-    $Item = $PsBoundParameters[$Module]
+    if ($PsCmdlet.ParameterSetName -ne 'Module') {
+        $Module = $PsCmdlet.ParameterSetName
+        $Item = $PsBoundParameters[$Module]
+    }
 
     # Search the Appropriate API Call for this Action
     $call = $OPNsenseOpenApi.$Module.'get'.$Item
