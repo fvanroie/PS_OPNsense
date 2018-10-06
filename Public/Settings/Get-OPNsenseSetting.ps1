@@ -69,8 +69,9 @@ Function Get-OPNsenseSetting {
         #if ($returntype) {
         #    Write-Verbose "Converting object to $returntype"
         #    return ConvertTo-OPNsenseObject -TypeName $returntype -InputObject $result
+        #} else {
+        return $result | Add-ObjectDetail -TypeName ('OPNsense.Settings.{0}.{1}' -f $Module, $Setting)
         #}
-        return $result
 
     }
     END {
