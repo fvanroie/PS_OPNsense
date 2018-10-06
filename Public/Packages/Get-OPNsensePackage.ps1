@@ -22,7 +22,7 @@
 #>
 
 Function Get-OPNsensePackage {
-    # .EXTERNALHELP ../../../PS_OPNsense.psd1-Help.xml
+    # .EXTERNALHELP ../../PS_OPNsense.psd1-Help.xml
     [CmdletBinding(DefaultParameterSetName = "Packages")]
     param (
         [SupportsWildcards()]    

@@ -22,7 +22,7 @@
 #>
 
 Function Install-OPNsensePackage {
-    # .EXTERNALHELP ../../../PS_OPNsense.psd1-Help.xml
+    # .EXTERNALHELP ../../PS_OPNsense.psd1-Help.xml
     param (
         [Parameter(Mandatory = $true, position = 1, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)][String[]]$Name,
         [Parameter(Mandatory = $false)][Switch]$Force

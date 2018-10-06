@@ -25,7 +25,7 @@
 # Performs pkg audit -F
 # FreeBSD registers vulnerabilities for its packages and this command visualizes the security issues found.
 Function Invoke-OPNsenseAudit {
-    # .EXTERNALHELP ../../../PS_OPNsense.psd1-Help.xml
+    # .EXTERNALHELP ../../PS_OPNsense.psd1-Help.xml
     [CmdletBinding()]
     Param(
         [Switch]$Raw

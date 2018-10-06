@@ -23,7 +23,7 @@
 
 
 Function Disconnect-OPNsense {
-    # .EXTERNALHELP ../../../PS_OPNsense.psd1-Help.xml
+    # .EXTERNALHELP ../../PS_OPNsense.psd1-Help.xml
     [CmdletBinding()]
     Param()
     If ($MyInvocation.MyCommand.Module.PrivateData['OPNsenseApi'] ) {

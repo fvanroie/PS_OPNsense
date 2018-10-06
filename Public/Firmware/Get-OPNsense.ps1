@@ -23,7 +23,7 @@
 
 
 Function Get-OPNsense {
-    # .EXTERNALHELP ../../../PS_OPNsense.psd1-Help.xml
+    # .EXTERNALHELP ../../PS_OPNsense.psd1-Help.xml
     [CmdletBinding(DefaultParameterSetName = 'Mirror')]
     Param(
         [Alias("Mirrors")]

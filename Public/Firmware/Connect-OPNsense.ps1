@@ -23,7 +23,7 @@
 
 
 Function Connect-OPNsense {
-    # .EXTERNALHELP ../../../PS_OPNsense.psd1-Help.xml
+    # .EXTERNALHELP ../../PS_OPNsense.psd1-Help.xml
     [CmdletBinding(DefaultParameterSetName = "Modern")]
     param (
         [parameter(Mandatory = $true, position = 1, ParameterSetName = "Modern")]
