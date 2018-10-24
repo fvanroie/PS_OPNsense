@@ -28,15 +28,26 @@ Function Update-OPNsenseFirmware {
         SupportsShouldProcess = $true,
         ConfirmImpact = "High"
     )]
-    Param()
+    Param(
+        [Switch]$Major
+    )
     if ($pscmdlet.ShouldProcess($MyInvocation.MyCommand.Module.PrivateData['OPNsenseApi'])) {
+
+        if ([bool]::Parse($Major)) {
+            $form = 'upgrade=maj'
+        } else {
+            $form = 'upgrade'
+        }
+
         $result = Invoke-OPNsenseCommand core firmware upgrade -Form 'upgrade' -Verbose:$VerbosePreference
+        
         if ($result.status -eq 'ok') {
             $result = Get-OPNsenseUpdateStatus -Title "Update OPNsense" -Verbose:$VerbosePreference
             if ($result.status -eq "Reboot") {
                 Write-Warning "The OPNsense server will now reboot."
             }
         }
+        
         return $result
     }
 }
