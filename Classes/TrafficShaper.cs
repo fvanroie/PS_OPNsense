@@ -20,6 +20,7 @@ namespace OPNsense.TrafficShaper.pipes {
 		public PSObject mask { get; set; }
 		public uint number { get; set; }
 		public string origin { get; set; }
+		public bool pie_enable { get; set; }
 		public uint queue { get; set; }
 		public PSObject scheduler { get; set; }
 		#endregion Parameters
@@ -41,6 +42,7 @@ namespace OPNsense.TrafficShaper.pipes {
 			mask = null;
 			number = 0;
 			origin = null;
+			pie_enable = true;
 			queue = 0;
 			scheduler = null;
 		}
@@ -62,6 +64,7 @@ namespace OPNsense.TrafficShaper.pipes {
 			PSObject Mask,
 			uint Number,
 			string Origin,
+			byte Pie_Enable,
 			uint Queue,
 			PSObject Scheduler
 		) {
@@ -81,6 +84,7 @@ namespace OPNsense.TrafficShaper.pipes {
 			mask = Mask;
 			number = Number;
 			origin = Origin;
+			pie_enable = (Pie_Enable == 0) ? false : true;
 			queue = Queue;
 			scheduler = Scheduler;
 		}
@@ -99,6 +103,7 @@ namespace OPNsense.TrafficShaper.queues {
 		public PSObject mask { get; set; }
 		public uint number { get; set; }
 		public string origin { get; set; }
+		public bool pie_enable { get; set; }
 		public PSObject pipe { get; set; }
 		public uint weight { get; set; }
 		#endregion Parameters
@@ -114,6 +119,7 @@ namespace OPNsense.TrafficShaper.queues {
 			mask = null;
 			number = 0;
 			origin = null;
+			pie_enable = true;
 			pipe = null;
 			weight = 100;
 		}
@@ -129,6 +135,7 @@ namespace OPNsense.TrafficShaper.queues {
 			PSObject Mask,
 			uint Number,
 			string Origin,
+			byte Pie_Enable,
 			PSObject Pipe,
 			uint Weight
 		) {
@@ -142,6 +149,7 @@ namespace OPNsense.TrafficShaper.queues {
 			mask = Mask;
 			number = Number;
 			origin = Origin;
+			pie_enable = (Pie_Enable == 0) ? false : true;
 			pipe = Pipe;
 			weight = Weight;
 		}
