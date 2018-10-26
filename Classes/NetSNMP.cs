@@ -7,6 +7,7 @@ namespace OPNsense.netsnmp.user.users {
 		public bool enabled { get; set; }
 		public string enckey { get; set; }
 		public string password { get; set; }
+		public bool readwrite { get; set; }
 		public string username { get; set; }
 		#endregion Parameters
 
@@ -14,6 +15,7 @@ namespace OPNsense.netsnmp.user.users {
 			enabled = true;
 			enckey = null;
 			password = null;
+			readwrite = true;
 			username = null;
 		}
 
@@ -21,11 +23,13 @@ namespace OPNsense.netsnmp.user.users {
 			byte Enabled,
 			string Enckey,
 			string Password,
+			byte Readwrite,
 			string Username
 		) {
 			enabled = (Enabled == 0) ? false : true;
 			enckey = Enckey;
 			password = Password;
+			readwrite = (Readwrite == 0) ? false : true;
 			username = Username;
 		}
 	}
