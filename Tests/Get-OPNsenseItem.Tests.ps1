@@ -37,8 +37,13 @@ InModuleScope PS_OPNsense {
                         #Set-TestInconclusive "$Module is under development"
                     }
                     $Splat = @{ 'Module' = $module; 'Item' = $item}
+                    # Test without filter
                     {
                         $result = Get-OPNsenseItem @Splat
+                    }  | should Not Throw
+                    # Test with filter
+                    {
+                        $result = Get-OPNsenseItem @Splat -Filter 'this_is_a_test_filter_text'
                     }  | should Not Throw
                     #{
                     #    $result = New-OPNsenseItem @Splat
