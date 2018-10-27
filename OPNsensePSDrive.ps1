@@ -34,7 +34,7 @@ class OPNsenseDrive : SHiPSDirectory {
         $menuItems = Invoke-OPNsenseCommand core menu tree
         foreach ($item in $menuItems) {   
             #if ($item.isVisible) {
-            $obj += [OPNsenseMenuItem]::new($item.Id, $item.VisibleName, '/', $item.Children)
+            $obj += [OPNsenseMenuItem]::new($item.VisibleName, $item.Id, '/', $item.Children)
             #}
         }
         
@@ -44,13 +44,13 @@ class OPNsenseDrive : SHiPSDirectory {
 
 [SHiPSProvider(UseCache = $false)]
 class OPNsenseMenuItem : SHiPSDirectory {
-    [string] $item
+    [string] $id
     [string] $parent
     [Object[]]$children
 
-    OPNsenseMenuItem([string]$id, [string]$item, [string]$parent, [Object[]]$children): base($name) {
-        $this.name = $id
-        $this.item = $item
+    OPNsenseMenuItem([string]$name, [string]$id, [string]$parent, [Object[]]$children): base($name) {
+        $this.name = $name
+        $this.id = $id
         $this.parent = $parent
         $this.children = $children
     }
@@ -58,62 +58,154 @@ class OPNsenseMenuItem : SHiPSDirectory {
     [object[]] GetChildItem() {
         
         $obj = @()
-        $fullPath = $this.parent + $this.name + '/'
+        $FullPath = $this.parent + $this.name + '/'
+
+        $SubMenuItems = @{
+            '/Services/Bind/Configuration/'            = @(
+                'General', 'Blocklists', 'ACLs'
+            )
+            '/Services/Captive Portal/Administration/' = @(
+                'Zones', 'Templates'
+            )
+            '/Services/Lldpd/'                         = @(
+                'General', 'Neighbors'
+            )
+            '/Services/Monit/Settings'                 = @(
+                'General', 'Alert', 'Service', 'Service Tests'
+            )
+            '/Services/VnStat/'                        = @(
+                'Settings', 'Statistics'
+            )
+            '/Services/VnStat/Settings/'               = @(
+                'General'
+            )
+            '/Services/VnStat/Statistics/'             = @(
+                'Hourly', 'Daily', 'Weekly', 'Monthly'
+            )
+            '/Services/Wake on LAN/'                   = @(
+                'Hosts'
+            )
+
+            '/System/Firmware/'                        = @(
+                'Mirrors'
+            )
+        }
+
+        $GetItems = @{
+            #region Firewall
+            '/Firewall/Shaper/Pipes/'                 = @{
+                'Module' = 'TrafficShaper'
+                'Item'   = 'Pipe'
+            }
+            '/Firewall/Shaper/Queues/'                = @{
+                'Module' = 'TrafficShaper'
+                'Item'   = 'Queue'
+            }
+            '/Firewall/Shaper/Rules/'                 = @{
+                'Module' = 'TrafficShaper'
+                'Item'   = 'Rule'
+            }
+            #endregion
+            
+            #region Bind
+            '/Services/Bind/Configuration/ACLs/'      = @{
+                'Module' = 'Bind'
+                'Item'   = 'Acl'
+            }
+            #endregion
+            #region Freeradius
+            '/Services/Freeradius/Clients/'           = @{
+                'Module' = 'Freeradius'
+                'Item'   = 'Client'
+            }
+            '/Services/Freeradius/Users/'             = @{
+                'Module' = 'Freeradius'
+                'Item'   = 'User'
+            }
+            #endregion
+            #region Monit
+            '/Services/Monit/Settings/Alert/'         = @{
+                'Module' = 'Monit'
+                'Item'   = 'Alert'
+            }
+            '/Services/Monit/Settings/Service/'       = @{
+                'Module' = 'Monit'
+                'Item'   = 'Service'
+            }
+            '/Services/Monit/Settings/Service Tests/' = @{
+                'Module' = 'Monit'
+                'Item'   = 'Test'
+            }
+            #endregion
+            #region Postfix
+            '/Services/Postfix/Domains/'              = @{
+                'Module' = 'Postfix'
+                'Item'   = 'Domain'
+            }
+            '/Services/Postfix/Recipients/'           = @{
+                'Module' = 'Postfix'
+                'Item'   = 'Recipient'
+            }
+            '/Services/Postfix/Senders/'              = @{
+                'Module' = 'Postfix'
+                'Item'   = 'Sender'
+            }
+            #endregion
+            #region Wake on LAN
+            '/Services/Wake on LAN/Hosts/'            = @{
+                'Module' = 'Wol'
+                'Item'   = 'Host'
+            }
+            #endregion
+        }
+
+
+        if ($SubMenuItems.keys -contains $Fullpath) {
+            foreach ($item in $SubMenuItems.$Fullpath) {
+                $obj += [OPNsenseMenuItem]::new($item, $item, $FullPath, $null)
+            }
+        }
+
+                
+        if ($GetItems.keys -contains $Fullpath) {
+            $Splat = $GetItems.$FullPath
+            $obj += Get-OPNsenseItem @Splat
+        }
 
         Switch ($fullPath) {
-            '/Firewall/Shaper/Pipes/' {
-                $obj += Get-OPNsenseItem -TrafficShaper Pipe
-            }
-            '/Firewall/Shaper/Queues/' {
-                $obj += Get-OPNsenseItem -TrafficShaper Queue
-            }
-            '/Firewall/Shaper/Rules/' {
-                $obj += Get-OPNsenseItem -TrafficShaper Rule
-            }
 
             '/Lobby/HelloWorld/' {
                 $obj += Get-OPNsenseSetting -Module HelloWorld -Setting General
             }
 
-            '/Services/Freeradius/Clients/' {
-                $obj += Get-OPNsenseItem -Freeradius Client
-            }
-            '/Services/Freeradius/Users/' {
-                $obj += Get-OPNsenseItem -Freeradius User
-            }
-
-            '/Services/Lldpd/' {
-                $newParent = '{0}{1}/' -f $this.parent, $this.name
-                $obj += [OPNsenseMenuItem]::new('General', 'General', $newParent, $null)
-                $obj += [OPNsenseMenuItem]::new('Neighbors', 'Neighbors', $newParent, $null)
-            }
-
-            '/Services/CaptivePortal/Administration/' {
-                $newParent = '{0}{1}/' -f $this.parent, $this.name
-                $obj += [OPNsenseMenuItem]::new('Zones', 'Zones', $newParent, $null)
-                $obj += [OPNsenseMenuItem]::new('Templates', 'Templates', $newParent, $null)
-            }
-            '/Services/CaptivePortal/Administration/Zones/' {
-                $obj += Get-OPNsenseItem -Module CaptivePortal -Item Zone
-            }
-            '/Services/CaptivePortal/Administration/Templates/' {
-                $obj += Get-OPNsenseItem -Module CaptivePortal -Item Template
-            }
-
-            '/Services/Bind/Configuration/' {
-                $newParent = '{0}{1}/' -f $this.parent, $this.name
-                $obj += [OPNsenseMenuItem]::new('General', 'General', $newParent, $null)
-                $obj += [OPNsenseMenuItem]::new('DNSBL', 'DNSBL', $newParent, $null)
-                $obj += [OPNsenseMenuItem]::new('ACLs', 'ACLs', $newParent, $null)
-            }
             '/Services/Bind/Configuration/General/' {
                 $obj += Get-OPNsenseSetting -Module Bind General
             }
             '/Services/Bind/Configuration/DNSBL/' {
                 $obj += Get-OPNsenseSetting -Module Bind DNSBL
             }
-            '/Services/Bind/Configuration/ACLs/' {
+            '/Services/BIND/Configuration/ACLs/' {
                 $obj += Get-OPNsenseItem -Module Bind -Item Acl
+            }
+
+            '/Services/Captive Portal/Administration/Zones/' {
+                $obj += Get-OPNsenseItem -Module CaptivePortal -Item Zone
+            }
+            '/Services/Captive Portal/Administration/Templates/' {
+                $obj += Get-OPNsenseItem -Module CaptivePortal -Item Template
+            }
+
+            '/Services/VnStat/Statistics/Hourly/' {
+                $obj += Invoke-OPNsenseCommand vnstat service hourly -Property Response
+            }
+            '/Services/VnStat/Statistics/Daily/' {
+                $obj += Invoke-OPNsenseCommand vnstat service daily -Property Response
+            }
+            '/Services/VnStat/Statistics/Weekly/' {
+                $obj += Invoke-OPNsenseCommand vnstat service weekly -Property Response
+            }
+            '/Services/VnStat/Statistics/Monthly/' {
+                $obj += Invoke-OPNsenseCommand vnstat service monthly -Property Response
             }
 
             '/System/Firmware/Updates/' {
@@ -124,6 +216,12 @@ class OPNsenseMenuItem : SHiPSDirectory {
             }
             '/System/Firmware/Plugins/' {
                 $obj += Get-OPNsensePackage -Plugin
+            }
+            '/System/Firmware/Mirrors/' {
+                $obj += Get-OPNsense -Mirror
+            }
+            '/System/Firmware/Settings/' {
+                $obj += Invoke-OPNsenseCommand core firmware getfirmwareconfig
             }
 
             '/Routing/General/' {
@@ -148,7 +246,7 @@ class OPNsenseMenuItem : SHiPSDirectory {
                     #$obj += $pkg
                     if ($item.isVisible -and $item.url -notlike '*.php*') {
                         $newParent = '{0}{1}/' -f $this.parent, $this.name
-                        $obj += [OPNsenseMenuItem]::new($item.Id, $item.VisibleName, $newParent, $item.Children)
+                        $obj += [OPNsenseMenuItem]::new($item.VisibleName, $item.Id, $newParent, $item.Children)
                     }
                     
                 }
