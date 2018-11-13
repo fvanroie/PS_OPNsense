@@ -60,104 +60,10 @@ class OPNsenseMenuItem : SHiPSDirectory {
         $obj = @()
         $FullPath = $this.parent + $this.name + '/'
 
-        $SubMenuItems = @{
-            '/Services/Bind/Configuration/'            = @(
-                'General', 'Blocklists', 'ACLs'
-            )
-            '/Services/Captive Portal/Administration/' = @(
-                'Zones', 'Templates'
-            )
-            '/Services/Lldpd/'                         = @(
-                'General', 'Neighbors'
-            )
-            '/Services/Monit/Settings'                 = @(
-                'General', 'Alert', 'Service', 'Service Tests'
-            )
-            '/Services/VnStat/'                        = @(
-                'Settings', 'Statistics'
-            )
-            '/Services/VnStat/Settings/'               = @(
-                'General'
-            )
-            '/Services/VnStat/Statistics/'             = @(
-                'Hourly', 'Daily', 'Weekly', 'Monthly'
-            )
-            '/Services/Wake on LAN/'                   = @(
-                'Hosts'
-            )
-
-            '/System/Firmware/'                        = @(
-                'Mirrors'
-            )
-        }
-
-        $GetItems = @{
-            #region Firewall
-            '/Firewall/Shaper/Pipes/'                 = @{
-                'Module' = 'TrafficShaper'
-                'Item'   = 'Pipe'
-            }
-            '/Firewall/Shaper/Queues/'                = @{
-                'Module' = 'TrafficShaper'
-                'Item'   = 'Queue'
-            }
-            '/Firewall/Shaper/Rules/'                 = @{
-                'Module' = 'TrafficShaper'
-                'Item'   = 'Rule'
-            }
-            #endregion
-            
-            #region Bind
-            '/Services/Bind/Configuration/ACLs/'      = @{
-                'Module' = 'Bind'
-                'Item'   = 'Acl'
-            }
-            #endregion
-            #region Freeradius
-            '/Services/Freeradius/Clients/'           = @{
-                'Module' = 'Freeradius'
-                'Item'   = 'Client'
-            }
-            '/Services/Freeradius/Users/'             = @{
-                'Module' = 'Freeradius'
-                'Item'   = 'User'
-            }
-            #endregion
-            #region Monit
-            '/Services/Monit/Settings/Alert/'         = @{
-                'Module' = 'Monit'
-                'Item'   = 'Alert'
-            }
-            '/Services/Monit/Settings/Service/'       = @{
-                'Module' = 'Monit'
-                'Item'   = 'Service'
-            }
-            '/Services/Monit/Settings/Service Tests/' = @{
-                'Module' = 'Monit'
-                'Item'   = 'Test'
-            }
-            #endregion
-            #region Postfix
-            '/Services/Postfix/Domains/'              = @{
-                'Module' = 'Postfix'
-                'Item'   = 'Domain'
-            }
-            '/Services/Postfix/Recipients/'           = @{
-                'Module' = 'Postfix'
-                'Item'   = 'Recipient'
-            }
-            '/Services/Postfix/Senders/'              = @{
-                'Module' = 'Postfix'
-                'Item'   = 'Sender'
-            }
-            #endregion
-            #region Wake on LAN
-            '/Services/Wake on LAN/Hosts/'            = @{
-                'Module' = 'Wol'
-                'Item'   = 'Host'
-            }
-            #endregion
-        }
+        $DataPath = ("{0}/{1}" -f $PSScriptRoot, 'Data/OPNsenseDriveSubMenu.psd1')
+        $SubMenuItems = Import-PowerShellDataFile -Path $DataPath
+        $DataPath = ("{0}/{1}" -f $PSScriptRoot, 'Data/OPNsenseDriveItems.psd1')
+        $GetItems = Import-PowerShellDataFile -Path $DataPath
 
 
         if ($SubMenuItems.keys -contains $Fullpath) {
@@ -244,7 +150,7 @@ class OPNsenseMenuItem : SHiPSDirectory {
             default {
                 foreach ($item in $this.children) {         
                     #$obj += $pkg
-                    if ($item.isVisible -and $item.url -notlike '*.php*') {
+                    if ($item.isVisible -and $item.url -notlike '*.php*' -and $item.Visibility -ne 'hidden') {
                         $newParent = '{0}{1}/' -f $this.parent, $this.name
                         $obj += [OPNsenseMenuItem]::new($item.VisibleName, $item.Id, $newParent, $item.Children)
                     }
