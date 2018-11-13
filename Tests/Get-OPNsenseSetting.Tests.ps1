@@ -26,6 +26,13 @@ InModuleScope PS_OPNsense {
                     $result = Get-OPNsenseSetting -Module $module -Setting $setting 
                 }  | should Not Throw
             }
+
+            It "SomeModule SomeSetting should throw" {
+                {
+                    $result = Get-OPNsenseSetting -Module 'SomeModule' -Setting 'SomeSetting'
+                }  | should Throw
+            }
+            
         }
     }
 }
