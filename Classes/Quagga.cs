@@ -214,6 +214,7 @@ namespace OPNsense.quagga.ospf.interfaces {
 	public class Interface {
 		#region Parameters
 		public string authkey { get; set; }
+		public uint authkey_id { get; set; }
 		public PSObject authtype { get; set; }
 		public uint cost { get; set; }
 		public uint deadinterval { get; set; }
@@ -228,6 +229,7 @@ namespace OPNsense.quagga.ospf.interfaces {
 
 		public Interface () {
 			authkey = null;
+			authkey_id = 1;
 			authtype = null;
 			cost = 0;
 			deadinterval = 0;
@@ -242,6 +244,7 @@ namespace OPNsense.quagga.ospf.interfaces {
 
 		public Interface (
 			string Authkey,
+			uint Authkey_Id,
 			PSObject Authtype,
 			uint Cost,
 			uint Deadinterval,
@@ -254,6 +257,7 @@ namespace OPNsense.quagga.ospf.interfaces {
 			uint Transmitdelay
 		) {
 			authkey = Authkey;
+			authkey_id = Authkey_Id;
 			authtype = Authtype;
 			cost = Cost;
 			deadinterval = Deadinterval;

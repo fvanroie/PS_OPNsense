@@ -4,6 +4,8 @@ using System.Management.Automation;
 namespace OPNsense.HAProxy.acls {
 	public class Acl {
 		#region Parameters
+		public PSObject allowedGroups { get; set; }
+		public PSObject allowedUsers { get; set; }
 		public string custom_acl { get; set; }
 		public string description { get; set; }
 		public PSObject expression { get; set; }
@@ -67,6 +69,8 @@ namespace OPNsense.HAProxy.acls {
 		#endregion Parameters
 
 		public Acl () {
+			allowedGroups = null;
+			allowedUsers = null;
 			custom_acl = null;
 			description = null;
 			expression = null;
@@ -130,6 +134,8 @@ namespace OPNsense.HAProxy.acls {
 		}
 
 		public Acl (
+			PSObject AllowedGroups,
+			PSObject AllowedUsers,
 			string Custom_Acl,
 			string Description,
 			PSObject Expression,
@@ -191,6 +197,8 @@ namespace OPNsense.HAProxy.acls {
 			string Url_Param_Value,
 			string Value
 		) {
+			allowedGroups = AllowedGroups;
+			allowedUsers = AllowedUsers;
 			custom_acl = Custom_Acl;
 			description = Description;
 			expression = Expression;
@@ -451,6 +459,9 @@ namespace OPNsense.HAProxy.backends {
 	public class Backend {
 		#region Parameters
 		public PSObject algorithm { get; set; }
+		public bool basicAuthEnabled { get; set; }
+		public PSObject basicAuthGroups { get; set; }
+		public PSObject basicAuthUsers { get; set; }
 		public string checkDownInterval { get; set; }
 		public string checkInterval { get; set; }
 		public string customOptions { get; set; }
@@ -496,6 +507,9 @@ namespace OPNsense.HAProxy.backends {
 
 		public Backend () {
 			algorithm = null;
+			basicAuthEnabled = true;
+			basicAuthGroups = null;
+			basicAuthUsers = null;
 			checkDownInterval = null;
 			checkInterval = null;
 			customOptions = null;
@@ -541,6 +555,9 @@ namespace OPNsense.HAProxy.backends {
 
 		public Backend (
 			PSObject Algorithm,
+			byte BasicAuthEnabled,
+			PSObject BasicAuthGroups,
+			PSObject BasicAuthUsers,
 			string CheckDownInterval,
 			string CheckInterval,
 			string CustomOptions,
@@ -584,6 +601,9 @@ namespace OPNsense.HAProxy.backends {
 			string Tuning_TimeoutServer
 		) {
 			algorithm = Algorithm;
+			basicAuthEnabled = (BasicAuthEnabled == 0) ? false : true;
+			basicAuthGroups = BasicAuthGroups;
+			basicAuthUsers = BasicAuthUsers;
 			checkDownInterval = CheckDownInterval;
 			checkInterval = CheckInterval;
 			customOptions = CustomOptions;
@@ -664,6 +684,9 @@ namespace OPNsense.HAProxy.errorfiles {
 namespace OPNsense.HAProxy.frontends {
 	public class Frontend {
 		#region Parameters
+		public bool basicAuthEnabled { get; set; }
+		public PSObject basicAuthGroups { get; set; }
+		public PSObject basicAuthUsers { get; set; }
 		public Object bind { get; set; }
 		public string bindOptions { get; set; }
 		public PSObject connectionBehaviour { get; set; }
@@ -686,6 +709,10 @@ namespace OPNsense.HAProxy.frontends {
 		public PSObject ssl_bindOptions { get; set; }
 		public PSObject ssl_certificates { get; set; }
 		public string ssl_cipherList { get; set; }
+		public PSObject ssl_clientAuthCAs { get; set; }
+		public PSObject ssl_clientAuthCRLs { get; set; }
+		public bool ssl_clientAuthEnabled { get; set; }
+		public PSObject ssl_clientAuthVerify { get; set; }
 		public string ssl_customOptions { get; set; }
 		public PSObject ssl_default_certificate { get; set; }
 		public bool ssl_enabled { get; set; }
@@ -713,6 +740,9 @@ namespace OPNsense.HAProxy.frontends {
 		#endregion Parameters
 
 		public Frontend () {
+			basicAuthEnabled = true;
+			basicAuthGroups = null;
+			basicAuthUsers = null;
 			bind = null;
 			bindOptions = null;
 			connectionBehaviour = null;
@@ -735,6 +765,10 @@ namespace OPNsense.HAProxy.frontends {
 			ssl_bindOptions = null;
 			ssl_certificates = null;
 			ssl_cipherList = "ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA256";
+			ssl_clientAuthCAs = null;
+			ssl_clientAuthCRLs = null;
+			ssl_clientAuthEnabled = true;
+			ssl_clientAuthVerify = null;
 			ssl_customOptions = null;
 			ssl_default_certificate = null;
 			ssl_enabled = true;
@@ -762,6 +796,9 @@ namespace OPNsense.HAProxy.frontends {
 		}
 
 		public Frontend (
+			byte BasicAuthEnabled,
+			PSObject BasicAuthGroups,
+			PSObject BasicAuthUsers,
 			Object Bind,
 			string BindOptions,
 			PSObject ConnectionBehaviour,
@@ -784,6 +821,10 @@ namespace OPNsense.HAProxy.frontends {
 			PSObject Ssl_BindOptions,
 			PSObject Ssl_Certificates,
 			string Ssl_CipherList,
+			PSObject Ssl_ClientAuthCAs,
+			PSObject Ssl_ClientAuthCRLs,
+			byte Ssl_ClientAuthEnabled,
+			PSObject Ssl_ClientAuthVerify,
 			string Ssl_CustomOptions,
 			PSObject Ssl_Default_Certificate,
 			byte Ssl_Enabled,
@@ -809,6 +850,9 @@ namespace OPNsense.HAProxy.frontends {
 			string Tuning_TimeoutHttpKeepAlive,
 			string Tuning_TimeoutHttpReq
 		) {
+			basicAuthEnabled = (BasicAuthEnabled == 0) ? false : true;
+			basicAuthGroups = BasicAuthGroups;
+			basicAuthUsers = BasicAuthUsers;
 			bind = Bind;
 			bindOptions = BindOptions;
 			connectionBehaviour = ConnectionBehaviour;
@@ -831,6 +875,10 @@ namespace OPNsense.HAProxy.frontends {
 			ssl_bindOptions = Ssl_BindOptions;
 			ssl_certificates = Ssl_Certificates;
 			ssl_cipherList = Ssl_CipherList;
+			ssl_clientAuthCAs = Ssl_ClientAuthCAs;
+			ssl_clientAuthCRLs = Ssl_ClientAuthCRLs;
+			ssl_clientAuthEnabled = (Ssl_ClientAuthEnabled == 0) ? false : true;
+			ssl_clientAuthVerify = Ssl_ClientAuthVerify;
 			ssl_customOptions = Ssl_CustomOptions;
 			ssl_default_certificate = Ssl_Default_Certificate;
 			ssl_enabled = (Ssl_Enabled == 0) ? false : true;

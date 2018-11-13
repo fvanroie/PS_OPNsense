@@ -34,8 +34,6 @@ namespace OPNsense.IDS.userDefinedRules {
 		public PSObject destination { get; set; }
 		public bool enabled { get; set; }
 		public string fingerprint { get; set; }
-		public PSObject geoip { get; set; }
-		public PSObject geoip_direction { get; set; }
 		public PSObject source { get; set; }
 		#endregion Parameters
 
@@ -45,8 +43,6 @@ namespace OPNsense.IDS.userDefinedRules {
 			destination = null;
 			enabled = true;
 			fingerprint = null;
-			geoip = null;
-			geoip_direction = null;
 			source = null;
 		}
 
@@ -56,8 +52,6 @@ namespace OPNsense.IDS.userDefinedRules {
 			PSObject Destination,
 			byte Enabled,
 			string Fingerprint,
-			PSObject Geoip,
-			PSObject Geoip_Direction,
 			PSObject Source
 		) {
 			action = Action;
@@ -65,8 +59,6 @@ namespace OPNsense.IDS.userDefinedRules {
 			destination = Destination;
 			enabled = (Enabled == 0) ? false : true;
 			fingerprint = Fingerprint;
-			geoip = Geoip;
-			geoip_direction = Geoip_Direction;
 			source = Source;
 		}
 	}

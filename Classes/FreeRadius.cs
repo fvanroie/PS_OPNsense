@@ -39,11 +39,13 @@ namespace OPNsense.freeradius.user.users {
 		public bool enabled { get; set; }
 		public string ip { get; set; }
 		public PSObject ip6 { get; set; }
+		public string logintime { get; set; }
 		public int mikrotik_vlan_id_number { get; set; }
 		public int mikrotik_vlan_id_type { get; set; }
 		public string password { get; set; }
 		public Object route { get; set; }
 		public int sessionlimit_max_session_limit { get; set; }
+		public uint simuse { get; set; }
 		public string subnet { get; set; }
 		public string username { get; set; }
 		public uint vlan { get; set; }
@@ -60,11 +62,13 @@ namespace OPNsense.freeradius.user.users {
 			enabled = true;
 			ip = null;
 			ip6 = null;
+			logintime = null;
 			mikrotik_vlan_id_number = 0;
 			mikrotik_vlan_id_type = 0;
 			password = null;
 			route = null;
 			sessionlimit_max_session_limit = 0;
+			simuse = 0;
 			subnet = null;
 			username = null;
 			vlan = 0;
@@ -81,11 +85,13 @@ namespace OPNsense.freeradius.user.users {
 			byte Enabled,
 			string Ip,
 			PSObject Ip6,
+			string Logintime,
 			int Mikrotik_Vlan_Id_Number,
 			int Mikrotik_Vlan_Id_Type,
 			string Password,
 			Object Route,
 			int Sessionlimit_Max_Session_Limit,
+			uint Simuse,
 			string Subnet,
 			string Username,
 			uint Vlan,
@@ -100,11 +106,13 @@ namespace OPNsense.freeradius.user.users {
 			enabled = (Enabled == 0) ? false : true;
 			ip = Ip;
 			ip6 = Ip6;
+			logintime = Logintime;
 			mikrotik_vlan_id_number = Mikrotik_Vlan_Id_Number;
 			mikrotik_vlan_id_type = Mikrotik_Vlan_Id_Type;
 			password = Password;
 			route = Route;
 			sessionlimit_max_session_limit = Sessionlimit_Max_Session_Limit;
+			simuse = Simuse;
 			subnet = Subnet;
 			username = Username;
 			vlan = Vlan;
