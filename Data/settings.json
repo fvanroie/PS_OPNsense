@@ -161,7 +161,7 @@
             "plugin": "os-freeradius",
             "General": {
                 "objectname": "FreeRadius General Settings",
-                "mountpoint": "\\\\OPNsense\\freeradius",
+                "mountpoint": "\\\\OPNsense\\freeradius\\general",
                 "get": {
                     "returntype": "OPNsense.Settings.FreeRadius.General",
                     "command": {
@@ -183,7 +183,7 @@
             },
             "EAP": {
                 "objectname": "FreeRadius EAP Settings",
-                "mountpoint": "\\\\OPNsense\\freeradius",
+                "mountpoint": "\\\\OPNsense\\freeradius\\eap",
                 "get": {
                     "returntype": "OPNsense.Settings.FreeRadius.Eap",
                     "command": {
@@ -205,7 +205,7 @@
             },
             "LDAP": {
                 "objectname": "FreeRadius LDAP Settings",
-                "mountpoint": "\\\\OPNsense\\freeradius",
+                "mountpoint": "\\\\OPNsense\\freeradius\\ldap",
                 "get": {
                     "returntype": "OPNsense.Settings.FreeRadius.Ldap",
                     "command": {
@@ -413,9 +413,9 @@
             }
         },
         "IDS": {
-            "RuleSet": {
+            "General": {
                 "objectname": "IDS General Settings",
-                "mountpoint": "\\\\OPNsense\\IDS\\userDefinedRules\\rule",
+                "mountpoint": "\\\\OPNsense\\IDS\\general",
                 "get": {
                     "returntype": "OPNsense.Settings.IDS.General",
                     "command": {
@@ -441,9 +441,9 @@
         },
         "IPerf": {
             "plugin": "os-iperf",
-            "Instance": {
+            "General": {
                 "objectname": "Iperf General Settings",
-                "mountpoint": "\\\\OPNsense\\iperf\\instances",
+                "mountpoint": "\\\\OPNsense\\iperf3",
                 "get": {
                     "returntype": "OPNsense.Settings.Iperf.Instance",
                     "command": {
@@ -518,7 +518,7 @@
             "plugin": "os-monit",
             "General": {
                 "objectname": "Monit General Settings",
-                "mountpoint": "\\\\OPNsense\\IDS\\userDefinedRules\\rule",
+                "mountpoint": "\\\\OPNsense\\monit\\general",
                 "get": {
                     "returntype": "OPNsense.Settings.Monit.General",
                     "command": {
@@ -543,9 +543,9 @@
             }
         },
         "Netflow": {
-            "Capture": {
-                "objectname": "Netflow Capture Settings",
-                "mountpoint": "\\\\OPNsense\\postfix\\domain\\domains\\domain",
+            "General": {
+                "objectname": "Netflow General Settings",
+                "mountpoint": "\\\\OPNsense\\Netflow",
                 "get": {
                     "returntype": "OPNsense.Settings.Netflow.Capture",
                     "command": {
@@ -565,30 +565,6 @@
                         "controller": "netflow",
                         "command": "setconfig",
                         "json": {}
-                    }
-                }
-            },
-            "Collect": {
-                "objectname": "Netflow Collect Settings",
-                "mountpoint": "\\\\OPNsense\\postfix\\recipient\\recipients\\recipient",
-                "get": {
-                    "returntype": "OPNsense.Settings.Netflow.Collect",
-                    "command": {
-                        "module": "diagnostics",
-                        "controller": "netflow",
-                        "command": "getconfig",
-                        "property": [
-                            "netflow",
-                            "collect"
-                        ]
-                    }
-                },
-                "set": {
-                    "returntype": "OPNsense.Settings.Netflow.Collect",
-                    "command": {
-                        "module": "diagnostics",
-                        "controller": "netflow",
-                        "command": "setconfig"
                     }
                 }
             }
@@ -622,7 +598,7 @@
             "plugin": "os-nut",
             "General": {
                 "objectname": "Node Exporter General Settings",
-                "mountpoint": "\\\\OPNsense\\NodeExporter",
+                "mountpoint": "\\\\OPNsense\\Nut\\general",
                 "get": {
                     "returntype": "OPNsense.Settings.Nut.General",
                     "command": {
@@ -675,7 +651,7 @@
             "plugin": "os-postfix",
             "General": {
                 "objectname": "Postfix General Settings",
-                "mountpoint": "\\\\OPNsense\\postfix\\domain\\domains\\domain",
+                "mountpoint": "\\\\OPNsense\\postfix\\general",
                 "get": {
                     "returntype": "OPNsense.Settings.Postfix.General",
                     "command": {
@@ -697,7 +673,7 @@
             },
             "Antispam": {
                 "objectname": "Postfix Antispam Settings",
-                "mountpoint": "\\\\OPNsense\\postfix\\recipient\\recipients\\recipient",
+                "mountpoint": "\\\\OPNsense\\postfix\\antispam",
                 "get": {
                     "returntype": "OPNsense.Settings.Postfix.Antispam",
                     "command": {
