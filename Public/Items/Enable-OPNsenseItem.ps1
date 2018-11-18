@@ -39,11 +39,9 @@ Function Enable-OPNsenseItem {
         [Switch]$PassThru
     )
     BEGIN {
-        # Get the Verb of this cmdlet
-        $Verb, $null = $MyInvocation.MyCommand -split "-", 2
-        $Action = 'toggle'
-        $Enabled = ($verb -eq "Enable")
-        
+        # Common Splat parameters shared with Enable, Disable, Switch and Remove
+        $Action, $CommonSplat = Initialize-CommonItemSplat -CmdletName $MyInvocation.MyCommand -PassThru:$PassThru
+
         # Pre-filter all matching api calls for this action
         $Commands = $OPNsenseOpenApi.values.values.values | Where-Object { $_.action -eq $action }
     }
@@ -56,10 +54,10 @@ Function Enable-OPNsenseItem {
             # Ask confirmation before performing action, if needed
             if ($Force -Or $PSCmdlet.ShouldProcess(
                     ("{{{0}}}" -f $Obj.Uuid) ,
-                    ("{0} {1}" -f $Verb, $Call.Object)
+                    ("{0} {1}" -f $CommonSplat.Verb, $Call.Object)
                 ) ) {
 
-                Invoke-OPNsenseItem -Call $Call -InputObject $Obj -Enabled:$Enabled -Verb $Verb -PassThru:$PassThru
+                Invoke-OPNsenseItem -Call $Call -InputObject $Obj @CommonSplat #-Enabled:$Enabled -Verb $Verb -PassThru:$PassThru
                 
             } # ShouldProcess
 
