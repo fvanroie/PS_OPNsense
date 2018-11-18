@@ -92,8 +92,10 @@ namespace OPNsense.Nginx {
 		public PSObject ca { get; set; }
 		public PSObject certificate { get; set; }
 		public PSObject charset { get; set; }
+		public bool disable_bot_protection { get; set; }
 		public bool enable_acme_support { get; set; }
 		public bool https_only { get; set; }
+		public PSObject ip_acl { get; set; }
 		public PSObject limit_request_connections { get; set; }
 		public PSObject listen_https_port { get; set; }
 		public PSObject listen_http_port { get; set; }
@@ -113,8 +115,10 @@ namespace OPNsense.Nginx {
 			ca = null;
 			certificate = null;
 			charset = null;
+			disable_bot_protection = true;
 			enable_acme_support = true;
 			https_only = true;
+			ip_acl = null;
 			limit_request_connections = null;
 			listen_https_port = null;
 			listen_http_port = null;
@@ -134,8 +138,10 @@ namespace OPNsense.Nginx {
 			PSObject Ca,
 			PSObject Certificate,
 			PSObject Charset,
+			byte Disable_Bot_Protection,
 			byte Enable_Acme_Support,
 			byte Https_Only,
+			PSObject Ip_Acl,
 			PSObject Limit_Request_Connections,
 			PSObject Listen_Https_Port,
 			PSObject Listen_Http_Port,
@@ -153,8 +159,10 @@ namespace OPNsense.Nginx {
 			ca = Ca;
 			certificate = Certificate;
 			charset = Charset;
+			disable_bot_protection = (Disable_Bot_Protection == 0) ? false : true;
 			enable_acme_support = (Enable_Acme_Support == 0) ? false : true;
 			https_only = (Https_Only == 0) ? false : true;
+			ip_acl = Ip_Acl;
 			limit_request_connections = Limit_Request_Connections;
 			listen_https_port = Listen_Https_Port;
 			listen_http_port = Listen_Http_Port;
@@ -257,6 +265,7 @@ namespace OPNsense.Nginx {
 		public bool honeypot { get; set; }
 		public bool http2_push_preload { get; set; }
 		public Object index { get; set; }
+		public PSObject ip_acl { get; set; }
 		public PSObject limit_request_connections { get; set; }
 		public PSObject matchtype { get; set; }
 		public string path_prefix { get; set; }
@@ -291,6 +300,7 @@ namespace OPNsense.Nginx {
 			honeypot = true;
 			http2_push_preload = true;
 			index = null;
+			ip_acl = null;
 			limit_request_connections = null;
 			matchtype = null;
 			path_prefix = null;
@@ -325,6 +335,7 @@ namespace OPNsense.Nginx {
 			byte Honeypot,
 			byte Http2_Push_Preload,
 			Object Index,
+			PSObject Ip_Acl,
 			PSObject Limit_Request_Connections,
 			PSObject Matchtype,
 			string Path_Prefix,
@@ -357,6 +368,7 @@ namespace OPNsense.Nginx {
 			honeypot = (Honeypot == 0) ? false : true;
 			http2_push_preload = (Http2_Push_Preload == 0) ? false : true;
 			index = Index;
+			ip_acl = Ip_Acl;
 			limit_request_connections = Limit_Request_Connections;
 			matchtype = Matchtype;
 			path_prefix = Path_Prefix;

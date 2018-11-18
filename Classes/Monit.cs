@@ -55,6 +55,7 @@ namespace OPNsense.monit {
 		public string start { get; set; }
 		public string stop { get; set; }
 		public PSObject tests { get; set; }
+		public uint timeout { get; set; }
 		public PSObject type { get; set; }
 		#endregion Parameters
 
@@ -69,6 +70,7 @@ namespace OPNsense.monit {
 			start = null;
 			stop = null;
 			tests = null;
+			timeout = 300;
 			type = null;
 		}
 
@@ -83,6 +85,7 @@ namespace OPNsense.monit {
 			string Start,
 			string Stop,
 			PSObject Tests,
+			uint Timeout,
 			PSObject Type
 		) {
 			address = Address;
@@ -95,6 +98,7 @@ namespace OPNsense.monit {
 			start = Start;
 			stop = Stop;
 			tests = Tests;
+			timeout = Timeout;
 			type = Type;
 		}
 	}
