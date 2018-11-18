@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Management.Automation;
 
 namespace OPNsense.TrafficShaper.pipes {
@@ -6,22 +6,22 @@ namespace OPNsense.TrafficShaper.pipes {
 		#region Parameters
 		public uint bandwidth { get; set; }
 		public PSObject bandwidthMetric { get; set; }
-		public uint buckets { get; set; }
+		public uint16 buckets { get; set; }
 		public bool codel_ecn_enable { get; set; }
 		public bool codel_enable { get; set; }
-		public uint codel_interval { get; set; }
-		public uint codel_target { get; set; }
-		public uint delay { get; set; }
+		public uint16 codel_interval { get; set; }
+		public uint16 codel_target { get; set; }
+		public uint16 delay { get; set; }
 		public string description { get; set; }
 		public bool enabled { get; set; }
-		public uint fqcodel_flows { get; set; }
-		public uint fqcodel_limit { get; set; }
-		public uint fqcodel_quantum { get; set; }
+		public uint16 fqcodel_flows { get; set; }
+		public uint16 fqcodel_limit { get; set; }
+		public uint16 fqcodel_quantum { get; set; }
 		public PSObject mask { get; set; }
-		public uint number { get; set; }
+		public uint16 number { get; set; }
 		public string origin { get; set; }
 		public bool pie_enable { get; set; }
-		public uint queue { get; set; }
+		public byte queue { get; set; }
 		public PSObject scheduler { get; set; }
 		#endregion Parameters
 
@@ -50,22 +50,22 @@ namespace OPNsense.TrafficShaper.pipes {
 		public Pipe (
 			uint Bandwidth,
 			PSObject BandwidthMetric,
-			uint Buckets,
+			uint16 Buckets,
 			byte Codel_Ecn_Enable,
 			byte Codel_Enable,
-			uint Codel_Interval,
-			uint Codel_Target,
-			uint Delay,
+			uint16 Codel_Interval,
+			uint16 Codel_Target,
+			uint16 Delay,
 			string Description,
 			byte Enabled,
-			uint Fqcodel_Flows,
-			uint Fqcodel_Limit,
-			uint Fqcodel_Quantum,
+			uint16 Fqcodel_Flows,
+			uint16 Fqcodel_Limit,
+			uint16 Fqcodel_Quantum,
 			PSObject Mask,
-			uint Number,
+			uint16 Number,
 			string Origin,
 			byte Pie_Enable,
-			uint Queue,
+			byte Queue,
 			PSObject Scheduler
 		) {
 			bandwidth = Bandwidth;
@@ -93,19 +93,19 @@ namespace OPNsense.TrafficShaper.pipes {
 namespace OPNsense.TrafficShaper.queues {
 	public class Queue {
 		#region Parameters
-		public uint buckets { get; set; }
+		public uint16 buckets { get; set; }
 		public bool codel_ecn_enable { get; set; }
 		public bool codel_enable { get; set; }
-		public uint codel_interval { get; set; }
-		public uint codel_target { get; set; }
+		public uint16 codel_interval { get; set; }
+		public uint16 codel_target { get; set; }
 		public string description { get; set; }
 		public bool enabled { get; set; }
 		public PSObject mask { get; set; }
-		public uint number { get; set; }
+		public uint16 number { get; set; }
 		public string origin { get; set; }
 		public bool pie_enable { get; set; }
 		public PSObject pipe { get; set; }
-		public uint weight { get; set; }
+		public byte weight { get; set; }
 		#endregion Parameters
 
 		public Queue () {
@@ -125,19 +125,19 @@ namespace OPNsense.TrafficShaper.queues {
 		}
 
 		public Queue (
-			uint Buckets,
+			uint16 Buckets,
 			byte Codel_Ecn_Enable,
 			byte Codel_Enable,
-			uint Codel_Interval,
-			uint Codel_Target,
+			uint16 Codel_Interval,
+			uint16 Codel_Target,
 			string Description,
 			byte Enabled,
 			PSObject Mask,
-			uint Number,
+			uint16 Number,
 			string Origin,
 			byte Pie_Enable,
 			PSObject Pipe,
-			uint Weight
+			byte Weight
 		) {
 			buckets = Buckets;
 			codel_ecn_enable = (Codel_Ecn_Enable == 0) ? false : true;

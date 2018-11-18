@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Management.Automation;
 
 namespace OPNsense.Tinc.hosts {
@@ -8,7 +8,7 @@ namespace OPNsense.Tinc.hosts {
 		public bool connectTo { get; set; }
 		public bool enabled { get; set; }
 		public string extaddress { get; set; }
-		public uint extport { get; set; }
+		public uint16 extport { get; set; }
 		public string hostname { get; set; }
 		public PSObject network { get; set; }
 		public string pubkey { get; set; }
@@ -32,7 +32,7 @@ namespace OPNsense.Tinc.hosts {
 			byte ConnectTo,
 			byte Enabled,
 			string Extaddress,
-			uint Extport,
+			uint16 Extport,
 			string Hostname,
 			PSObject Network,
 			string Pubkey,
@@ -57,13 +57,13 @@ namespace OPNsense.Tinc.networks {
 		public PSObject debuglevel { get; set; }
 		public bool enabled { get; set; }
 		public string extaddress { get; set; }
-		public uint extport { get; set; }
+		public uint16 extport { get; set; }
 		public string hostname { get; set; }
 		public int id { get; set; }
 		public PSObject intaddress { get; set; }
 		public PSObject mode { get; set; }
 		public string name { get; set; }
-		public uint pingtimeout { get; set; }
+		public uint16 pingtimeout { get; set; }
 		public bool PMTUDiscovery { get; set; }
 		public string privkey { get; set; }
 		public string pubkey { get; set; }
@@ -93,13 +93,13 @@ namespace OPNsense.Tinc.networks {
 			PSObject Debuglevel,
 			byte Enabled,
 			string Extaddress,
-			uint Extport,
+			uint16 Extport,
 			string Hostname,
 			int Id,
 			PSObject Intaddress,
 			PSObject Mode,
 			string Name,
-			uint Pingtimeout,
+			uint16 Pingtimeout,
 			byte pmtudiscovery,
 			string Privkey,
 			string Pubkey,

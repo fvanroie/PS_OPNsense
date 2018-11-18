@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Management.Automation;
 
 namespace OPNsense.captiveportal.templates {
@@ -37,8 +37,8 @@ namespace OPNsense.captiveportal.zones {
 		public bool concurrentlogins { get; set; }
 		public string description { get; set; }
 		public bool enabled { get; set; }
-		public uint hardtimeout { get; set; }
-		public uint idletimeout { get; set; }
+		public uint16 hardtimeout { get; set; }
+		public uint16 idletimeout { get; set; }
 		public PSObject interfaces { get; set; }
 		public string servername { get; set; }
 		public PSObject template { get; set; }
@@ -75,8 +75,8 @@ namespace OPNsense.captiveportal.zones {
 			byte Concurrentlogins,
 			string Description,
 			byte Enabled,
-			uint Hardtimeout,
-			uint Idletimeout,
+			uint16 Hardtimeout,
+			uint16 Idletimeout,
 			PSObject Interfaces,
 			string Servername,
 			PSObject Template,

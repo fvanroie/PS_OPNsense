@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Management.Automation;
 
 namespace OPNsense.netsnmp.user.users {
@@ -31,6 +31,39 @@ namespace OPNsense.netsnmp.user.users {
 			password = Password;
 			readwrite = (Readwrite == 0) ? false : true;
 			username = Username;
+		}
+	}
+}
+namespace OPNsense.netsnmp {
+	public class General {
+		#region Parameters
+		public string community { get; set; }
+		public bool enabled { get; set; }
+		public PSObject listen { get; set; }
+		public string syscontact { get; set; }
+		public string syslocation { get; set; }
+		#endregion Parameters
+
+		public General () {
+			community = null;
+			enabled = true;
+			listen = null;
+			syscontact = null;
+			syslocation = null;
+		}
+
+		public General (
+			string Community,
+			byte Enabled,
+			PSObject Listen,
+			string Syscontact,
+			string Syslocation
+		) {
+			community = Community;
+			enabled = (Enabled == 0) ? false : true;
+			listen = Listen;
+			syscontact = Syscontact;
+			syslocation = Syslocation;
 		}
 	}
 }

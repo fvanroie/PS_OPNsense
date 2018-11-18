@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Management.Automation;
 
 namespace OPNsense.wireguard.client.clients {
@@ -92,6 +92,23 @@ namespace OPNsense.wireguard.server.servers {
 			privkey = Privkey;
 			pubkey = Pubkey;
 			tunneladdress = Tunneladdress;
+		}
+	}
+}
+namespace OPNsense.wireguard {
+	public class General {
+		#region Parameters
+		public bool enabled { get; set; }
+		#endregion Parameters
+
+		public General () {
+			enabled = true;
+		}
+
+		public General (
+			byte Enabled
+		) {
+			enabled = (Enabled == 0) ? false : true;
 		}
 	}
 }
