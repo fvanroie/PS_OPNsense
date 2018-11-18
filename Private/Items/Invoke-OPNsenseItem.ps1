@@ -52,31 +52,34 @@ Function Invoke-OPNsenseItem {
     # Be Verbose about this action
     Write-Verbose ("{0} {1} with UUID {{{2}}}" -f $Verb, $Call.Object, $InputObject.UUID)
 
-    # Execute the api call
-    $Splat = @{
-        'Module' = $Call.Module
-        'Action' = $Call.Action
-        'Object' = $Call.Object
-        'Uuid'   = $InputObject.UUID
-    }
-    if ($PSBoundParameters.ContainsKey('Enabled')) {
-        $Splat.Add('Enabled', $Enabled)
-    }
-    if ($Verb -eq 'set') {
-        $body = @{}
-        $body[$Call.Object.toLower()] = ConvertTo-OPNsenseItem $InputObject #| Select-Object -ExcludeProperty 'Uuid'
-        $Splat.Add('Body', $body)
-    }
+    if ($Verb -ne 'get') {
 
-    $Result = Invoke-OPNsenseOpenApiPath @Splat
+        # Execute the api call
+        $Splat = @{
+            'Module' = $Call.Module
+            'Action' = $Call.Action
+            'Object' = $Call.Object
+            'Uuid'   = $InputObject.UUID
+        }
+        if ($PSBoundParameters.ContainsKey('Enabled')) {
+            $Splat.Add('Enabled', $Enabled)
+        }
+        if ($Verb -eq 'set') {
+            $body = @{}
+            $body[$Call.Object.toLower()] = ConvertTo-OPNsenseItem $InputObject #| Select-Object -ExcludeProperty 'Uuid'
+            $Splat.Add('Body', $body)
+        }
 
-    if (-Not (Test-OPnsenseApiResult $Result)) {
-        Write-Warning ("Failed to {0} {1} {{{2}}}" -f $Verb.toLower(), $Call.Object, $InputObject.UUID)
-        Continue # With next object
+        $Result = Invoke-OPNsenseOpenApiPath @Splat
+
+        if (-Not (Test-OPnsenseApiResult $Result)) {
+            Write-Warning ("Failed to {0} {1} {{{2}}}" -f $Verb.toLower(), $Call.Object, $InputObject.UUID)
+            Continue # With next object
+        }
     }
 
     # Also Output results
-    if ($PassThru) {
+    if ($PassThru -or $Verb -eq 'get') {
         if ($Verb -ne 'Remove') {
             Invoke-OPNsenseOpenApiPath -Module $Call.Module -Action 'get' -Object $Call.Object -Uuid $InputObject.UUID
         } else {
