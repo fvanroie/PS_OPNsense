@@ -1380,7 +1380,7 @@
                 "command": {
                     "module": "monit",
                     "controller": "settings",
-                    "command": "add/test"
+                    "command": "set/test"
                 }
             },
             "set": {
