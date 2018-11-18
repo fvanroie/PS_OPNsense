@@ -41,9 +41,9 @@ Function ConvertTo-OPNsenseItem {
         switch ($prop.TypeNameOfValue) {
             'System.Boolean' {
                 if ($Prop.Value) {
-                    $newobject.Add($prop.Name, 1)
+                    $newobject.Add($prop.Name, "1")
                 } else {
-                    $newobject.Add($prop.Name, 0)
+                    $newobject.Add($prop.Name, "0")
                 }
             }
             {@('System.Object', 'System.Management.Automation.PSObject') -contains $_ } {
