@@ -4,7 +4,7 @@ using System.Management.Automation;
 namespace OPNsense.openconnect {
 	public class General {
 		#region Parameters
-		public  clientcertificate { get; set; }
+		public PSObject clientcertificate { get; set; }
 		public bool enabled { get; set; }
 		public string group { get; set; }
 		public PSObject hash { get; set; }
@@ -15,7 +15,7 @@ namespace OPNsense.openconnect {
 		#endregion Parameters
 
 		public General () {
-			clientcertificate = ;
+			clientcertificate = null;
 			enabled = true;
 			group = null;
 			hash = null;
@@ -26,7 +26,7 @@ namespace OPNsense.openconnect {
 		}
 
 		public General (
-			 Clientcertificate,
+			PSObject Clientcertificate,
 			byte Enabled,
 			string Group,
 			PSObject Hash,

@@ -99,8 +99,8 @@ namespace OPNsense.postfix {
 		public string banner { get; set; }
 		public PSObject bind_address { get; set; }
 		public PSObject bind_address6 { get; set; }
-		public  ca { get; set; }
-		public  certificate { get; set; }
+		public PSObject ca { get; set; }
+		public PSObject certificate { get; set; }
 		public bool disable_ssl { get; set; }
 		public bool disable_weak_ciphers { get; set; }
 		public bool enabled { get; set; }
@@ -132,8 +132,8 @@ namespace OPNsense.postfix {
 			banner = null;
 			bind_address = null;
 			bind_address6 = null;
-			ca = ;
-			certificate = ;
+			ca = null;
+			certificate = null;
 			disable_ssl = true;
 			disable_weak_ciphers = true;
 			enabled = true;
@@ -165,8 +165,8 @@ namespace OPNsense.postfix {
 			string Banner,
 			PSObject Bind_Address,
 			PSObject Bind_Address6,
-			 Ca,
-			 Certificate,
+			PSObject Ca,
+			PSObject Certificate,
 			byte Disable_Ssl,
 			byte Disable_Weak_Ciphers,
 			byte Enabled,

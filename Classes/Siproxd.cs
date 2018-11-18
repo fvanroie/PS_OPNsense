@@ -80,16 +80,16 @@ namespace OPNsense.siproxd {
 		public int plugin_stun_server_port { get; set; }
 		public bool proxy_auth_enable { get; set; }
 		public byte rtp_dscp { get; set; }
-		public uint16 rtp_input_dejitter { get; set; }
-		public uint16 rtp_output_dejitter { get; set; }
-		public uint16 rtp_port_high { get; set; }
-		public uint16 rtp_port_low { get; set; }
-		public uint16 rtp_timeout { get; set; }
+		public ushort rtp_input_dejitter { get; set; }
+		public ushort rtp_output_dejitter { get; set; }
+		public ushort rtp_port_high { get; set; }
+		public ushort rtp_port_low { get; set; }
+		public ushort rtp_timeout { get; set; }
 		public byte sip_dscp { get; set; }
-		public uint16 sip_listen_port { get; set; }
-		public uint16 tcp_connect_timeout { get; set; }
-		public uint16 tcp_keepalive { get; set; }
-		public uint16 tcp_timeout { get; set; }
+		public ushort sip_listen_port { get; set; }
+		public ushort tcp_connect_timeout { get; set; }
+		public ushort tcp_keepalive { get; set; }
+		public ushort tcp_timeout { get; set; }
 		public string ua_string { get; set; }
 		public PSObject use_rport { get; set; }
 		#endregion Parameters
@@ -154,16 +154,16 @@ namespace OPNsense.siproxd {
 			int Plugin_Stun_Server_Port,
 			byte Proxy_Auth_Enable,
 			byte Rtp_Dscp,
-			uint16 Rtp_Input_Dejitter,
-			uint16 Rtp_Output_Dejitter,
-			uint16 Rtp_Port_High,
-			uint16 Rtp_Port_Low,
-			uint16 Rtp_Timeout,
+			ushort Rtp_Input_Dejitter,
+			ushort Rtp_Output_Dejitter,
+			ushort Rtp_Port_High,
+			ushort Rtp_Port_Low,
+			ushort Rtp_Timeout,
 			byte Sip_Dscp,
-			uint16 Sip_Listen_Port,
-			uint16 Tcp_Connect_Timeout,
-			uint16 Tcp_Keepalive,
-			uint16 Tcp_Timeout,
+			ushort Sip_Listen_Port,
+			ushort Tcp_Connect_Timeout,
+			ushort Tcp_Keepalive,
+			ushort Tcp_Timeout,
 			string Ua_String,
 			PSObject Use_Rport
 		) {
