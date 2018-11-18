@@ -466,20 +466,20 @@ namespace OPNsense.proxy {
 		#region Parameters
 		public bool addACLforInterfaceSubnets { get; set; }
 		public PSObject ftpInterfaces { get; set; }
-		public uint16 ftpPort { get; set; }
+		public ushort ftpPort { get; set; }
 		public bool ftpTransparentMode { get; set; }
 		public PSObject interfaces { get; set; }
-		public uint16 port { get; set; }
+		public ushort port { get; set; }
 		public bool snmp_enable { get; set; }
 		public string snmp_password { get; set; }
-		public uint16 snmp_port { get; set; }
+		public ushort snmp_port { get; set; }
 		public bool sslbump { get; set; }
-		public uint16 sslbumpport { get; set; }
+		public ushort sslbumpport { get; set; }
 		public  sslcertificate { get; set; }
 		public byte sslcrtd_children { get; set; }
 		public Object sslnobumpsites { get; set; }
 		public bool sslurlonly { get; set; }
-		public uint16 ssl_crtd_storage_max_size { get; set; }
+		public ushort ssl_crtd_storage_max_size { get; set; }
 		public bool transparentMode { get; set; }
 		#endregion Parameters
 
@@ -506,20 +506,20 @@ namespace OPNsense.proxy {
 		public Forward (
 			byte AddACLforInterfaceSubnets,
 			PSObject FtpInterfaces,
-			uint16 FtpPort,
+			ushort FtpPort,
 			byte FtpTransparentMode,
 			PSObject Interfaces,
-			uint16 Port,
+			ushort Port,
 			byte Snmp_Enable,
 			string Snmp_Password,
-			uint16 Snmp_Port,
+			ushort Snmp_Port,
 			byte Sslbump,
-			uint16 Sslbumpport,
+			ushort Sslbumpport,
 			 Sslcertificate,
 			byte Sslcrtd_Children,
 			Object Sslnobumpsites,
 			byte Sslurlonly,
-			uint16 Ssl_Crtd_Storage_Max_Size,
+			ushort Ssl_Crtd_Storage_Max_Size,
 			byte TransparentMode
 		) {
 			addACLforInterfaceSubnets = (AddACLforInterfaceSubnets == 0) ? false : true;
@@ -549,7 +549,7 @@ namespace OPNsense.proxy {
 		public bool dnsV4First { get; set; }
 		public bool enabled { get; set; }
 		public PSObject forwardedForHandling { get; set; }
-		public uint16 icpPort { get; set; }
+		public ushort icpPort { get; set; }
 		public bool suppressVersion { get; set; }
 		public PSObject uriWhitespaceHandling { get; set; }
 		public bool useViaHeader { get; set; }
@@ -575,7 +575,7 @@ namespace OPNsense.proxy {
 			byte DnsV4First,
 			byte Enabled,
 			PSObject ForwardedForHandling,
-			uint16 IcpPort,
+			ushort IcpPort,
 			byte SuppressVersion,
 			PSObject UriWhitespaceHandling,
 			byte UseViaHeader,

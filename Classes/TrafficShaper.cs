@@ -6,19 +6,19 @@ namespace OPNsense.TrafficShaper.pipes {
 		#region Parameters
 		public uint bandwidth { get; set; }
 		public PSObject bandwidthMetric { get; set; }
-		public uint16 buckets { get; set; }
+		public ushort buckets { get; set; }
 		public bool codel_ecn_enable { get; set; }
 		public bool codel_enable { get; set; }
-		public uint16 codel_interval { get; set; }
-		public uint16 codel_target { get; set; }
-		public uint16 delay { get; set; }
+		public ushort codel_interval { get; set; }
+		public ushort codel_target { get; set; }
+		public ushort delay { get; set; }
 		public string description { get; set; }
 		public bool enabled { get; set; }
-		public uint16 fqcodel_flows { get; set; }
-		public uint16 fqcodel_limit { get; set; }
-		public uint16 fqcodel_quantum { get; set; }
+		public ushort fqcodel_flows { get; set; }
+		public ushort fqcodel_limit { get; set; }
+		public ushort fqcodel_quantum { get; set; }
 		public PSObject mask { get; set; }
-		public uint16 number { get; set; }
+		public ushort number { get; set; }
 		public string origin { get; set; }
 		public bool pie_enable { get; set; }
 		public byte queue { get; set; }
@@ -50,19 +50,19 @@ namespace OPNsense.TrafficShaper.pipes {
 		public Pipe (
 			uint Bandwidth,
 			PSObject BandwidthMetric,
-			uint16 Buckets,
+			ushort Buckets,
 			byte Codel_Ecn_Enable,
 			byte Codel_Enable,
-			uint16 Codel_Interval,
-			uint16 Codel_Target,
-			uint16 Delay,
+			ushort Codel_Interval,
+			ushort Codel_Target,
+			ushort Delay,
 			string Description,
 			byte Enabled,
-			uint16 Fqcodel_Flows,
-			uint16 Fqcodel_Limit,
-			uint16 Fqcodel_Quantum,
+			ushort Fqcodel_Flows,
+			ushort Fqcodel_Limit,
+			ushort Fqcodel_Quantum,
 			PSObject Mask,
-			uint16 Number,
+			ushort Number,
 			string Origin,
 			byte Pie_Enable,
 			byte Queue,
@@ -93,15 +93,15 @@ namespace OPNsense.TrafficShaper.pipes {
 namespace OPNsense.TrafficShaper.queues {
 	public class Queue {
 		#region Parameters
-		public uint16 buckets { get; set; }
+		public ushort buckets { get; set; }
 		public bool codel_ecn_enable { get; set; }
 		public bool codel_enable { get; set; }
-		public uint16 codel_interval { get; set; }
-		public uint16 codel_target { get; set; }
+		public ushort codel_interval { get; set; }
+		public ushort codel_target { get; set; }
 		public string description { get; set; }
 		public bool enabled { get; set; }
 		public PSObject mask { get; set; }
-		public uint16 number { get; set; }
+		public ushort number { get; set; }
 		public string origin { get; set; }
 		public bool pie_enable { get; set; }
 		public PSObject pipe { get; set; }
@@ -125,15 +125,15 @@ namespace OPNsense.TrafficShaper.queues {
 		}
 
 		public Queue (
-			uint16 Buckets,
+			ushort Buckets,
 			byte Codel_Ecn_Enable,
 			byte Codel_Enable,
-			uint16 Codel_Interval,
-			uint16 Codel_Target,
+			ushort Codel_Interval,
+			ushort Codel_Target,
 			string Description,
 			byte Enabled,
 			PSObject Mask,
-			uint16 Number,
+			ushort Number,
 			string Origin,
 			byte Pie_Enable,
 			PSObject Pipe,

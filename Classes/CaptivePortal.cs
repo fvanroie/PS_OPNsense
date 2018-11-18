@@ -37,8 +37,8 @@ namespace OPNsense.captiveportal.zones {
 		public bool concurrentlogins { get; set; }
 		public string description { get; set; }
 		public bool enabled { get; set; }
-		public uint16 hardtimeout { get; set; }
-		public uint16 idletimeout { get; set; }
+		public ushort hardtimeout { get; set; }
+		public ushort idletimeout { get; set; }
 		public PSObject interfaces { get; set; }
 		public string servername { get; set; }
 		public PSObject template { get; set; }
@@ -75,8 +75,8 @@ namespace OPNsense.captiveportal.zones {
 			byte Concurrentlogins,
 			string Description,
 			byte Enabled,
-			uint16 Hardtimeout,
-			uint16 Idletimeout,
+			ushort Hardtimeout,
+			ushort Idletimeout,
 			PSObject Interfaces,
 			string Servername,
 			PSObject Template,

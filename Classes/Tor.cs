@@ -31,9 +31,9 @@ namespace OPNsense.tor.exitpolicy {
 		#region Parameters
 		public PSObject action { get; set; }
 		public bool enabled { get; set; }
-		public uint16 endport { get; set; }
+		public ushort endport { get; set; }
 		public PSObject network { get; set; }
-		public uint16 startport { get; set; }
+		public ushort startport { get; set; }
 		public PSObject type { get; set; }
 		#endregion Parameters
 
@@ -49,9 +49,9 @@ namespace OPNsense.tor.exitpolicy {
 		public Policy (
 			PSObject Action,
 			byte Enabled,
-			uint16 Endport,
+			ushort Endport,
 			PSObject Network,
-			uint16 Startport,
+			ushort Startport,
 			PSObject Type
 		) {
 			action = Action;
@@ -97,9 +97,9 @@ namespace OPNsense.tor.hiddenserviceacl {
 		#region Parameters
 		public bool enabled { get; set; }
 		public PSObject hiddenservice { get; set; }
-		public uint16 port { get; set; }
+		public ushort port { get; set; }
 		public PSObject target_host { get; set; }
-		public uint16 target_port { get; set; }
+		public ushort target_port { get; set; }
 		#endregion Parameters
 
 		public Hiddenserviceacl () {
@@ -113,9 +113,9 @@ namespace OPNsense.tor.hiddenserviceacl {
 		public Hiddenserviceacl (
 			byte Enabled,
 			PSObject Hiddenservice,
-			uint16 Port,
+			ushort Port,
 			PSObject Target_Host,
-			uint16 Target_Port
+			ushort Target_Port
 		) {
 			enabled = (Enabled == 0) ? false : true;
 			hiddenservice = Hiddenservice;
@@ -157,7 +157,7 @@ namespace OPNsense.tor.aclsockspolicy {
 namespace OPNsense.tor {
 	public class General {
 		#region Parameters
-		public uint16 control_port { get; set; }
+		public ushort control_port { get; set; }
 		public string control_port_password { get; set; }
 		public string control_port_password_hashed { get; set; }
 		public bool dns_map_hosts { get; set; }
@@ -171,11 +171,11 @@ namespace OPNsense.tor {
 		public uint max_memory_in_queues { get; set; }
 		public PSObject scheduler { get; set; }
 		public PSObject socks_listen_ip { get; set; }
-		public uint16 socks_listen_port { get; set; }
+		public ushort socks_listen_port { get; set; }
 		public PSObject sysloglevel { get; set; }
-		public uint16 transparent_dns { get; set; }
+		public ushort transparent_dns { get; set; }
 		public PSObject transparent_ip_pool { get; set; }
-		public uint16 transparent_port { get; set; }
+		public ushort transparent_port { get; set; }
 		#endregion Parameters
 
 		public General () {
@@ -201,7 +201,7 @@ namespace OPNsense.tor {
 		}
 
 		public General (
-			uint16 Control_Port,
+			ushort Control_Port,
 			string Control_Port_Password,
 			string Control_Port_Password_Hashed,
 			byte Dns_Map_Hosts,
@@ -215,11 +215,11 @@ namespace OPNsense.tor {
 			uint Max_Memory_In_Queues,
 			PSObject Scheduler,
 			PSObject Socks_Listen_Ip,
-			uint16 Socks_Listen_Port,
+			ushort Socks_Listen_Port,
 			PSObject Sysloglevel,
-			uint16 Transparent_Dns,
+			ushort Transparent_Dns,
 			PSObject Transparent_Ip_Pool,
-			uint16 Transparent_Port
+			ushort Transparent_Port
 		) {
 			control_port = Control_Port;
 			control_port_password = Control_Port_Password;
@@ -250,7 +250,7 @@ namespace OPNsense.tor {
 		public int bandwithburst { get; set; }
 		public int bandwithrate { get; set; }
 		public string contact_info { get; set; }
-		public uint16 directory_port { get; set; }
+		public ushort directory_port { get; set; }
 		public bool dir_frontpage { get; set; }
 		public bool enabled { get; set; }
 		public bool exitenabled { get; set; }
@@ -262,7 +262,7 @@ namespace OPNsense.tor {
 		public string nick { get; set; }
 		public string outboundbind { get; set; }
 		public string outboundbindv6 { get; set; }
-		public uint16 port { get; set; }
+		public ushort port { get; set; }
 		public bool publish { get; set; }
 		public bool relay { get; set; }
 		#endregion Parameters
@@ -294,7 +294,7 @@ namespace OPNsense.tor {
 			int Bandwithburst,
 			int Bandwithrate,
 			string Contact_Info,
-			uint16 Directory_Port,
+			ushort Directory_Port,
 			byte Dir_Frontpage,
 			byte Enabled,
 			byte Exitenabled,
@@ -306,7 +306,7 @@ namespace OPNsense.tor {
 			string Nick,
 			string Outboundbind,
 			string Outboundbindv6,
-			uint16 Port,
+			ushort Port,
 			byte Publish,
 			byte Relay
 		) {

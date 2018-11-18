@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Management.Automation;
 
 namespace OPNsense.AcmeClient.accounts {
@@ -97,9 +97,9 @@ namespace OPNsense.AcmeClient.certificates {
 		public int lastUpdate { get; set; }
 		public string name { get; set; }
 		public bool ocsp { get; set; }
-		public uint renewInterval { get; set; }
+		public byte renewInterval { get; set; }
 		public PSObject restartActions { get; set; }
-		public uint statusCode { get; set; }
+		public ushort statusCode { get; set; }
 		public int statusLastUpdate { get; set; }
 		public PSObject validationMethod { get; set; }
 		#endregion Parameters
@@ -135,9 +135,9 @@ namespace OPNsense.AcmeClient.certificates {
 			int LastUpdate,
 			string Name,
 			byte Ocsp,
-			uint RenewInterval,
+			byte RenewInterval,
 			PSObject RestartActions,
-			uint StatusCode,
+			ushort StatusCode,
 			int StatusLastUpdate,
 			PSObject ValidationMethod
 		) {
@@ -243,7 +243,7 @@ namespace OPNsense.AcmeClient.validations {
 		public string dns_servercow_password { get; set; }
 		public string dns_servercow_username { get; set; }
 		public PSObject dns_service { get; set; }
-		public uint dns_sleep { get; set; }
+		public ushort dns_sleep { get; set; }
 		public string dns_sl_key { get; set; }
 		public string dns_uno_key { get; set; }
 		public string dns_uno_user { get; set; }
@@ -445,7 +445,7 @@ namespace OPNsense.AcmeClient.validations {
 			string Dns_Servercow_Password,
 			string Dns_Servercow_Username,
 			PSObject Dns_Service,
-			uint Dns_Sleep,
+			ushort Dns_Sleep,
 			string Dns_Sl_Key,
 			string Dns_Uno_Key,
 			string Dns_Uno_User,
@@ -562,6 +562,67 @@ namespace OPNsense.AcmeClient.validations {
 			id = Id;
 			method = Method;
 			name = Name;
+		}
+	}
+}
+namespace OPNsense.AcmeClient {
+	public class Settings {
+		#region Parameters
+		public bool autoRenewal { get; set; }
+		public ushort challengePort { get; set; }
+		public bool enabled { get; set; }
+		public PSObject environment { get; set; }
+		public PSObject haproxyAclRef { get; set; }
+		public PSObject haproxyActionRef { get; set; }
+		public PSObject haproxyBackendRef { get; set; }
+		public bool haproxyIntegration { get; set; }
+		public PSObject haproxyServerRef { get; set; }
+		public PSObject logLevel { get; set; }
+		public uint restartTimeout { get; set; }
+		public PSObject UpdateCron { get; set; }
+		#endregion Parameters
+
+		public Settings () {
+			autoRenewal = true;
+			challengePort = 43580;
+			enabled = true;
+			environment = null;
+			haproxyAclRef = null;
+			haproxyActionRef = null;
+			haproxyBackendRef = null;
+			haproxyIntegration = true;
+			haproxyServerRef = null;
+			logLevel = null;
+			restartTimeout = 600;
+			UpdateCron = null;
+		}
+
+		public Settings (
+			byte AutoRenewal,
+			ushort ChallengePort,
+			byte Enabled,
+			PSObject Environment,
+			PSObject HaproxyAclRef,
+			PSObject HaproxyActionRef,
+			PSObject HaproxyBackendRef,
+			byte HaproxyIntegration,
+			PSObject HaproxyServerRef,
+			PSObject LogLevel,
+			uint RestartTimeout,
+			PSObject updatecron
+		) {
+			autoRenewal = (AutoRenewal == 0) ? false : true;
+			challengePort = ChallengePort;
+			enabled = (Enabled == 0) ? false : true;
+			environment = Environment;
+			haproxyAclRef = HaproxyAclRef;
+			haproxyActionRef = HaproxyActionRef;
+			haproxyBackendRef = HaproxyBackendRef;
+			haproxyIntegration = (HaproxyIntegration == 0) ? false : true;
+			haproxyServerRef = HaproxyServerRef;
+			logLevel = LogLevel;
+			restartTimeout = RestartTimeout;
+			UpdateCron = updatecron;
 		}
 	}
 }
