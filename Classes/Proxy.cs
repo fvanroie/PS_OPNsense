@@ -4,15 +4,15 @@ using System.Management.Automation;
 namespace OPNsense.proxy.forward.acl {
 	public class Remoteacls {
 		#region Parameters
-		public  UpdateCron { get; set; }
+		public PSObject UpdateCron { get; set; }
 		#endregion Parameters
 
 		public Remoteacls () {
-			UpdateCron = ;
+			UpdateCron = null;
 		}
 
 		public Remoteacls (
-			 updatecron
+			PSObject updatecron
 		) {
 			UpdateCron = updatecron;
 		}
@@ -205,39 +205,39 @@ namespace OPNsense.proxy.forward.acl.remoteACLs.blacklists {
 namespace OPNsense.proxy.forward {
 	public class Acl {
 		#region Parameters
-		public  allowedSubnets { get; set; }
-		public  bannedHosts { get; set; }
-		public  blackList { get; set; }
-		public  browser { get; set; }
-		public  mimeType { get; set; }
-		public  safePorts { get; set; }
-		public  sslPorts { get; set; }
-		public  unrestricted { get; set; }
-		public  whiteList { get; set; }
+		public Object allowedSubnets { get; set; }
+		public Object bannedHosts { get; set; }
+		public Object blackList { get; set; }
+		public Object browser { get; set; }
+		public Object mimeType { get; set; }
+		public Object safePorts { get; set; }
+		public Object sslPorts { get; set; }
+		public Object unrestricted { get; set; }
+		public Object whiteList { get; set; }
 		#endregion Parameters
 
 		public Acl () {
-			allowedSubnets = ;
-			bannedHosts = ;
-			blackList = ;
-			browser = ;
-			mimeType = ;
-			safePorts = ;
-			sslPorts = ;
-			unrestricted = ;
-			whiteList = ;
+			allowedSubnets = null;
+			bannedHosts = null;
+			blackList = null;
+			browser = null;
+			mimeType = null;
+			safePorts = null;
+			sslPorts = null;
+			unrestricted = null;
+			whiteList = null;
 		}
 
 		public Acl (
-			 AllowedSubnets,
-			 BannedHosts,
-			 BlackList,
-			 Browser,
-			 MimeType,
-			 SafePorts,
-			 SslPorts,
-			 Unrestricted,
-			 WhiteList
+			Object AllowedSubnets,
+			Object BannedHosts,
+			Object BlackList,
+			Object Browser,
+			Object MimeType,
+			Object SafePorts,
+			Object SslPorts,
+			Object Unrestricted,
+			Object WhiteList
 		) {
 			allowedSubnets = AllowedSubnets;
 			bannedHosts = BannedHosts;
@@ -254,24 +254,24 @@ namespace OPNsense.proxy.forward {
 namespace OPNsense.proxy.forward {
 	public class Authentication {
 		#region Parameters
-		public  children { get; set; }
-		public  credentialsttl { get; set; }
-		public  method { get; set; }
-		public  realm { get; set; }
+		public uint children { get; set; }
+		public uint credentialsttl { get; set; }
+		public PSObject method { get; set; }
+		public string realm { get; set; }
 		#endregion Parameters
 
 		public Authentication () {
-			children = ;
-			credentialsttl = ;
-			method = ;
-			realm = ;
+			children = 5;
+			credentialsttl = 2;
+			method = null;
+			realm = "OPNsense proxy authentication";
 		}
 
 		public Authentication (
-			 Children,
-			 Credentialsttl,
-			 Method,
-			 Realm
+			uint Children,
+			uint Credentialsttl,
+			PSObject Method,
+			string Realm
 		) {
 			children = Children;
 			credentialsttl = Credentialsttl;
@@ -283,56 +283,56 @@ namespace OPNsense.proxy.forward {
 namespace OPNsense.proxy.forward {
 	public class Icap {
 		#region Parameters
-		public  enable { get; set; }
-		public  EnablePreview { get; set; }
-		public  EncodeUsername { get; set; }
-		public  exclude { get; set; }
-		public  OptionsTTL { get; set; }
-		public  PreviewSize { get; set; }
-		public  RequestURL { get; set; }
-		public  ResponseURL { get; set; }
-		public  SendClientIP { get; set; }
-		public  SendUsername { get; set; }
-		public  UsernameHeader { get; set; }
+		public bool enable { get; set; }
+		public bool EnablePreview { get; set; }
+		public bool EncodeUsername { get; set; }
+		public Object exclude { get; set; }
+		public int OptionsTTL { get; set; }
+		public int PreviewSize { get; set; }
+		public string RequestURL { get; set; }
+		public string ResponseURL { get; set; }
+		public bool SendClientIP { get; set; }
+		public bool SendUsername { get; set; }
+		public string UsernameHeader { get; set; }
 		#endregion Parameters
 
 		public Icap () {
-			enable = ;
-			EnablePreview = ;
-			EncodeUsername = ;
-			exclude = ;
-			OptionsTTL = ;
-			PreviewSize = ;
-			RequestURL = ;
-			ResponseURL = ;
-			SendClientIP = ;
-			SendUsername = ;
-			UsernameHeader = ;
+			enable = true;
+			EnablePreview = true;
+			EncodeUsername = true;
+			exclude = null;
+			OptionsTTL = 60;
+			PreviewSize = 1024;
+			RequestURL = "icap://[::1]:1344/avscan";
+			ResponseURL = "icap://[::1]:1344/avscan";
+			SendClientIP = true;
+			SendUsername = true;
+			UsernameHeader = "X-Username";
 		}
 
 		public Icap (
-			 Enable,
-			 enablepreview,
-			 encodeusername,
-			 Exclude,
-			 optionsttl,
-			 previewsize,
-			 requesturl,
-			 responseurl,
-			 sendclientip,
-			 sendusername,
-			 usernameheader
+			byte Enable,
+			byte enablepreview,
+			byte encodeusername,
+			Object Exclude,
+			int optionsttl,
+			int previewsize,
+			string requesturl,
+			string responseurl,
+			byte sendclientip,
+			byte sendusername,
+			string usernameheader
 		) {
-			enable = Enable;
-			EnablePreview = enablepreview;
-			EncodeUsername = encodeusername;
+			enable = (Enable == 0) ? false : true;
+			EnablePreview = (enablepreview == 0) ? false : true;
+			EncodeUsername = (encodeusername == 0) ? false : true;
 			exclude = Exclude;
 			OptionsTTL = optionsttl;
 			PreviewSize = previewsize;
 			RequestURL = requesturl;
 			ResponseURL = responseurl;
-			SendClientIP = sendclientip;
-			SendUsername = sendusername;
+			SendClientIP = (sendclientip == 0) ? false : true;
+			SendUsername = (sendusername == 0) ? false : true;
 			UsernameHeader = usernameheader;
 		}
 	}
@@ -340,45 +340,45 @@ namespace OPNsense.proxy.forward {
 namespace OPNsense.proxy.general.cache {
 	public class Local {
 		#region Parameters
-		public  cache_linux_packages { get; set; }
-		public  cache_mem { get; set; }
-		public  cache_windows_updates { get; set; }
-		public  directory { get; set; }
-		public  enabled { get; set; }
-		public  l1 { get; set; }
-		public  l2 { get; set; }
-		public  maximum_object_size { get; set; }
-		public  size { get; set; }
+		public bool cache_linux_packages { get; set; }
+		public uint cache_mem { get; set; }
+		public bool cache_windows_updates { get; set; }
+		public string directory { get; set; }
+		public bool enabled { get; set; }
+		public uint l1 { get; set; }
+		public uint l2 { get; set; }
+		public uint maximum_object_size { get; set; }
+		public uint size { get; set; }
 		#endregion Parameters
 
 		public Local () {
-			cache_linux_packages = ;
-			cache_mem = ;
-			cache_windows_updates = ;
-			directory = ;
-			enabled = ;
-			l1 = ;
-			l2 = ;
-			maximum_object_size = ;
-			size = ;
+			cache_linux_packages = true;
+			cache_mem = 256;
+			cache_windows_updates = true;
+			directory = "/var/squid/cache";
+			enabled = true;
+			l1 = 16;
+			l2 = 256;
+			maximum_object_size = 0;
+			size = 100;
 		}
 
 		public Local (
-			 Cache_Linux_Packages,
-			 Cache_Mem,
-			 Cache_Windows_Updates,
-			 Directory,
-			 Enabled,
-			 L1,
-			 L2,
-			 Maximum_Object_Size,
-			 Size
+			byte Cache_Linux_Packages,
+			uint Cache_Mem,
+			byte Cache_Windows_Updates,
+			string Directory,
+			byte Enabled,
+			uint L1,
+			uint L2,
+			uint Maximum_Object_Size,
+			uint Size
 		) {
-			cache_linux_packages = Cache_Linux_Packages;
+			cache_linux_packages = (Cache_Linux_Packages == 0) ? false : true;
 			cache_mem = Cache_Mem;
-			cache_windows_updates = Cache_Windows_Updates;
+			cache_windows_updates = (Cache_Windows_Updates == 0) ? false : true;
 			directory = Directory;
-			enabled = Enabled;
+			enabled = (Enabled == 0) ? false : true;
 			l1 = L1;
 			l2 = L2;
 			maximum_object_size = Maximum_Object_Size;
@@ -389,39 +389,39 @@ namespace OPNsense.proxy.general.cache {
 namespace OPNsense.proxy.general.logging {
 	public class Enable {
 		#region Parameters
-		public  accessLog { get; set; }
-		public  storeLog { get; set; }
+		public bool accessLog { get; set; }
+		public bool storeLog { get; set; }
 		#endregion Parameters
 
 		public Enable () {
-			accessLog = ;
-			storeLog = ;
+			accessLog = true;
+			storeLog = true;
 		}
 
 		public Enable (
-			 AccessLog,
-			 StoreLog
+			byte AccessLog,
+			byte StoreLog
 		) {
-			accessLog = AccessLog;
-			storeLog = StoreLog;
+			accessLog = (AccessLog == 0) ? false : true;
+			storeLog = (StoreLog == 0) ? false : true;
 		}
 	}
 }
 namespace OPNsense.proxy.general {
 	public class Logging {
 		#region Parameters
-		public  ignoreLogACL { get; set; }
-		public  target { get; set; }
+		public Object ignoreLogACL { get; set; }
+		public PSObject target { get; set; }
 		#endregion Parameters
 
 		public Logging () {
-			ignoreLogACL = ;
-			target = ;
+			ignoreLogACL = null;
+			target = null;
 		}
 
 		public Logging (
-			 IgnoreLogACL,
-			 Target
+			Object IgnoreLogACL,
+			PSObject Target
 		) {
 			ignoreLogACL = IgnoreLogACL;
 			target = Target;
@@ -431,29 +431,29 @@ namespace OPNsense.proxy.general {
 namespace OPNsense.proxy.general {
 	public class Traffic {
 		#region Parameters
-		public  enabled { get; set; }
-		public  maxDownloadSize { get; set; }
-		public  maxUploadSize { get; set; }
-		public  OverallBandwidthTrotteling { get; set; }
-		public  perHostTrotteling { get; set; }
+		public bool enabled { get; set; }
+		public uint maxDownloadSize { get; set; }
+		public uint maxUploadSize { get; set; }
+		public uint OverallBandwidthTrotteling { get; set; }
+		public uint perHostTrotteling { get; set; }
 		#endregion Parameters
 
 		public Traffic () {
-			enabled = ;
-			maxDownloadSize = ;
-			maxUploadSize = ;
-			OverallBandwidthTrotteling = ;
-			perHostTrotteling = ;
+			enabled = true;
+			maxDownloadSize = 2048;
+			maxUploadSize = 1024;
+			OverallBandwidthTrotteling = 1024;
+			perHostTrotteling = 256;
 		}
 
 		public Traffic (
-			 Enabled,
-			 MaxDownloadSize,
-			 MaxUploadSize,
-			 overallbandwidthtrotteling,
-			 PerHostTrotteling
+			byte Enabled,
+			uint MaxDownloadSize,
+			uint MaxUploadSize,
+			uint overallbandwidthtrotteling,
+			uint PerHostTrotteling
 		) {
-			enabled = Enabled;
+			enabled = (Enabled == 0) ? false : true;
 			maxDownloadSize = MaxDownloadSize;
 			maxUploadSize = MaxUploadSize;
 			OverallBandwidthTrotteling = overallbandwidthtrotteling;
@@ -475,7 +475,7 @@ namespace OPNsense.proxy {
 		public ushort snmp_port { get; set; }
 		public bool sslbump { get; set; }
 		public ushort sslbumpport { get; set; }
-		public  sslcertificate { get; set; }
+		public PSObject sslcertificate { get; set; }
 		public byte sslcrtd_children { get; set; }
 		public Object sslnobumpsites { get; set; }
 		public bool sslurlonly { get; set; }
@@ -495,7 +495,7 @@ namespace OPNsense.proxy {
 			snmp_port = 3401;
 			sslbump = true;
 			sslbumpport = 3129;
-			sslcertificate = ;
+			sslcertificate = null;
 			sslcrtd_children = 5;
 			sslnobumpsites = null;
 			sslurlonly = true;
@@ -515,7 +515,7 @@ namespace OPNsense.proxy {
 			ushort Snmp_Port,
 			byte Sslbump,
 			ushort Sslbumpport,
-			 Sslcertificate,
+			PSObject Sslcertificate,
 			byte Sslcrtd_Children,
 			Object Sslnobumpsites,
 			byte Sslurlonly,

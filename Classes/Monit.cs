@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Management.Automation;
 
 namespace OPNsense.monit {
@@ -129,6 +129,99 @@ namespace OPNsense.monit {
 			condition = Condition;
 			name = Name;
 			path = Path;
+		}
+	}
+}
+namespace OPNsense.monit {
+	public class General {
+		#region Parameters
+		public bool enabled { get; set; }
+		public string eventqueuePath { get; set; }
+		public int eventqueueSlots { get; set; }
+		public Object httpdAllow { get; set; }
+		public bool httpdEnabled { get; set; }
+		public string httpdPassword { get; set; }
+		public ushort httpdPort { get; set; }
+		public string httpdUsername { get; set; }
+		public uint interval { get; set; }
+		public string logfile { get; set; }
+		public Object mailserver { get; set; }
+		public bool mmonitRegisterCredentials { get; set; }
+		public uint mmonitTimeout { get; set; }
+		public string mmonitUrl { get; set; }
+		public string password { get; set; }
+		public ushort port { get; set; }
+		public bool ssl { get; set; }
+		public uint startdelay { get; set; }
+		public string statefile { get; set; }
+		public string username { get; set; }
+		#endregion Parameters
+
+		public General () {
+			enabled = true;
+			eventqueuePath = null;
+			eventqueueSlots = 0;
+			httpdAllow = null;
+			httpdEnabled = true;
+			httpdPassword = null;
+			httpdPort = 2812;
+			httpdUsername = null;
+			interval = 120;
+			logfile = "syslog facility log_daemon";
+			mailserver = null;
+			mmonitRegisterCredentials = true;
+			mmonitTimeout = 5;
+			mmonitUrl = null;
+			password = null;
+			port = 25;
+			ssl = true;
+			startdelay = 120;
+			statefile = null;
+			username = null;
+		}
+
+		public General (
+			byte Enabled,
+			string EventqueuePath,
+			int EventqueueSlots,
+			Object HttpdAllow,
+			byte HttpdEnabled,
+			string HttpdPassword,
+			ushort HttpdPort,
+			string HttpdUsername,
+			uint Interval,
+			string Logfile,
+			Object Mailserver,
+			byte MmonitRegisterCredentials,
+			uint MmonitTimeout,
+			string MmonitUrl,
+			string Password,
+			ushort Port,
+			byte Ssl,
+			uint Startdelay,
+			string Statefile,
+			string Username
+		) {
+			enabled = (Enabled == 0) ? false : true;
+			eventqueuePath = EventqueuePath;
+			eventqueueSlots = EventqueueSlots;
+			httpdAllow = HttpdAllow;
+			httpdEnabled = (HttpdEnabled == 0) ? false : true;
+			httpdPassword = HttpdPassword;
+			httpdPort = HttpdPort;
+			httpdUsername = HttpdUsername;
+			interval = Interval;
+			logfile = Logfile;
+			mailserver = Mailserver;
+			mmonitRegisterCredentials = (MmonitRegisterCredentials == 0) ? false : true;
+			mmonitTimeout = MmonitTimeout;
+			mmonitUrl = MmonitUrl;
+			password = Password;
+			port = Port;
+			ssl = (Ssl == 0) ? false : true;
+			startdelay = Startdelay;
+			statefile = Statefile;
+			username = Username;
 		}
 	}
 }

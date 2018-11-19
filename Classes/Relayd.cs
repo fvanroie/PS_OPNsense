@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Management.Automation;
 
 namespace OPNsense.relayd {
@@ -235,6 +235,39 @@ namespace OPNsense.relayd {
 			transport_timeout = Transport_Timeout;
 			transport_type = Transport_Type;
 			type = Type;
+		}
+	}
+}
+namespace OPNsense.relayd {
+	public class General {
+		#region Parameters
+		public bool enabled { get; set; }
+		public uint interval { get; set; }
+		public PSObject log { get; set; }
+		public uint prefork { get; set; }
+		public uint timeout { get; set; }
+		#endregion Parameters
+
+		public General () {
+			enabled = true;
+			interval = 10;
+			log = null;
+			prefork = 3;
+			timeout = 200;
+		}
+
+		public General (
+			byte Enabled,
+			uint Interval,
+			PSObject Log,
+			uint Prefork,
+			uint Timeout
+		) {
+			enabled = (Enabled == 0) ? false : true;
+			interval = Interval;
+			log = Log;
+			prefork = Prefork;
+			timeout = Timeout;
 		}
 	}
 }

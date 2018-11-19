@@ -1,19 +1,19 @@
-﻿using System;
+using System;
 using System.Management.Automation;
 
 namespace OPNsense.ftpproxies {
 	public class Ftpproxy {
 		#region Parameters
-		public uint debuglevel { get; set; }
+		public byte debuglevel { get; set; }
 		public string description { get; set; }
 		public bool enabled { get; set; }
 		public uint idletimeout { get; set; }
 		public string listenaddress { get; set; }
-		public uint listenport { get; set; }
+		public ushort listenport { get; set; }
 		public bool logconnections { get; set; }
-		public uint maxsessions { get; set; }
+		public ushort maxsessions { get; set; }
 		public string reverseaddress { get; set; }
-		public uint reverseport { get; set; }
+		public ushort reverseport { get; set; }
 		public bool rewritesourceport { get; set; }
 		public string sourceaddress { get; set; }
 		#endregion Parameters
@@ -34,16 +34,16 @@ namespace OPNsense.ftpproxies {
 		}
 
 		public Ftpproxy (
-			uint Debuglevel,
+			byte Debuglevel,
 			string Description,
 			byte Enabled,
 			uint Idletimeout,
 			string Listenaddress,
-			uint Listenport,
+			ushort Listenport,
 			byte Logconnections,
-			uint Maxsessions,
+			ushort Maxsessions,
 			string Reverseaddress,
-			uint Reverseport,
+			ushort Reverseport,
 			byte Rewritesourceport,
 			string Sourceaddress
 		) {
