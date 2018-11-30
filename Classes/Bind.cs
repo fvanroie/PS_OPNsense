@@ -1,20 +1,28 @@
 using System;
 using System.Management.Automation;
 
-namespace OPNsense {
-	public class Bind {
+namespace OPNsense.bind {
+	public class Dnsbl {
 		#region Parameters
-		public  dnsbl { get; set; }
+		public bool enabled { get; set; }
+		public PSObject type { get; set; }
+		public Object whitelists  { get; set; }
 		#endregion Parameters
 
-		public Bind () {
-			dnsbl = ;
+		public Dnsbl () {
+			enabled = true;
+			type = null;
+			whitelists  = null;
 		}
 
-		public Bind (
-			 Dnsbl
+		public Dnsbl (
+			byte Enabled,
+			PSObject Type,
+			Object Whitelists 
 		) {
-			dnsbl = Dnsbl;
+			enabled = (Enabled == 0) ? false : true;
+			type = Type;
+			whitelists  = Whitelists ;
 		}
 	}
 }

@@ -1,6 +1,60 @@
-﻿using System;
+using System;
 using System.Management.Automation;
 
+namespace OPNsense.Nginx {
+	public class Ban {
+		#region Parameters
+		public PSObject ip { get; set; }
+		public uint time { get; set; }
+		#endregion Parameters
+
+		public Ban () {
+			ip = null;
+			time = 0;
+		}
+
+		public Ban (
+			PSObject Ip,
+			uint Time
+		) {
+			ip = Ip;
+			time = Time;
+		}
+	}
+}
+namespace OPNsense.Nginx {
+	public class Cache_Path {
+		#region Parameters
+		public uint inactive { get; set; }
+		public uint max_size { get; set; }
+		public string path { get; set; }
+		public uint size { get; set; }
+		public bool use_temp_path { get; set; }
+		#endregion Parameters
+
+		public Cache_Path () {
+			inactive = 0;
+			max_size = 0;
+			path = null;
+			size = 10;
+			use_temp_path = true;
+		}
+
+		public Cache_Path (
+			uint Inactive,
+			uint Max_Size,
+			string Path,
+			uint Size,
+			byte Use_Temp_Path
+		) {
+			inactive = Inactive;
+			max_size = Max_Size;
+			path = Path;
+			size = Size;
+			use_temp_path = (Use_Temp_Path == 0) ? false : true;
+		}
+	}
+}
 namespace OPNsense.Nginx {
 	public class Credential {
 		#region Parameters
@@ -92,10 +146,8 @@ namespace OPNsense.Nginx {
 		public PSObject ca { get; set; }
 		public PSObject certificate { get; set; }
 		public PSObject charset { get; set; }
-		public bool disable_bot_protection { get; set; }
 		public bool enable_acme_support { get; set; }
 		public bool https_only { get; set; }
-		public PSObject ip_acl { get; set; }
 		public PSObject limit_request_connections { get; set; }
 		public PSObject listen_https_port { get; set; }
 		public PSObject listen_http_port { get; set; }
@@ -115,10 +167,8 @@ namespace OPNsense.Nginx {
 			ca = null;
 			certificate = null;
 			charset = null;
-			disable_bot_protection = true;
 			enable_acme_support = true;
 			https_only = true;
-			ip_acl = null;
 			limit_request_connections = null;
 			listen_https_port = null;
 			listen_http_port = null;
@@ -138,10 +188,8 @@ namespace OPNsense.Nginx {
 			PSObject Ca,
 			PSObject Certificate,
 			PSObject Charset,
-			byte Disable_Bot_Protection,
 			byte Enable_Acme_Support,
 			byte Https_Only,
-			PSObject Ip_Acl,
 			PSObject Limit_Request_Connections,
 			PSObject Listen_Https_Port,
 			PSObject Listen_Http_Port,
@@ -159,10 +207,8 @@ namespace OPNsense.Nginx {
 			ca = Ca;
 			certificate = Certificate;
 			charset = Charset;
-			disable_bot_protection = (Disable_Bot_Protection == 0) ? false : true;
 			enable_acme_support = (Enable_Acme_Support == 0) ? false : true;
 			https_only = (Https_Only == 0) ? false : true;
-			ip_acl = Ip_Acl;
 			limit_request_connections = Limit_Request_Connections;
 			listen_https_port = Listen_Https_Port;
 			listen_http_port = Listen_Http_Port;
@@ -265,7 +311,6 @@ namespace OPNsense.Nginx {
 		public bool honeypot { get; set; }
 		public bool http2_push_preload { get; set; }
 		public Object index { get; set; }
-		public PSObject ip_acl { get; set; }
 		public PSObject limit_request_connections { get; set; }
 		public PSObject matchtype { get; set; }
 		public string path_prefix { get; set; }
@@ -300,7 +345,6 @@ namespace OPNsense.Nginx {
 			honeypot = true;
 			http2_push_preload = true;
 			index = null;
-			ip_acl = null;
 			limit_request_connections = null;
 			matchtype = null;
 			path_prefix = null;
@@ -335,7 +379,6 @@ namespace OPNsense.Nginx {
 			byte Honeypot,
 			byte Http2_Push_Preload,
 			Object Index,
-			PSObject Ip_Acl,
 			PSObject Limit_Request_Connections,
 			PSObject Matchtype,
 			string Path_Prefix,
@@ -368,7 +411,6 @@ namespace OPNsense.Nginx {
 			honeypot = (Honeypot == 0) ? false : true;
 			http2_push_preload = (Http2_Push_Preload == 0) ? false : true;
 			index = Index;
-			ip_acl = Ip_Acl;
 			limit_request_connections = Limit_Request_Connections;
 			matchtype = Matchtype;
 			path_prefix = Path_Prefix;
@@ -872,13 +914,48 @@ namespace OPNsense.Nginx {
 	}
 }
 namespace OPNsense.Nginx {
-	public class Upstreamserver {
+	public class Upstream_Server {
 		#region Parameters
+		public string description { get; set; }
+		public int fail_timeout { get; set; }
+		public int max_conns { get; set; }
+		public int max_fails { get; set; }
+		public PSObject no_use { get; set; }
+		public PSObject port { get; set; }
+		public uint priority { get; set; }
+		public string server { get; set; }
 		#endregion Parameters
 
-		public Upstreamserver () {
+		public Upstream_Server () {
+			description = null;
+			fail_timeout = 0;
+			max_conns = 0;
+			max_fails = 0;
+			no_use = null;
+			port = null;
+			priority = 0;
+			server = null;
 		}
 
+		public Upstream_Server (
+			string Description,
+			int Fail_Timeout,
+			int Max_Conns,
+			int Max_Fails,
+			PSObject No_Use,
+			PSObject Port,
+			uint Priority,
+			string Server
+		) {
+			description = Description;
+			fail_timeout = Fail_Timeout;
+			max_conns = Max_Conns;
+			max_fails = Max_Fails;
+			no_use = No_Use;
+			port = Port;
+			priority = Priority;
+			server = Server;
+		}
 	}
 }
 namespace OPNsense.Nginx {
@@ -899,6 +976,65 @@ namespace OPNsense.Nginx {
 		) {
 			name = Name;
 			users = Users;
+		}
+	}
+}
+namespace OPNsense.Nginx {
+	public class General {
+		#region Parameters
+		public bool enabled { get; set; }
+		#endregion Parameters
+
+		public General () {
+			enabled = true;
+		}
+
+		public General (
+			byte Enabled
+		) {
+			enabled = (Enabled == 0) ? false : true;
+		}
+	}
+}
+namespace OPNsense.Nginx {
+	public class Http {
+		#region Parameters
+		public string default_type { get; set; }
+		public int keepalive_timeout { get; set; }
+		public bool sendfile { get; set; }
+		#endregion Parameters
+
+		public Http () {
+			default_type = null;
+			keepalive_timeout = 60;
+			sendfile = true;
+		}
+
+		public Http (
+			string Default_Type,
+			int Keepalive_Timeout,
+			byte Sendfile
+		) {
+			default_type = Default_Type;
+			keepalive_timeout = Keepalive_Timeout;
+			sendfile = (Sendfile == 0) ? false : true;
+		}
+	}
+}
+namespace OPNsense.Nginx {
+	public class Webgui {
+		#region Parameters
+		public bool limitnetworks { get; set; }
+		#endregion Parameters
+
+		public Webgui () {
+			limitnetworks = true;
+		}
+
+		public Webgui (
+			byte Limitnetworks
+		) {
+			limitnetworks = (Limitnetworks == 0) ? false : true;
 		}
 	}
 }
