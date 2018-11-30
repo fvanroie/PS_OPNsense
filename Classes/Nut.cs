@@ -25,17 +25,17 @@ namespace OPNsense.Nut {
 namespace OPNsense.Nut {
 	public class Apcsmart {
 		#region Parameters
-		public string args { get; set; }
+		public Object args { get; set; }
 		public bool enable { get; set; }
 		#endregion Parameters
 
 		public Apcsmart () {
-			args = "port=auto";
+			args = null;
 			enable = true;
 		}
 
 		public Apcsmart (
-			string Args,
+			Object Args,
 			byte Enable
 		) {
 			args = Args;
@@ -46,17 +46,17 @@ namespace OPNsense.Nut {
 namespace OPNsense.Nut {
 	public class Blazerusb {
 		#region Parameters
-		public string args { get; set; }
+		public Object args { get; set; }
 		public bool enable { get; set; }
 		#endregion Parameters
 
 		public Blazerusb () {
-			args = "port=auto";
+			args = null;
 			enable = true;
 		}
 
 		public Blazerusb (
-			string Args,
+			Object Args,
 			byte Enable
 		) {
 			args = Args;
@@ -96,17 +96,17 @@ namespace OPNsense.Nut {
 namespace OPNsense.Nut {
 	public class Usbhid {
 		#region Parameters
-		public string args { get; set; }
+		public Object args { get; set; }
 		public bool enable { get; set; }
 		#endregion Parameters
 
 		public Usbhid () {
-			args = "port=auto";
+			args = null;
 			enable = true;
 		}
 
 		public Usbhid (
-			string Args,
+			Object Args,
 			byte Enable
 		) {
 			args = Args;
