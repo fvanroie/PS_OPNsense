@@ -54,7 +54,7 @@ Function Invoke-OPNsenseItem {
 
     if ($Verb -ne 'get') {
 
-        # Execute the api call
+        # Execute the modifying api call
         $Splat = @{
             'Module' = $Call.Module
             'Action' = $Call.Action
