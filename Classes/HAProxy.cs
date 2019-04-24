@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Management.Automation;
 
 namespace OPNsense.HAProxy.acls {
@@ -294,7 +294,7 @@ namespace OPNsense.HAProxy.actions {
 		public string http_response_replace_value_regex { get; set; }
 		public string http_response_set_header_content { get; set; }
 		public string http_response_set_header_name { get; set; }
-		public uint http_response_set_status_code { get; set; }
+		public ushort http_response_set_status_code { get; set; }
 		public string http_response_set_status_reason { get; set; }
 		public PSObject linkedAcls { get; set; }
 		public PSObject map_use_backend_default { get; set; }
@@ -390,7 +390,7 @@ namespace OPNsense.HAProxy.actions {
 			string Http_Response_Replace_Value_Regex,
 			string Http_Response_Set_Header_Content,
 			string Http_Response_Set_Header_Name,
-			uint Http_Response_Set_Status_Code,
+			ushort Http_Response_Set_Status_Code,
 			string Http_Response_Set_Status_Reason,
 			PSObject LinkedAcls,
 			PSObject Map_Use_Backend_Default,
@@ -459,9 +459,6 @@ namespace OPNsense.HAProxy.backends {
 	public class Backend {
 		#region Parameters
 		public PSObject algorithm { get; set; }
-		public bool basicAuthEnabled { get; set; }
-		public PSObject basicAuthGroups { get; set; }
-		public PSObject basicAuthUsers { get; set; }
 		public string checkDownInterval { get; set; }
 		public string checkInterval { get; set; }
 		public string customOptions { get; set; }
@@ -469,9 +466,9 @@ namespace OPNsense.HAProxy.backends {
 		public bool enabled { get; set; }
 		public PSObject healthCheck { get; set; }
 		public bool healthCheckEnabled { get; set; }
-		public uint healthCheckFall { get; set; }
+		public byte healthCheckFall { get; set; }
 		public bool healthCheckLogStatus { get; set; }
-		public uint healthCheckRise { get; set; }
+		public byte healthCheckRise { get; set; }
 		public string id { get; set; }
 		public PSObject linkedActions { get; set; }
 		public PSObject linkedErrorfiles { get; set; }
@@ -487,7 +484,7 @@ namespace OPNsense.HAProxy.backends {
 		public string stickiness_bytesInRatePeriod { get; set; }
 		public string stickiness_bytesOutRatePeriod { get; set; }
 		public string stickiness_connRatePeriod { get; set; }
-		public uint stickiness_cookielength { get; set; }
+		public ushort stickiness_cookielength { get; set; }
 		public string stickiness_cookiename { get; set; }
 		public PSObject stickiness_dataTypes { get; set; }
 		public string stickiness_expire { get; set; }
@@ -499,7 +496,7 @@ namespace OPNsense.HAProxy.backends {
 		public string tuning_defaultserver { get; set; }
 		public PSObject tuning_httpreuse { get; set; }
 		public bool tuning_noport { get; set; }
-		public uint tuning_retries { get; set; }
+		public byte tuning_retries { get; set; }
 		public string tuning_timeoutCheck { get; set; }
 		public string tuning_timeoutConnect { get; set; }
 		public string tuning_timeoutServer { get; set; }
@@ -507,9 +504,6 @@ namespace OPNsense.HAProxy.backends {
 
 		public Backend () {
 			algorithm = null;
-			basicAuthEnabled = true;
-			basicAuthGroups = null;
-			basicAuthUsers = null;
 			checkDownInterval = null;
 			checkInterval = null;
 			customOptions = null;
@@ -555,9 +549,6 @@ namespace OPNsense.HAProxy.backends {
 
 		public Backend (
 			PSObject Algorithm,
-			byte BasicAuthEnabled,
-			PSObject BasicAuthGroups,
-			PSObject BasicAuthUsers,
 			string CheckDownInterval,
 			string CheckInterval,
 			string CustomOptions,
@@ -565,9 +556,9 @@ namespace OPNsense.HAProxy.backends {
 			byte Enabled,
 			PSObject HealthCheck,
 			byte HealthCheckEnabled,
-			uint HealthCheckFall,
+			byte HealthCheckFall,
 			byte HealthCheckLogStatus,
-			uint HealthCheckRise,
+			byte HealthCheckRise,
 			string Id,
 			PSObject LinkedActions,
 			PSObject LinkedErrorfiles,
@@ -583,7 +574,7 @@ namespace OPNsense.HAProxy.backends {
 			string Stickiness_BytesInRatePeriod,
 			string Stickiness_BytesOutRatePeriod,
 			string Stickiness_ConnRatePeriod,
-			uint Stickiness_Cookielength,
+			ushort Stickiness_Cookielength,
 			string Stickiness_Cookiename,
 			PSObject Stickiness_DataTypes,
 			string Stickiness_Expire,
@@ -595,15 +586,12 @@ namespace OPNsense.HAProxy.backends {
 			string Tuning_Defaultserver,
 			PSObject Tuning_Httpreuse,
 			byte Tuning_Noport,
-			uint Tuning_Retries,
+			byte Tuning_Retries,
 			string Tuning_TimeoutCheck,
 			string Tuning_TimeoutConnect,
 			string Tuning_TimeoutServer
 		) {
 			algorithm = Algorithm;
-			basicAuthEnabled = (BasicAuthEnabled == 0) ? false : true;
-			basicAuthGroups = BasicAuthGroups;
-			basicAuthUsers = BasicAuthUsers;
 			checkDownInterval = CheckDownInterval;
 			checkInterval = CheckInterval;
 			customOptions = CustomOptions;
@@ -684,9 +672,6 @@ namespace OPNsense.HAProxy.errorfiles {
 namespace OPNsense.HAProxy.frontends {
 	public class Frontend {
 		#region Parameters
-		public bool basicAuthEnabled { get; set; }
-		public PSObject basicAuthGroups { get; set; }
-		public PSObject basicAuthUsers { get; set; }
 		public Object bind { get; set; }
 		public string bindOptions { get; set; }
 		public PSObject connectionBehaviour { get; set; }
@@ -709,10 +694,6 @@ namespace OPNsense.HAProxy.frontends {
 		public PSObject ssl_bindOptions { get; set; }
 		public PSObject ssl_certificates { get; set; }
 		public string ssl_cipherList { get; set; }
-		public PSObject ssl_clientAuthCAs { get; set; }
-		public PSObject ssl_clientAuthCRLs { get; set; }
-		public bool ssl_clientAuthEnabled { get; set; }
-		public PSObject ssl_clientAuthVerify { get; set; }
 		public string ssl_customOptions { get; set; }
 		public PSObject ssl_default_certificate { get; set; }
 		public bool ssl_enabled { get; set; }
@@ -729,7 +710,7 @@ namespace OPNsense.HAProxy.frontends {
 		public string stickiness_expire { get; set; }
 		public string stickiness_httpErrRatePeriod { get; set; }
 		public string stickiness_httpReqRatePeriod { get; set; }
-		public uint stickiness_length { get; set; }
+		public ushort stickiness_length { get; set; }
 		public PSObject stickiness_pattern { get; set; }
 		public string stickiness_sessRatePeriod { get; set; }
 		public string stickiness_size { get; set; }
@@ -740,9 +721,6 @@ namespace OPNsense.HAProxy.frontends {
 		#endregion Parameters
 
 		public Frontend () {
-			basicAuthEnabled = true;
-			basicAuthGroups = null;
-			basicAuthUsers = null;
 			bind = null;
 			bindOptions = null;
 			connectionBehaviour = null;
@@ -764,11 +742,7 @@ namespace OPNsense.HAProxy.frontends {
 			ssl_advancedEnabled = true;
 			ssl_bindOptions = null;
 			ssl_certificates = null;
-			ssl_cipherList = "ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA256";
-			ssl_clientAuthCAs = null;
-			ssl_clientAuthCRLs = null;
-			ssl_clientAuthEnabled = true;
-			ssl_clientAuthVerify = null;
+			ssl_cipherList = "ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES128-SHA256:ECDHE";
 			ssl_customOptions = null;
 			ssl_default_certificate = null;
 			ssl_enabled = true;
@@ -796,9 +770,6 @@ namespace OPNsense.HAProxy.frontends {
 		}
 
 		public Frontend (
-			byte BasicAuthEnabled,
-			PSObject BasicAuthGroups,
-			PSObject BasicAuthUsers,
 			Object Bind,
 			string BindOptions,
 			PSObject ConnectionBehaviour,
@@ -821,10 +792,6 @@ namespace OPNsense.HAProxy.frontends {
 			PSObject Ssl_BindOptions,
 			PSObject Ssl_Certificates,
 			string Ssl_CipherList,
-			PSObject Ssl_ClientAuthCAs,
-			PSObject Ssl_ClientAuthCRLs,
-			byte Ssl_ClientAuthEnabled,
-			PSObject Ssl_ClientAuthVerify,
 			string Ssl_CustomOptions,
 			PSObject Ssl_Default_Certificate,
 			byte Ssl_Enabled,
@@ -841,7 +808,7 @@ namespace OPNsense.HAProxy.frontends {
 			string Stickiness_Expire,
 			string Stickiness_HttpErrRatePeriod,
 			string Stickiness_HttpReqRatePeriod,
-			uint Stickiness_Length,
+			ushort Stickiness_Length,
 			PSObject Stickiness_Pattern,
 			string Stickiness_SessRatePeriod,
 			string Stickiness_Size,
@@ -850,9 +817,6 @@ namespace OPNsense.HAProxy.frontends {
 			string Tuning_TimeoutHttpKeepAlive,
 			string Tuning_TimeoutHttpReq
 		) {
-			basicAuthEnabled = (BasicAuthEnabled == 0) ? false : true;
-			basicAuthGroups = BasicAuthGroups;
-			basicAuthUsers = BasicAuthUsers;
 			bind = Bind;
 			bindOptions = BindOptions;
 			connectionBehaviour = ConnectionBehaviour;
@@ -875,10 +839,6 @@ namespace OPNsense.HAProxy.frontends {
 			ssl_bindOptions = Ssl_BindOptions;
 			ssl_certificates = Ssl_Certificates;
 			ssl_cipherList = Ssl_CipherList;
-			ssl_clientAuthCAs = Ssl_ClientAuthCAs;
-			ssl_clientAuthCRLs = Ssl_ClientAuthCRLs;
-			ssl_clientAuthEnabled = (Ssl_ClientAuthEnabled == 0) ? false : true;
-			ssl_clientAuthVerify = Ssl_ClientAuthVerify;
 			ssl_customOptions = Ssl_CustomOptions;
 			ssl_default_certificate = Ssl_Default_Certificate;
 			ssl_enabled = (Ssl_Enabled == 0) ? false : true;
@@ -910,8 +870,8 @@ namespace OPNsense.HAProxy.healthchecks {
 	public class Healthcheck {
 		#region Parameters
 		public int agentPort { get; set; }
-		public uint agent_port { get; set; }
-		public uint checkport { get; set; }
+		public ushort agent_port { get; set; }
+		public ushort checkport { get; set; }
 		public string dbUser { get; set; }
 		public string description { get; set; }
 		public string esmtp_domain { get; set; }
@@ -970,8 +930,8 @@ namespace OPNsense.HAProxy.healthchecks {
 
 		public Healthcheck (
 			int AgentPort,
-			uint Agent_Port,
-			uint Checkport,
+			ushort Agent_Port,
+			ushort Checkport,
 			string DbUser,
 			string Description,
 			string Esmtp_Domain,
@@ -1027,35 +987,6 @@ namespace OPNsense.HAProxy.healthchecks {
 		}
 	}
 }
-namespace OPNsense.HAProxy.mapfiles {
-	public class Mapfile {
-		#region Parameters
-		public string content { get; set; }
-		public string description { get; set; }
-		public string id { get; set; }
-		public string name { get; set; }
-		#endregion Parameters
-
-		public Mapfile () {
-			content = null;
-			description = null;
-			id = null;
-			name = null;
-		}
-
-		public Mapfile (
-			string Content,
-			string Description,
-			string Id,
-			string Name
-		) {
-			content = Content;
-			description = Description;
-			id = Id;
-			name = Name;
-		}
-	}
-}
 namespace OPNsense.HAProxy.luas {
 	public class Lua {
 		#region Parameters
@@ -1089,6 +1020,35 @@ namespace OPNsense.HAProxy.luas {
 		}
 	}
 }
+namespace OPNsense.HAProxy.mapfiles {
+	public class Mapfile {
+		#region Parameters
+		public string content { get; set; }
+		public string description { get; set; }
+		public string id { get; set; }
+		public string name { get; set; }
+		#endregion Parameters
+
+		public Mapfile () {
+			content = null;
+			description = null;
+			id = null;
+			name = null;
+		}
+
+		public Mapfile (
+			string Content,
+			string Description,
+			string Id,
+			string Name
+		) {
+			content = Content;
+			description = Description;
+			id = Id;
+			name = Name;
+		}
+	}
+}
 namespace OPNsense.HAProxy.servers {
 	public class Server {
 		#region Parameters
@@ -1096,19 +1056,19 @@ namespace OPNsense.HAProxy.servers {
 		public string advanced { get; set; }
 		public string checkDownInterval { get; set; }
 		public string checkInterval { get; set; }
-		public uint checkport { get; set; }
+		public ushort checkport { get; set; }
 		public string description { get; set; }
 		public string id { get; set; }
 		public PSObject mode { get; set; }
 		public string name { get; set; }
-		public uint port { get; set; }
+		public ushort port { get; set; }
 		public string source { get; set; }
 		public bool ssl { get; set; }
 		public PSObject sslCA { get; set; }
 		public PSObject sslClientCertificate { get; set; }
 		public PSObject sslCRL { get; set; }
 		public bool sslVerify { get; set; }
-		public uint weight { get; set; }
+		public ushort weight { get; set; }
 		#endregion Parameters
 
 		public Server () {
@@ -1136,19 +1096,19 @@ namespace OPNsense.HAProxy.servers {
 			string Advanced,
 			string CheckDownInterval,
 			string CheckInterval,
-			uint Checkport,
+			ushort Checkport,
 			string Description,
 			string Id,
 			PSObject Mode,
 			string Name,
-			uint Port,
+			ushort Port,
 			string Source,
 			byte Ssl,
 			PSObject SslCA,
 			PSObject SslClientCertificate,
 			PSObject SslCRL,
 			byte SslVerify,
-			uint Weight
+			ushort Weight
 		) {
 			address = Address;
 			advanced = Advanced;
@@ -1167,6 +1127,256 @@ namespace OPNsense.HAProxy.servers {
 			sslCRL = SslCRL;
 			sslVerify = (SslVerify == 0) ? false : true;
 			weight = Weight;
+		}
+	}
+}
+namespace OPNsense.HAProxy.general {
+	public class Defaults {
+		#region Parameters
+		public string customOptions { get; set; }
+		public uint maxConnections { get; set; }
+		public PSObject redispatch { get; set; }
+		public byte retries { get; set; }
+		public string timeoutCheck { get; set; }
+		public string timeoutClient { get; set; }
+		public string timeoutConnect { get; set; }
+		public string timeoutServer { get; set; }
+		#endregion Parameters
+
+		public Defaults () {
+			customOptions = null;
+			maxConnections = 0;
+			redispatch = null;
+			retries = 3;
+			timeoutCheck = null;
+			timeoutClient = "30s";
+			timeoutConnect = "30s";
+			timeoutServer = "30s";
+		}
+
+		public Defaults (
+			string CustomOptions,
+			uint MaxConnections,
+			PSObject Redispatch,
+			byte Retries,
+			string TimeoutCheck,
+			string TimeoutClient,
+			string TimeoutConnect,
+			string TimeoutServer
+		) {
+			customOptions = CustomOptions;
+			maxConnections = MaxConnections;
+			redispatch = Redispatch;
+			retries = Retries;
+			timeoutCheck = TimeoutCheck;
+			timeoutClient = TimeoutClient;
+			timeoutConnect = TimeoutConnect;
+			timeoutServer = TimeoutServer;
+		}
+	}
+}
+namespace OPNsense.HAProxy.general {
+	public class Logging {
+		#region Parameters
+		public PSObject facility { get; set; }
+		public string host { get; set; }
+		public ushort length { get; set; }
+		public PSObject level { get; set; }
+		#endregion Parameters
+
+		public Logging () {
+			facility = null;
+			host = "127.0.0.1";
+			length = 0;
+			level = null;
+		}
+
+		public Logging (
+			PSObject Facility,
+			string Host,
+			ushort Length,
+			PSObject Level
+		) {
+			facility = Facility;
+			host = Host;
+			length = Length;
+			level = Level;
+		}
+	}
+}
+namespace OPNsense.HAProxy.general {
+	public class Peers {
+		#region Parameters
+		public bool enabled { get; set; }
+		public string listen1 { get; set; }
+		public string listen2 { get; set; }
+		public string name1 { get; set; }
+		public string name2 { get; set; }
+		public ushort port1 { get; set; }
+		public ushort port2 { get; set; }
+		#endregion Parameters
+
+		public Peers () {
+			enabled = true;
+			listen1 = null;
+			listen2 = null;
+			name1 = null;
+			name2 = null;
+			port1 = 1024;
+			port2 = 1024;
+		}
+
+		public Peers (
+			byte Enabled,
+			string Listen1,
+			string Listen2,
+			string Name1,
+			string Name2,
+			ushort Port1,
+			ushort Port2
+		) {
+			enabled = (Enabled == 0) ? false : true;
+			listen1 = Listen1;
+			listen2 = Listen2;
+			name1 = Name1;
+			name2 = Name2;
+			port1 = Port1;
+			port2 = Port2;
+		}
+	}
+}
+namespace OPNsense.HAProxy.general {
+	public class Stats {
+		#region Parameters
+		public bool authEnabled { get; set; }
+		public string customOptions { get; set; }
+		public bool enabled { get; set; }
+		public ushort port { get; set; }
+		public Object remoteBind { get; set; }
+		public bool remoteEnabled { get; set; }
+		public Object users { get; set; }
+		#endregion Parameters
+
+		public Stats () {
+			authEnabled = true;
+			customOptions = null;
+			enabled = true;
+			port = 8822;
+			remoteBind = null;
+			remoteEnabled = true;
+			users = null;
+		}
+
+		public Stats (
+			byte AuthEnabled,
+			string CustomOptions,
+			byte Enabled,
+			ushort Port,
+			Object RemoteBind,
+			byte RemoteEnabled,
+			Object Users
+		) {
+			authEnabled = (AuthEnabled == 0) ? false : true;
+			customOptions = CustomOptions;
+			enabled = (Enabled == 0) ? false : true;
+			port = Port;
+			remoteBind = RemoteBind;
+			remoteEnabled = (RemoteEnabled == 0) ? false : true;
+			users = Users;
+		}
+	}
+}
+namespace OPNsense.HAProxy.general {
+	public class Tuning {
+		#region Parameters
+		public uint bufferSize { get; set; }
+		public uint checkBufferSize { get; set; }
+		public string customOptions { get; set; }
+		public ushort luaMaxMem { get; set; }
+		public uint maxConnections { get; set; }
+		public ushort maxDHSize { get; set; }
+		public byte nbproc { get; set; }
+		public bool root { get; set; }
+		public byte spreadChecks { get; set; }
+		public PSObject sslServerVerify { get; set; }
+		public PSObject ssl_bindOptions { get; set; }
+		public string ssl_cipherList { get; set; }
+		public bool ssl_defaultsEnabled { get; set; }
+		#endregion Parameters
+
+		public Tuning () {
+			bufferSize = 16384;
+			checkBufferSize = 16384;
+			customOptions = null;
+			luaMaxMem = 0;
+			maxConnections = 0;
+			maxDHSize = 1024;
+			nbproc = 1;
+			root = true;
+			spreadChecks = 0;
+			sslServerVerify = null;
+			ssl_bindOptions = null;
+			ssl_cipherList = "ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES128-SHA256:ECDHE";
+			ssl_defaultsEnabled = true;
+		}
+
+		public Tuning (
+			uint BufferSize,
+			uint CheckBufferSize,
+			string CustomOptions,
+			ushort LuaMaxMem,
+			uint MaxConnections,
+			ushort MaxDHSize,
+			byte Nbproc,
+			byte Root,
+			byte SpreadChecks,
+			PSObject SslServerVerify,
+			PSObject Ssl_BindOptions,
+			string Ssl_CipherList,
+			byte Ssl_DefaultsEnabled
+		) {
+			bufferSize = BufferSize;
+			checkBufferSize = CheckBufferSize;
+			customOptions = CustomOptions;
+			luaMaxMem = LuaMaxMem;
+			maxConnections = MaxConnections;
+			maxDHSize = MaxDHSize;
+			nbproc = Nbproc;
+			root = (Root == 0) ? false : true;
+			spreadChecks = SpreadChecks;
+			sslServerVerify = SslServerVerify;
+			ssl_bindOptions = Ssl_BindOptions;
+			ssl_cipherList = Ssl_CipherList;
+			ssl_defaultsEnabled = (Ssl_DefaultsEnabled == 0) ? false : true;
+		}
+	}
+}
+namespace OPNsense.HAProxy {
+	public class General {
+		#region Parameters
+		public bool enabled { get; set; }
+		public bool gracefulStop { get; set; }
+		public bool seamlessReload { get; set; }
+		public bool showIntro { get; set; }
+		#endregion Parameters
+
+		public General () {
+			enabled = true;
+			gracefulStop = true;
+			seamlessReload = true;
+			showIntro = true;
+		}
+
+		public General (
+			byte Enabled,
+			byte GracefulStop,
+			byte SeamlessReload,
+			byte ShowIntro
+		) {
+			enabled = (Enabled == 0) ? false : true;
+			gracefulStop = (GracefulStop == 0) ? false : true;
+			seamlessReload = (SeamlessReload == 0) ? false : true;
+			showIntro = (ShowIntro == 0) ? false : true;
 		}
 	}
 }
