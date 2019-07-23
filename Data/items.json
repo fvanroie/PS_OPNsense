@@ -1,6 +1,6 @@
 {
     "MinimumVersion": "18.7",
-    "MaximumVersion": "19.1",
+    "MaximumVersion": "19.7",
     "AcmeClient": {
         "Account": {
             "objectname": "AcmeClient Account",
@@ -772,7 +772,7 @@
         },
         "Whilelist": {
             "objectname": "DnsCryptProxy Whilelist",
-            "mountpoint": "\\\\OPNsense\\dnscryptproxy\\whilelist\\whilelists\\whilelist",
+            "mountpoint": "\\\\OPNsense\\dnscryptproxy\\whitelist\\whitelists\\whitelist",
             "remove": {
                 "returntype": "OPNsense.DnsCryptProxy.Whilelist",
                 "command": {
