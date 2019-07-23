@@ -48,7 +48,7 @@ namespace OPNsense.telegraf {
 		public string influx_username { get; set; }
 		public bool prometheus_enable { get; set; }
 		public Object prometheus_exclude { get; set; }
-		public PSObject prometheus_listen { get; set; }
+		public ushort prometheus_listen { get; set; }
 		public bool prometheus_stringaslabel { get; set; }
 		#endregion Parameters
 
@@ -96,7 +96,7 @@ namespace OPNsense.telegraf {
 			string Influx_Username,
 			byte Prometheus_Enable,
 			Object Prometheus_Exclude,
-			PSObject Prometheus_Listen,
+			ushort Prometheus_Listen,
 			byte Prometheus_Stringaslabel
 		) {
 			elastic_enable = (Elastic_Enable == 0) ? false : true;

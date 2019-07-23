@@ -106,7 +106,7 @@ namespace OPNsense.postfix {
 		public bool enabled { get; set; }
 		public bool enforce_recipient_check { get; set; }
 		public string inet_interfaces { get; set; }
-		public PSObject inet_port { get; set; }
+		public ushort inet_port { get; set; }
 		public int message_size_limit { get; set; }
 		public string mydomain { get; set; }
 		public string myhostname { get; set; }
@@ -172,7 +172,7 @@ namespace OPNsense.postfix {
 			byte Enabled,
 			byte Enforce_Recipient_Check,
 			string Inet_Interfaces,
-			PSObject Inet_Port,
+			ushort Inet_Port,
 			int Message_Size_Limit,
 			string Mydomain,
 			string Myhostname,

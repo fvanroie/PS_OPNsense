@@ -6,7 +6,7 @@ namespace OPNsense.ntopng {
 		#region Parameters
 		public PSObject dnsmode { get; set; }
 		public bool enabled { get; set; }
-		public PSObject httpport { get; set; }
+		public ushort httpport { get; set; }
 		public PSObject Interface { get; set; }
 		#endregion Parameters
 
@@ -20,7 +20,7 @@ namespace OPNsense.ntopng {
 		public General (
 			PSObject Dnsmode,
 			byte Enabled,
-			PSObject Httpport,
+			ushort Httpport,
 			PSObject Interface_
 		) {
 			dnsmode = Dnsmode;

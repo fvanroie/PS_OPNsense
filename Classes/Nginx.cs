@@ -149,8 +149,8 @@ namespace OPNsense.Nginx {
 		public bool enable_acme_support { get; set; }
 		public bool https_only { get; set; }
 		public PSObject limit_request_connections { get; set; }
-		public PSObject listen_https_port { get; set; }
-		public PSObject listen_http_port { get; set; }
+		public ushort listen_https_port { get; set; }
+		public ushort listen_http_port { get; set; }
 		public PSObject locations { get; set; }
 		public bool naxsi_extensive_log { get; set; }
 		public PSObject rewrites { get; set; }
@@ -191,8 +191,8 @@ namespace OPNsense.Nginx {
 			byte Enable_Acme_Support,
 			byte Https_Only,
 			PSObject Limit_Request_Connections,
-			PSObject Listen_Https_Port,
-			PSObject Listen_Http_Port,
+			ushort Listen_Https_Port,
+			ushort Listen_Http_Port,
 			PSObject Locations,
 			byte Naxsi_Extensive_Log,
 			PSObject Rewrites,
@@ -921,7 +921,7 @@ namespace OPNsense.Nginx {
 		public int max_conns { get; set; }
 		public int max_fails { get; set; }
 		public PSObject no_use { get; set; }
-		public PSObject port { get; set; }
+		public ushort port { get; set; }
 		public uint priority { get; set; }
 		public string server { get; set; }
 		#endregion Parameters
@@ -943,7 +943,7 @@ namespace OPNsense.Nginx {
 			int Max_Conns,
 			int Max_Fails,
 			PSObject No_Use,
-			PSObject Port,
+			ushort Port,
 			uint Priority,
 			string Server
 		) {

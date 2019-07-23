@@ -9,7 +9,7 @@ namespace OPNsense.wireguard.client.clients {
 		public string psk { get; set; }
 		public string pubkey { get; set; }
 		public string serveraddress { get; set; }
-		public PSObject serverport { get; set; }
+		public ushort serverport { get; set; }
 		public PSObject tunneladdress { get; set; }
 		#endregion Parameters
 
@@ -29,7 +29,7 @@ namespace OPNsense.wireguard.client.clients {
 			string Psk,
 			string Pubkey,
 			string Serveraddress,
-			PSObject Serverport,
+			ushort Serverport,
 			PSObject Tunneladdress
 		) {
 			enabled = (Enabled == 0) ? false : true;
@@ -51,7 +51,7 @@ namespace OPNsense.wireguard.server.servers {
 		public int instance { get; set; }
 		public string name { get; set; }
 		public PSObject peers { get; set; }
-		public PSObject port { get; set; }
+		public ushort port { get; set; }
 		public string privkey { get; set; }
 		public string pubkey { get; set; }
 		public PSObject tunneladdress { get; set; }
@@ -77,7 +77,7 @@ namespace OPNsense.wireguard.server.servers {
 			int Instance,
 			string Name,
 			PSObject Peers,
-			PSObject Port,
+			ushort Port,
 			string Privkey,
 			string Pubkey,
 			PSObject Tunneladdress
