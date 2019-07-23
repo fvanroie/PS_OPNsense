@@ -143,16 +143,16 @@ namespace OPNsense.relayd {
 		public uint backuptransport_timeout { get; set; }
 		public bool enabled { get; set; }
 		public string listen_address { get; set; }
-		public ushort listen_endport { get; set; }
+		public Nullable<ushort> listen_endport { get; set; }
 		public PSObject listen_interface { get; set; }
-		public ushort listen_startport { get; set; }
+		public Nullable<ushort> listen_startport { get; set; }
 		public string name { get; set; }
 		public PSObject protocol { get; set; }
 		public PSObject routing_interface { get; set; }
 		public uint sessiontimeout { get; set; }
 		public bool stickyaddress { get; set; }
 		public uint transport_interval { get; set; }
-		public ushort transport_port { get; set; }
+		public Nullable<ushort> transport_port { get; set; }
 		public PSObject transport_table { get; set; }
 		public PSObject transport_tablecheck { get; set; }
 		public PSObject transport_tablemode { get; set; }
@@ -195,16 +195,16 @@ namespace OPNsense.relayd {
 			uint Backuptransport_Timeout,
 			byte Enabled,
 			string Listen_Address,
-			ushort Listen_Endport,
+			Nullable<ushort> Listen_Endport,
 			PSObject Listen_Interface,
-			ushort Listen_Startport,
+			Nullable<ushort> Listen_Startport,
 			string Name,
 			PSObject Protocol,
 			PSObject Routing_Interface,
 			uint Sessiontimeout,
 			byte Stickyaddress,
 			uint Transport_Interval,
-			ushort Transport_Port,
+			Nullable<ushort> Transport_Port,
 			PSObject Transport_Table,
 			PSObject Transport_Tablecheck,
 			PSObject Transport_Tablemode,

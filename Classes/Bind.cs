@@ -61,7 +61,7 @@ namespace OPNsense.bind {
 		public PSObject listenv6 { get; set; }
 		public ushort logsize { get; set; }
 		public byte maxcachesize { get; set; }
-		public ushort port { get; set; }
+		public Nullable<ushort> port { get; set; }
 		public PSObject recursion { get; set; }
 		#endregion Parameters
 
@@ -85,7 +85,7 @@ namespace OPNsense.bind {
 			PSObject Listenv6,
 			ushort Logsize,
 			byte Maxcachesize,
-			ushort Port,
+			Nullable<ushort> Port,
 			PSObject Recursion
 		) {
 			dnssecvalidation = Dnssecvalidation;

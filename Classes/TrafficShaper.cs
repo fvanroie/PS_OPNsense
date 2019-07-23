@@ -162,7 +162,7 @@ namespace OPNsense.TrafficShaper.rules {
 		public PSObject destination { get; set; }
 		public bool destination_not { get; set; }
 		public PSObject direction { get; set; }
-		public ushort dst_port { get; set; }
+		public Nullable<ushort> dst_port { get; set; }
 		public bool enabled { get; set; }
 		public PSObject Interface { get; set; }
 		public PSObject interface2 { get; set; }
@@ -171,7 +171,7 @@ namespace OPNsense.TrafficShaper.rules {
 		public uint sequence { get; set; }
 		public PSObject source { get; set; }
 		public bool source_not { get; set; }
-		public ushort src_port { get; set; }
+		public Nullable<ushort> src_port { get; set; }
 		public PSObject target { get; set; }
 		#endregion Parameters
 
@@ -198,7 +198,7 @@ namespace OPNsense.TrafficShaper.rules {
 			PSObject Destination,
 			byte Destination_Not,
 			PSObject Direction,
-			ushort Dst_Port,
+			Nullable<ushort> Dst_Port,
 			byte Enabled,
 			PSObject Interface_,
 			PSObject Interface2,
@@ -207,7 +207,7 @@ namespace OPNsense.TrafficShaper.rules {
 			uint Sequence,
 			PSObject Source,
 			byte Source_Not,
-			ushort Src_Port,
+			Nullable<ushort> Src_Port,
 			PSObject Target
 		) {
 			description = Description;
