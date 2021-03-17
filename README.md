@@ -64,6 +64,11 @@ Depending on your ExecutionPolicy, you might need to unblock the downloaded modu
 Get-ChildItem PS_OPNsense -Recurse | Unblock-File -Verbose
 ```
 
+On newer system you also might open PS with administrative access and run:
+```powershell
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+```
+
 To load this module in PowerShell type:
 ```powershell
 Import-Module -Name PS_OPNsense -PassThru
