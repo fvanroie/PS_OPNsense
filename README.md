@@ -118,3 +118,8 @@ Windows 10        | PowerShell Core    | 6.0
 
 PS_OPNsense aims to be cross-platform on PowerShell Core 6.0 and up, however it has not been extensively tested on MacOS yet. Let me know what works and what doesn't.
 Feel free to use it on these platforms and report back any [issues](https://github.com/fvanroie/PS_OPNsense/issues) you encouter. The goal is to make PS_OPNsense crossplatform with PowerShell Core.
+
+
+## [Buy me a coffee](https://www.buymeacoffee.com/aktdCofU)
+
+[![Buy me a coffee](https://www.buymeacoffee.com/assets/img/custom_images/black_img.png)](https://www.buymeacoffee.com/aktdCofU)
